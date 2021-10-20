@@ -65,6 +65,16 @@ namespace DALObject
         public static void Match(Parcel parcel,Drone drone)
         {
             parcel.DroneId = drone.Id;
+            //int index=0;
+           /* foreach (Parcel parcel in DataSource.parcels)
+            {
+                index++;
+                if (pId == parcel.Id)
+                {
+                    AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, dId, parcel.Requested, parcel.Scheduled, parcel.PickedUp, parcel.Delivered);
+                }
+            }*/
+           // DataSource.parcels.RemoveAt(index);
         }
         public static void PickUpTime(Parcel parcel)
         {
@@ -203,6 +213,48 @@ namespace DALObject
                 if(station.ChargeSlots>0)
                     Console.WriteLine(station);
             }
+        }
+        public static Parcel ConvertParcel(int id)
+        {
+            int index = 0;
+            foreach (Parcel parcel in DataSource.parcels)
+            {
+                index++;
+                if (id == parcel.Id)
+                {
+                    return parcel;
+                }
+            }
+            Parcel p = new Parcel();
+            return p;
+        }
+        public static Drone ConvertDrone(int id)
+        {
+            int index = 0;
+            foreach (Drone drone in DataSource.drones)
+            {
+                index++;
+                if (id == drone.Id)
+                {
+                    return drone;
+                }
+            }
+            Drone d = new Drone();
+            return d;
+        }
+        public static Station ConvertStation(int id)
+        {
+            int index = 0;
+            foreach (Station station in DataSource.baseStations)
+            {
+                index++;
+                if (id == station.Id)
+                {
+                    return station;
+                }
+            }
+            Station s = new Station();
+            return s;
         }
     }
 }
