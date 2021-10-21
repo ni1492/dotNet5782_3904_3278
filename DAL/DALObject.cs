@@ -62,19 +62,21 @@ namespace DALObject
             charging.StationId = sId;
             DataSource.inChargeing.Add(charging);
         }
-        public static void Match(Parcel parcel,Drone drone)
+        public static void Match(Parcel parcel)
         {
-            parcel.DroneId = drone.Id;
-            //int index=0;
-           /* foreach (Parcel parcel in DataSource.parcels)
-            {
-                index++;
-                if (pId == parcel.Id)
-                {
-                    AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, dId, parcel.Requested, parcel.Scheduled, parcel.PickedUp, parcel.Delivered);
-                }
-            }*/
-           // DataSource.parcels.RemoveAt(index);
+            //parcel.DroneId = drone.Id;
+            int index=0;
+            foreach (Drone drone in DataSource.drones)
+             {
+                 index++;
+                 if ((drone.Status == DroneStatuses.available)&&(drone.MaxWeight>=parcel.Weight))
+                 {
+                    AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
+                    break;
+                 }
+             }
+            DataSource.parcels.RemoveAt(index);
+            parcel.DroneId = DataSource.drones[index].Id;
         }
         public static void PickUpTime(Parcel parcel)
         {
@@ -86,6 +88,7 @@ namespace DALObject
                 if (drone.Id == parcel.DroneId)
                 {
                     AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
+                    break;
                 }
             }
             DataSource.drones.RemoveAt(index);
@@ -100,6 +103,7 @@ namespace DALObject
                 if (drone.Id == parcel.DroneId)
                 {
                     AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.available, drone.Battery);
+                    break;
                 }
             }
             DataSource.drones.RemoveAt(index);

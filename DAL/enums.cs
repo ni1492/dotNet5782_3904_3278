@@ -11,6 +11,7 @@ namespace IDAL
         public enum WeightCategories { light, medium, heavy };
         public enum DroneStatuses { available, maintenance, delivery };
         public enum Priorities { regular, quick, urgent };
+        public enum Models {Mavic,Phantom,Inspire,Air,Syma,Hanvon, Propel,FPV,DJI,PowerVision,AUTEL,Skydio,Holystone};
 
 
     }

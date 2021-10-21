@@ -4,23 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DALObject
-{
-    public class DataSource
-    {
-        internal static List<IDAL.DO.Drone> drones = null;
-        internal static List<IDAL.DO.Station> baseStations = null;
-        internal static List<IDAL.DO.Customer> customers = null;
-        internal static List<IDAL.DO.Parcel> parcels = null;
-        internal static List<IDAL.DO.DroneCharge> inChargeing = null;
+//קווי הרוחב 33º-29º 
 
-        internal class Config
+namespace DALObject
+{ }
+public class DataSource
+{
+    internal static Random R = new Random();
+    internal static List<IDAL.DO.Drone> drones = null;
+    internal static List<IDAL.DO.Station> baseStations = null;
+    internal static List<IDAL.DO.Customer> customers = null;
+    internal static List<IDAL.DO.Parcel> parcels = null;
+    internal static List<IDAL.DO.DroneCharge> inChargeing = null;
+
+    internal class Config
+    {
+        internal static int StationID = 1;
+        internal static int DroneID = 1000;
+        internal static int CustomerID = 100000000;
+        internal static int ParcelID = 1000;
+    }
+    internal static void Initialize()
+    {
+        int num = R.Next(2, 5);
+        for (int i = 0; i < num; i++)
         {
-            internal static int IdNumber = 1;
+            DALObject.DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(1000, 10000) / 100, R.Next(1000, 10000) / 100, R.Next(50));
         }
-        internal static void Initialize()
+        num = R.Next(5, 10);
+        for (int i = 0; i < num; i++)
         {
-            DALObject.AddStation(Config.IdNumber,0,0.0, 0.0, 0);
+            string model = ((IDAL.DO.Models)R.Next(13)).ToString();
+            IDAL.DO.WeightCategories weight = ((IDAL.DO.WeightCategories)R.Next(3));
+            IDAL.DO.DroneStatuses statuse = ((IDAL.DO.DroneStatuses)R.Next(3));
+            DALObject.DALObject.AddDrone(Config.DroneID++, model, weight, statuse, R.Next(1000, 10000) / 100);
+        }
+        num = R.Next(10, 15);
+        string[] names = { "hanna", "lenny", "ginny", "minnie", "bob", "benny", "yakob", "shuva", "etya", "hamutal","nelly","hellen","braidy","daisy","anastasia","kevin" };
+        for (int i = 0; i < num; i++)
+        {
+            DALObject.DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(1000, 10000) / 100, R.Next(1000, 10000) / 100);
+        }
+        for (int i = 0; i < num; i++)
+        {
+            IDAL.DO.WeightCategories weight = ((IDAL.DO.WeightCategories)R.Next(3));
+            IDAL.DO.Priorities priority = ((IDAL.DO.Priorities)R.Next(3));
+         //  DALObject.DALObject.AddParcel(Config.ParcelID,,,weight,priority,)
         }
     }
+}
 }

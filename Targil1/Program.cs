@@ -147,7 +147,7 @@ namespace ConsoleUI
                                         Int32.TryParse(input, out id);//parcel
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out dId);//drone
-                                        DALObject.DALObject.Match(DALObject.DALObject.ConvertParcel(id), DALObject.DALObject.ConvertDrone(dId));
+                                        DALObject.DALObject.Match(DALObject.DALObject.ConvertParcel(id));
                                         break;
                                     }
                                 case 2:

@@ -7,12 +7,12 @@ namespace IDAL
         public struct Parcel
         {
             public int Id { get => Id; set => Id = value; }
-            public int SenderId { get => SenderId; set => SenderId = value; }
-            public int TargetId { get => TargetId; set => TargetId = value; }
+            public int SenderId { get => SenderId=0; set => SenderId = value; }
+            public int TargetId { get => TargetId=0; set => TargetId = value; }
             public WeightCategories Weight { get => Weight; set => Weight = value; }
             public Priorities Priority { get => Priority; set => Priority = value; }
             public DateTime Requested { get => Requested; set => Requested = value; }
-            public int DroneId { get => DroneId; set => DroneId = value = 0; }
+            public int DroneId { get => DroneId=0; set => DroneId = value = 0; }
             public DateTime Scheduled { get => Scheduled; set => Scheduled = value; }
             public DateTime PickedUp { get => PickedUp; set => PickedUp = value; }
             public DateTime Delivered { get => Delivered; set => Delivered = value; }
