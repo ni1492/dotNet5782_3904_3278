@@ -7,6 +7,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            DALObject.DataSource.Initialize();
             int inputVal1=0;
             int inputVal2 = 0;
             int id=0;

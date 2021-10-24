@@ -64,6 +64,7 @@ namespace DALObject
         }
         public static void Match(Parcel parcel)
         {
+            int dId = 0;
             //parcel.DroneId = drone.Id;
             int index=0;
             foreach (Drone drone in DataSource.drones)
@@ -72,11 +73,13 @@ namespace DALObject
                  if ((drone.Status == DroneStatuses.available)&&(drone.MaxWeight>=parcel.Weight))
                  {
                     AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
+                    DataSource.drones.RemoveAt(index);
+                    dId = drone.Id;
                     break;
                  }
              }
-            DataSource.parcels.RemoveAt(index);
-            parcel.DroneId = DataSource.drones[index].Id;
+            //DataSource.drones.RemoveAt(index);
+            parcel.DroneId = dId;
         }
         public static void PickUpTime(Parcel parcel)
         {
