@@ -73,9 +73,9 @@ namespace DALObject
                  //index++;
                  if ((drone.Status == DroneStatuses.available)&&(drone.MaxWeight>=parcel.Weight))
                  {
-                    AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
+                   //AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
                     // DataSource.drones.RemoveAt(index);
-                    DataSource.drones.Remove(drone);
+                  //  DataSource.drones.Remove(drone);
                     dId = drone.Id;
                     break;
                  }
@@ -86,13 +86,13 @@ namespace DALObject
             // parcel.DroneId = dId;
         }
         public static void PickUpTime(Parcel parcel)
-        {
+        {//we would do if(
             //parcel.PickedUp = DateTime.Now;
            // int index = 0;
             foreach (Drone drone in DataSource.drones)
             {
                // index++;
-                if (drone.Id == parcel.DroneId)
+                if (drone.Id == parcel.DroneId)//we would do if DroneStatuses is availble if you wouldnt ask us not to use logic...
                 {
                     AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
                     DataSource.drones.Remove(drone);
