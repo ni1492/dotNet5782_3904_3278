@@ -62,88 +62,107 @@ namespace DALObject
             charging.StationId = sId;
             DataSource.inChargeing.Add(charging);
         }
-        public static void Match(Parcel parcel)
+        public static void Match(Parcel parcel) //,Drone drone)
         {
             int dId = 0;
             //parcel.DroneId = drone.Id;
-            int index=0;
+           // drone.Status = DroneStatuses.delivery;
+           // int index=0;
             foreach (Drone drone in DataSource.drones)
              {
-                 index++;
+                 //index++;
                  if ((drone.Status == DroneStatuses.available)&&(drone.MaxWeight>=parcel.Weight))
                  {
                     AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
-                    DataSource.drones.RemoveAt(index);
+                    // DataSource.drones.RemoveAt(index);
+                    DataSource.drones.Remove(drone);
                     dId = drone.Id;
                     break;
                  }
              }
             //DataSource.drones.RemoveAt(index);
-            parcel.DroneId = dId;
+            AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, dId, parcel.Requested, parcel.Scheduled, parcel.PickedUp, parcel.Delivered);
+            DataSource.parcels.Remove(parcel);
+            // parcel.DroneId = dId;
         }
         public static void PickUpTime(Parcel parcel)
         {
-            parcel.PickedUp = DateTime.Now;
-            int index = 0;
+            //parcel.PickedUp = DateTime.Now;
+           // int index = 0;
             foreach (Drone drone in DataSource.drones)
             {
-                index++;
+               // index++;
                 if (drone.Id == parcel.DroneId)
                 {
                     AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
+                    DataSource.drones.Remove(drone);
                     break;
                 }
             }
-            DataSource.drones.RemoveAt(index);
+            // DataSource.drones.RemoveAt(index);
+            AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId, parcel.Requested, parcel.Scheduled, DateTime.Now, parcel.Delivered);
+            DataSource.parcels.Remove(parcel);
         }
         public static void DeliveryTime(Parcel parcel)
         {
-            parcel.Delivered = DateTime.Now;
-            int index = 0;
+           // parcel.Delivered = DateTime.Now;
+           // int index = 0;
             foreach (Drone drone in DataSource.drones)
             {
-                index++;
+               // index++;
                 if (drone.Id == parcel.DroneId)
                 {
                     AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.available, drone.Battery);
+                    DataSource.drones.Remove(drone);
                     break;
                 }
             }
-            DataSource.drones.RemoveAt(index);
+            //DataSource.drones.RemoveAt(index);
+            AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId, parcel.Requested, parcel.Scheduled,parcel.PickedUp, DateTime.Now);
+            DataSource.parcels.Remove(parcel);
         }
         public static void ChargingDrone(Drone drone, Station station)
         {
             if(station.ChargeSlots>0)
             {
-                drone.Status = DroneStatuses.maintenance;
-                station.ChargeSlots--;
+                AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.maintenance, drone.Battery);
+                DataSource.drones.Remove(drone);
+                // drone.Status = DroneStatuses.maintenance;
+                AddStation(station.Id, station.Name, station.Longitude, station.Lattitude, station.ChargeSlots - 1);
+                DataSource.baseStations.Remove(station);
+                //station.ChargeSlots--;
                 AddCharging(drone.Id, station.Id);
             } 
         }
         public static void ReleaseChargingDrone(Drone drone)
         {
-            drone.Status = DroneStatuses.available;
-            int index = 0;
+            AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.available, drone.Battery);
+            DataSource.drones.Remove(drone);
+            // drone.Status = DroneStatuses.available;
+            //int index = 0;
             int sId = 0;
             foreach (DroneCharge charge in DataSource.inChargeing)
             {
-                index++;
+               // index++;
                 if (charge.DroneId==drone.Id)
                 {
-                    sId = charge.StationId; 
+                    sId = charge.StationId;
+                    DataSource.inChargeing.Remove(charge);
+                    break;
                 }
             }
-            DataSource.inChargeing.RemoveAt(index);
-            index = 0;
+           // DataSource.inChargeing.RemoveAt(index);
+           // index = 0;
             foreach (Station station in DataSource.baseStations)
             {
-                index++;
+              //  index++;
                 if (station.Id ==sId)
                 {
-                    AddStation(station.Id, station.Name, station.Longitude, station.Lattitude, (station.ChargeSlots - 1));
+                    AddStation(station.Id, station.Name, station.Longitude, station.Lattitude, (station.ChargeSlots + 1));
+                    DataSource.baseStations.Remove(station);
                 }
             }
-            DataSource.baseStations.RemoveAt(index);
+            //DataSource.baseStations.RemoveAt(index);
         }
         public static void PrintStation(int id)
         {

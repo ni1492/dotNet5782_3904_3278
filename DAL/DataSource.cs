@@ -48,14 +48,14 @@ namespace DALObject
             for (int i = 0; i < num; i++)
             {
                 int dId = 0;
-                foreach (IDAL.DO.Drone drone in drones)
+               /* foreach (IDAL.DO.Drone drone in drones)
                 {
-                    foreach (IDAL.DO.DroneCharge droneCharge in inChargeing)
-                    {
-                        if (droneCharge.DroneId != drone.Id)
+                   // foreach (IDAL.DO.DroneCharge droneCharge in inChargeing)
+                   //{
+                        if (drone.Status==IDAL.DO.DroneStatuses.available)
                             dId = drone.Id;
-                    }
-                }
+                   // }
+                }*/
                 IDAL.DO.WeightCategories weight = ((IDAL.DO.WeightCategories)R.Next(3));
                 IDAL.DO.Priorities priority = ((IDAL.DO.Priorities)R.Next(3));
                 DateTime req = new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));
@@ -65,6 +65,7 @@ namespace DALObject
                 int sId = R.Next(100000000, 1000000000);
                 int tId = R.Next(100000000, 1000000000);
                 DALObject.AddParcel(Config.ParcelID++, sId, tId, weight, priority, dId, req, sch, pUp, del);
+                DALObject.Match(DALObject.ConvertParcel((Config.ParcelID - 1)));
             }
         }
     }

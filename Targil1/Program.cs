@@ -54,7 +54,7 @@ namespace ConsoleUI
                             {
                                 case 1:
                                     {
-                                        Console.WriteLine("enter: id, name, longitude, lattitude, charge slots number");
+                                        Console.WriteLine("enter: id, name(number), longitude, lattitude, charge slots number");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         input = Console.ReadLine();
@@ -71,6 +71,8 @@ namespace ConsoleUI
                                 case 2:
                                     {
                                         Console.WriteLine("enter: id, model, max weight, drone status, battery");
+                                        Console.WriteLine("weight options: light, medium, heavy");
+                                        Console.WriteLine("DroneStatuses options: available, maintenance, delivery");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         model = Console.ReadLine();
@@ -99,7 +101,9 @@ namespace ConsoleUI
                                     }
                                 case 4:
                                     {
-                                        Console.WriteLine("enter: id, model, max weight, drone status, battery");
+                                        Console.WriteLine("enter: id, sender id, target id, weight, priority, drone id, request, schedule, pick up, delivery");
+                                        Console.WriteLine("weight options: light, medium, heavy");
+                                        Console.WriteLine("Priorities options: regular, quick, urgent");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         input = Console.ReadLine();
@@ -143,11 +147,9 @@ namespace ConsoleUI
                             {
                                 case 1:
                                     {
-                                        Console.WriteLine("enter parcel and drone id");
+                                        Console.WriteLine("enter parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                        input = Console.ReadLine();
-                                        Int32.TryParse(input, out dId);//drone
                                         DALObject.DALObject.Match(DALObject.DALObject.ConvertParcel(id));
                                         break;
                                     }
