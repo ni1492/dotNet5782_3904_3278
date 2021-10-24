@@ -20,7 +20,7 @@ namespace IDAL
             {
                 return ("Parcel Id: " + Id + "\nSender Id: " + SenderId + "\nCustomer Id: " + TargetId + "\nWeight of the parcel: " + Weight +
                     "\nPriority: " + Priority + "\nDrone Id: " + DroneId + "\nRequested Date: " + Requested + "\nScheduled Date: " + Scheduled +
-                    "\nPickedUp Date:" + PickedUp + "\nDelivered Date: " + Delivered + "\n");
+                    "\nPickedUp Date: " + PickedUp + "\nDelivered Date: " + Delivered + "\n");
             }
 
         };

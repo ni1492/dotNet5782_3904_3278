@@ -37,6 +37,11 @@ namespace ConsoleUI
             Console.WriteLine("5: exit\n");
             do
             {
+                Console.WriteLine("1: Adding options\n");
+                Console.WriteLine("2: Update options\n");
+                Console.WriteLine("3: Display options\n");
+                Console.WriteLine("4: List display options\n");
+                Console.WriteLine("5: exit\n");
                 string input = Console.ReadLine();
                 Int32.TryParse(input, out inputVal1);
                 switch (inputVal1)

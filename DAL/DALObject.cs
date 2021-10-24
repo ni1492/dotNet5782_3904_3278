@@ -160,6 +160,7 @@ namespace DALObject
                 {
                     AddStation(station.Id, station.Name, station.Longitude, station.Lattitude, (station.ChargeSlots + 1));
                     DataSource.baseStations.Remove(station);
+                    break;
                 }
             }
             //DataSource.baseStations.RemoveAt(index);

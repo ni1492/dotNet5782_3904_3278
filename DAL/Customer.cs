@@ -14,7 +14,7 @@ namespace IDAL
             public override string ToString()
             {
                 return ("Customer Id: " + Id + "\nCustomer Name: " + Name + "\nPhone Number: " + Phone +
-                    "\nLocation: " + "\nLongitude: " + Longitude + "\nLattitude: " + Lattitude + "\n");
+                    "\nLocation: " + "\n-Longitude: " + Longitude + "\n-Lattitude: " + Lattitude + "\n");
             }
         };
     }
