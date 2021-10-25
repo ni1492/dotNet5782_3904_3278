@@ -268,7 +268,7 @@ namespace DALObject
             Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
-        public static void ConvertLongitude(double longitude)
+        public static string ConvertLongitude(double longitude)
         {
             longitude *= -1;
             int angle = (int)longitude;
@@ -278,9 +278,9 @@ namespace DALObject
             longitude -= minutes;
             longitude *= 60;
             double seconds = longitude;
-            Console.WriteLine(angle + "°" + minutes + "'" + seconds + "'' S");
+            return(angle + "°" + minutes + "'" + seconds + "'' S");
         }
-        public static void ConvertLattitude( double lattitude)
+        public static string ConvertLattitude( double lattitude)
         {
             int angle = (int)lattitude;
             lattitude -= angle;
@@ -289,7 +289,7 @@ namespace DALObject
             lattitude -= minutes;
             lattitude *= 60;
             double seconds = lattitude;
-            Console.WriteLine(angle + "°" + minutes + "'" + seconds + "'' E");
+            return(angle + "°" + minutes + "'" + seconds + "'' E");
         }
         public static double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)
         {
