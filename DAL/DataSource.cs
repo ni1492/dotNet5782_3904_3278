@@ -29,7 +29,7 @@ namespace DALObject
             int num = R.Next(2, 5);
             for (int i = 0; i < num; i++)
             {
-                DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(1000, 10000) / 100, R.Next(1000, 10000) / 100, R.Next(50));
+                DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(0, 50)+R.NextDouble(), R.Next(0, 50) + R.NextDouble(), R.Next(50));
             }
             num = R.Next(5, 10);
             for (int i = 0; i < num; i++)
@@ -37,13 +37,13 @@ namespace DALObject
                 string model = ((IDAL.DO.Models)R.Next(13)).ToString();
                 IDAL.DO.WeightCategories weight = ((IDAL.DO.WeightCategories)R.Next(3));
                 IDAL.DO.DroneStatuses statuse = ((IDAL.DO.DroneStatuses)R.Next(3));
-                DALObject.AddDrone(Config.DroneID++, model, weight, statuse, R.Next(1000, 10000) / 100);
+                DALObject.AddDrone(Config.DroneID++, model, weight, statuse, R.Next(0, 100) + R.NextDouble());
             }
             num = R.Next(10, 15);
             string[] names = { "hanna", "lenny", "ginny", "minnie", "bob", "benny", "yakob", "shuva", "etya", "hamutal", "nelly", "hellen", "braidy", "daisy", "anastasia", "kevin" };
             for (int i = 0; i < num; i++)
             {
-                DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(1000, 10000) / 100, R.Next(1000, 10000) / 100);
+                DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(0, 50) + R.NextDouble(), R.Next(0, 50) + R.NextDouble());
             }
             for (int i = 0; i < num; i++)
             {
