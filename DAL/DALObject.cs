@@ -182,90 +182,90 @@ namespace DALObject
                     Console.WriteLine(parcel);
             }
         }
-        public static void PrintAllStation()//הדפסת כל התחנות
+        public static void PrintAllStation()//display all stations
         {
-            foreach (Station station in DataSource.baseStations)//מעבר על כל התחנות
+            foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
             {
                 Console.WriteLine(station);
             }
         }
-        public static void PrintAllDrone()//הדפסת כל הרחפנים
+        public static void PrintAllDrone()//display all drones
         {
-            foreach (Drone drone in DataSource.drones)//מעבר על כל הרחפנים
+            foreach (Drone drone in DataSource.drones)//goes over all the drones and prints all of them
             {
                 Console.WriteLine(drone);
             }
         }
-        public static void PrintAllCustomer()//הדפסת כל הלקוחות
+        public static void PrintAllCustomer()//display all customers
         {
-            foreach (Customer customer in DataSource.customers)//מעבר על כל הלקוחות
+            foreach (Customer customer in DataSource.customers)//goes over all the customers and prints all of them
             {
                 Console.WriteLine(customer);
             }
         }
-        public static void PrintAllParcel()//הדפסת כל החבילות
+        public static void PrintAllParcel()//display all parcels
         {
-            foreach (Parcel parcel in DataSource.parcels)//מעבר על כל החבילות
+            foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and prints all of them
             {
                 Console.WriteLine(parcel);
             }
         }
-        public static void PrintParcelsWithNoDrone()//הדפסת כל החבילות שלא משוייכות לרחפן
+        public static void PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
         {
-            foreach (Parcel parcel in DataSource.parcels)//מעבר על כל החבילות
+            foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and if they are not assigned to any drone - print the,
             {
-                if (parcel.DroneId == 0)//הדפס החבילות הלא משוייכות לרחפן
+                if (parcel.DroneId == 0)//not assigned to drone= drone ID is 0
                     Console.WriteLine(parcel);
             }
         }
-        public static void PrintStationWithChargeSlots()//הדפסת כל התחנות עם חורי טעינה פנויים
+        public static void PrintStationWithChargeSlots()//display all stations with available charging slots 
         {
-            foreach (Station station in DataSource.baseStations)//מעבר על כל התחנות
+            foreach (Station station in DataSource.baseStations)//goes over all the stations and if the station has any available charging slots - it displays it
             {
-                if (station.ChargeSlots > 0)//הדפסת התחנות עם חורי טעינה פנויים
+                if (station.ChargeSlots > 0)//station with available charging slots= at least one charging slot
                     Console.WriteLine(station);
             }
         }
-        public static Parcel ConvertParcel(int id)//מציאת חבילה לפי מספר
+        public static Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
             int index = 0;
-            foreach (Parcel parcel in DataSource.parcels)//מעבר על רשימת החבילות
+            foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and finds the one with the given ID and returns it
             {
                 index++;
-                if (id == parcel.Id)//החזרת החבילה הרצוייה
+                if (id == parcel.Id)
                 {
                     return parcel;
                 }
             }
-            Parcel p = new Parcel();//אם החבילה לא קיימת, נחזיר משתנה ריק
+            Parcel p = new Parcel();//if the parcel does not exist - returns an empty parcel
             return p;
         }
-        public static Drone ConvertDrone(int id)//מציאת רחפן לפי מספר
+        public static Drone ConvertDrone(int id)//returns the drone of the ID that was given
         {
             int index = 0;
-            foreach (Drone drone in DataSource.drones)//מעבר על רשימת הרחפנים
+            foreach (Drone drone in DataSource.drones)//goes over all the drones and finds the one with the given ID and returns it
             {
                 index++;
-                if (id == drone.Id)//החזרת הרחפן הרצויי
+                if (id == drone.Id)
                 {
                     return drone;
                 }
             }
-            Drone d = new Drone();//אם הרחפן לא קיים, נחזיר משתנה ריק
+            Drone d = new Drone();//if the parcel does not exist - returns an empty drone
             return d;
         }
-        public static Station ConvertStation(int id)//מציאת תחנה לפי מספר
+        public static Station ConvertStation(int id)//returns the station of the ID that was given
         {
             int index = 0;
-            foreach (Station station in DataSource.baseStations)//מעבר על רשימת התחנות
+            foreach (Station station in DataSource.baseStations)//goes over all the stations and finds the one with the given ID and returns it
             {
                 index++;
-                if (id == station.Id)//החזרת התחנה הרצוייה
+                if (id == station.Id)
                 {
                     return station;
                 }
             }
-            Station s = new Station();//אם התחנה לא קיימת, נחזיר משתנה ריק
+            Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
         public static void ConvertLongitude(double longitude)
