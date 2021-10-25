@@ -11,7 +11,7 @@ namespace IDAL
             public string Phone { get; set; }
             public double Longitude { get; set; }
             public double Lattitude { get; set; }
-            public override string ToString()//custom print fuction for customer class
+            public override string ToString()//custom print function for customer struct
             {
                 return ("Customer Id: " + Id + "\nCustomer Name: " + Name + "\nPhone Number: " + Phone +
                     "\nLocation: " + "\n-Longitude: " + Longitude + "\n-Lattitude: " + Lattitude + "\n");

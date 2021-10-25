@@ -11,7 +11,7 @@ namespace IDAL
             public WeightCategories MaxWeight { get ; set ; }
             public DroneStatuses Status { get; set; }
             public double Battery { get; set; }
-            public override string ToString()//צורת הדפסה נכונה
+            public override string ToString()//custom print function for drone struct
             {
                 return ("Drone Id: " + Id + "\nDrone Model: " + Model + "\nMaximum Weight: " + MaxWeight +
                     "\nDrone status: " + Status + "\nDrone battery: " + Battery + "\n");
