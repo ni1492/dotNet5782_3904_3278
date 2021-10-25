@@ -30,7 +30,7 @@ namespace DALObject
             int num = R.Next(2, 5);
             for (int i = 0; i < num; i++)//איתחול תחנות
             {
-                DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(0, 50)+R.NextDouble(), R.Next(0, 50) + R.NextDouble(), R.Next(50));
+                DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(-50, 0)+R.NextDouble(), R.Next(0, 50) + R.NextDouble(), R.Next(50));
             }//איתחול תחנות
             num = R.Next(5, 10);
             for (int i = 0; i < num; i++)//איתחול רחפנים
@@ -45,7 +45,7 @@ namespace DALObject
                 "nelly", "hellen", "braidy", "daisy", "anastasia", "kevin" };//שמות לאיתחול הלקוחות
             for (int i = 0; i < num; i++)//איתחול לקוחות
             {
-                DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(0, 50) + R.NextDouble(), R.Next(0, 50) + R.NextDouble());
+                DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(-50, 0) + R.NextDouble(), R.Next(0, 50) + R.NextDouble());
             }//איתחול לקוחות
             num = R.Next(10, 15);
             for (int i = 0; i < num; i++)//איתחול חבילות

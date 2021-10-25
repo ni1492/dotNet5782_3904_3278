@@ -205,6 +205,8 @@ namespace ConsoleUI
                             Console.WriteLine("2: Display drone\n");
                             Console.WriteLine("3: Display customer\n");
                             Console.WriteLine("4: Display parcel\n");
+                            Console.WriteLine("5: Display distance from station\n");
+                            Console.WriteLine("6: Display distance from customer\n");
                             input = Console.ReadLine();
                             Int32.TryParse(input, out inputVal2);
                             switch (inputVal2)
@@ -239,6 +241,19 @@ namespace ConsoleUI
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         DALObject.DALObject.PrintParcel(id);
+                                        break;
+                                    }
+                                case 5:
+                                    {
+                                        Console.WriteLine("enter the station id");
+                                        input = Console.ReadLine();
+                                        Int32.TryParse(input, out id);
+                                        Station station = DALObject.DALObject.ConvertStation(id);
+                                        Console.WriteLine("enter your location");
+                                        double.TryParse(input, out longitude);
+                                        input = Console.ReadLine();
+                                        double.TryParse(input, out lattitude);
+                                        double distance = DALObject.DALObject.CalculateDistance(station.Longitude, station.Lattitude, longitude, lattitude);
                                         break;
                                     }
                                 default:
