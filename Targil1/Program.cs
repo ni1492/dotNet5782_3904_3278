@@ -242,7 +242,7 @@ namespace ConsoleUI
                                         DALObject.DALObject.PrintParcel(id);
                                         break;
                                     }
-                                case 5:
+                                case 5://display distance from station
                                     {
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
