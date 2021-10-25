@@ -268,7 +268,7 @@ namespace DALObject
             Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
-        public static string ConvertLongitude(double longitude)
+        public static string ConvertLongitude(double longitude)//converts double longitude to sexagesimal display
         {
             longitude *= -1;
             int angle = (int)longitude;
@@ -280,7 +280,7 @@ namespace DALObject
             double seconds = longitude;
             return(angle + "°" + minutes + "'" + seconds + "'' S");
         }
-        public static string ConvertLattitude( double lattitude)
+        public static string ConvertLattitude( double lattitude)//converts double lattitude to sexagesimal display
         {
             int angle = (int)lattitude;
             lattitude -= angle;
@@ -291,7 +291,7 @@ namespace DALObject
             double seconds = lattitude;
             return(angle + "°" + minutes + "'" + seconds + "'' E");
         }
-        public static double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)
+        public static double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
             var d1 = latitude1 * (Math.PI / 180.0);
             var num1 = longitude1 * (Math.PI / 180.0);
