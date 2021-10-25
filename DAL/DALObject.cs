@@ -268,8 +268,30 @@ namespace DALObject
             Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
-        // public static double ConvertCoordinates(double longitude, double latitude)
-        public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)
+        public static void ConvertLongitude(double longitude)
+        {
+            longitude *= -1;
+            int angle = (int)longitude;
+            longitude -= angle;
+            longitude *= 60;
+            int minutes = ((int)longitude);
+            longitude -= minutes;
+            longitude *= 60;
+            double seconds = longitude;
+            Console.WriteLine(angle + "°" + minutes + "'" + seconds + "'' S");
+        }
+        public static void ConvertLattitude( double lattitude)
+        {
+            int angle = (int)lattitude;
+            lattitude -= angle;
+            lattitude *= 60;
+            int minutes = ((int)lattitude);
+            lattitude -= minutes;
+            lattitude *= 60;
+            double seconds = lattitude;
+            Console.WriteLine(angle + "°" + minutes + "'" + seconds + "'' E");
+        }
+        public static double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)
         {
             var d1 = latitude1 * (Math.PI / 180.0);
             var num1 = longitude1 * (Math.PI / 180.0);

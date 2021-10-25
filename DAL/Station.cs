@@ -13,7 +13,10 @@ namespace IDAL
             public int ChargeSlots { get; set; }
             public override string ToString()//custom print function for station struct
             {
-                return ("Station Id: " + Id + "\nStation Name: " + Name +  "\nLocation: " + "\n-Longitude: " + Longitude + 
+                DALObject.DALObject.ConvertLongitude(Longitude);
+                DALObject.DALObject.ConvertLattitude(Lattitude);
+
+                return ("Station Id: " + Id + "\nStation Name: " + Name + "\nLocation: " + "\n-Longitude: " + Longitude +
                     "\n-Lattitude: " + Lattitude + "\nNumber of charge slots: " + ChargeSlots + "\n");
             }
 
