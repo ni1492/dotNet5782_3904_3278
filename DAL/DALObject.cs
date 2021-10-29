@@ -270,34 +270,65 @@ namespace DALObject
         }
         public static string ConvertLongitude(double longitude)//converts double longitude to sexagesimal display
         {
-            longitude *= -1;
-            int angle = (int)longitude;
+            int angle;
+            int minutes;
+            double seconds;
+            if (longitude<0)
+            {
+                longitude *= -1;
+                angle = (int)longitude;
+                longitude -= angle;
+                longitude *= 60;
+                minutes = ((int)longitude);
+                longitude -= minutes;
+                longitude *= 60;
+                seconds = longitude;
+                    return (angle + "°" + minutes + "'" + seconds + "'' S");
+            }
+            angle = (int)longitude;
             longitude -= angle;
             longitude *= 60;
-            int minutes = ((int)longitude);
+            minutes = ((int)longitude);
             longitude -= minutes;
             longitude *= 60;
-            double seconds = longitude;
-            return(angle + "°" + minutes + "'" + seconds + "'' S");
+             seconds = longitude;
+
+            return (angle + "°" + minutes + "'" + seconds + "'' N");
         }
         public static string ConvertLattitude( double lattitude)//converts double lattitude to sexagesimal display
         {
-            int angle = (int)lattitude;
+            int angle;
+            int minutes;
+            double seconds;
+            if (lattitude < 0)
+            {
+                lattitude *= -1;
+              angle = (int)lattitude;
+                lattitude -= angle;
+                lattitude *= 60;
+                 minutes = ((int)lattitude);
+                lattitude -= minutes;
+                lattitude *= 60;
+                seconds = lattitude;
+                return (angle + "°" + minutes + "'" + seconds + "'' W");
+            }
+             angle = (int)lattitude;
             lattitude -= angle;
             lattitude *= 60;
-            int minutes = ((int)lattitude);
+             minutes = ((int)lattitude);
             lattitude -= minutes;
             lattitude *= 60;
-            double seconds = lattitude;
-            return(angle + "°" + minutes + "'" + seconds + "'' E");
+             seconds = lattitude;
+            return (angle + "°" + minutes + "'" + seconds + "'' E");
         }
         public static double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
-            var d1 = latitude1 * (Math.PI / 180.0);
-            var num1 = longitude1 * (Math.PI / 180.0);
-            var d2 = latitude2 * (Math.PI / 180.0);
-            var num2 = longitude2 * (Math.PI / 180.0) - num1; var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
-            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
+            double lat1 = latitude1 * (Math.PI / 180.0);
+            double long1 = longitude1 * (Math.PI / 180.0);
+            double lat2 = latitude2 * (Math.PI / 180.0);
+            double long2 = longitude2 * (Math.PI / 180.0) - long1;
+            double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) *Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
+            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
         }
     }
 

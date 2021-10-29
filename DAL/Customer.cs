@@ -13,9 +13,9 @@ namespace IDAL
             public double Lattitude { get; set; }
             public override string ToString()//custom print function for customer struct
             {
-                return ("Customer Id: " + Id + "\nCustomer Name: " + Name + "\nPhone Number: " + Phone + "\nLocation: " + 
-                    "\n-Longitude: " + DALObject.DALObject.ConvertLongitude(Longitude) +
-                    "\n-Lattitude: " + DALObject.DALObject.ConvertLattitude(Lattitude) + "\n");
+                return ("Customer Id: " + Id + "\nCustomer Name: " + Name + "\nPhone Number: " + Phone + "\nLocation: " +
+                    "\n-Longitude: " + DALObject.DALObject.ConvertLongitude(Longitude) + "(" + Longitude + ")" +
+                    "\n-Lattitude: " + DALObject.DALObject.ConvertLattitude(Lattitude) + "(" + Lattitude + ")" + "\n");
             }
         };
     }

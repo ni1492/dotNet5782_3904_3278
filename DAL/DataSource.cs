@@ -28,7 +28,9 @@ namespace DALObject
             int num = R.Next(2, 5); 
             for (int i = 0; i < num; i++)//initialization of 2-4 stations
             {
-                DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(-50, 0)+R.NextDouble(), R.Next(0, 50) + R.NextDouble(), R.Next(50));
+                //
+               // DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(-50, 0)+R.NextDouble(), R.Next(0, 50) + R.NextDouble(), R.Next(50));
+                DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(-180, 180) + (double)(R.Next(1000,10000))/10000, R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000, R.Next(50));
             }
             num = R.Next(5, 10);
             for (int i = 0; i < num; i++)//initialization of 5-9 drones
@@ -43,7 +45,9 @@ namespace DALObject
                 "nelly", "hellen", "braidy", "daisy", "anastasia", "kevin" };//potential names for initialization of customers
             for (int i = 0; i < num; i++)//initialization of 10-14 customers
             {
-                DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(-50, 0) + R.NextDouble(), R.Next(0, 50) + R.NextDouble());
+                //
+                //DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(-50, 0) + R.NextDouble(), R.Next(0, 50) + R.NextDouble());
+                DALObject.AddCustomer(Config.CustomerID++, names[i], ("0" + R.Next(100000000, 1000000000).ToString()), R.Next(-180, 180) + (double)(R.Next(1000, 10000)) / 10000, R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000);
             }
             num = R.Next(10, 15);
             for (int i = 0; i < num; i++)//initialization of 10-14 parcels
