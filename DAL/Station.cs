@@ -11,11 +11,11 @@ namespace IDAL
             public double Longitude { get; set; }
             public double Lattitude { get; set; }
             public int ChargeSlots { get; set; }
+          
             public override string ToString()//custom print function for station struct
             {
-                return ("Station Id: " + Id + "\nStation Name: " + Name + "\nLocation: " +
-                    "\n-Longitude: " + DALObject.DALObject.ConvertLongitude(Longitude) + "(" + Longitude + ")" +
-                    "\n-Lattitude: " + DALObject.DALObject.ConvertLattitude(Lattitude) + "(" + Lattitude + ")" +
+                Sexagesimal Location = new Sexagesimal(Longitude, Lattitude);
+                return ("Station Id: " + Id + "\nStation Name: " + Name + "\nLocation: " + "(" + Longitude + "," + Lattitude + ") \n" + Location +
                     "\nNumber of charge slots: " + ChargeSlots + "\n");
             }
 

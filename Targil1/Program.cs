@@ -8,7 +8,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-           DALObject.DataSource.Initialize();//initialize components
+            DALObject.DALObject mainObject = new DALObject.DALObject();
             //the following initializations is going to be used later on in the program:
             int inputVal1=0;//first user choice - outer switch-case
             int inputVal2 = 0;//second user choice - inner switch-case
@@ -69,7 +69,7 @@ namespace ConsoleUI
                                         double.TryParse(input, out lattitude);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out chargeSlots);
-                                        DALObject.DALObject.AddStation(id, name, longitude, lattitude, chargeSlots);
+                                        mainObject.AddStation(id, name, longitude, lattitude, chargeSlots);
                                         break;
                                     }
                                 case 2://add drone
@@ -86,7 +86,7 @@ namespace ConsoleUI
                                         DroneStatuses.TryParse(input, out status);
                                         input = Console.ReadLine();
                                         double.TryParse(input, out battery);
-                                        DALObject.DALObject.AddDrone(dId, model, weight, status, battery);
+                                        mainObject.AddDrone(dId, model, weight, status, battery);
                                         break;
                                     }
                                 case 3://add customer
@@ -100,7 +100,7 @@ namespace ConsoleUI
                                         double.TryParse(input, out longitude);
                                         input = Console.ReadLine();
                                         double.TryParse(input, out lattitude);
-                                        DALObject.DALObject.AddCustomer(id, customerName, phone, longitude, lattitude);
+                                        mainObject.AddCustomer(id, customerName, phone, longitude, lattitude);
                                         break;
                                     }
                                 case 4://add parcel
@@ -116,8 +116,6 @@ namespace ConsoleUI
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
                                         Priorities.TryParse(input, out priority);
-                                        //input = Console.ReadLine();
-                                        //Int32.TryParse(input, out dId);
                                         input = Console.ReadLine();
                                         DateTime.TryParse(input, out req);
                                         input = Console.ReadLine();
@@ -126,7 +124,7 @@ namespace ConsoleUI
                                         DateTime.TryParse(input, out pUp);
                                         input = Console.ReadLine();
                                         DateTime.TryParse(input, out del);
-                                        DALObject.DALObject.AddParcel(0,sId, tId, weight, priority, 0, req, sch, pUp, del);
+                                        mainObject.AddParcel(0,sId, tId, weight, priority, 0, req, sch, pUp, del);
                                         break;
                                     }
                                 default:
@@ -152,7 +150,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                        DALObject.DALObject.Match(DALObject.DALObject.ConvertParcel(id));
+                                        mainObject.Match(mainObject.ConvertParcel(id));
                                         break;
                                     }
                                 case 2://update pick up by drone
@@ -160,7 +158,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                        DALObject.DALObject.PickUpTime(DALObject.DALObject.ConvertParcel(id));
+                                        mainObject.PickUpTime(mainObject.ConvertParcel(id));
                                         break;
                                     }
                                 case 3://update delivery parcel status
@@ -168,19 +166,19 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                        DALObject.DALObject.DeliveryTime(DALObject.DALObject.ConvertParcel(id));
+                                        mainObject.DeliveryTime(mainObject.ConvertParcel(id));
                                         break;
                                     }
                                 case 4://send drone to charge
                                     {
                                         Console.WriteLine("all the available stations:");
-                                        DALObject.DALObject.PrintStationWithChargeSlots();//***
+                                        mainObject.PrintStationWithChargeSlots();//***
                                         Console.WriteLine("enter the drone and station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out sId);
-                                        DALObject.DALObject.ChargingDrone(DALObject.DALObject.ConvertDrone(id), DALObject.DALObject.ConvertStation(sId));
+                                        mainObject.ChargingDrone(mainObject.ConvertDrone(id), mainObject.ConvertStation(sId));
                                         break;
                                     }
                                 case 5://release drone from charging
@@ -188,7 +186,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        DALObject.DALObject.ReleaseChargingDrone(DALObject.DALObject.ConvertDrone(id));
+                                        mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
                                         break;
                                     }
                                 default:
@@ -214,7 +212,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        DALObject.DALObject.PrintStation(id);
+                                        mainObject.PrintStation(id);
                                         break;
                                     }
                                 case 2://display drone
@@ -222,7 +220,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        DALObject.DALObject.PrintDrone(id);
+                                        mainObject.PrintDrone(id);
                                         break;
                                     }
                                 case 3://display customer
@@ -230,7 +228,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        DALObject.DALObject.PrintCustomer(id);
+                                        mainObject.PrintCustomer(id);
                                         break;
                                     }
                                 case 4://display parcel
@@ -238,7 +236,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        DALObject.DALObject.PrintParcel(id);
+                                        mainObject.PrintParcel(id);
                                         break;
                                     }
                                 case 5://display distance from station to user location
@@ -246,13 +244,13 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Station station = DALObject.DALObject.ConvertStation(id);
+                                        Station station = mainObject.ConvertStation(id);
                                         Console.WriteLine("enter your location");
                                         input = Console.ReadLine();
                                         double.TryParse(input, out longitude);
                                         input = Console.ReadLine();
                                         double.TryParse(input, out lattitude);
-                                        double distance = DALObject.DALObject.CalculateDistance(station.Longitude, station.Lattitude, longitude, lattitude);
+                                        double distance = mainObject.CalculateDistance(station.Longitude, station.Lattitude, longitude, lattitude);
                                         Console.WriteLine(distance);
                                         break;
                                     }
@@ -277,32 +275,32 @@ namespace ConsoleUI
                             {
                                 case 1://display all base stations
                                     {
-                                        DALObject.DALObject.PrintAllStation();
+                                        mainObject.PrintAllStation();
                                         break;
                                     }
                                 case 2://display all drones
                                     {
-                                        DALObject.DALObject.PrintAllDrone();
+                                        mainObject.PrintAllDrone();
                                         break;
                                     }
                                 case 3://display all customers
                                     {
-                                        DALObject.DALObject.PrintAllCustomer();
+                                        mainObject.PrintAllCustomer();
                                         break;
                                     }
                                 case 4://display all parcels
                                     {
-                                        DALObject.DALObject.PrintAllParcel();
+                                        mainObject.PrintAllParcel();
                                         break;
                                     }
                                 case 5://display all parcels not assigned to any drone
                                     {
-                                        DALObject.DALObject.PrintParcelsWithNoDrone();
+                                        mainObject.PrintParcelsWithNoDrone();
                                         break;
                                     }
                                 case 6://display all base stations with available charging slots
                                     {
-                                        DALObject.DALObject.PrintStationWithChargeSlots();
+                                        mainObject.PrintStationWithChargeSlots();
                                         break;
                                     }
                                 default:

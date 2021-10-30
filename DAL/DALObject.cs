@@ -10,7 +10,11 @@ namespace DALObject
 {
     public class DALObject
     {
-        public static void AddStation(int Id, int name, double longitude, double lattitude, int chargeSlots)//add a new station
+        public DALObject()
+        {
+            DataSource.Initialize();
+        }
+        public  void AddStation(int Id, int name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
             //initialize new station object:
             IDAL.DO.Station station = new IDAL.DO.Station();
@@ -22,7 +26,7 @@ namespace DALObject
             //adds to base station list:
             DataSource.baseStations.Add(station);
         }
-        public static void AddDrone(int Id, string model, WeightCategories maxWeight, DroneStatuses status, double battery)//add a new drone
+        public  void AddDrone(int Id, string model, WeightCategories maxWeight, DroneStatuses status, double battery)//add a new drone
         {
             //initialize new drone object:
             IDAL.DO.Drone drone = new IDAL.DO.Drone();
@@ -34,7 +38,7 @@ namespace DALObject
             //adds to drones list:
             DataSource.drones.Add(drone);
         }
-        public static void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
+        public  void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
         {
             //initialize new customer object:
             IDAL.DO.Customer customer = new IDAL.DO.Customer();
@@ -46,7 +50,7 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
-        public static void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId, DateTime req, DateTime sch, DateTime pUp, DateTime del)//add new parcel
+        public  void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId, DateTime req, DateTime sch, DateTime pUp, DateTime del)//add new parcel
         {
             //initialize new parcel object:
             IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();
@@ -66,7 +70,7 @@ namespace DALObject
             //add to parcels list
             DataSource.parcels.Add(parcel);
         }
-        public static void AddCharging(int dId, int sId)//adds a drone to charging
+        public  void AddCharging(int dId, int sId)//adds a drone to charging
         {
             //initialize new charging object:
             DroneCharge charging = new DroneCharge();
@@ -75,7 +79,7 @@ namespace DALObject
             //adds to charging list:
             DataSource.inChargeing.Add(charging);
         }
-        public static void Match(Parcel parcel) //matches a drone to a parcel
+        public  void Match(Parcel parcel) //matches a drone to a parcel
         {
             int dId = 0;
             foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
@@ -90,7 +94,7 @@ namespace DALObject
                 parcel.Requested, parcel.Scheduled, parcel.PickedUp, parcel.Delivered);//adds the parcel to the list of parcels while changing the droneId to be the id of the chosen drone
             DataSource.parcels.Remove(parcel);//removes the old parcel from the list of parcels
         }
-        public static void PickUpTime(Parcel parcel)//Update pickup parcel by drone
+        public  void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
             foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone assigned to the parcel
             {
@@ -105,7 +109,7 @@ namespace DALObject
                 parcel.Requested, parcel.Scheduled, DateTime.Now, parcel.Delivered);//adds a new parcel with the updated pick up time
             DataSource.parcels.Remove(parcel);//removes the old parcel from the list
         }
-        public static void DeliveryTime(Parcel parcel)//Update delivery parcel status
+        public  void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
             foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone assigned to the parcel
             {
@@ -120,7 +124,7 @@ namespace DALObject
                 parcel.Requested, parcel.Scheduled, parcel.PickedUp, DateTime.Now);//adds a new parcel with the updated delivery time
             DataSource.parcels.Remove(parcel);//removes the old parcel from the list of parcels
         }
-        public static void ChargingDrone(Drone drone, Station station)//send drone to charge
+        public  void ChargingDrone(Drone drone, Station station)//send drone to charge
         {
             AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.maintenance, drone.Battery);//adds a new drone with updated status
             DataSource.drones.Remove(drone);//removes the old drone from the list of drones
@@ -129,7 +133,7 @@ namespace DALObject
             AddCharging(drone.Id, station.Id);//adds a new charging object to the list
 
         }
-        public static void ReleaseChargingDrone(Drone drone)//release drone from charging
+        public  void ReleaseChargingDrone(Drone drone)//release drone from charging
         {
             AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.available, drone.Battery);//adds a new drone to the list f drones with the updated status (available)
             DataSource.drones.Remove(drone);//removes the old drone
@@ -153,7 +157,7 @@ namespace DALObject
                 }
             }
         }
-        public static void PrintStation(int id)//display station by station ID
+        public  void PrintStation(int id)//display station by station ID
         {
             foreach (Station station in DataSource.baseStations)//goes over the list of stations to find the station with that ID
             {
@@ -161,7 +165,7 @@ namespace DALObject
                     Console.WriteLine(station);
             }
         }
-        public static void PrintDrone(int id)//display drone by drone ID
+        public  void PrintDrone(int id)//display drone by drone ID
         {
             foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone with that ID
             {
@@ -169,7 +173,7 @@ namespace DALObject
                     Console.WriteLine(drone);//when found- displays the drone 
             }
         }
-        public static void PrintCustomer(int id)//display customer by customer ID
+        public  void PrintCustomer(int id)//display customer by customer ID
         {
             foreach (Customer customer in DataSource.customers)//goes over the list of customers to find the customer with that ID
             {
@@ -177,7 +181,7 @@ namespace DALObject
                     Console.WriteLine(customer);
             }
         }
-        public static void PrintParcel(int id)//display parcel by parcel ID
+        public  void PrintParcel(int id)//display parcel by parcel ID
         {
             foreach (Parcel parcel in DataSource.parcels)//goes over the list of parcels to find the parcel with that ID
             {
@@ -185,35 +189,35 @@ namespace DALObject
                     Console.WriteLine(parcel);
             }
         }
-        public static void PrintAllStation()//display all stations
+        public  void PrintAllStation()//display all stations
         {
             foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
             {
                 Console.WriteLine(station);
             }
         }
-        public static void PrintAllDrone()//display all drones
+        public  void PrintAllDrone()//display all drones
         {
             foreach (Drone drone in DataSource.drones)//goes over all the drones and prints all of them
             {
                 Console.WriteLine(drone);
             }
         }
-        public static void PrintAllCustomer()//display all customers
+        public  void PrintAllCustomer()//display all customers
         {
             foreach (Customer customer in DataSource.customers)//goes over all the customers and prints all of them
             {
                 Console.WriteLine(customer);
             }
         }
-        public static void PrintAllParcel()//display all parcels
+        public  void PrintAllParcel()//display all parcels
         {
             foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and prints all of them
             {
                 Console.WriteLine(parcel);
             }
         }
-        public static void PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
+        public  void PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
         {
             foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and if they are not assigned to any drone - print the,
             {
@@ -221,7 +225,7 @@ namespace DALObject
                     Console.WriteLine(parcel);
             }
         }
-        public static void PrintStationWithChargeSlots()//display all stations with available charging slots 
+        public  void PrintStationWithChargeSlots()//display all stations with available charging slots 
         {
             foreach (Station station in DataSource.baseStations)//goes over all the stations and if the station has any available charging slots - it displays it
             {
@@ -229,7 +233,7 @@ namespace DALObject
                     Console.WriteLine(station);
             }
         }
-        public static Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
+        public  Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
             int index = 0;
             foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and finds the one with the given ID and returns it
@@ -243,7 +247,7 @@ namespace DALObject
             Parcel p = new Parcel();//if the parcel does not exist - returns an empty parcel
             return p;
         }
-        public static Drone ConvertDrone(int id)//returns the drone of the ID that was given
+        public  Drone ConvertDrone(int id)//returns the drone of the ID that was given
         {
             int index = 0;
             foreach (Drone drone in DataSource.drones)//goes over all the drones and finds the one with the given ID and returns it
@@ -257,7 +261,7 @@ namespace DALObject
             Drone d = new Drone();//if the parcel does not exist - returns an empty drone
             return d;
         }
-        public static Station ConvertStation(int id)//returns the station of the ID that was given
+        public  Station ConvertStation(int id)//returns the station of the ID that was given
         {
             int index = 0;
             foreach (Station station in DataSource.baseStations)//goes over all the stations and finds the one with the given ID and returns it
@@ -271,60 +275,7 @@ namespace DALObject
             Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
-        public static string ConvertLongitude(double longitude)//converts double longitude to sexagesimal display
-        {
-            int angle;
-            int minutes;
-            double seconds;
-            if (longitude<0)
-            {
-                longitude *= -1;
-                angle = (int)longitude;
-                longitude -= angle;
-                longitude *= 60;
-                minutes = ((int)longitude);
-                longitude -= minutes;
-                longitude *= 60;
-                seconds = longitude;
-                    return (angle + "°" + minutes + "'" + seconds + "'' S");
-            }
-            angle = (int)longitude;
-            longitude -= angle;
-            longitude *= 60;
-            minutes = ((int)longitude);
-            longitude -= minutes;
-            longitude *= 60;
-             seconds = longitude;
-
-            return (angle + "°" + minutes + "'" + seconds + "'' N");
-        }
-        public static string ConvertLattitude( double lattitude)//converts double lattitude to sexagesimal display
-        {
-            int angle;
-            int minutes;
-            double seconds;
-            if (lattitude < 0)
-            {
-                lattitude *= -1;
-              angle = (int)lattitude;
-                lattitude -= angle;
-                lattitude *= 60;
-                 minutes = ((int)lattitude);
-                lattitude -= minutes;
-                lattitude *= 60;
-                seconds = lattitude;
-                return (angle + "°" + minutes + "'" + seconds + "'' W");
-            }
-             angle = (int)lattitude;
-            lattitude -= angle;
-            lattitude *= 60;
-             minutes = ((int)lattitude);
-            lattitude -= minutes;
-            lattitude *= 60;
-             seconds = lattitude;
-            return (angle + "°" + minutes + "'" + seconds + "'' E");
-        }
-        public static double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
+        public  double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
             double lat1 = latitude1 * (Math.PI / 180.0);
             double long1 = longitude1 * (Math.PI / 180.0);

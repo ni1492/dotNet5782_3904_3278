@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IDAL.DO;
 
 namespace DALObject
 {
-    public class DataSource
+    internal class DataSource
     {
         internal static Random R = new Random();
         //lists of stored information: drones, stations, customers, parcels, inCharging.
@@ -28,39 +29,61 @@ namespace DALObject
             int num = R.Next(2, 5); 
             for (int i = 0; i < num; i++)//initialization of 2-4 stations
             {
-                DALObject.AddStation(Config.StationID++, R.Next(1000, 10000), R.Next(-180, 180) + (double)(R.Next(1000,10000))/10000,
-                    R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000, R.Next(50));
+                Station station = new Station();
+                station.Id = Config.StationID++;
+                station.Name = R.Next(1000, 10000);
+                station.Longitude = R.Next(-180, 180) + (double)(R.Next(1000, 10000)) / 10000;
+                station.Lattitude = R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000;
+                station.ChargeSlots = R.Next(50);
+                baseStations.Add(station);
             }
             num = R.Next(5, 10);
             for (int i = 0; i < num; i++)//initialization of 5-9 drones
             {
-                string model = ((IDAL.DO.Models)R.Next(13)).ToString();//initialization of random model name using enum
-                IDAL.DO.WeightCategories weight = ((IDAL.DO.WeightCategories)R.Next(3));//initialization of random weight using enum
-                IDAL.DO.DroneStatuses statuse = ((IDAL.DO.DroneStatuses)R.Next(3));//initialization of random status using enum
-                DALObject.AddDrone(Config.DroneID++, model, weight, statuse, R.Next(0, 100) + R.NextDouble());//adds the new drone to the list of drones
+                Drone drone = new Drone();
+                drone.Id = Config.DroneID++;
+                drone.Model=((IDAL.DO.Models)R.Next(13)).ToString();//initialization of random model name using enum
+                drone.MaxWeight = ((IDAL.DO.WeightCategories)R.Next(3));//initialization of random weight using enum
+               drone.Status = ((IDAL.DO.DroneStatuses)R.Next(3));//initialization of random status using enum
+                drone.Battery = R.Next(0, 100) + R.NextDouble();
+                drones.Add(drone);
             }
             num = R.Next(10, 15);
             string[] names = { "hanna", "lenny", "ginny", "minnie", "bob", "benny", "yakob", "shuva", "etya", "hamutal",
                 "nelly", "hellen", "braidy", "daisy", "anastasia", "kevin" };//potential names for initialization of customers
             for (int i = 0; i < num; i++)//initialization of 10-14 customers
             {
-                DALObject.AddCustomer(Config.CustomerID++, names[i], ( "0" + R.Next(100000000, 1000000000).ToString()),
-                    R.Next(-180, 180) + (double)(R.Next(1000, 10000)) / 10000, R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000);
+                Customer customer = new Customer();
+                customer.Id = Config.CustomerID++;
+                customer.Name = names[i];
+                customer.Phone = ("0" + R.Next(100000000, 1000000000).ToString());
+                customer.Longitude = R.Next(-180, 180) + (double)(R.Next(1000, 10000)) / 10000;
+                customer.Lattitude = R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000;
+                customers.Add(customer);
             }
             num = R.Next(10, 15);
             for (int i = 0; i < num; i++)//initialization of 10-14 parcels
             {
-                int dId = 0;
-                IDAL.DO.WeightCategories weight = ((IDAL.DO.WeightCategories)R.Next(3));//initialization of random weight using enum
-                IDAL.DO.Priorities priority = ((IDAL.DO.Priorities)R.Next(3));//initialization of random priority using enum
-                DateTime req = new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random request time
-                DateTime sch= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random schedule time
-                DateTime pUp= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random pick up time
-                DateTime del= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random delivery time
-                int sId = R.Next(100000000, 1000000000);//initialization of random sender id
-                int tId = R.Next(100000000, 1000000000);//initialization of random target id
-                DALObject.AddParcel(0,sId, tId, weight, priority, dId, req, sch, pUp, del);//adds the new parcels to the list of parcels
-                DALObject.Match(DALObject.ConvertParcel((Config.ParcelID - 1)));//assign the parcel to a drone
+                Parcel parcel = new Parcel();
+                parcel.Id = Config.ParcelID++;
+                parcel.SenderId = R.Next(100000000, 1000000000);//initialization of random sender id
+                parcel.TargetId = R.Next(100000000, 1000000000);//initialization of random target id
+
+               parcel.Weight = ((IDAL.DO.WeightCategories)R.Next(3));//initialization of random weight using enum
+               parcel.Priority = ((IDAL.DO.Priorities)R.Next(3));//initialization of random priority using enum
+                parcel.Requested = new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random request time
+                parcel.Scheduled= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random schedule time
+                parcel.PickedUp= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random pick up time
+                parcel.Delivered= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random delivery time
+                foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
+                {
+                    if (drone.MaxWeight >= parcel.Weight)//makes sure the maximum weight of the drone can hold the parcel
+                    {
+                        parcel.DroneId = drone.Id;
+                        break;
+                    }
+                }
+                parcels.Add(parcel);
             }
         }
     }
