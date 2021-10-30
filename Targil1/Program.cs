@@ -1,13 +1,14 @@
 ﻿using System;
 using IDAL.DO;
 using DALObject;
+
 namespace ConsoleUI
 {
     class Program
     {
         static void Main(string[] args)
         {
-            DALObject.DataSource.Initialize();//initialize components
+           DALObject.DataSource.Initialize();//initialize components
             //the following initializations is going to be used later on in the program:
             int inputVal1=0;//first user choice - outer switch-case
             int inputVal2 = 0;//second user choice - inner switch-case
@@ -104,11 +105,9 @@ namespace ConsoleUI
                                     }
                                 case 4://add parcel
                                     {
-                                        Console.WriteLine("enter: id, sender id, target id, weight, priority, drone id, request, schedule, pick up, delivery");
+                                        Console.WriteLine("enter: sender id, target id, weight, priority, request, schedule, pick up, delivery");
                                         Console.WriteLine("weight options: light, medium, heavy");
                                         Console.WriteLine("Priorities options: regular, quick, urgent");
-                                        input = Console.ReadLine();
-                                        Int32.TryParse(input, out id);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out sId);
                                         input = Console.ReadLine();
@@ -117,8 +116,8 @@ namespace ConsoleUI
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
                                         Priorities.TryParse(input, out priority);
-                                        input = Console.ReadLine();
-                                        Int32.TryParse(input, out dId);
+                                        //input = Console.ReadLine();
+                                        //Int32.TryParse(input, out dId);
                                         input = Console.ReadLine();
                                         DateTime.TryParse(input, out req);
                                         input = Console.ReadLine();
@@ -127,7 +126,7 @@ namespace ConsoleUI
                                         DateTime.TryParse(input, out pUp);
                                         input = Console.ReadLine();
                                         DateTime.TryParse(input, out del);
-                                        DALObject.DALObject.AddParcel(id, sId, tId, weight, priority, dId, req, sch, pUp, del);
+                                        DALObject.DALObject.AddParcel(0,sId, tId, weight, priority, 0, req, sch, pUp, del);
                                         break;
                                     }
                                 default:

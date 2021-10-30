@@ -46,11 +46,14 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
-        public static void AddParcel(int Id, int sId, int tId, WeightCategories weight, Priorities priority, int dId, DateTime req, DateTime sch, DateTime pUp, DateTime del)//add new parcel
+        public static void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId, DateTime req, DateTime sch, DateTime pUp, DateTime del)//add new parcel
         {
             //initialize new parcel object:
             IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();
-            parcel.Id = Id;
+            if (id == 0)
+                parcel.Id = DataSource.Config.ParcelID++;
+            else
+                parcel.Id = id;
             parcel.SenderId = sId;
             parcel.TargetId = tId;
             parcel.Weight = weight;
@@ -83,7 +86,7 @@ namespace DALObject
                     break;
                 }
             }
-            AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, dId,
+            AddParcel(parcel.Id,parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, dId,
                 parcel.Requested, parcel.Scheduled, parcel.PickedUp, parcel.Delivered);//adds the parcel to the list of parcels while changing the droneId to be the id of the chosen drone
             DataSource.parcels.Remove(parcel);//removes the old parcel from the list of parcels
         }
@@ -98,7 +101,7 @@ namespace DALObject
                     break;
                 }
             }
-            AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId,
+            AddParcel(parcel.Id,parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId,
                 parcel.Requested, parcel.Scheduled, DateTime.Now, parcel.Delivered);//adds a new parcel with the updated pick up time
             DataSource.parcels.Remove(parcel);//removes the old parcel from the list
         }
@@ -113,7 +116,7 @@ namespace DALObject
                     break;
                 }
             }
-            AddParcel(parcel.Id, parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId,
+            AddParcel(parcel.Id,parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId,
                 parcel.Requested, parcel.Scheduled, parcel.PickedUp, DateTime.Now);//adds a new parcel with the updated delivery time
             DataSource.parcels.Remove(parcel);//removes the old parcel from the list of parcels
         }
