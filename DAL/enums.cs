@@ -9,7 +9,7 @@ namespace IDAL
     namespace DO
     {
         public enum WeightCategories { light, medium, heavy };//enum of various types of weight: light, medium, heavy
-        public enum DroneStatuses { available, maintenance, delivery };//enum of various options for drone status: available, maintenance, delivery
+       // public enum DroneStatuses { available, maintenance, delivery };//enum of various options for drone status: available, maintenance, delivery
         public enum Priorities { regular, quick, urgent };//enum of various options for priority: regular, quick, urgent
         public enum Models {Mavic,Phantom,Inspire,Air,Syma,Hanvon, Propel,FPV,DJI,PowerVision,AUTEL,Skydio,Holystone};//enum of various options of models of drones - used for initialization of drones.
 

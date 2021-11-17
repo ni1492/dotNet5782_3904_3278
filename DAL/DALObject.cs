@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
+using DAL.IDAL;
 
 
 namespace DALObject
 {
-    public class DALObject
+    public class DALObject:IDal
     {
         public DALObject()
         {
@@ -26,15 +27,15 @@ namespace DALObject
             //adds to base station list:
             DataSource.baseStations.Add(station);
         }
-        public  void AddDrone(int Id, string model, WeightCategories maxWeight, DroneStatuses status, double battery)//add a new drone
+        public  void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
         {
             //initialize new drone object:
             IDAL.DO.Drone drone = new IDAL.DO.Drone();
             drone.Id = Id;
             drone.Model = model;
             drone.MaxWeight = maxWeight;
-            drone.Status = status;
-            drone.Battery = battery;
+          //  drone.Status = status;
+          //  drone.Battery = battery;
             //adds to drones list:
             DataSource.drones.Add(drone);
         }
@@ -81,78 +82,125 @@ namespace DALObject
         }
         public  void Match(Parcel parcel) //matches a drone to a parcel
         {
-            int dId = 0;
+            
             foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
             {
-                if ((drone.Status == DroneStatuses.available) && (drone.MaxWeight >= parcel.Weight))//makes sure the maximum weight of the drone can hold the parcel
+                if (drone.MaxWeight >= parcel.Weight)//makes sure the maximum weight of the drone can hold the parcel
                 {
-                    dId = drone.Id;
+                    for (int i = 0; i < DataSource.parcels.Count(); i++)
+                    {
+                        if (DataSource.parcels[i].Id == parcel.Id)
+                        {
+                            Parcel p = DataSource.parcels[i];
+                            p.DroneId = drone.Id;
+                            DataSource.parcels[i] = p;
+                            break;
+                        }
+                    }
                     break;
                 }
             }
-            AddParcel(parcel.Id,parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, dId,
-                parcel.Requested, parcel.Scheduled, parcel.PickedUp, parcel.Delivered);//adds the parcel to the list of parcels while changing the droneId to be the id of the chosen drone
-            DataSource.parcels.Remove(parcel);//removes the old parcel from the list of parcels
+           
         }
         public  void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
-            foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone assigned to the parcel
+            for(int i=0; i<DataSource.drones.Count;i++)//goes over the list of drones to find the drone assigned to the parcel
             {
-                if (drone.Id == parcel.DroneId)//when the drone is found we add a new drone with the updated status and remove the old drone from the list
+                if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we update status
                 {
-                    AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.delivery, drone.Battery);
-                    DataSource.drones.Remove(drone);
+                    Drone d = DataSource.drones[i];
+                    //update pickup
+                    DataSource.drones[i] = d;
+                    for (int j = 0; j < DataSource.parcels.Count(); j++)//change the pickup time
+                    {
+                        if (DataSource.parcels[j].Id == parcel.Id)
+                        {
+                            Parcel p = DataSource.parcels[j];
+                            p.PickedUp = DateTime.Now;
+                            DataSource.parcels[j] = p;
+                            break;
+                        }
+                    }
                     break;
                 }
             }
-            AddParcel(parcel.Id,parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId,
-                parcel.Requested, parcel.Scheduled, DateTime.Now, parcel.Delivered);//adds a new parcel with the updated pick up time
-            DataSource.parcels.Remove(parcel);//removes the old parcel from the list
         }
         public  void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
-            foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone assigned to the parcel
+            for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone to update
             {
-                if (drone.Id == parcel.DroneId)//when the drone is found we add a new drone with the updated status and remove the old drone from the list
+                if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we updat status
                 {
-                    AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.available, drone.Battery);
-                    DataSource.drones.Remove(drone);
+                    Drone d = DataSource.drones[i];
+                    //update pickup
+                    DataSource.drones[i] = d;
+                    for (int j = 0; j < DataSource.parcels.Count(); j++)//change the delivery time
+                    {
+                        if (DataSource.parcels[j].Id == parcel.Id)
+                        {
+                            Parcel p = DataSource.parcels[j];
+                            p.Delivered = DateTime.Now;
+                            DataSource.parcels[j] = p;
+                            break;
+                        }
+                    }
                     break;
                 }
             }
-            AddParcel(parcel.Id,parcel.SenderId, parcel.TargetId, parcel.Weight, parcel.Priority, parcel.DroneId,
-                parcel.Requested, parcel.Scheduled, parcel.PickedUp, DateTime.Now);//adds a new parcel with the updated delivery time
-            DataSource.parcels.Remove(parcel);//removes the old parcel from the list of parcels
         }
         public  void ChargingDrone(Drone drone, Station station)//send drone to charge
         {
-            AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.maintenance, drone.Battery);//adds a new drone with updated status
-            DataSource.drones.Remove(drone);//removes the old drone from the list of drones
-            AddStation(station.Id, station.Name, station.Longitude, station.Lattitude, station.ChargeSlots - 1);//adds a new station to the list of stations with the updated charging slots number
-            DataSource.baseStations.Remove(station);//removes the old station from the list of stations
+            for(int i=0;i<DataSource.drones.Count;i++)//find the drone to update
+            {
+                if(DataSource.drones[i].Id==drone.Id)
+                {
+                    Drone d = DataSource.drones[i];
+                    //update charging status
+                    DataSource.drones[i] = d;
+
+                    break;
+                }
+            }
+            for (int i = 0; i < DataSource.baseStations.Count; i++)//find the station to update
+            {
+                if (DataSource.baseStations[i].Id == station.Id)
+                {
+                    Station s = DataSource.baseStations[i];
+                    s.ChargeSlots--;
+                        DataSource.baseStations[i] = s;
+                    break;
+                }
+            }
             AddCharging(drone.Id, station.Id);//adds a new charging object to the list
 
         }
         public  void ReleaseChargingDrone(Drone drone)//release drone from charging
         {
-            AddDrone(drone.Id, drone.Model, drone.MaxWeight, DroneStatuses.available, drone.Battery);//adds a new drone to the list f drones with the updated status (available)
-            DataSource.drones.Remove(drone);//removes the old drone
-            int sId = 0;
-            foreach (DroneCharge charge in DataSource.inChargeing)//goes over the list of charging and looks for the one with the drone that was given to release
+            for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone to update
             {
-                if (charge.DroneId == drone.Id)//if its found we remove it from the list
+                if (DataSource.drones[i].Id == drone.Id)//when the drone is found we updat status
                 {
-                    sId = charge.StationId;
-                    DataSource.inChargeing.Remove(charge);
-                    break;
-                }
-            }
-            foreach (Station station in DataSource.baseStations)//goes over the station list to find the station that the given drone was charging at.
-            {
-                if (station.Id == sId)//if found - adds a new station with the updated number of available charging slots and removes the old station from the list.
-                {
-                    AddStation(station.Id, station.Name, station.Longitude, station.Lattitude, (station.ChargeSlots + 1));
-                    DataSource.baseStations.Remove(station);
+                    Drone d = DataSource.drones[i];
+                    //update charging status
+                    DataSource.drones[i] = d;
+                    foreach (DroneCharge charge in DataSource.inChargeing)//goes over the list of charging and looks for the one with the drone that was given to release
+                    {
+                        if (charge.DroneId == drone.Id)//if its found we remove it from the list
+                        {
+                            for (int j = 0; j < DataSource.baseStations.Count(); j++)//goes over the station list to find the station that the given drone was charging at.
+                            {
+                                if (DataSource.baseStations[j].Id == charge.StationId)//if found - update number of available charging slots
+                                {
+                                    Station s = DataSource.baseStations[j];
+                                    s.ChargeSlots++;
+                                    DataSource.baseStations[j] = s;
+                                    break;
+                                }
+                            }
+                            DataSource.inChargeing.Remove(charge);
+                            break;
+                        }
+                    }
                     break;
                 }
             }
@@ -283,6 +331,16 @@ namespace DALObject
             double long2 = longitude2 * (Math.PI / 180.0) - long1;
             double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) *Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
             return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
+        }
+        public double[] powerUse(Drone drone)
+        {
+            double[] power = new double[5];
+            power[0] = DataSource.Config.availablePK;
+            power[1] = DataSource.Config.lightPK;
+            power[2] = DataSource.Config.mediumPK;
+            power[3] = DataSource.Config.heavyPK;
+            power[4] = DataSource.Config.chargingPH;
+            return power;
         }
     }
 

@@ -15,7 +15,7 @@ namespace ConsoleUI
             int id=0;//id for parcel, station, customer
             string model="";//drone model
             WeightCategories weight = WeightCategories.light;//weight within drone object and parcel
-            DroneStatuses status = DroneStatuses.available;//enum status
+            //DroneStatuses status = DroneStatuses.available;//enum status
             double battery = 0; //0-100
             int name = 0;//station
             double longitude = 0;//0-50
@@ -83,10 +83,10 @@ namespace ConsoleUI
                                         input = Console.ReadLine();
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
-                                        DroneStatuses.TryParse(input, out status);
+                                        //DroneStatuses.TryParse(input, out status);
                                         input = Console.ReadLine();
                                         double.TryParse(input, out battery);
-                                        mainObject.AddDrone(dId, model, weight, status, battery);
+                                        mainObject.AddDrone(dId, model, weight);
                                         break;
                                     }
                                 case 3://add customer

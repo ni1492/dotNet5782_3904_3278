@@ -11,11 +11,11 @@ namespace DALObject
     {
         internal static Random R = new Random();
         //lists of stored information: drones, stations, customers, parcels, inCharging.
-        internal static List<IDAL.DO.Drone> drones = new List<IDAL.DO.Drone>();
-        internal static List<IDAL.DO.Station> baseStations = new List<IDAL.DO.Station>();
-        internal static List<IDAL.DO.Customer> customers = new List<IDAL.DO.Customer>();
-        internal static List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
-        internal static List<IDAL.DO.DroneCharge> inChargeing = new List<IDAL.DO.DroneCharge>();
+        internal static List<IDAL.DO.Drone> drones = new();
+        internal static List<IDAL.DO.Station> baseStations = new();
+        internal static List<IDAL.DO.Customer> customers = new();
+        internal static List<IDAL.DO.Parcel> parcels = new();
+        internal static List<IDAL.DO.DroneCharge> inChargeing = new();
 
         internal class Config//initialization of running numbers for station list, drone list, customer list, and parcel list
         {
@@ -23,6 +23,11 @@ namespace DALObject
             internal static int DroneID = 1000;
             internal static int CustomerID = 100000000;
             internal static int ParcelID = 1000;
+            internal static double availablePK;
+            internal static double lightPK;
+            internal static double mediumPK;
+            internal static double heavyPK;
+            internal static double chargingPH;
         }
         public static void Initialize()//initialization of data for the program
         {
@@ -44,8 +49,8 @@ namespace DALObject
                 drone.Id = Config.DroneID++;
                 drone.Model=((IDAL.DO.Models)R.Next(13)).ToString();//initialization of random model name using enum
                 drone.MaxWeight = ((IDAL.DO.WeightCategories)R.Next(3));//initialization of random weight using enum
-               drone.Status = ((IDAL.DO.DroneStatuses)R.Next(3));//initialization of random status using enum
-                drone.Battery = R.Next(0, 100) + R.NextDouble();
+              // drone.Status = ((IDAL.DO.DroneStatuses)R.Next(3));//initialization of random status using enum
+               // drone.Battery = R.Next(0, 100) + R.NextDouble();
                 drones.Add(drone);
             }
             num = R.Next(10, 15);
