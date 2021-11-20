@@ -18,6 +18,13 @@ namespace DALObject
         public  void AddStation(int Id, int name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
             //initialize new station object:
+            foreach (Station s in DataSource.baseStations)
+            {
+                if (s.Id == Id)
+                {
+                    throw new ExistException("station alredy exist");
+                }
+            }
             IDAL.DO.Station station = new IDAL.DO.Station();
             station.Id = Id;
             station.Name = name;
@@ -30,6 +37,13 @@ namespace DALObject
         public  void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
         {
             //initialize new drone object:
+            foreach (Drone d in DataSource.drones)
+            {
+                if (d.Id == Id)
+                {
+                    throw new ExistException("drone alredy exist");
+                }
+            }
             IDAL.DO.Drone drone = new IDAL.DO.Drone();
             drone.Id = Id;
             drone.Model = model;
@@ -42,6 +56,13 @@ namespace DALObject
         public  void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
         {
             //initialize new customer object:
+            foreach (Customer c in DataSource.customers)
+            {
+                if (c.Id == Id)
+                {
+                    throw new ExistException("customer alredy exist");
+                }
+            }
             IDAL.DO.Customer customer = new IDAL.DO.Customer();
             customer.Id = Id;
             customer.Name = name;
@@ -54,6 +75,13 @@ namespace DALObject
         public  void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId, DateTime req, DateTime sch, DateTime pUp, DateTime del)//add new parcel
         {
             //initialize new parcel object:
+            foreach (Parcel p in DataSource.parcels)
+            {
+                if (p.Id == id)
+                {
+                    throw new ExistException("parcel alredy exist");
+                }
+            }
             IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();
             if (id == 0)
                 parcel.Id = DataSource.Config.ParcelID++;
@@ -73,6 +101,27 @@ namespace DALObject
         }
         public  void AddCharging(int dId, int sId)//adds a drone to charging
         {
+            bool b = false;
+            foreach (Station s in DataSource.baseStations)
+            {
+                if (s.Id == sId)
+                {
+                    b = true;
+                }
+            }
+            if(!b)
+                throw new NotFoundException("station doesn't exist");
+            b = false;
+            foreach (Drone d in DataSource.drones)
+            {
+                if (d.Id == dId)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("drone doesn't exist");
+
             //initialize new charging object:
             DroneCharge charging = new DroneCharge();
             charging.DroneId = dId;
@@ -82,7 +131,17 @@ namespace DALObject
         }
         public  void Match(Parcel parcel) //matches a drone to a parcel
         {
-            
+            bool b = false;
+            foreach (Parcel p in DataSource.parcels)
+            {
+                if (p.Id == parcel.Id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("parcel doesn't exist");
+
             foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
             {
                 if (drone.MaxWeight >= parcel.Weight)//makes sure the maximum weight of the drone can hold the parcel
@@ -104,7 +163,18 @@ namespace DALObject
         }
         public  void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
-            for(int i=0; i<DataSource.drones.Count;i++)//goes over the list of drones to find the drone assigned to the parcel
+            bool b = false;
+            foreach (Parcel p in DataSource.parcels)
+            {
+                if (p.Id == parcel.Id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("parcel doesn't exist");
+
+            for (int i=0; i<DataSource.drones.Count;i++)//goes over the list of drones to find the drone assigned to the parcel
             {
                 if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we update status
                 {
@@ -127,6 +197,17 @@ namespace DALObject
         }
         public  void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
+            bool b = false;
+            foreach (Parcel p in DataSource.parcels)
+            {
+                if (p.Id == parcel.Id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("parcel doesn't exist");
+
             for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone to update
             {
                 if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we updat status
@@ -150,7 +231,7 @@ namespace DALObject
         }
         public  void ChargingDrone(Drone drone, Station station)//send drone to charge
         {
-            for(int i=0;i<DataSource.drones.Count;i++)//find the drone to update
+            for (int i=0;i<DataSource.drones.Count;i++)//find the drone to update
             {
                 if(DataSource.drones[i].Id==drone.Id)
                 {
@@ -176,6 +257,17 @@ namespace DALObject
         }
         public  void ReleaseChargingDrone(Drone drone)//release drone from charging
         {
+            bool b = false;
+            foreach (Drone d in DataSource.drones)
+            {
+                if (d.Id == drone.Id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("drone doesn't exist");
+
             for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone to update
             {
                 if (DataSource.drones[i].Id == drone.Id)//when the drone is found we updat status
@@ -207,34 +299,66 @@ namespace DALObject
         }
         public  void PrintStation(int id)//display station by station ID
         {
+            bool b = false;
             foreach (Station station in DataSource.baseStations)//goes over the list of stations to find the station with that ID
             {
                 if (station.Id == id)//when found- displays the station 
+                {
                     Console.WriteLine(station);
+                    b = true;
+                }
+            }
+            if(!b)
+            {
+                throw new NotFoundException("station doesn't exist");
             }
         }
         public  void PrintDrone(int id)//display drone by drone ID
         {
+            bool b = false;
             foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone with that ID
             {
                 if (drone.Id == id)
+                {
                     Console.WriteLine(drone);//when found- displays the drone 
+                    b = true;
+                }
+            }
+            if (!b)
+            {
+                throw new NotFoundException("drone doesn't exist");
             }
         }
         public  void PrintCustomer(int id)//display customer by customer ID
         {
+            bool b = false;
             foreach (Customer customer in DataSource.customers)//goes over the list of customers to find the customer with that ID
             {
                 if (customer.Id == id)//when found- displays the customer 
+                {
                     Console.WriteLine(customer);
+                    b = true;
+                }
+            }
+            if (!b)
+            {
+                throw new NotFoundException("customer doesn't exist");
             }
         }
         public  void PrintParcel(int id)//display parcel by parcel ID
         {
+            bool b = false;
             foreach (Parcel parcel in DataSource.parcels)//goes over the list of parcels to find the parcel with that ID
             {
                 if (parcel.Id == id)//when found- displays the parcel
+                {
                     Console.WriteLine(parcel);
+                    b = true;
+                }
+            }
+            if (!b)
+            {
+                throw new NotFoundException("parcel doesn't exist");
             }
         }
         public  void PrintAllStation()//display all stations
@@ -334,6 +458,19 @@ namespace DALObject
         }
         public double[] powerUse(Drone drone)
         {
+            bool b = false;
+            foreach (Drone d in DataSource.drones)//goes over the list of drones to find the drone with that ID
+            {
+                if (d.Id == drone.Id)
+                {
+                    Console.WriteLine(drone);//when found- displays the drone 
+                    b = true;
+                }
+            }
+            if (!b)
+            {
+                throw new NotFoundException("drone doesn't exist");
+            }
             double[] power = new double[5];
             power[0] = DataSource.Config.availablePK;
             power[1] = DataSource.Config.lightPK;

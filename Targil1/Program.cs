@@ -1,16 +1,16 @@
 ﻿using System;
 using IDAL.DO;
-using DALObject;
-
+using DAL.IDAL;
 namespace ConsoleUI
 {
     class Program
     {
         static void Main(string[] args)
         {
-            DALObject.DALObject mainObject = new DALObject.DALObject();
+            DAL.IDAL.IDal mainObject = new DALObject.DALObject();
+            //DALObject.DALObject mainObject = new DALObject.DALObject();
             //the following initializations is going to be used later on in the program:
-            int inputVal1=0;//first user choice - outer switch-case
+            int inputVal1 =0;//first user choice - outer switch-case
             int inputVal2 = 0;//second user choice - inner switch-case
             int id=0;//id for parcel, station, customer
             string model="";//drone model
