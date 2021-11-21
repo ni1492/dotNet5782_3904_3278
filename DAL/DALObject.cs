@@ -297,112 +297,95 @@ namespace DALObject
                 }
             }
         }
-        public  void PrintStation(int id)//display station by station ID
+        public  Station PrintStation(int id)//display station by station ID
         {
-            bool b = false;
             foreach (Station station in DataSource.baseStations)//goes over the list of stations to find the station with that ID
             {
                 if (station.Id == id)//when found- displays the station 
                 {
-                    Console.WriteLine(station);
-                    b = true;
+                    return station;
                 }
             }
-            if(!b)
-            {
-                throw new NotFoundException("station doesn't exist");
-            }
+        throw new NotFoundException("station doesn't exist");
+
         }
-        public  void PrintDrone(int id)//display drone by drone ID
+        public  Drone PrintDrone(int id)//display drone by drone ID
         {
-            bool b = false;
             foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone with that ID
             {
                 if (drone.Id == id)
                 {
-                    Console.WriteLine(drone);//when found- displays the drone 
-                    b = true;
+                    return drone;
                 }
             }
-            if (!b)
-            {
-                throw new NotFoundException("drone doesn't exist");
-            }
+           throw new NotFoundException("drone doesn't exist");
         }
-        public  void PrintCustomer(int id)//display customer by customer ID
+        public  Customer PrintCustomer(int id)//display customer by customer ID
         {
-            bool b = false;
             foreach (Customer customer in DataSource.customers)//goes over the list of customers to find the customer with that ID
             {
                 if (customer.Id == id)//when found- displays the customer 
                 {
-                    Console.WriteLine(customer);
-                    b = true;
+                    return customer;
                 }
             }
-            if (!b)
-            {
-                throw new NotFoundException("customer doesn't exist");
-            }
+            throw new NotFoundException("customer doesn't exist");
+            
         }
-        public  void PrintParcel(int id)//display parcel by parcel ID
+        public  Parcel PrintParcel(int id)//display parcel by parcel ID
         {
-            bool b = false;
             foreach (Parcel parcel in DataSource.parcels)//goes over the list of parcels to find the parcel with that ID
             {
                 if (parcel.Id == id)//when found- displays the parcel
                 {
-                    Console.WriteLine(parcel);
-                    b = true;
+                    return parcel;
                 }
             }
-            if (!b)
-            {
-                throw new NotFoundException("parcel doesn't exist");
-            }
+            throw new NotFoundException("parcel doesn't exist");
+            
         }
-        public  void PrintAllStation()//display all stations
+        public IEnumerable<Station> PrintAllStation()//display all stations
         {
             foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
             {
-                Console.WriteLine(station);
+               yield return station;
             }
         }
-        public  void PrintAllDrone()//display all drones
+        public IEnumerable<Drone> PrintAllDrone()//display all drones
         {
             foreach (Drone drone in DataSource.drones)//goes over all the drones and prints all of them
             {
-                Console.WriteLine(drone);
+                yield return drone;
             }
         }
-        public  void PrintAllCustomer()//display all customers
+        public IEnumerable<Customer> PrintAllCustomer()//display all customers
         {
             foreach (Customer customer in DataSource.customers)//goes over all the customers and prints all of them
             {
-                Console.WriteLine(customer);
+                yield return customer;
             }
         }
-        public  void PrintAllParcel()//display all parcels
+        public IEnumerable<Parcel> PrintAllParcel()//display all parcels
         {
             foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and prints all of them
             {
-                Console.WriteLine(parcel);
+                yield return parcel;
             }
         }
-        public  void PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
+        public IEnumerable<Parcel> PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
         {
             foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and if they are not assigned to any drone - print the,
             {
                 if (parcel.DroneId == 0)//not assigned to drone= drone ID is 0
-                    Console.WriteLine(parcel);
+                    yield return parcel;
             }
         }
-        public  void PrintStationWithChargeSlots()//display all stations with available charging slots 
+        public IEnumerable<Station> PrintStationWithChargeSlots()//display all stations with available charging slots 
         {
             foreach (Station station in DataSource.baseStations)//goes over all the stations and if the station has any available charging slots - it displays it
             {
                 if (station.ChargeSlots > 0)//station with available charging slots= at least one charging slot
-                    Console.WriteLine(station);
+                    yield return station;
             }
         }
         public  Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
@@ -456,21 +439,8 @@ namespace DALObject
             double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) *Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
             return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
         }
-        public double[] powerUse(Drone drone)
+        public double[] powerUse()
         {
-            bool b = false;
-            foreach (Drone d in DataSource.drones)//goes over the list of drones to find the drone with that ID
-            {
-                if (d.Id == drone.Id)
-                {
-                    Console.WriteLine(drone);//when found- displays the drone 
-                    b = true;
-                }
-            }
-            if (!b)
-            {
-                throw new NotFoundException("drone doesn't exist");
-            }
             double[] power = new double[5];
             power[0] = DataSource.Config.availablePK;
             power[1] = DataSource.Config.lightPK;

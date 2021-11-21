@@ -212,7 +212,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        mainObject.PrintStation(id);
+                                        Console.WriteLine(mainObject.PrintStation(id));
                                         break;
                                     }
                                 case 2://display drone
@@ -220,7 +220,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        mainObject.PrintDrone(id);
+                                        Console.WriteLine(mainObject.PrintDrone(id));
                                         break;
                                     }
                                 case 3://display customer
@@ -228,7 +228,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        mainObject.PrintCustomer(id);
+                                        Console.WriteLine(mainObject.PrintCustomer(id));
                                         break;
                                     }
                                 case 4://display parcel
@@ -236,7 +236,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        mainObject.PrintParcel(id);
+                                        Console.WriteLine(mainObject.PrintParcel(id));
                                         break;
                                     }
                                 case 5://display distance from station to user location
@@ -275,32 +275,50 @@ namespace ConsoleUI
                             {
                                 case 1://display all base stations
                                     {
-                                        mainObject.PrintAllStation();
+                                        foreach (Station item in mainObject.PrintAllStation())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 2://display all drones
                                     {
-                                        mainObject.PrintAllDrone();
+                                        foreach (Drone item in mainObject.PrintAllDrone())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 3://display all customers
                                     {
-                                        mainObject.PrintAllCustomer();
+                                        foreach (Customer item in mainObject.PrintAllCustomer())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 4://display all parcels
                                     {
-                                        mainObject.PrintAllParcel();
+                                        foreach (Parcel item in mainObject.PrintAllParcel())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 5://display all parcels not assigned to any drone
                                     {
-                                        mainObject.PrintParcelsWithNoDrone();
+                                        foreach (Parcel item in mainObject.PrintParcelsWithNoDrone())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 6://display all base stations with available charging slots
                                     {
-                                        mainObject.PrintStationWithChargeSlots();
+                                        foreach (Station item in mainObject.PrintStationWithChargeSlots())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 default:

@@ -11,11 +11,11 @@ namespace DALObject
     {
         internal static Random R = new Random();
         //lists of stored information: drones, stations, customers, parcels, inCharging.
-        internal static List<IDAL.DO.Drone> drones = new();
-        internal static List<IDAL.DO.Station> baseStations = new();
-        internal static List<IDAL.DO.Customer> customers = new();
-        internal static List<IDAL.DO.Parcel> parcels = new();
-        internal static List<IDAL.DO.DroneCharge> inChargeing = new();
+        internal static List<Drone> drones = new();
+        internal static List<Station> baseStations = new();
+        internal static List<Customer> customers = new();
+        internal static List<Parcel> parcels = new();
+        internal static List<DroneCharge> inChargeing = new();
 
         internal class Config//initialization of running numbers for station list, drone list, customer list, and parcel list
         {
@@ -31,6 +31,11 @@ namespace DALObject
         }
         public static void Initialize()//initialization of data for the program
         {
+            Config.availablePK = R.Next(0, 100) + R.NextDouble();
+            Config.lightPK = R.Next(0, 100) + R.NextDouble();
+            Config.mediumPK = R.Next(0, 100) + R.NextDouble();
+            Config.heavyPK = R.Next(0, 100) + R.NextDouble();
+            Config.chargingPH = R.Next(0, 100) + R.NextDouble();
             int num = R.Next(2, 5); 
             for (int i = 0; i < num; i++)//initialization of 2-4 stations
             {

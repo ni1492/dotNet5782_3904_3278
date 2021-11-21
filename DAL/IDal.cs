@@ -21,21 +21,21 @@ namespace DAL
             public void DeliveryTime(Parcel parcel);//Update delivery parcel status
             public void ChargingDrone(Drone drone, Station station);//send drone to charge
             public void ReleaseChargingDrone(Drone drone);//release drone from charging
-            public void PrintStation(int id);//display station by station ID
-            public void PrintDrone(int id);//display drone by drone ID
-            public void PrintCustomer(int id);//display customer by customer ID
-            public void PrintParcel(int id);//display parcel by parcel ID
-            public void PrintAllStation();//display all stations
-            public void PrintAllDrone();//display all drones
-            public void PrintAllCustomer();//display all customers
-            public void PrintAllParcel();//display all parcels
-            public void PrintParcelsWithNoDrone();//display all parcels that are not assigned to any drone
-            public void PrintStationWithChargeSlots();//display all stations with available charging slots 
+            public Station PrintStation(int id);//display station by station ID
+            public Drone PrintDrone(int id);//display drone by drone ID
+            public Customer PrintCustomer(int id);//display customer by customer ID
+            public Parcel PrintParcel(int id);//display parcel by parcel ID
+            public IEnumerable<Station> PrintAllStation();//display all stations
+            public IEnumerable<Drone> PrintAllDrone();//display all drones
+            public IEnumerable<Customer> PrintAllCustomer();//display all customers
+            public IEnumerable<Parcel> PrintAllParcel();//display all parcels
+            public IEnumerable<Parcel> PrintParcelsWithNoDrone();//display all parcels that are not assigned to any drone
+            public IEnumerable<Station> PrintStationWithChargeSlots();//display all stations with available charging slots 
             public Parcel ConvertParcel(int id);//returns the parcel of the ID that was given
             public Drone ConvertDrone(int id);//returns the drone of the ID that was given
             public Station ConvertStation(int id);//returns the station of the ID that was given
             public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2);
-            public double[] powerUse(Drone drone);
+            public double[] powerUse();
         }
     }
 
