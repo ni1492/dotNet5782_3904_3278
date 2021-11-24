@@ -15,5 +15,11 @@ namespace IBL.BO
         public DroneStatuses status { get; set; }
         public location currentLocation { get; set; }
         public int parcelID { get; set; }
+        public override string ToString()//custom print function for drone 
+        {
+            return ("Drone Id: " + id + "\nDrone Model: " + model + "\nWeight: " + weight
+            + "\nDrone Battery:" + battery + "\nDrone status: " + status 
+            + "\nCurrent Location:" + currentLocation + "\nParcel Id:"+parcelID+ "\n");
+        }
     }
 }

@@ -15,5 +15,12 @@ namespace IBL.BO
         public int notDeliveredPar { get; set; }
         public int acceptedPar { get; set; }
         public int notAcceptedPar { get; set; }
+        public override string ToString()
+        {
+            return ("Customer Id: " + id + "\nCustomer Name: " + name + "\nPhone Number: " + phone
+                + "\nNumber of Parcels Sent and Delivered: " + deliveredPar + "\nNumber of Parcels Sent and  NOT Delivered: "
+                + notDeliveredPar + "\nNumber of Parcels Accepted: " + acceptedPar + "\nNumber of Parcels Sent and NOT Accepted: "
+                + notAcceptedPar + "\n");
+        }
     }
 }

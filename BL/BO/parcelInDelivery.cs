@@ -17,5 +17,11 @@ namespace IBL.BO
         public location pickUp { get; set; }
         public location destination { get; set; }
         public double distance { get; set; }//needs a function to calculate the distance 
+        public override string ToString()//custom print function for parcel 
+        {
+            return ("Parcel Id: " + id + "\nWeight of the parcel: " + weight + "\nPriority: " + priority
+                + "\nDrone Status: " + status + "\nSender: " + sender + "\nReceiver: " + receiver + "\nCreation Time: " +
+                "\nPickedUp Location:" + pickUp + "\nDestination Location: " + destination + "\nDistance:" + distance + "\n");
+        }
     }
 }

@@ -13,6 +13,16 @@ namespace IBL.BO
         public location location { get; set; }
         public int chargingSlots { get; set; }
         public List<droneInCharging> dronesInCharging { get; set; }
+        public override string ToString()
+        {
+            string ch = "";
+            foreach (droneInCharging d in dronesInCharging)
+            {
+                ch += d.ToString();
+            }
+            return ("Base Station Id: " + id + "\nBase Station Name: " + name + "\nLocation" + location
+                + "\nNumber of Slots:" + chargingSlots+"\nDrones in Charging:" + ch + "\n");
+        }
 
     }
 }

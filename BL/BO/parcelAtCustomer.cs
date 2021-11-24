@@ -13,5 +13,10 @@ namespace IBL.BO
         public Priorities priority { get; set; }
         public DroneStatuses status { get; set; }
         public customerForParcel otherCus { get; set; }
+        public override string ToString()//custom print function for parcel 
+        {
+            return ("Parcel Id: " + id + "\nWeight of the parcel: " + weight +
+                "\nPriority: " + priority + "\nDrone Status: " + status + "\nSender/receiver: " + otherCus + "\n");
+        }
     }
 }

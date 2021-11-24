@@ -14,5 +14,20 @@ namespace IBL.BO
         public location location { get; set; }
         public List<parcelAtCustomer> fromCus { get; set; }
         public List<parcelAtCustomer> toCus { get; set; }
+        public override string ToString()//custom print function for customer 
+        {
+            string from="";
+            foreach (parcelAtCustomer p in fromCus) 
+            {
+                from += p.ToString();
+            }
+            string to = "";
+            foreach (parcelAtCustomer p in toCus)
+            {
+                to += p.ToString();
+            }
+            return ("Customer Id: " + id + "\nCustomer Name: " + name + "\nPhone Number: " + phone
+                + "\nLocation: " + location + "\nParcels From Customer:" + from + "\nParcels To Customer:" + to + "\n");
+        }
     }
 }

@@ -18,6 +18,11 @@ namespace IBL.BO
         public DateTime match { get; set; }
         public DateTime pickup { get; set; }
         public DateTime delivery { get; set; }
-
+        public override string ToString()//custom print function for parcel 
+        {
+            return ("Parcel Id: " + id + "\nSender: " + sender + "\nReceiver: " + receiver + "\nWeight of the parcel: " + weight +
+                "\nPriority: " + priority + "\nDrone: " + drone + "\nCreation Time: " + creation + "\nMatch Time: " + match+ 
+                "\nPickedUp Time:" + pickup + "\nDelivered Time: " + delivery  +"\n");
+        }
     }
 }
