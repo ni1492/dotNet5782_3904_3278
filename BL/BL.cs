@@ -31,5 +31,14 @@ namespace IBL
                 drones.Add(item);
             }
         }
+        public bool inDelivery(int droneId)
+        {
+            foreach (var item in dl.PrintAllParcel())
+            {
+
+            }
+            return true;
+        }
     }
+   
 }
