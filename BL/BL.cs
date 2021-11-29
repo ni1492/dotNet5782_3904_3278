@@ -42,18 +42,9 @@ namespace IBL
             }
             foreach (var item in drones)
             {
-                if(item.)
+                if()
             }
 
-        }
-        public bool inDelivery(int droneId)
-        {
-            foreach (var item in dl.PrintAllParcel())
-            {
-
-            }
-            return true;
         }
     }
-   
 }
