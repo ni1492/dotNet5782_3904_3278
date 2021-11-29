@@ -83,8 +83,9 @@ namespace DALObject
                parcel.Priority = ((IDAL.DO.Priorities)R.Next(3));//initialization of random priority using enum
                 parcel.Requested = new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random request time
                 parcel.Scheduled= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random schedule time
-                parcel.PickedUp= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random pick up time
-                parcel.Delivered= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random delivery time
+                parcel.PickedUp= new DateTime(0,0,0,0,0,0);//initialization of random pick up time
+                parcel.Delivered= new DateTime(0,0,0,0,0,0);//initialization of random delivery time
+                parcel.DroneId = 0;
                 foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
                 {
                     if (drone.MaxWeight >= parcel.Weight)//makes sure the maximum weight of the drone can hold the parcel
