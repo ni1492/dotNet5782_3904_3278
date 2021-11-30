@@ -13,7 +13,7 @@ namespace IBL.BO
         public string receiver { get; set; }
         public WeightCategories weight { get; set; }
         public Priorities priority { get; set; }
-        public DroneStatuses status { get; set; }
+        public ParcelStatus status { get; set; }
         public override string ToString()//custom print function for parcel 
         {
             return ("Parcel Id: " + id + "\nSender name: " + sender + "\nReceiver name: " + receiver + "\nWeight of the parcel: " + weight +

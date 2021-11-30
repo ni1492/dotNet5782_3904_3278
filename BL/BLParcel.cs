@@ -12,14 +12,14 @@ namespace IBL
         public void addParcel(parcelInDelivery parcel)
         {
             DateTime x = new DateTime(0, 0, 0, 0, 0, 0);
-            try
-            {
-                dl.AddParcel(0, parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0, DateTime.Now, x, x, x);
-            }
-            catch
-            {
+          //  try
+           // {
+                dl.AddParcel(0, parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0);
+           // }
+           // catch
+           // {
 
-            }
+           // }
         }
         public void pickupParcel(int id)
         {
@@ -31,15 +31,88 @@ namespace IBL
         }
         public parcel displayParcel(int id)
         {
-
-        }
+            foreach (var p in dl.PrintAllParcel())
+            {
+                if (p.Id == id)
+                {
+                    return (new parcel
+                    {
+                        id = p.Id,
+                        sender = new customerForParcel
+                        {
+                            id = p.SenderId,
+                            name = dl.PrintCustomer(p.SenderId).Name
+                        },
+                        receiver = new customerForParcel
+                        {
+                            id = p.TargetId,
+                            name = dl.PrintCustomer(p.TargetId).Name
+                        },
+                        weight = (BO.WeightCategories)p.Weight,
+                        priority = (BO.Priorities)p.Priority,
+                        drone = new droneForParcel
+                        {
+                            id = p.DroneId,
+                            battery = getBattery(p.DroneId),
+                            currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
+                        },
+                        creation = p.Requested,
+                        match = p.Scheduled,
+                        pickup = p.PickedUp,
+                        delivery = p.Delivered
+                    });
+                }
+            }
+            //throw- parcel not exist
+            return new parcel();
+                }
         public IEnumerable<parcelForList> displayParcelList()
         {
-
+            foreach (var p in dl.PrintAllParcel())
+            {
+                yield return (new parcelForList
+                {
+                    id = p.Id,
+                    sender = dl.PrintCustomer(p.SenderId).Name,
+                    receiver = dl.PrintCustomer(p.TargetId).Name,
+                    weight = (BO.WeightCategories)p.Weight,
+                    priority = (BO.Priorities)p.Priority,
+                    status=getStatus(p.Id)
+                });
+                
+            }
         }
+
+        private ParcelStatus getStatus(int id)
+        {
+            parcel p = displayParcel(id);
+            DateTime x = new DateTime(0, 0, 0, 0, 0, 0);
+            if (p.delivery != x)
+                return ParcelStatus.Delivered;
+            if (p.pickup != x)
+                return ParcelStatus.PickedUp;
+            if (p.match != x)
+                return ParcelStatus.Scheduled;
+            return ParcelStatus.Requested;
+        }
+
         public IEnumerable<parcelForList> displayParcelListWithoutDrone()
         {
-
+            foreach (var p in dl.PrintAllParcel())
+            {
+                if(getStatus(p.Id)!=ParcelStatus.Requested)
+                {
+                    yield return (new parcelForList
+                    {
+                        id = p.Id,
+                        sender = dl.PrintCustomer(p.SenderId).Name,
+                        receiver = dl.PrintCustomer(p.TargetId).Name,
+                        weight = (BO.WeightCategories)p.Weight,
+                        priority = (BO.Priorities)p.Priority,
+                        status = getStatus(p.Id)
+                    });
+                }
+            }
         }
     }
 }

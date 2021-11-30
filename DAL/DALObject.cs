@@ -72,7 +72,7 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
-        public  void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId, DateTime req, DateTime sch, DateTime pUp, DateTime del)//add new parcel
+        public  void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId)//add new parcel
         {
             if(id==0)
             {
@@ -96,10 +96,10 @@ namespace DALObject
             parcel.Weight = weight;
             parcel.Priority = priority;
             parcel.DroneId = dId;
-            parcel.Requested = req;
-            parcel.Scheduled = sch;
-            parcel.PickedUp = pUp;
-            parcel.Delivered = del;
+            parcel.Requested = DateTime.Now;
+            parcel.Scheduled = DateTime.MinValue;
+            parcel.PickedUp = DateTime.MinValue;
+            parcel.Delivered = DateTime.MinValue;
             //add to parcels list
             DataSource.parcels.Add(parcel);
         }
@@ -282,7 +282,7 @@ namespace DALObject
                     Drone d = DataSource.drones[i];
                     //update charging status
                     DataSource.drones[i] = d;
-                    foreach (DroneCharge charge in DataSource.inChargeing)//goes over the list of charging and looks for the one with the drone that was given to release
+                    foreach (DroneCharge charge in DataSource.inCharging)//goes over the list of charging and looks for the one with the drone that was given to release
                     {
                         if (charge.DroneId == drone.Id)//if its found we remove it from the list
                         {
@@ -296,7 +296,7 @@ namespace DALObject
                                     break;
                                 }
                             }
-                            DataSource.inChargeing.Remove(charge);
+                            DataSource.inCharging.Remove(charge);
                             break;
                         }
                     }

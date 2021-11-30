@@ -46,25 +46,45 @@ namespace IBL
                 stationBO.dronesInCharging.Add(new droneInCharging
                 {
                     id = item.DroneId,
-                    battery = calcBattery(item.DroneId)
+                    battery = getBattery(item.DroneId)
                 });
             }
             return stationBO;
         }
 
-        private double calcBattery(int droneId)
+        private double getBattery(int droneId)
         {
-
+            return drones.Find(drone => drone.id == droneId).battery;
         }
 
         public IEnumerable<baseStationForList> displayStationList()
         {
+            foreach (var item in dl.PrintAllStation())
+            {
+                yield return (new baseStationForList
+                {
+                    id = item.Id,
+                    name=item.Name,
+                    availableSlots=item.ChargeSlots,
+                    usedSlots= dl.displayChargings(item.Id).Count()
 
+                });          
+            }
         }
 
         public IEnumerable<baseStationForList> displayStationListSlotsAvailable()
         {
+            foreach (var item in dl.PrintStationWithChargeSlots())
+            {
+                yield return (new baseStationForList
+                {
+                    id = item.Id,
+                    name = item.Name,
+                    availableSlots = item.ChargeSlots,
+                    usedSlots = dl.displayChargings(item.Id).Count()
 
+                });
+            }
         }
     }
 }

@@ -16,14 +16,24 @@ namespace IBL.BO
         public customerForParcel receiver { get; set; }
         public location pickUp { get; set; }
         public location destination { get; set; }
-        public double distance { get; set; }//needs a function to calculate the distance 
+        public double distance
+        {
+            get
+            {
+                return distance;
+            }
+            set
+            {
+                distance = calcDistance();
+            }
+        }//needs a function to calculate the distance 
         public override string ToString()//custom print function for parcel 
         {
             return ("Parcel Id: " + id + "\nWeight of the parcel: " + weight + "\nPriority: " + priority
                 + "\nDrone Status: " + status + "\nSender: " + sender + "\nReceiver: " + receiver + "\nCreation Time: " +
                 "\nPickedUp Location:" + pickUp + "\nDestination Location: " + destination + "\nDistance:" + distance + "\n");
         }
-        private void calcDistance()//calculate thedistance between two locations 
+        private double calcDistance()//calculate thedistance between two locations 
         {
             int R = 6371 * 1000;
             double phi1 = pickUp.Latitude * Math.PI;
@@ -35,7 +45,8 @@ namespace IBL.BO
                 Math.Cos(phi1) * Math.Cos(phi2) *
                 Math.Sin(deltaLambda / 2) * Math.Sin(deltaLambda / 2);
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            distance = R * c / 1000;
+            return (R * c / 1000);
+
         }
     }
 }

@@ -24,8 +24,8 @@ namespace IBL
         }
         public void matchParcelToDrone(int id)
         {
-            try
-            {
+           // try
+           // {
                 if (isMatched(id))
                 {
                     int parcelId = parcelToMatch(id);
@@ -39,11 +39,11 @@ namespace IBL
                         }
                     }
                 }
-            }
-            catch
-            {
+          //  }
+         //   catch
+          //  {
 
-            }
+          //  }
         }
         public void updateDrone(int id, string model)
         {
@@ -51,7 +51,7 @@ namespace IBL
         }
         public void sendDroneToCharge(int id)
         {
-
+            
         }
         public void releaseDroneFromCharge(int id, DateTime time)
         {
@@ -59,11 +59,36 @@ namespace IBL
         }
         public drone displayDrone(int id)
         {
-
+           droneForList drone = drones.Find(drone => drone.id == id);
+            parcelInDelivery p =( new parcelInDelivery
+            {
+                id=drone.id,
+                /*weight,
+        priority, 
+    status ,
+sender ,
+        customerForParcel receiver
+      pickUp
+       destination
+  distance*/
+            });
+            BO.drone droneBO = (new drone
+            {
+                id = drone.id,
+                model = drone.model,
+                weight = drone.weight,
+                currentLocation = drone.currentLocation,
+                battery=drone.battery,
+                status=drone.status,
+            });
+            return droneBO;
         }
         public IEnumerable<droneForList> displayDroneList()
         {
-
+            foreach (var drone in drones)
+            {
+                yield return drone;
+            }
         }
         private IEnumerable<parcelInDelivery> parcelsByPriority(List<parcelInDelivery> list, BO.Priorities prioritiy)
         {
@@ -102,19 +127,17 @@ namespace IBL
                 }
             }
             List<parcelInDelivery> list = new List<parcelInDelivery>();
-            foreach (var parcel in dl.PrintAllParcel())
+            foreach (var parcel in displayParcelListWithoutDrone())
             {
-                if (parcel.DroneId != 0)
-                {
                     list.Add(new parcelInDelivery
                     {
-                        id = parcel.Id,
-                        weight = (BO.WeightCategories)parcel.Weight,
-                        priority = (BO.Priorities)parcel.Priority,
-                        pickUp = senderLocation(parcel.Id),
-                        destination = targetLocation(parcel.Id)
+                        id = parcel.id,
+                        weight = parcel.weight,
+                        priority = parcel.priority,
+                        pickUp = senderLocation(parcel.id),
+                        destination = targetLocation(parcel.id),
+                        status=false
                     });
-                }
             }
             BO.Priorities p = BO.Priorities.urgent;
             List<parcelInDelivery> parcels = new List<parcelInDelivery>();

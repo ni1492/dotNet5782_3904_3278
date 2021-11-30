@@ -16,7 +16,7 @@ namespace IBL
         public IEnumerable<baseStationForList> displayStationList();
         public IEnumerable<baseStationForList> displayStationListSlotsAvailable();
 
-        public void addDrone(drone drone);
+        public void addDrone(droneForList drone, int stationId);
         public void updateDrone(int id, string model);
         public void sendDroneToCharge(int id);
         public void releaseDroneFromCharge(int id, DateTime time);//time???
@@ -28,7 +28,7 @@ namespace IBL
         public customer displayCustomer(int id);
         public IEnumerable<customerForList> displayCustomerList();
 
-        public void addParcel(parcel parcel);
+        public void addParcel(parcelInDelivery parcel);
         public void matchParcelToDrone(int id);
         public void pickupParcel(int id);
         public void deliverParcel(int id);

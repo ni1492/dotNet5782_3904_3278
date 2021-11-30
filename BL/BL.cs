@@ -114,7 +114,6 @@ namespace IBL
                 double phi2 = to.Latitude * Math.PI;
                 double deltaPhi = (to.Latitude - from.Latitude) * Math.PI / 180;
                 double deltaLambda = (to.Longitude - from.Longitude) * Math.PI / 180;
-
                 double a = Math.Sin(deltaPhi / 2) * Math.Sin(deltaPhi / 2) +
                     Math.Cos(phi1) * Math.Cos(phi2) *
                     Math.Sin(deltaLambda / 2) * Math.Sin(deltaLambda / 2);

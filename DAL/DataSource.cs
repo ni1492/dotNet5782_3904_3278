@@ -96,11 +96,13 @@ namespace DALObject
                             break;
                         }
                     }
-                    if ((drone.MaxWeight >= parcel.Weight)&&(!matched))//makes sure the maximum weight of the drone can hold the parcel
+                    if ((drone.MaxWeight >= parcel.Weight) && (!matched))//makes sure the maximum weight of the drone can hold the parcel
                     {
                         parcel.DroneId = drone.Id;
                         break;
                     }
+                    else
+                        parcel.DroneId = 0;
                 }
                 parcels.Add(parcel);
             }
