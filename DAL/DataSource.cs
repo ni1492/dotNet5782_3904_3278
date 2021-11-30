@@ -87,7 +87,16 @@ namespace DALObject
                 parcel.Delivered= new DateTime(R.Next(1, 9999), R.Next(1, 12), R.Next(1, 25), R.Next(1, 23), R.Next(1, 59), R.Next(1, 59));//initialization of random delivery time
                 foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
                 {
-                    if (drone.MaxWeight >= parcel.Weight)//makes sure the maximum weight of the drone can hold the parcel
+                    bool matched = false;
+                    foreach (Parcel parcel1 in DataSource.parcels)
+                    {
+                        if (parcel1.DroneId == drone.Id)
+                        {
+                            matched = true;
+                            break;
+                        }
+                    }
+                    if ((drone.MaxWeight >= parcel.Weight)&&(!matched))//makes sure the maximum weight of the drone can hold the parcel
                     {
                         parcel.DroneId = drone.Id;
                         break;

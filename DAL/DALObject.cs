@@ -144,7 +144,16 @@ namespace DALObject
 
             foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
             {
-                if (drone.MaxWeight >= parcel.Weight)//makes sure the maximum weight of the drone can hold the parcel
+                bool matched = false;
+                foreach (Parcel parcel1 in DataSource.parcels)
+                {
+                    if (parcel1.DroneId == drone.Id)
+                    {
+                        matched = true;
+                        break;
+                    }
+                }
+                if (drone.MaxWeight >= parcel.Weight && !matched)//makes sure the maximum weight of the drone can hold the parcel
                 {
                     for (int i = 0; i < DataSource.parcels.Count(); i++)
                     {
