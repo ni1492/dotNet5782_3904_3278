@@ -131,7 +131,7 @@ namespace DALObject
             charging.DroneId = dId;
             charging.StationId = sId;
             //adds to charging list:
-            DataSource.inChargeing.Add(charging);
+            DataSource.inCharging.Add(charging);
         }
         public  void Match(int pId, int dId) //matches a drone to a parcel
         {
@@ -455,6 +455,14 @@ namespace DALObject
             power[3] = DataSource.Config.heavyPK;
             power[4] = DataSource.Config.chargingPH;
             return power;
+        }
+        public IEnumerable<DroneCharge> displayChargings(int id)
+        {
+            foreach (var item in DataSource.inCharging)
+            {
+                if(item.StationId==id)
+                    yield return item;
+            }
         }
     }
 

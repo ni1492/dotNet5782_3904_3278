@@ -23,5 +23,19 @@ namespace IBL.BO
                 + "\nDrone Status: " + status + "\nSender: " + sender + "\nReceiver: " + receiver + "\nCreation Time: " +
                 "\nPickedUp Location:" + pickUp + "\nDestination Location: " + destination + "\nDistance:" + distance + "\n");
         }
+        private void calcDistance()//calculate thedistance between two locations 
+        {
+            int R = 6371 * 1000;
+            double phi1 = pickUp.Latitude * Math.PI;
+            double phi2 = destination.Latitude * Math.PI;
+            double deltaPhi = (destination.Latitude - pickUp.Latitude) * Math.PI / 180;
+            double deltaLambda = (destination.Longitude - pickUp.Longitude) * Math.PI / 180;
+
+            double a = Math.Sin(deltaPhi / 2) * Math.Sin(deltaPhi / 2) +
+                Math.Cos(phi1) * Math.Cos(phi2) *
+                Math.Sin(deltaLambda / 2) * Math.Sin(deltaLambda / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            distance = R * c / 1000;
+        }
     }
 }
