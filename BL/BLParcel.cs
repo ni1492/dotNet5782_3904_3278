@@ -9,9 +9,8 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-        public void addParcel(parcel parcel)
+        public void addParcel(parcelInDelivery parcel)
         {
-
         }
         public void matchParcelToDrone(int id)
         {

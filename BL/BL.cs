@@ -49,7 +49,7 @@ namespace IBL
                     item.currentLocation = senderLocation(item.id);//returns the location of the sender
 
                     double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                    item.battery = (double)r.Next(minBattery, 100);
+                    item.battery = (double)r.Next((int)minBattery, 100);
 
                 }
                 if ((isMatched(item.id)) && !(isPickedUp(item.id))) //id matched and not yet picked up
@@ -58,7 +58,7 @@ namespace IBL
                     item.currentLocation = nearestStation(senderLocation(item.id));//returns the closet station to the sender
 
                     double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                    item.battery = (double)r.Next(minBattery, 100);
+                    item.battery = (double)r.Next((int)minBattery, 100);
 
                 }
                 else
@@ -68,7 +68,7 @@ namespace IBL
                     {
                         //the location in random from a list of customers that have had parcels delivered to them
                         double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                        item.battery = (double)r.Next(minBattery, 100);
+                        item.battery = (double)r.Next((int)minBattery, 100);
                     }
                     if (item.status == DroneStatuses.maintenance)
                     {
