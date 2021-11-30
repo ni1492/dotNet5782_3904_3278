@@ -28,7 +28,7 @@ namespace IBL
         }
         public baseStation displayStation(int id)
         {
-            
+            IDAL.DO.Station stationDO = dl.PrintStation(id);
         }
         public IEnumerable<baseStationForList> displayStationList()
         {
