@@ -11,7 +11,16 @@ namespace IBL
     {
         public void addStation(baseStation station)
         {
-
+            station.dronesInCharging = null;
+            try
+            {
+                dl.AddStation(station.id,station.name , station.location.Longitude, station.location.Latitude, station.chargingSlots);
+            }
+            catch
+            {
+                //exception
+                //question - when do we initialize the list in each station??
+            }
         }
         public void updateStation(int id, string name, int chargingSlots)
         {

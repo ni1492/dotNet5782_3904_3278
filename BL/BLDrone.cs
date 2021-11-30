@@ -10,13 +10,19 @@ namespace IBL
 {
     public partial class BL : IBL
     {
-        
-        public void addDrone(drone drone)
+        public Random r = new Random();
+        public void addDrone(droneForList drone, int stationId)
         {
-            foreach (Drone item in dl.PrintAllDrone())
-            {
-                drones.Add(item);
-            }
+            drone.battery = (double)r.Next(20, 40);
+            drone.status = DroneStatuses.maintenance;
+            //List<int> stationIds = dl.PrintStationWithChargeSlots().Select(bs => bs.Id).ToList();
+            //int stationId = stationIds[r.Next(stationIds.Count)];
+            dl.AddCharging(drone.id, stationId);
+            drone.currentLocation = stationLocation(stationId);
+            drone.parcelID = 0;
+            drones.Add(drone);
+            //add exception - drone exists - check in the dal layer 
+            //and add exception for station id
         }
         public void updateDrone(int id, string model)
         {

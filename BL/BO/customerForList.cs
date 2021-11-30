@@ -10,7 +10,7 @@ namespace IBL.BO
     {
         public int id { get; set; }
         public string name { get; set; }
-        public int phone { get; set; }
+        public string phone { get; set; }
         public int deliveredPar { get; set; }
         public int notDeliveredPar { get; set; }
         public int acceptedPar { get; set; }
