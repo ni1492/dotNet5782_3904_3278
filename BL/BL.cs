@@ -55,7 +55,7 @@ namespace IBL
                 if ((isMatched(item.id)) && !(isPickedUp(item.id))) //id matched and not yet picked up
                 {
                     item.status = DroneStatuses.delivery;
-                    item.currentLocation = nearestStation(item.id);//returns the closet station to the sender
+                    item.currentLocation = nearestStation(senderLocation(item.id));//returns the closet station to the sender
 
                     double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
                     item.battery = (double)r.Next(minBattery, 100);
@@ -81,7 +81,7 @@ namespace IBL
                 }
             }
         }
-            private double clacDistance(location from, location to)
+        private double calcDistance(location from, location to)
             {
                 int R = 6371 * 1000;
                 double phi1=from.Latitude * Math.PI;
@@ -96,7 +96,162 @@ namespace IBL
                 double d = R * c / 1000;
                 return d;
             }
+        private bool isDelivered(int droneId)
+        {
+
+            foreach (var item in dl.PrintAllParcel())
+            {
+                if ((item.DroneId == droneId) && (item.Delivered != new DateTime(0, 0, 0, 0, 0, 0)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool isPickedUp(int droneId)
+        {
+            foreach (var item in dl.PrintAllParcel())
+            {
+                if ((item.DroneId == droneId) && (item.PickedUp != new DateTime(0, 0, 0, 0, 0, 0)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool isMatched(int droneId)
+        {
+            foreach (var item in dl.PrintAllParcel())
+            {
+                if (item.DroneId == droneId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private location senderLocation(int droneId)//return tne sender location
+        {
+            foreach (var item in dl.PrintAllParcel())//goes over the list of parcels to find the
+             {
+                if (item.DroneId == droneId)
+                {
+                    foreach (var item2 in dl.PrintAllCustomer())
+                    {
+                        if (item.SenderId == item2.Id)
+                        {
+                            location l = new location();
+                            l.Latitude = item2.Lattitude;
+                            l.Longitude = item2.Longitude;
+                            return l;
+                        }
+                    }
+                }
+            }
+            location x = new location();
+            x.Latitude = 0;
+            x.Longitude = 0;
+            return x;
+
+        }
+        private location targetLocation(int targetId)//return tne target location
+        {
+            foreach (var item in dl.PrintAllCustomer())//goes over thre lust of customers in the DAL layer 
+            {
+                if (targetId == item.Id)//fide find the target customer
+                {
+                    location l = new location();
+                    l.Latitude = item.Lattitude;
+                    l.Longitude = item.Longitude;
+                    return l;//return the lication
+                }
+            }
+            //maybe we need to do trow and catch in here.
+            location x = new location();
+            x.Latitude = 0;
+            x.Longitude = 0;
+            return x;
+
+        }
+        private location nearestStation(location loc)//return the closest statuon to the location given by the user
+        {
             
-             
+            List<baseStation> locations = new List<baseStation>();
+            foreach (var baseStation in dl.PrintAllStation())//buliding a list of all the station with the locations
+            {
+                locations.Add(new baseStation
+                {
+                    location = new location
+                    {
+                        Latitude = baseStation.Lattitude,
+                        Longitude = baseStation.Longitude
+                    }
+                });//add location
+            }
+            location location = locations[0].location;
+            double smallest = calcDistance(loc, locations[0].location);
+            double temp;
+            for (int i = 0; i < locations.Count(); i++)//compering the distance to find the closest location
+            {
+                temp = calcDistance(loc, locations[i].location);
+                if (temp < smallest)
+                {
+                    smallest = temp;
+                    location = locations[i].location;
+                }
+            }
+            return location;
+        }
+        private location stationLocation(int stationId)//return thr location of the station, by the id
+        {
+            foreach (var item in dl.PrintAllStation())//gos over the list of station in the DAL layer
+            {
+                if (item.Id == stationId)//fide the station by the id
+                    return (new location
+                    {
+                        Latitude = item.Lattitude,
+                        Longitude = item.Longitude
+                    });//return the location
+            }
+            return new location();
+        }
+        private double calcMinBattery(droneForList d)
+        {
+            if (d.status == DroneStatuses.available)
+            {
+                location location = nearestStation(d.currentLocation);
+                return calcDistance(d.currentLocation, location) * availablePK;
+            }
+            if (d.status == DroneStatuses.delivery)
+            {
+                WeightCategories weight;
+                foreach (var item in dl.PrintAllParcel())
+                {
+                    if (item.Id == d.parcelID && isPickedUp(d.id))
+                    {
+                        weight = (WeightCategories)item.Weight;
+                       double distance1= calcDistance(d.currentLocation, targetLocation(item.TargetId));
+                        double distance2 = calcDistance(targetLocation(item.TargetId), nearestStation();
+
+                        switch (weight)
+                        {
+                            case WeightCategories.light:
+                                return (distance1* lightPK)
+                                break;
+                            case WeightCategories.medium:
+                                break;
+                            case WeightCategories.heavy:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+            }
+            return 0;
+        }
     }
+
 }
+
