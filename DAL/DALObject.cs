@@ -74,6 +74,10 @@ namespace DALObject
         }
         public  void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId, DateTime req, DateTime sch, DateTime pUp, DateTime del)//add new parcel
         {
+            if(id==0)
+            {
+                id = DataSource.Config.ParcelID;
+            }
             //initialize new parcel object:
             foreach (Parcel p in DataSource.parcels)
             {
@@ -129,46 +133,40 @@ namespace DALObject
             //adds to charging list:
             DataSource.inChargeing.Add(charging);
         }
-        public  void Match(Parcel parcel) //matches a drone to a parcel
+        public  void Match(int pId, int dId) //matches a drone to a parcel
         {
             bool b = false;
             foreach (Parcel p in DataSource.parcels)
             {
-                if (p.Id == parcel.Id)
+                if (p.Id == pId)
                 {
                     b = true;
                 }
             }
             if (!b)
                 throw new NotFoundException("parcel doesn't exist");
-
-            foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
+            b = false;
+            foreach (Drone d in DataSource.drones)
             {
-                bool matched = false;
-                foreach (Parcel parcel1 in DataSource.parcels)
+                if (d.Id == dId)
                 {
-                    if (parcel1.DroneId == drone.Id)
-                    {
-                        matched = true;
-                        break;
-                    }
+                    b = true;
                 }
-                if (drone.MaxWeight >= parcel.Weight && !matched)//makes sure the maximum weight of the drone can hold the parcel
+            }
+            if (!b)
+                throw new NotFoundException("drone doesn't exist");
+
+            for (int i = 0; i < DataSource.parcels.Count(); i++)
+            {
+                if (DataSource.parcels[i].Id == pId)
                 {
-                    for (int i = 0; i < DataSource.parcels.Count(); i++)
-                    {
-                        if (DataSource.parcels[i].Id == parcel.Id)
-                        {
-                            Parcel p = DataSource.parcels[i];
-                            p.DroneId = drone.Id;
-                            DataSource.parcels[i] = p;
-                            break;
-                        }
-                    }
+                    Parcel p = DataSource.parcels[i];
+                    p.DroneId = dId;
+                    p.Scheduled = DateTime.Now;
+                    DataSource.parcels[i] = p;
                     break;
                 }
             }
-           
         }
         public  void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {

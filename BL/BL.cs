@@ -309,6 +309,24 @@ namespace IBL
                                 break;
                         }
                     }
+                    else
+                    {
+                        weight = (WeightCategories)item.Weight;
+                        double distance1 = calcDistance(d.currentLocation, targetLocation(item.Id));//the distance between the drone and the destination
+                        double distance2 = calcDistance(targetLocation(item.Id), nearestCharging(targetLocation(item.Id)));//the distance between the destination and the nearest station
+                        double distance3 = calcDistance(d.currentLocation, senderLocation(item.Id));//the distance between the drone and the parcel to collect
+                        switch (weight)//calculate the battery
+                        {
+                            case WeightCategories.light:
+                                return ((distance1 * lightPK) + ((distance2+distance3)* availablePK));
+                            case WeightCategories.medium:
+                                return ((distance1 * mediumPK) + ((distance2 + distance3) * availablePK));
+                            case WeightCategories.heavy:
+                                return ((distance1 * heavyPK) + ((distance2 + distance3) * availablePK));
+                            default:
+                                break;
+                        }
+                    }
                 }
 
             }

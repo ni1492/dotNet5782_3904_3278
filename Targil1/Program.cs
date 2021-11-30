@@ -147,10 +147,12 @@ namespace ConsoleUI
                             {
                                 case 1://match drone to parcel
                                     {
-                                        Console.WriteLine("enter parcel id");
+                                        Console.WriteLine("enter parcel id and drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                        mainObject.Match(mainObject.ConvertParcel(id));
+                                        input = Console.ReadLine();
+                                        Int32.TryParse(input, out dId);//drone
+                                        mainObject.Match(id,dId);
                                         break;
                                     }
                                 case 2://update pick up by drone

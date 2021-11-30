@@ -11,10 +11,15 @@ namespace IBL
     {
         public void addParcel(parcelInDelivery parcel)
         {
-        }
-        public void matchParcelToDrone(int id)
-        {
+            DateTime x = new DateTime(0, 0, 0, 0, 0, 0);
+            try
+            {
+                dl.AddParcel(0, parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0, DateTime.Now, x, x, x);
+            }
+            catch
+            {
 
+            }
         }
         public void pickupParcel(int id)
         {
