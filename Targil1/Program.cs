@@ -17,7 +17,7 @@ namespace ConsoleUI
             WeightCategories weight = WeightCategories.light;//weight within drone object and parcel
             //DroneStatuses status = DroneStatuses.available;//enum status
             double battery = 0; //0-100
-            int name = 0;//station
+            string name = null;//station
             double longitude = 0;//0-50
             double lattitude = 0;//0-50
             int chargeSlots = 0;//amount of charging spots
@@ -57,8 +57,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter: id, name(number), longitude, lattitude, charge slots number");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        input = Console.ReadLine();
-                                        Int32.TryParse(input, out name);
+                                        name = Console.ReadLine();
                                         input = Console.ReadLine();
                                         double.TryParse(input, out longitude);
                                         input = Console.ReadLine();

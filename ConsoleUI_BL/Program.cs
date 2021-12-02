@@ -13,8 +13,8 @@ namespace ConsoleUI_BL
             int id = 0;//id for parcel, station, customer
             string model = "";//drone model
             WeightCategories weight = WeightCategories.light;//weight within drone object and parcel
-            //DroneStatuses status = DroneStatuses.available;//enum status
-            int name = 0;//station
+            DroneStatuses status = DroneStatuses.available;//enum status
+            string name = null;//station
             double longitude = 0;//0-50
             double lattitude = 0;//0-50
             int chargeSlots = 0;//amount of charging spots
@@ -54,15 +54,25 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter: id, name(number), longitude, lattitude, charge slots number");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        input = Console.ReadLine();
-                                        Int32.TryParse(input, out name);
+                                        name = Console.ReadLine();
                                         input = Console.ReadLine();
                                         double.TryParse(input, out longitude);
                                         input = Console.ReadLine();
                                         double.TryParse(input, out lattitude);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out chargeSlots);
-                                      //  mainObject.AddStation(id, name, longitude, lattitude, chargeSlots);
+                                        bl.addStation(new baseStation
+                                        {
+                                            id = id,
+                                            name = name,
+                                            location = new location
+                                            {
+                                                Longitude = longitude,
+                                                Latitude = lattitude
+                                            },
+                                            chargingSlots = chargeSlots,
+                                            dronesInCharging = new()
+                                        });  
                                         break;
                                     }
                                 case 2://add drone
@@ -76,10 +86,16 @@ namespace ConsoleUI_BL
                                         input = Console.ReadLine();
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
-                                        //DroneStatuses.TryParse(input, out status);
+                                        DroneStatuses.TryParse(input, out status);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                       // mainObject.AddDrone(dId, model, weight);
+                                        bl.addDrone(new droneForList
+                                        {
+                                            id = dId,
+                                            model = model,
+                                            weight = weight,
+                                            status = status
+                                        }, id);
                                         break;
                                     }
                                 case 3://add customer
@@ -93,7 +109,17 @@ namespace ConsoleUI_BL
                                         double.TryParse(input, out longitude);
                                         input = Console.ReadLine();
                                         double.TryParse(input, out lattitude);
-                                      //  mainObject.AddCustomer(id, customerName, phone, longitude, lattitude);
+                                        bl.addCustomer(new customer
+                                        {
+                                            id = id,
+                                            name = customerName,
+                                            phone = phone,
+                                            location = new location
+                                            {
+                                                Latitude = lattitude,
+                                                Longitude = longitude
+                                            }
+                                        });
                                         break;
                                     }
                                 case 4://add parcel
@@ -109,7 +135,19 @@ namespace ConsoleUI_BL
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
                                         Priorities.TryParse(input, out priority);
-                                        //mainObject.AddParcel(0, sId, tId, weight, priority, 0);
+                                        bl.addParcel(new parcelInDelivery
+                                        {
+                                            sender=new customerForParcel
+                                            {
+                                                id=sId
+                                            },
+                                            receiver=new customerForParcel
+                                            {
+                                                id=tId
+                                            },
+                                            weight = weight,
+                                            priority = priority
+                                        });
                                         break;
                                     }
                                 default:
@@ -126,26 +164,26 @@ namespace ConsoleUI_BL
                             Console.WriteLine("3: Update customer detailes\n");
                             Console.WriteLine("4: Update battery status: send drone to charge\n");
                             Console.WriteLine("5: Update battery status: release drone frome charging\n");
-                            Console.WriteLine("6:Update parcel and drone connection\n");
-                            Console.WriteLine("7:Update deliver parcel by drone\n");
-                            Console.WriteLine("8:Update pick up parcel by drone\n");
+                            Console.WriteLine("6: Update parcel and drone connection\n");
+                            Console.WriteLine("7: Update deliver parcel by drone\n");
+                            Console.WriteLine("8: Update pick up parcel by drone\n");
 
 
                             input = Console.ReadLine();
                             Int32.TryParse(input, out inputVal2);
                             switch (inputVal2)
                             {
-                                case 1://match drone to parcel
+                                case 1://Update drone name
                                     {
-                                        Console.WriteLine("enter parcel id and drone id");
+                                        Console.WriteLine("enter drone id and new name");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                        input = Console.ReadLine();
-                                        Int32.TryParse(input, out dId);//drone
+                                        name = Console.ReadLine();
+
                                         //mainObject.Match(id, dId);
                                         break;
                                     }
-                                case 2://update pick up by drone
+                                case 2://Update station detailes
                                     {
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
@@ -153,7 +191,7 @@ namespace ConsoleUI_BL
                                        // mainObject.PickUpTime(mainObject.ConvertParcel(id));
                                         break;
                                     }
-                                case 3://update delivery parcel status
+                                case 3://Update customer detailes
                                     {
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
@@ -161,7 +199,7 @@ namespace ConsoleUI_BL
                                       //  mainObject.DeliveryTime(mainObject.ConvertParcel(id));
                                         break;
                                     }
-                                case 4://send drone to charge
+                                case 4://Update battery status: send drone to charge
                                     {
                                         Console.WriteLine("all the available stations:");
                                        // mainObject.PrintStationWithChargeSlots();//***
@@ -173,7 +211,7 @@ namespace ConsoleUI_BL
                                       //  mainObject.ChargingDrone(mainObject.ConvertDrone(id), mainObject.ConvertStation(sId));
                                         break;
                                     }
-                                case 5://release drone from charging
+                                case 5://Update battery status: release drone frome charging
                                     {
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
@@ -181,7 +219,7 @@ namespace ConsoleUI_BL
                                      //   mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
                                         break;
                                     }
-                                case 6://release drone from charging
+                                case 6://Update parcel and drone connection
                                     {
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
@@ -189,7 +227,7 @@ namespace ConsoleUI_BL
                                      //   mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
                                         break;
                                     }
-                                case 7://release drone from charging
+                                case 7://Update deliver parcel by drone
                                     {
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
@@ -197,7 +235,7 @@ namespace ConsoleUI_BL
                                       //  mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
                                         break;
                                     }
-                                case 8://release drone from charging
+                                case 8://Update pick up parcel by drone
                                     {
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();

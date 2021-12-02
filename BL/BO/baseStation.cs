@@ -9,7 +9,7 @@ namespace IBL.BO
     public class baseStation
     {
         public int id { get; set; }
-        public int name { get; set; }
+        public string name { get; set; }
         public location location { get; set; }
         public int chargingSlots { get; set; }
         public List<droneInCharging> dronesInCharging { get; set; }

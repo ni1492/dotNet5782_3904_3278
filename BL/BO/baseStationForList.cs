@@ -9,7 +9,7 @@ namespace IBL.BO
     public class baseStationForList
     {
         public int id { get; set; }
-        public int name { get; set; }
+        public string name { get; set; }
         public int availableSlots { get; set; }
         public int usedSlots { get; set; }
         public override string ToString()

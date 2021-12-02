@@ -15,7 +15,7 @@ namespace DALObject
         {
             DataSource.Initialize();
         }
-        public  void AddStation(int Id, int name, double longitude, double lattitude, int chargeSlots)//add a new station
+        public  void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
             //initialize new station object:
             foreach (Station s in DataSource.baseStations)

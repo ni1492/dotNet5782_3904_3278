@@ -11,7 +11,7 @@ namespace DAL
     {
         public interface IDal
         {
-            public void AddStation(int Id, int name, double longitude, double lattitude, int chargeSlots);//add a new station
+            public void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots);//add a new station
             public void AddDrone(int Id, string model, WeightCategories maxWeight);//add a new drone
             public void AddCustomer(int Id, string name, string phone, double longitude, double lattitude);//add a new customer
             public void AddParcel(int id, int sId, int tId, WeightCategories weight, Priorities priority, int dId);//add new parcel

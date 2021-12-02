@@ -36,12 +36,12 @@ namespace DALObject
             Config.mediumPK = R.Next(0, 100) + R.NextDouble();
             Config.heavyPK = R.Next(0, 100) + R.NextDouble();
             Config.chargingPH = R.Next(0, 100) + R.NextDouble();
-            int num = R.Next(2, 5); 
+            int num = R.Next(2, 5);
             for (int i = 0; i < num; i++)//initialization of 2-4 stations
             {
                 Station station = new Station();
                 station.Id = Config.StationID++;
-                station.Name = R.Next(1000, 10000);
+                station.Name = "station " + (i+1);
                 station.Longitude = R.Next(-180, 180) + (double)(R.Next(1000, 10000)) / 10000;
                 station.Lattitude = R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000;
                 station.ChargeSlots = R.Next(50);
