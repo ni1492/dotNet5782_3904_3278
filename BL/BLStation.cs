@@ -20,7 +20,6 @@ namespace IBL
             {
                 throw;
                 //exception
-                //question - when do we initialize the list in each station??
             }
         }
         public void updateStation(int id, string name, int chargingSlots)

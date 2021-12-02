@@ -42,7 +42,6 @@ namespace DAL
             public void deleteStation(int id);
             public void deleteParcel(int id);
 
-
         }
     }
 

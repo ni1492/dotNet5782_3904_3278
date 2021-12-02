@@ -11,7 +11,7 @@ namespace IBL.BO
         public int id { get; set; }
         public WeightCategories weight { get; set; }
         public Priorities priority { get; set; }
-        public bool status { get; set; }
+        public bool status { get; set; }//ממתין לאיסוף=0 בדרך ליעד=1
         public customerForParcel sender { get; set; }
         public customerForParcel receiver { get; set; }
         public location pickUp { get; set; }

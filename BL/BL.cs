@@ -27,7 +27,7 @@ namespace IBL
             mediumPK = powerUse[2];
             heavyPK = powerUse[3];
             chargingPH = powerUse[4];
-           initializeDrone();
+          // initializeDrone();
             
         }
         private void initializeDrone()

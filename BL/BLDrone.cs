@@ -129,6 +129,7 @@ namespace IBL
                 }
             }
             drones.Find(drone => drone.id == id).status = DroneStatuses.available;
+            drones.Find(drone => drone.id == id).parcelID = 0;
         }
         public void sendDroneToCharge(int id)
         {
@@ -168,28 +169,32 @@ namespace IBL
         public drone displayDrone(int id)
         {
            droneForList drone = drones.Find(drone => drone.id == id);
-            parcelInDelivery p =( new parcelInDelivery
+            parcel temp = displayParcel(drone.parcelID);
+            parcelInDelivery p = (new parcelInDelivery
             {
-                id=drone.id,
-                /*weight,
-        priority, 
-    status ,
-sender ,
-        customerForParcel receiver
-      pickUp
-       destination
-  distance*/
+                id = temp.id,
+                weight = temp.weight,
+                priority = temp.priority,
+                // status=getStatus(temp.id),
+                sender = temp.sender,
+                receiver = temp.receiver,
+                pickUp = senderLocation(temp.id),
+                destination = targetLocation(temp.id)
             });
-            BO.drone droneBO = (new drone
+            if (getStatus(temp.id) == ParcelStatus.PickedUp)
+                p.status = true;
+            else
+                p.status = false;
+            return (new drone
             {
                 id = drone.id,
                 model = drone.model,
                 weight = drone.weight,
                 currentLocation = drone.currentLocation,
-                battery=drone.battery,
-                status=drone.status,
+                battery = drone.battery,
+                status = drone.status,
+                parcel = p
             });
-            return droneBO;
         }
         public IEnumerable<droneForList> displayDroneList()
         {
