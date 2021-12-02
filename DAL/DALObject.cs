@@ -446,6 +446,23 @@ namespace DALObject
                     yield return item;
             }
         }
+        public void deleteDrone(int id)
+        {
+            DataSource.drones.RemoveAll(Drone => Drone.Id == id);
+        }
+
+        public void deleteCustomer(int id)
+        {
+            DataSource.customers.RemoveAll(Customer => Customer.Id == id);
+        }
+        public void deleteStation(int id)
+        {
+            DataSource.baseStations.RemoveAll(Station => Station.Id == id);
+        }
+        public void deleteParcel(int id)
+        {
+            DataSource.parcels.RemoveAll(Parcel => Parcel.Id == id);
+        }
     }
 
 }

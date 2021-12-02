@@ -179,7 +179,7 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine("enter drone id and new name");
                                         input = Console.ReadLine();
-                                        Int32.TryParse(input, out id);//parcel
+                                        Int32.TryParse(input, out id);
                                         name = Console.ReadLine();
                                         bl.updateDrone(id, name);
                                         break;
@@ -188,10 +188,10 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
-                                        Int32.TryParse(input, out id);//parcel
+                                        Int32.TryParse(input, out id);
                                         Console.WriteLine("(enter 1 for changing name, 2 for changing number of charging slots, 3 for both)");
                                         input = Console.ReadLine();
-                                        Int32.TryParse(input, out num);//parcel
+                                        Int32.TryParse(input, out num);
                                         if(num==1)
                                         {
                                             Console.WriteLine("enter name");
@@ -219,10 +219,10 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
-                                        Int32.TryParse(input, out id);//parcel
+                                        Int32.TryParse(input, out id);
                                         Console.WriteLine("(enter 1 for changing name, 2 for changing phone number, 3 for both)");
                                         input = Console.ReadLine();
-                                        Int32.TryParse(input, out num);//parcel
+                                        Int32.TryParse(input, out num);
                                         if (num == 1)
                                         {
                                             Console.WriteLine("enter name");
