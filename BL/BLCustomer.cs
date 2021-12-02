@@ -4,35 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
+using IDAL.DO;
+
+
 namespace IBL
 {
     public partial class BL : IBL
     {
-        public void addCustomer(customer customer)
+        public void addCustomer(customer customer) //adding a new customer
         {
-            try
+            try 
             {
                 dl.AddCustomer(customer.id, customer.name, customer.phone, customer.location.Longitude, customer.location.Latitude);
             }
-            catch
+            catch (Exception ex) //catches if the ID already exists
             {
-                //exception - exists
+                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
 
         }
-        public void updateCustomer(int id, string name, string phone)
+        public void updateCustomer(int id, string name, string phone) //update a customers details
         {
-            IDAL.DO.Customer tempDL = dl.PrintCustomer(id);
-            dl.deleteCustomer(id);
-            if (name != null)
+            IDAL.DO.Customer tempDL = dl.PrintCustomer(id); //catch
+
+            dl.deleteCustomer(id);  //catch
+            if (name != null) 
                 tempDL.Name = name;
             if (phone != null)
                 tempDL.Phone = phone;
-            dl.AddCustomer(tempDL.Id, tempDL.Name, tempDL.Phone, tempDL.Longitude, tempDL.Lattitude);
+
+            dl.AddCustomer(tempDL.Id, tempDL.Name, tempDL.Phone, tempDL.Longitude, tempDL.Lattitude); //catch 
+            //throw - if the customer doesnt exist
         }
-        public customer displayCustomer(int id)
+        public customer displayCustomer(int id) //displays the customer requested
         {
-            IDAL.DO.Customer cus = dl.PrintCustomer(id);
+            IDAL.DO.Customer cus = dl.PrintCustomer(id); //catch
             List<parcelAtCustomer> fromCus = new();
             List<parcelAtCustomer> toCus = new();
             foreach (var p in displayParcelList())
@@ -44,7 +50,7 @@ namespace IBL
                         id = p.id,
                         weight = p.weight,
                         priority = p.priority,
-                        status = getStatus(p.id),
+                        status = getStatus(p.id), //catch
                         otherCus = new customerForParcel
                         {
                             name = p.sender,
@@ -83,16 +89,16 @@ namespace IBL
                 fromCus = fromCus,
                 toCus = toCus
             };
-
+            //throw if the customer doesnt exist
         }
 
-        public IEnumerable<customerForList> displayCustomerList()
+        public IEnumerable<customerForList> displayCustomerList() //displays the list of customers
         {
             foreach (var cus in dl.PrintAllCustomer())
             {
                 int notAcceptedPar = 0;
                 int notDeliveredPar = 0;
-                customer c = displayCustomer(cus.Id);
+                customer c = displayCustomer(cus.Id); //catch
                 foreach (var parcel in c.toCus)
                 {
                     if (parcel.status != ParcelStatus.Delivered)

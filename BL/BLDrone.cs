@@ -11,26 +11,40 @@ namespace IBL
     public partial class BL : IBL
     {
         public Random r = new Random();
-        public void addDrone(droneForList drone, int stationId)
+        public void addDrone(droneForList drone, int stationId) //adds new drone (to the list in DAL layer and in the BL layer)
         {
-            drone.battery = (double)r.Next(20, 40);
-            drone.status = DroneStatuses.maintenance;
-            dl.ChargingDrone(drone.id, stationId);
-            drone.currentLocation = stationLocation(stationId);
+            drone.battery = (double)r.Next(20, 40); // the battery startes between 20-40 percent
+            drone.status = DroneStatuses.maintenance; //started in charging
+            drone.currentLocation = stationLocation(stationId); //the starting location is the charging station location
             drone.parcelID = 0;
-            drones.Add(drone);
-            //add exception - drone exists - check in the dal layer 
-            //and add exception for station id
+            try
+            {
+                dl.AddDrone(drone.id, drone.model, (IDAL.DO.WeightCategories)drone.weight);
+            }
+            catch (Exception ex) //catches if the ID already exists
+            {
+                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+            try
+            {
+                dl.ChargingDrone(drone.id, stationId); //we need to add to the charging list (DAL)
+            }
+            catch (Exception ex) //catches if the ID of the drone and the station exists
+            {
+                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+            drones.Add(drone); //if it doesnt already exist then we will add to the list of drones (BL)
+
         }
-        public void matchParcelToDrone(int id)
+
+        public void matchParcelToDrone(int id)  //match fuction - recieves a drone ID
         {
-           // try
-           // {
+          
                 if (isMatched(id))
                 {
-                    int parcelId = parcelToMatch(id);
+                    int parcelId = parcelToMatch(id); //catch
 
-                    dl.Match(parcelId, id);
+                    dl.Match(parcelId, id); //catch
                     foreach (var item in drones)
                     {
                         if (item.id == id)
@@ -39,23 +53,19 @@ namespace IBL
                         }
                     }
                 }
-          //  }
-         //   catch
-          //  {
-
-          //  }
+        
         }
-        public void updateDrone(int id, string model)
+        public void updateDrone(int id, string model)  //update the drone model name
         {
-           IDAL.DO.Drone tempDL = dl.PrintDrone(id);
-            dl.deleteDrone(id);
-            dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight);
-            droneForList tempBL = drones.Find(drone => drone.id == id);
-            tempBL.model = model;
-            drones.RemoveAll(drone => drone.id == id);
-            drones.Add(tempBL);
+           IDAL.DO.Drone tempDL = dl.PrintDrone(id); //catch  //find the drone in the DAL
+            dl.deleteDrone(id); //catch  //delltes the old drone before the changes
+            dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight); //catch  //adds the drone with the changes
+            droneForList tempBL = drones.Find(drone => drone.id == id); //finds it in the drone list
+            tempBL.model = model; ///changes the model name
+            drones.RemoveAll(drone => drone.id == id); //removes the old drone from the list
+            drones.Add(tempBL); //adds the drone with the changes
         }
-        public void pickupParcel(int id)
+        public void pickupParcel(int id) //sends a drone to pick up a parcel
         {
             int parcelId = drones.Find(drone => drone.id == id).parcelID;
             if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.Scheduled) 
@@ -92,7 +102,7 @@ namespace IBL
                 }
             }
         }
-        public void deliverParcel(int id)
+        public void deliverParcel(int id) // drone delivers the parcel
         {
             int parcelId = drones.Find(drone => drone.id == id).parcelID;
             if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.PickedUp)
@@ -131,7 +141,7 @@ namespace IBL
             drones.Find(drone => drone.id == id).status = DroneStatuses.available;
             drones.Find(drone => drone.id == id).parcelID = 0;
         }
-        public void sendDroneToCharge(int id)
+        public void sendDroneToCharge(int id) //sends the drone to charge
         {
             droneForList d = drones.Find(drone => drone.id == id);
             if (d.status != DroneStatuses.available)
@@ -155,7 +165,7 @@ namespace IBL
             drones.Find(drone => drone.id == id).status = DroneStatuses.maintenance;
             drones.Find(drone => drone.id == id).battery -= battery;
         }
-        public void releaseDroneFromCharge(int id, DateTime time)
+        public void releaseDroneFromCharge(int id, DateTime time) //releases the drone from charging
         {
             if (drones.Find(drone => drone.id == id).status != DroneStatuses.maintenance) 
             {
@@ -166,7 +176,7 @@ namespace IBL
             drones.Find(drone => drone.id == id).battery += battery;
             dl.ReleaseChargingDrone(id);
         }
-        public drone displayDrone(int id)
+        public drone displayDrone(int id) //displays the requested drone //remember to throw and catch
         {
            droneForList drone = drones.Find(drone => drone.id == id);
             parcel temp = displayParcel(drone.parcelID);
@@ -196,14 +206,14 @@ namespace IBL
                 parcel = p
             });
         }
-        public IEnumerable<droneForList> displayDroneList()
+        public IEnumerable<droneForList> displayDroneList() //displays the list of drones
         {
             foreach (var drone in drones)
             {
                 yield return drone;
             }
         }
-        private IEnumerable<parcelInDelivery> parcelsByPriority(List<parcelInDelivery> list, BO.Priorities prioritiy)
+        private IEnumerable<parcelInDelivery> parcelsByPriority(List<parcelInDelivery> list, BO.Priorities prioritiy) //returns all the parcels based on the priority requested ---should this be in BLParcel??
         {
             foreach (var parcel in list)
             {
@@ -211,7 +221,7 @@ namespace IBL
                     yield return parcel;
             }
         }
-        private IEnumerable<parcelInDelivery> parcelsByWeight(List<parcelInDelivery> list, BO.WeightCategories weight)
+        private IEnumerable<parcelInDelivery> parcelsByWeight(List<parcelInDelivery> list, BO.WeightCategories weight)//returns all the parcels based on the weight requested ----should this be in BLParcel??
         {
             foreach (var parcel in list)
             {
@@ -219,7 +229,7 @@ namespace IBL
                     yield return parcel;
             }
         }
-        private int parcelToMatch(int droneId)
+        private int parcelToMatch(int droneId) //finds the parcel that should be matched to the drone given (according to various standards)
         {
             BO.WeightCategories w = new();
             double battery = 0;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
+using IDAL.DO;
 
 namespace IBL
 {
@@ -11,17 +12,16 @@ namespace IBL
     {
         public void addParcel(parcelInDelivery parcel)
         {
-            DateTime x = DateTime.MinValue;
             try
             {
                 dl.AddParcel(0, parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0);
             }
-            catch(Exception)
+            catch (Exception ex) //catches if the ID already exists
             {
-                throw;
+                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         }
-        public parcel displayParcel(int id)
+        public parcel displayParcel(int id) //display the parcel requested
         {
             foreach (var p in dl.PrintAllParcel())
             {
@@ -33,19 +33,21 @@ namespace IBL
                         sender = new customerForParcel
                         {
                             id = p.SenderId,
-                            name = dl.PrintCustomer(p.SenderId).Name
+                            name = dl.PrintCustomer(p.SenderId).Name 
+                            //catch
                         },
                         receiver = new customerForParcel
                         {
                             id = p.TargetId,
-                            name = dl.PrintCustomer(p.TargetId).Name
+                            name = dl.PrintCustomer(p.TargetId).Name 
+                            //catch
                         },
                         weight = (BO.WeightCategories)p.Weight,
                         priority = (BO.Priorities)p.Priority,
                         drone = new droneForParcel
                         {
                             id = p.DroneId,
-                            battery = getBattery(p.DroneId),
+                            battery = getBattery(p.DroneId), //catch
                             currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
                         },
                         creation = p.Requested,
@@ -55,28 +57,28 @@ namespace IBL
                     });
                 }
             }
-            //throw- parcel not exist
+            //throw exception is id doesnt exist
             return new parcel();
                 }
-        public IEnumerable<parcelForList> displayParcelList()
+        public IEnumerable<parcelForList> displayParcelList() //displays the list of all parcels 
         {
             foreach (var p in dl.PrintAllParcel())
             {
                 yield return (new parcelForList
                 {
                     id = p.Id,
-                    sender = dl.PrintCustomer(p.SenderId).Name,
-                    receiver = dl.PrintCustomer(p.TargetId).Name,
+                    sender = dl.PrintCustomer(p.SenderId).Name,   //catch
+                    receiver = dl.PrintCustomer(p.TargetId).Name,   //catch
                     weight = (BO.WeightCategories)p.Weight,
                     priority = (BO.Priorities)p.Priority,
-                    status=getStatus(p.Id)
+                    status=getStatus(p.Id) //catch
                 });
                 
             }
         }
-        private ParcelStatus getStatus(int id)
+        private ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
         {
-            parcel p = displayParcel(id);
+            parcel p = displayParcel(id);  //catch
             DateTime x = DateTime.MinValue;
             if (p.delivery != x)
                 return ParcelStatus.Delivered;
@@ -85,21 +87,22 @@ namespace IBL
             if (p.match != x)
                 return ParcelStatus.Scheduled;
             return ParcelStatus.Requested;
+            //throw exception is id doesnt exist
         }
-        public IEnumerable<parcelForList> displayParcelListWithoutDrone()
+        public IEnumerable<parcelForList> displayParcelListWithoutDrone() //displays all the parcels that havent been matched with a drone
         {
             foreach (var p in dl.PrintAllParcel())
             {
-                if(getStatus(p.Id)!=ParcelStatus.Requested)
+                if(getStatus(p.Id)!=ParcelStatus.Requested)  //catch
                 {
                     yield return (new parcelForList
                     {
-                        id = p.Id,
-                        sender = dl.PrintCustomer(p.SenderId).Name,
-                        receiver = dl.PrintCustomer(p.TargetId).Name,
+                        id = p.Id, 
+                        sender = dl.PrintCustomer(p.SenderId).Name,  //catch
+                        receiver = dl.PrintCustomer(p.TargetId).Name,   //catch
                         weight = (BO.WeightCategories)p.Weight,
                         priority = (BO.Priorities)p.Priority,
-                        status = getStatus(p.Id)
+                        status = getStatus(p.Id)   //catch
                     });
                 }
             }

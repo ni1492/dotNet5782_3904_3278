@@ -10,36 +10,39 @@ namespace IBL
 {
     public partial class BL:IBL
     {
-        public IDal dl;
-        public List<droneForList> drones;
-        public double availablePK;
+        public IDal dl; //the DAL object 
+        public List<droneForList> drones; //the list of drones saved in the BL layer
+        //שדות נוספים: פנוי, נושא משקל קל, בינוני וכבד+שדה של הטענה לשעה
+        public double availablePK; 
         public double lightPK;
         public double mediumPK;
         public double heavyPK;
         public double chargingPH;
         public BL()
         {
-            dl = new DALObject.DALObject();
-            drones = new List<droneForList>();
-            double[] powerUse = dl.powerUse();
+            dl = new DALObject.DALObject(); //initialize the DAL object
+            drones = new List<droneForList>(); //initialize the list of drones 
+            //initializing the different variables 
+            double[] powerUse = dl.powerUse(); 
             availablePK = powerUse[0];
             lightPK = powerUse[1];
             mediumPK = powerUse[2];
             heavyPK = powerUse[3];
             chargingPH = powerUse[4];
-          // initializeDrone();
+            initializeDrone(); //initializing the program
             
         }
         private void initializeDrone()
         {
-            Random r = new Random();
-            foreach (var item in dl.PrintAllDrone())//bulding list of drones
+            Random r = new Random(); 
+            foreach (var item in dl.PrintAllDrone())//bulding list of drones - adding them from the DAL layer
             {
                 drones.Add(new droneForList
                 {
                     id = item.Id,
                     model = item.Model,
                     weight = (WeightCategories)item.MaxWeight
+
                 });//adding drone to the list
             }
             foreach (var item in drones)
@@ -53,7 +56,7 @@ namespace IBL
                     item.battery = (double)r.Next((int)minBattery, 100);
 
                 }
-                if ((isMatched(item.id)) && !(isPickedUp(item.id))) //id matched and not yet picked up
+                if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
                 {
                     item.status = DroneStatuses.delivery;
                     item.currentLocation = nearestStation(senderLocation(findParcelDelivery(item.id)));//returns the closet station to the sender
@@ -64,8 +67,8 @@ namespace IBL
                 }
                 else//not matched to any parcel
                 {
-                    item.status = (DroneStatuses)r.Next(1, 2);
-                    if (item.status == DroneStatuses.available)
+                    item.status = (DroneStatuses)r.Next(1, 2); //the status will be randomized between in available and maintenance
+                    if (item.status == DroneStatuses.available) //creating a list of all locations of customers that have had parcels delivered to them
                     {
                         List<location> locations = new List<location>();
                         int count = 0;
@@ -94,15 +97,16 @@ namespace IBL
                         }
                         item.currentLocation = locations[r.Next(0, count)];
                         //the location in random from a list of customers that have had parcels delivered to them
+                        //////PROBLEMPROBLEMPROBLEM!!! -- this is all assuming that exists a customer that has had parcels delivered to them!!! if not - it is randomized between NOTHING and it throws and exception!
                         double minBattery = calcMinBattery(item)+1; //returns the minimum battery needed to allow the drone to make the delivery
                         item.battery = (double)r.Next((int)minBattery, 100);
                     }
-                    if (item.status == DroneStatuses.maintenance)
+                    if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
                     {
-                        int stationId = r.Next(1, dl.PrintAllStation().Count());
+                        int stationId = r.Next(1, dl.PrintAllStation().Count()); 
                         item.currentLocation = stationLocation(stationId);
                             //the drone location will be the location of the station chosen
-                        item.battery = (double)r.Next(0, 20);
+                        item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
 
                     }
                 }
