@@ -12,14 +12,14 @@ namespace IBL
         public void addParcel(parcelInDelivery parcel)
         {
             DateTime x = DateTime.MinValue;
-          //  try
-           // {
+            try
+            {
                 dl.AddParcel(0, parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0);
-           // }
-           // catch
-           // {
-
-           // }
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
         public parcel displayParcel(int id)
         {

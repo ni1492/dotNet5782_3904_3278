@@ -63,18 +63,26 @@ namespace ConsoleUI_BL
                                         double.TryParse(input, out lattitude);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out chargeSlots);
-                                        bl.addStation(new baseStation
+                                        try
                                         {
-                                            id = id,
-                                            name = name,
-                                            location = new location
+                                            bl.addStation(new baseStation
                                             {
-                                                Longitude = longitude,
-                                                Latitude = lattitude
-                                            },
-                                            chargingSlots = chargeSlots,
-                                            dronesInCharging = new()
-                                        });  
+                                                id = id,
+                                                name = name,
+                                                location = new location
+                                                {
+                                                    Longitude = longitude,
+                                                    Latitude = lattitude
+                                                },
+                                                chargingSlots = chargeSlots,
+                                                dronesInCharging = new()
+                                            });
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
+                                       
                                         break;
                                     }
                                 case 2://add drone
@@ -91,13 +99,21 @@ namespace ConsoleUI_BL
                                         DroneStatuses.TryParse(input, out status);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        bl.addDrone(new droneForList
+                                        try
                                         {
-                                            id = dId,
-                                            model = model,
-                                            weight = weight,
-                                            status = status
-                                        }, id);
+                                            bl.addDrone(new droneForList
+                                            {
+                                                id = dId,
+                                                model = model,
+                                                weight = weight,
+                                                status = status
+                                            }, id);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
+                                       
                                         break;
                                     }
                                 case 3://add customer
@@ -111,17 +127,25 @@ namespace ConsoleUI_BL
                                         double.TryParse(input, out longitude);
                                         input = Console.ReadLine();
                                         double.TryParse(input, out lattitude);
-                                        bl.addCustomer(new customer
+                                        try
                                         {
-                                            id = id,
-                                            name = customerName,
-                                            phone = phone,
-                                            location = new location
+                                            bl.addCustomer(new customer
                                             {
-                                                Latitude = lattitude,
-                                                Longitude = longitude
-                                            }
-                                        });
+                                                id = id,
+                                                name = customerName,
+                                                phone = phone,
+                                                location = new location
+                                                {
+                                                    Latitude = lattitude,
+                                                    Longitude = longitude
+                                                }
+                                            });
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
+                                        
                                         break;
                                     }
                                 case 4://add parcel
@@ -137,19 +161,27 @@ namespace ConsoleUI_BL
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
                                         Priorities.TryParse(input, out priority);
-                                        bl.addParcel(new parcelInDelivery
+                                        try
                                         {
-                                            sender=new customerForParcel
+                                            bl.addParcel(new parcelInDelivery
                                             {
-                                                id=sId
-                                            },
-                                            receiver=new customerForParcel
-                                            {
-                                                id=tId
-                                            },
-                                            weight = weight,
-                                            priority = priority
-                                        });
+                                                sender = new customerForParcel
+                                                {
+                                                    id = sId
+                                                },
+                                                receiver = new customerForParcel
+                                                {
+                                                    id = tId
+                                                },
+                                                weight = weight,
+                                                priority = priority
+                                            });
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
+                                        
                                         break;
                                     }
                                 default:
@@ -181,7 +213,14 @@ namespace ConsoleUI_BL
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         model = Console.ReadLine();
-                                        bl.updateDrone(id, model);
+                                        try
+                                        {
+                                            bl.updateDrone(id, model);
+                                        }
+                                        catch(Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 2://Update station detailes
@@ -212,7 +251,14 @@ namespace ConsoleUI_BL
                                             input = Console.ReadLine();
                                             Int32.TryParse(input, out chargeSlots);
                                         }
-                                        bl.updateStation(id, name, chargeSlots);
+                                        try
+                                        {
+                                            bl.updateStation(id, name, chargeSlots);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 3://Update customer detailes
@@ -241,7 +287,14 @@ namespace ConsoleUI_BL
                                             name = Console.ReadLine();
                                             phone = Console.ReadLine();
                                         }
-                                        bl.updateCustomer(id, name, phone);
+                                        try
+                                        {
+                                            bl.updateCustomer(id, name, phone);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 4://Update battery status: send drone to charge
@@ -259,7 +312,14 @@ namespace ConsoleUI_BL
                                         Int32.TryParse(input, out id);
                                         input = Console.ReadLine();
                                         DateTime.TryParse(input, out time);
-                                        bl.releaseDroneFromCharge(id, time);//datetime
+                                        try
+                                        {
+                                            bl.releaseDroneFromCharge(id, time);//datetime
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 6://Update parcel and drone connection
@@ -267,7 +327,14 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        bl.matchParcelToDrone(id);
+                                        try
+                                        {
+                                            bl.matchParcelToDrone(id);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 7://Update deliver parcel by drone
@@ -275,7 +342,14 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        bl.deliverParcel(id);
+                                        try
+                                        {
+                                            bl.deliverParcel(id);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 8://Update pick up parcel by drone
@@ -283,10 +357,16 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the pardel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        bl.pickupParcel(id);
+                                        try
+                                        {
+                                            bl.pickupParcel(id);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
-
                                 default:
                                     Console.WriteLine("ERROR\n");
                                     break;
@@ -309,7 +389,15 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(bl.displayStation(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.displayStation(id));
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
+                                        
                                         break;
                                     }
                                 case 2://display drone
@@ -317,7 +405,14 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(bl.displayDrone(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.displayDrone(id));
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 3://display customer
@@ -325,7 +420,14 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(bl.displayCustomer(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.displayCustomer(id));
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 case 4://display parcel
@@ -333,7 +435,14 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(bl.displayParcel(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.displayParcel(id));
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
+                                        }
                                         break;
                                     }
                                 default:

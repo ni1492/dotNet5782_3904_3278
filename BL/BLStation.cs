@@ -16,8 +16,9 @@ namespace IBL
             {
                 dl.AddStation(station.id,station.name , station.location.Longitude, station.location.Latitude, station.chargingSlots);
             }
-            catch
+            catch(Exception)
             {
+                throw;
                 //exception
                 //question - when do we initialize the list in each station??
             }
