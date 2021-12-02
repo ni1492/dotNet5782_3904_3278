@@ -11,7 +11,7 @@ namespace IBL
     {
         public void addParcel(parcelInDelivery parcel)
         {
-            DateTime x = new DateTime(0, 0, 0, 0, 0, 0);
+            DateTime x = DateTime.MinValue;
           //  try
            // {
                 dl.AddParcel(0, parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0);
@@ -77,7 +77,7 @@ namespace IBL
         private ParcelStatus getStatus(int id)
         {
             parcel p = displayParcel(id);
-            DateTime x = new DateTime(0, 0, 0, 0, 0, 0);
+            DateTime x = DateTime.MinValue;
             if (p.delivery != x)
                 return ParcelStatus.Delivered;
             if (p.pickup != x)

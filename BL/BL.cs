@@ -27,6 +27,7 @@ namespace IBL
             mediumPK = powerUse[2];
             heavyPK = powerUse[3];
             chargingPH = powerUse[4];
+           // initializeDrone();
             
         }
         private void initializeDrone()
@@ -126,7 +127,7 @@ namespace IBL
 
             foreach (var item in dl.PrintAllParcel())//goes over all the parcel in the DAL layer
             {
-                if ((item.DroneId == droneId) && (item.Delivered != new DateTime(0, 0, 0, 0, 0, 0)))//chack if the drone is deliverd
+                if ((item.DroneId == droneId) && (item.Delivered !=DateTime.MinValue))//chack if the drone is deliverd
                 {
                     return true;
                 }
@@ -137,7 +138,7 @@ namespace IBL
         {
             foreach (var item in dl.PrintAllParcel())//goes over all the parcel in the DAL layer
             {
-                if ((item.DroneId == droneId) && (item.PickedUp != new DateTime(0, 0, 0, 0, 0, 0)))//chack if the parcel is picked up
+                if ((item.DroneId == droneId) && (item.PickedUp != DateTime.MinValue))//chack if the parcel is picked up
                 {
                     return true;
                 }

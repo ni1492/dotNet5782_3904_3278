@@ -15,9 +15,39 @@ namespace IBL.BO
         public Priorities priority { get; set; }
         public droneForParcel drone { get; set; }
         public DateTime creation { get; set; }
-        public DateTime match { get; set; }
-        public DateTime pickup { get; set; }
-        public DateTime delivery { get; set; }
+        public DateTime match 
+        {
+            get
+            {
+                return match;
+            }
+            set
+            {
+                match = DateTime.MinValue;
+            }
+        }
+        public DateTime pickup
+        {
+            get
+            {
+                return pickup;
+            }
+            set
+            {
+                pickup = DateTime.MinValue;
+            }
+        }
+        public DateTime delivery
+        {
+            get
+            {
+                return delivery;
+            }
+            set
+            {
+                delivery = DateTime.MinValue;
+            }
+        }
         public override string ToString()//custom print function for parcel 
         {
             return ("Parcel Id: " + id + "\nSender: " + sender + "\nReceiver: " + receiver + "\nWeight of the parcel: " + weight +
