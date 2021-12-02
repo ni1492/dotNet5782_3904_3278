@@ -184,7 +184,7 @@ namespace ConsoleUI_BL
                                         bl.updateDrone(id, model);
                                         break;
                                     }
-                                case 2://Update station detailes//need func
+                                case 2://Update station detailes
                                     {
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
@@ -215,7 +215,7 @@ namespace ConsoleUI_BL
                                         bl.updateStation(id, name, chargeSlots);
                                         break;
                                     }
-                                case 3://Update customer detailes//need func
+                                case 3://Update customer detailes
                                     {
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();

@@ -22,7 +22,13 @@ namespace IBL
         }
         public void updateCustomer(int id, string name, string phone)
         {
-
+            IDAL.DO.Customer tempDL = dl.PrintCustomer(id);
+            dl.deleteCustomer(id);
+            if (name != null)
+                tempDL.Name = name;
+            if (phone != null)
+                tempDL.Phone = phone;
+            dl.AddCustomer(tempDL.Id, tempDL.Name, tempDL.Phone, tempDL.Longitude, tempDL.Lattitude);
         }
         public customer displayCustomer(int id)
         {
