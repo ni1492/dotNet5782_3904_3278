@@ -21,14 +21,6 @@ namespace IBL
 
            // }
         }
-        public void pickupParcel(int id)
-        {
-
-        }
-        public void deliverParcel(int id)
-        {
-
-        }
         public parcel displayParcel(int id)
         {
             foreach (var p in dl.PrintAllParcel())
@@ -82,7 +74,6 @@ namespace IBL
                 
             }
         }
-
         private ParcelStatus getStatus(int id)
         {
             parcel p = displayParcel(id);
@@ -95,7 +86,6 @@ namespace IBL
                 return ParcelStatus.Scheduled;
             return ParcelStatus.Requested;
         }
-
         public IEnumerable<parcelForList> displayParcelListWithoutDrone()
         {
             foreach (var p in dl.PrintAllParcel())

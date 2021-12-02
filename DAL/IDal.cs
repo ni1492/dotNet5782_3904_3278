@@ -19,8 +19,8 @@ namespace DAL
             public void Match(int pId, int dId); //matches a drone to a parcel
             public void PickUpTime(Parcel parcel);//Update pickup parcel by drone
             public void DeliveryTime(Parcel parcel);//Update delivery parcel status
-            public void ChargingDrone(Drone drone, Station station);//send drone to charge
-            public void ReleaseChargingDrone(Drone drone);//release drone from charging
+            public void ChargingDrone(int dId, int sId);//send drone to charge
+            public void ReleaseChargingDrone(int id);//release drone from charging
             public Station PrintStation(int id);//display station by station ID
             public Drone PrintDrone(int id);//display drone by drone ID
             public Customer PrintCustomer(int id);//display customer by customer ID

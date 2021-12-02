@@ -24,6 +24,7 @@ namespace ConsoleUI_BL
             int tId = 0;//target
             int dId = 0;//drone
             int num = 0;
+            DateTime time = DateTime.MinValue;
             Priorities priority = Priorities.regular;//enum priorities
             //end of initialization
             do
@@ -174,7 +175,7 @@ namespace ConsoleUI_BL
                             Int32.TryParse(input, out inputVal2);
                             switch (inputVal2)
                             {
-                                case 1://Update drone name
+                                case 1://Update drone name//need func
                                     {
                                         Console.WriteLine("enter drone id and new name");
                                         input = Console.ReadLine();
@@ -183,7 +184,7 @@ namespace ConsoleUI_BL
                                         bl.updateDrone(id, name);
                                         break;
                                     }
-                                case 2://Update station detailes
+                                case 2://Update station detailes//need func
                                     {
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
@@ -214,7 +215,7 @@ namespace ConsoleUI_BL
                                         bl.updateStation(id, name, chargeSlots);
                                         break;
                                     }
-                                case 3://Update customer detailes
+                                case 3://Update customer detailes//need func
                                     {
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
@@ -253,10 +254,12 @@ namespace ConsoleUI_BL
                                     }
                                 case 5://Update battery status: release drone frome charging
                                     {
-                                        Console.WriteLine("enter the drone id");
+                                        Console.WriteLine("enter the drone id and the time it was charging");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        bl.releaseDroneFromCharge(id, DateTime.Now);//datetime
+                                        input = Console.ReadLine();
+                                        DateTime.TryParse(input, out time);
+                                        bl.releaseDroneFromCharge(id, time);//datetime
                                         break;
                                     }
                                 case 6://Update parcel and drone connection

@@ -167,7 +167,7 @@ namespace ConsoleUI
                                         Int32.TryParse(input, out id);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out sId);
-                                        mainObject.ChargingDrone(mainObject.ConvertDrone(id), mainObject.ConvertStation(sId));
+                                        mainObject.ChargingDrone(id, sId);
                                         break;
                                     }
                                 case 5://release drone from charging
@@ -175,7 +175,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
+                                        mainObject.ReleaseChargingDrone(id);
                                         break;
                                     }
                                 default:

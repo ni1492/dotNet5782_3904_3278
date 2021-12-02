@@ -9,13 +9,13 @@ using DAL.IDAL;
 
 namespace DALObject
 {
-    public class DALObject:IDal
+    public class DALObject : IDal
     {
         public DALObject()
         {
             DataSource.Initialize();
         }
-        public  void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots)//add a new station
+        public void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
             //initialize new station object:
             foreach (Station s in DataSource.baseStations)
@@ -34,7 +34,7 @@ namespace DALObject
             //adds to base station list:
             DataSource.baseStations.Add(station);
         }
-        public  void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
+        public void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
         {
             //initialize new drone object:
             foreach (Drone d in DataSource.drones)
@@ -48,12 +48,12 @@ namespace DALObject
             drone.Id = Id;
             drone.Model = model;
             drone.MaxWeight = maxWeight;
-          //  drone.Status = status;
-          //  drone.Battery = battery;
+            //  drone.Status = status;
+            //  drone.Battery = battery;
             //adds to drones list:
             DataSource.drones.Add(drone);
         }
-        public  void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
+        public void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
         {
             //initialize new customer object:
             foreach (Customer c in DataSource.customers)
@@ -72,9 +72,9 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
-        public  void AddParcel(int id,int sId, int tId, WeightCategories weight, Priorities priority, int dId)//add new parcel
+        public void AddParcel(int id, int sId, int tId, WeightCategories weight, Priorities priority, int dId)//add new parcel
         {
-            if(id==0)
+            if (id == 0)
             {
                 id = DataSource.Config.ParcelID;
             }
@@ -103,7 +103,7 @@ namespace DALObject
             //add to parcels list
             DataSource.parcels.Add(parcel);
         }
-        public  void AddCharging(int dId, int sId)//adds a drone to charging
+        public void AddCharging(int dId, int sId)//adds a drone to charging
         {
             bool b = false;
             foreach (Station s in DataSource.baseStations)
@@ -113,7 +113,7 @@ namespace DALObject
                     b = true;
                 }
             }
-            if(!b)
+            if (!b)
                 throw new NotFoundException("station doesn't exist");
             b = false;
             foreach (Drone d in DataSource.drones)
@@ -133,7 +133,7 @@ namespace DALObject
             //adds to charging list:
             DataSource.inCharging.Add(charging);
         }
-        public  void Match(int pId, int dId) //matches a drone to a parcel
+        public void Match(int pId, int dId) //matches a drone to a parcel
         {
             bool b = false;
             foreach (Parcel p in DataSource.parcels)
@@ -168,7 +168,7 @@ namespace DALObject
                 }
             }
         }
-        public  void PickUpTime(Parcel parcel)//Update pickup parcel by drone
+        public void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
             bool b = false;
             foreach (Parcel p in DataSource.parcels)
@@ -181,13 +181,10 @@ namespace DALObject
             if (!b)
                 throw new NotFoundException("parcel doesn't exist");
 
-            for (int i=0; i<DataSource.drones.Count;i++)//goes over the list of drones to find the drone assigned to the parcel
+            for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone assigned to the parcel
             {
                 if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we update status
                 {
-                    Drone d = DataSource.drones[i];
-                    //update pickup
-                    DataSource.drones[i] = d;
                     for (int j = 0; j < DataSource.parcels.Count(); j++)//change the pickup time
                     {
                         if (DataSource.parcels[j].Id == parcel.Id)
@@ -202,7 +199,7 @@ namespace DALObject
                 }
             }
         }
-        public  void DeliveryTime(Parcel parcel)//Update delivery parcel status
+        public void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
             bool b = false;
             foreach (Parcel p in DataSource.parcels)
@@ -236,38 +233,26 @@ namespace DALObject
                 }
             }
         }
-        public  void ChargingDrone(Drone drone, Station station)//send drone to charge
+        public void ChargingDrone(int dId, int sId)//send drone to charge
         {
-            for (int i=0;i<DataSource.drones.Count;i++)//find the drone to update
-            {
-                if(DataSource.drones[i].Id==drone.Id)
-                {
-                    Drone d = DataSource.drones[i];
-                    //update charging status
-                    DataSource.drones[i] = d;
-
-                    break;
-                }
-            }
             for (int i = 0; i < DataSource.baseStations.Count; i++)//find the station to update
             {
-                if (DataSource.baseStations[i].Id == station.Id)
+                if (DataSource.baseStations[i].Id == sId)
                 {
                     Station s = DataSource.baseStations[i];
                     s.ChargeSlots--;
-                        DataSource.baseStations[i] = s;
+                    DataSource.baseStations[i] = s;
                     break;
                 }
             }
-            AddCharging(drone.Id, station.Id);//adds a new charging object to the list
-
+            AddCharging(dId, sId);//adds a new charging object to the list
         }
-        public  void ReleaseChargingDrone(Drone drone)//release drone from charging
+        public void ReleaseChargingDrone(int id)//release drone from charging
         {
             bool b = false;
             foreach (Drone d in DataSource.drones)
             {
-                if (d.Id == drone.Id)
+                if (d.Id == id)
                 {
                     b = true;
                 }
@@ -277,14 +262,11 @@ namespace DALObject
 
             for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone to update
             {
-                if (DataSource.drones[i].Id == drone.Id)//when the drone is found we updat status
+                if (DataSource.drones[i].Id == id)//when the drone is found we updat status
                 {
-                    Drone d = DataSource.drones[i];
-                    //update charging status
-                    DataSource.drones[i] = d;
                     foreach (DroneCharge charge in DataSource.inCharging)//goes over the list of charging and looks for the one with the drone that was given to release
                     {
-                        if (charge.DroneId == drone.Id)//if its found we remove it from the list
+                        if (charge.DroneId == id)//if its found we remove it from the list
                         {
                             for (int j = 0; j < DataSource.baseStations.Count(); j++)//goes over the station list to find the station that the given drone was charging at.
                             {
@@ -304,7 +286,7 @@ namespace DALObject
                 }
             }
         }
-        public  Station PrintStation(int id)//display station by station ID
+        public Station PrintStation(int id)//display station by station ID
         {
             foreach (Station station in DataSource.baseStations)//goes over the list of stations to find the station with that ID
             {
@@ -313,10 +295,10 @@ namespace DALObject
                     return station;
                 }
             }
-        throw new NotFoundException("station doesn't exist");
+            throw new NotFoundException("station doesn't exist");
 
         }
-        public  Drone PrintDrone(int id)//display drone by drone ID
+        public Drone PrintDrone(int id)//display drone by drone ID
         {
             foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone with that ID
             {
@@ -325,9 +307,9 @@ namespace DALObject
                     return drone;
                 }
             }
-           throw new NotFoundException("drone doesn't exist");
+            throw new NotFoundException("drone doesn't exist");
         }
-        public  Customer PrintCustomer(int id)//display customer by customer ID
+        public Customer PrintCustomer(int id)//display customer by customer ID
         {
             foreach (Customer customer in DataSource.customers)//goes over the list of customers to find the customer with that ID
             {
@@ -337,9 +319,9 @@ namespace DALObject
                 }
             }
             throw new NotFoundException("customer doesn't exist");
-            
+
         }
-        public  Parcel PrintParcel(int id)//display parcel by parcel ID
+        public Parcel PrintParcel(int id)//display parcel by parcel ID
         {
             foreach (Parcel parcel in DataSource.parcels)//goes over the list of parcels to find the parcel with that ID
             {
@@ -349,13 +331,13 @@ namespace DALObject
                 }
             }
             throw new NotFoundException("parcel doesn't exist");
-            
+
         }
         public IEnumerable<Station> PrintAllStation()//display all stations
         {
             foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
             {
-               yield return station;
+                yield return station;
             }
         }
         public IEnumerable<Drone> PrintAllDrone()//display all drones
@@ -395,7 +377,7 @@ namespace DALObject
                     yield return station;
             }
         }
-        public  Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
+        public Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
             int index = 0;
             foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and finds the one with the given ID and returns it
@@ -409,7 +391,7 @@ namespace DALObject
             Parcel p = new Parcel();//if the parcel does not exist - returns an empty parcel
             return p;
         }
-        public  Drone ConvertDrone(int id)//returns the drone of the ID that was given
+        public Drone ConvertDrone(int id)//returns the drone of the ID that was given
         {
             int index = 0;
             foreach (Drone drone in DataSource.drones)//goes over all the drones and finds the one with the given ID and returns it
@@ -423,7 +405,7 @@ namespace DALObject
             Drone d = new Drone();//if the parcel does not exist - returns an empty drone
             return d;
         }
-        public  Station ConvertStation(int id)//returns the station of the ID that was given
+        public Station ConvertStation(int id)//returns the station of the ID that was given
         {
             int index = 0;
             foreach (Station station in DataSource.baseStations)//goes over all the stations and finds the one with the given ID and returns it
@@ -437,13 +419,13 @@ namespace DALObject
             Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
-        public  double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
+        public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
             double lat1 = latitude1 * (Math.PI / 180.0);
             double long1 = longitude1 * (Math.PI / 180.0);
             double lat2 = latitude2 * (Math.PI / 180.0);
             double long2 = longitude2 * (Math.PI / 180.0) - long1;
-            double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) *Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
+            double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
             return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
         }
         public double[] powerUse()
@@ -460,7 +442,7 @@ namespace DALObject
         {
             foreach (var item in DataSource.inCharging)
             {
-                if(item.StationId==id)
+                if (item.StationId == id)
                     yield return item;
             }
         }

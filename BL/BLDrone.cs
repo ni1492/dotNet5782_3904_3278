@@ -15,7 +15,7 @@ namespace IBL
         {
             drone.battery = (double)r.Next(20, 40);
             drone.status = DroneStatuses.maintenance;
-            dl.AddCharging(drone.id, stationId);
+            dl.ChargingDrone(drone.id, stationId);
             drone.currentLocation = stationLocation(stationId);
             drone.parcelID = 0;
             drones.Add(drone);
@@ -49,13 +49,115 @@ namespace IBL
         {
 
         }
+        public void pickupParcel(int id)
+        {
+            int parcelId = drones.Find(drone => drone.id == id).parcelID;
+            if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.Scheduled) 
+            {
+                //trow- cant pick up parcel
+            }
+            dl.PickUpTime(new Parcel
+            {
+                Id = parcelId,
+                DroneId=id
+            });
+            foreach (var parcel in dl.PrintAllParcel())
+            {
+                if(parcel.Id==parcelId)
+                {
+                    foreach (var cust in dl.PrintAllCustomer())
+                    {
+                        if (cust.Id == parcel.SenderId)
+                        {
+                            drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
+                            {
+                                Latitude = cust.Lattitude,
+                                Longitude = cust.Longitude
+                            });
+                            drones.Find(drone => drone.id == id).currentLocation = (new location
+                            {
+                                Latitude = cust.Lattitude,
+                                Longitude = cust.Longitude
+                            });
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        public void deliverParcel(int id)
+        {
+            int parcelId = drones.Find(drone => drone.id == id).parcelID;
+            if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.PickedUp)
+            {
+                //trow- cant deliver parcel
+            }
+            dl.DeliveryTime(new Parcel
+            {
+                Id = parcelId,
+                DroneId = id
+            });
+            foreach (var parcel in dl.PrintAllParcel())
+            {
+                if (parcel.Id == parcelId)
+                {
+                    foreach (var cust in dl.PrintAllCustomer())
+                    {
+                        if (cust.Id == parcel.TargetId)
+                        {
+                            drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
+                            {
+                                Latitude = cust.Lattitude,
+                                Longitude = cust.Longitude
+                            });
+                            drones.Find(drone => drone.id == id).currentLocation = (new location
+                            {
+                                Latitude = cust.Lattitude,
+                                Longitude = cust.Longitude
+                            });
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            drones.Find(drone => drone.id == id).status = DroneStatuses.available;
+        }
         public void sendDroneToCharge(int id)
         {
-            
+            droneForList d = drones.Find(drone => drone.id == id);
+            if (d.status != DroneStatuses.available)
+            {
+                //throw-drone in delivery/maintane- cant send to charge
+            }
+            double battery = calcMinBattery(d);
+            if (battery> d.battery)
+            {
+                //throw- battery too low to get to station
+            }
+            location l = nearestCharging(d.currentLocation);
+            foreach (var item in dl.PrintAllStation())
+            {
+                if (item.Lattitude == l.Latitude && item.Longitude==l.Longitude)
+                {
+                    dl.ChargingDrone(id, item.Id);
+                }
+            }
+            drones.Find(drone => drone.id == id).currentLocation = l;
+            drones.Find(drone => drone.id == id).status = DroneStatuses.maintenance;
+            drones.Find(drone => drone.id == id).battery -= battery;
         }
         public void releaseDroneFromCharge(int id, DateTime time)
         {
-            //time???
+            if (drones.Find(drone => drone.id == id).status != DroneStatuses.maintenance) 
+            {
+                //throw
+            }
+            double battery = chargingPH * (time.Hour + time.Minute / 60);
+            drones.Find(drone => drone.id == id).status = DroneStatuses.available;
+            drones.Find(drone => drone.id == id).battery += battery;
+            dl.ReleaseChargingDrone(id);
         }
         public drone displayDrone(int id)
         {

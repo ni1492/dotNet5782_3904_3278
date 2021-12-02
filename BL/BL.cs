@@ -205,8 +205,7 @@ namespace IBL
 
         }
         private location nearestStation(location loc)//return the closest statuon to the location given by the user
-        {
-            
+        { 
             List<baseStation> locations = new List<baseStation>();
             foreach (var baseStation in dl.PrintAllStation())//buliding a list of all the station with the locations
             {
