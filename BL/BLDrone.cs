@@ -47,7 +47,13 @@ namespace IBL
         }
         public void updateDrone(int id, string model)
         {
-
+           IDAL.DO.Drone tempDL = dl.PrintDrone(id);
+            dl.deleteDrone(id);
+            dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight);
+            droneForList tempBL = drones.Find(drone => drone.id == id);
+            tempBL.model = model;
+            drones.RemoveAll(drone => drone.id == id);
+            drones.Add(tempBL);
         }
         public void pickupParcel(int id)
         {

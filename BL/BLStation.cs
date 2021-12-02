@@ -24,7 +24,17 @@ namespace IBL
         }
         public void updateStation(int id, string name, int chargingSlots)
         {
-
+            IDAL.DO.Station tempDL = dl.PrintStation(id);
+            dl.deleteStation(id);
+            if (name != null)
+                tempDL.Name = name;
+            if(chargingSlots!=0)
+            {
+                if(chargingSlots> dl.displayChargings(id).Count())
+                    tempDL.ChargeSlots = chargingSlots - dl.displayChargings(id).Count();
+               //else- throw- not enoght slots
+            }
+            dl.AddStation(tempDL.Id, tempDL.Name, tempDL.Longitude, tempDL.Lattitude, tempDL.ChargeSlots);
         }
         public baseStation displayStation(int id)
         {

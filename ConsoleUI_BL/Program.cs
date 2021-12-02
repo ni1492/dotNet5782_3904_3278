@@ -175,13 +175,13 @@ namespace ConsoleUI_BL
                             Int32.TryParse(input, out inputVal2);
                             switch (inputVal2)
                             {
-                                case 1://Update drone name//need func
+                                case 1://Update drone model
                                     {
-                                        Console.WriteLine("enter drone id and new name");
+                                        Console.WriteLine("enter drone id and new model");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        name = Console.ReadLine();
-                                        bl.updateDrone(id, name);
+                                        model = Console.ReadLine();
+                                        bl.updateDrone(id, model);
                                         break;
                                     }
                                 case 2://Update station detailes//need func
