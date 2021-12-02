@@ -161,7 +161,7 @@ namespace ConsoleUI
                                 case 4://send drone to charge
                                     {
                                         Console.WriteLine("all the available stations:");
-                                        mainObject.PrintStationWithChargeSlots();//***
+                                        mainObject.PrintStationWithChargeSlots();
                                         Console.WriteLine("enter the drone and station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);

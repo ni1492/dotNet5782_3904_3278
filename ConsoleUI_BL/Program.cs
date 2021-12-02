@@ -23,6 +23,7 @@ namespace ConsoleUI_BL
             int sId = 0;//sender
             int tId = 0;//target
             int dId = 0;//drone
+            int num = 0;
             Priorities priority = Priorities.regular;//enum priorities
             //end of initialization
             do
@@ -179,36 +180,75 @@ namespace ConsoleUI_BL
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
                                         name = Console.ReadLine();
-
-                                        //mainObject.Match(id, dId);
+                                        bl.updateDrone(id, name);
                                         break;
                                     }
                                 case 2://Update station detailes
                                     {
-                                        Console.WriteLine("enter the parcel id");
+                                        Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                       // mainObject.PickUpTime(mainObject.ConvertParcel(id));
+                                        Console.WriteLine("(enter 1 for changing name, 2 for changing number of charging slots, 3 for both)");
+                                        input = Console.ReadLine();
+                                        Int32.TryParse(input, out num);//parcel
+                                        if(num==1)
+                                        {
+                                            Console.WriteLine("enter name");
+                                            name = Console.ReadLine();
+                                            chargeSlots = 0;
+                                        }
+                                        if (num==2)
+                                        {
+                                            Console.WriteLine("enter number of charging slots");
+                                            input = Console.ReadLine();
+                                            Int32.TryParse(input, out chargeSlots);
+                                            name = null;
+                                        }
+                                        else
+                                        {
+                                        Console.WriteLine("enter name and number of charging slots");
+                                            name = Console.ReadLine();
+                                            input = Console.ReadLine();
+                                            Int32.TryParse(input, out chargeSlots);
+                                        }
+                                        bl.updateStation(id, name, chargeSlots);
                                         break;
                                     }
                                 case 3://Update customer detailes
                                     {
-                                        Console.WriteLine("enter the parcel id");
+                                        Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);//parcel
-                                      //  mainObject.DeliveryTime(mainObject.ConvertParcel(id));
+                                        Console.WriteLine("(enter 1 for changing name, 2 for changing phone number, 3 for both)");
+                                        input = Console.ReadLine();
+                                        Int32.TryParse(input, out num);//parcel
+                                        if (num == 1)
+                                        {
+                                            Console.WriteLine("enter name");
+                                            name = Console.ReadLine();
+                                            phone = null;
+                                        }
+                                        if (num == 2)
+                                        {
+                                            Console.WriteLine("enter number of charging slots");
+                                            phone = Console.ReadLine();
+                                            name = null;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("enter name and number of charging slots");
+                                            name = Console.ReadLine();
+                                            phone = Console.ReadLine();
+                                        }
+                                        bl.updateCustomer(id, name, phone);
                                         break;
                                     }
                                 case 4://Update battery status: send drone to charge
                                     {
-                                        Console.WriteLine("all the available stations:");
-                                       // mainObject.PrintStationWithChargeSlots();//***
-                                        Console.WriteLine("enter the drone and station id");
+                                        Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        input = Console.ReadLine();
-                                        Int32.TryParse(input, out sId);
-                                      //  mainObject.ChargingDrone(mainObject.ConvertDrone(id), mainObject.ConvertStation(sId));
+                                        bl.sendDroneToCharge(id);
                                         break;
                                     }
                                 case 5://Update battery status: release drone frome charging
@@ -216,7 +256,7 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                     //   mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
+                                        bl.releaseDroneFromCharge(id, DateTime.Now);//datetime
                                         break;
                                     }
                                 case 6://Update parcel and drone connection
@@ -224,23 +264,23 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                     //   mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
+                                        bl.matchParcelToDrone(id);
                                         break;
                                     }
                                 case 7://Update deliver parcel by drone
                                     {
-                                        Console.WriteLine("enter the drone id");
+                                        Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                      //  mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
+                                        bl.deliverParcel(id);
                                         break;
                                     }
                                 case 8://Update pick up parcel by drone
                                     {
-                                        Console.WriteLine("enter the drone id");
+                                        Console.WriteLine("enter the pardel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                      //  mainObject.ReleaseChargingDrone(mainObject.ConvertDrone(id));
+                                        bl.pickupParcel(id);
                                         break;
                                     }
 
@@ -266,7 +306,7 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                       // Console.WriteLine(mainObject.PrintStation(id));
+                                        Console.WriteLine(bl.displayStation(id));
                                         break;
                                     }
                                 case 2://display drone
@@ -274,7 +314,7 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                      //  Console.WriteLine(mainObject.PrintDrone(id));
+                                        Console.WriteLine(bl.displayDrone(id));
                                         break;
                                     }
                                 case 3://display customer
@@ -282,7 +322,7 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                     //   Console.WriteLine(mainObject.PrintCustomer(id));
+                                        Console.WriteLine(bl.displayCustomer(id));
                                         break;
                                     }
                                 case 4://display parcel
@@ -290,7 +330,7 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                      //  Console.WriteLine(mainObject.PrintParcel(id));
+                                        Console.WriteLine(bl.displayParcel(id));
                                         break;
                                     }
                                 default:
@@ -314,50 +354,50 @@ namespace ConsoleUI_BL
                             {
                                 case 1://display all base stations
                                     {
-                                        //foreach (Station item in mainObject.PrintAllStation())
-                                        //{
-                                        //    Console.WriteLine(item);
-                                        //}
+                                        foreach (var item in bl.displayStationList())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 2://display all drones
                                     {
-                                        //foreach (Drone item in mainObject.PrintAllDrone())
-                                        //{
-                                        //    Console.WriteLine(item);
-                                        //}
+                                        foreach (var item in bl.displayDroneList())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 3://display all customers
                                     {
-                                        //foreach (Customer item in mainObject.PrintAllCustomer())
-                                        //{
-                                        //    Console.WriteLine(item);
-                                        //}
+                                        foreach (var item in bl.displayCustomerList())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 4://display all parcels
                                     {
-                                        //foreach (Parcel item in mainObject.PrintAllParcel())
-                                        //{
-                                        //    Console.WriteLine(item);
-                                        //}
+                                        foreach (var item in bl.displayParcelList())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 5://display all parcels not assigned to any drone
                                     {
-                                        //foreach (Parcel item in mainObject.PrintParcelsWithNoDrone())
-                                        //{
-                                        //    Console.WriteLine(item);
-                                        //}
+                                        foreach (var item in bl.displayParcelListWithoutDrone())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 case 6://display all base stations with available charging slots
                                     {
-                                        //foreach (Station item in mainObject.PrintStationWithChargeSlots())
-                                        //{
-                                        //    Console.WriteLine(item);
-                                        //}
+                                        foreach (var item in bl.displayStationListSlotsAvailable())
+                                        {
+                                            Console.WriteLine(item);
+                                        }
                                         break;
                                     }
                                 default:

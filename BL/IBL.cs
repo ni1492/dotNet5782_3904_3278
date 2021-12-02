@@ -24,7 +24,7 @@ namespace IBL
         public IEnumerable<droneForList> displayDroneList();
 
         public void addCustomer(customer customer);
-        public void updateCustomer(int id, string name, int phone);
+        public void updateCustomer(int id, string name, string phone);
         public customer displayCustomer(int id);
         public IEnumerable<customerForList> displayCustomerList();
 

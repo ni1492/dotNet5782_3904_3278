@@ -20,7 +20,7 @@ namespace IBL
             }
 
         }
-        public void updateCustomer(int id, string name, int phone)
+        public void updateCustomer(int id, string name, string phone)
         {
 
         }
