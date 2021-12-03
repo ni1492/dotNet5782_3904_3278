@@ -482,9 +482,16 @@ namespace ConsoleUI_BL
                                     }
                                 case 3://display all customers
                                     {
-                                        foreach (var item in bl.displayCustomerList())
+                                        try
                                         {
-                                            Console.WriteLine(item);
+                                            foreach (var item in bl.displayCustomerList())
+                                            {
+                                                Console.WriteLine(item);
+                                            }
+                                        }
+                                        catch (Exception)
+                                        {
+                                            throw;
                                         }
                                         break;
                                     }

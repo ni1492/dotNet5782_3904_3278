@@ -23,6 +23,8 @@ namespace IBL
         }
         public parcel displayParcel(int id) //display the parcel requested
         {
+            if (id == 0)
+                return null;
             foreach (var p in dl.PrintAllParcel())
             {
                 if (p.Id == id)
@@ -78,13 +80,13 @@ namespace IBL
         }
         private ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
         {
-            parcel p = displayParcel(id);  //catch
+           IDAL.DO.Parcel p = dl.PrintParcel(id);  //catch
             DateTime x = DateTime.MinValue;
-            if (p.delivery != x)
+            if (p.Delivered != x)
                 return ParcelStatus.Delivered;
-            if (p.pickup != x)
+            if (p.PickedUp != x)
                 return ParcelStatus.PickedUp;
-            if (p.match != x)
+            if (p.Scheduled != x)
                 return ParcelStatus.Scheduled;
             return ParcelStatus.Requested;
             //throw exception is id doesnt exist

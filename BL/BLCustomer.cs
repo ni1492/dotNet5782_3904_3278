@@ -41,8 +41,17 @@ namespace IBL
             IDAL.DO.Customer cus = dl.PrintCustomer(id); //catch
             List<parcelAtCustomer> fromCus = new();
             List<parcelAtCustomer> toCus = new();
+            int sId = 0;
+            int tId = 0;
             foreach (var p in displayParcelList())
             {
+                foreach (var item in dl.PrintAllCustomer())
+                {
+                    if (item.Name == p.sender)
+                        sId = item.Id;
+                    if (item.Name == p.receiver)
+                        tId = item.Id;
+                }
                 if (p.receiver == cus.Name)
                 {
                     toCus.Add(new parcelAtCustomer
@@ -54,12 +63,13 @@ namespace IBL
                         otherCus = new customerForParcel
                         {
                             name = p.sender,
-                            id = dl.PrintAllCustomer().ToList().Find(customer => customer.Name == p.sender).Id
+                            id=sId
+ //                           id = dl.PrintAllCustomer().ToList().Find(customer => customer.Name == p.sender).Id
 
                         }
                     });
                 }
-                if (p.sender == cus.Name)
+               else if (p.sender == cus.Name)
                 {
                     fromCus.Add(new parcelAtCustomer
                     {
@@ -70,10 +80,11 @@ namespace IBL
                         otherCus = new customerForParcel
                         {
                             name = p.receiver,
-                            id = dl.PrintAllCustomer().ToList().Find(customer => customer.Name == p.receiver).Id
+                            id = tId
+                            //   id = dl.PrintAllCustomer().ToList().Find(customer => customer.Name == p.receiver).Id
 
                         }
-                    });
+                    }) ;
                 }
             }
             return new customer

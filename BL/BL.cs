@@ -95,11 +95,24 @@ namespace IBL
                             }
 
                         }
-                        item.currentLocation = locations[r.Next(0, count)];
+                        if (count != 0)
+                            item.currentLocation = locations[r.Next(0, count)];
+                        else
+                            item.currentLocation = new location
+                            {
+                                Latitude = r.Next(-180, 180) + (double)(r.Next(1000, 10000)) / 10000,
+                                Longitude = r.Next(-90, 90) + (double)(r.Next(1000, 10000)) / 10000
+                            };
                         //the location in random from a list of customers that have had parcels delivered to them
                         //////PROBLEMPROBLEMPROBLEM!!! -- this is all assuming that exists a customer that has had parcels delivered to them!!! if not - it is randomized between NOTHING and it throws and exception!
-                        double minBattery = calcMinBattery(item)+1; //returns the minimum battery needed to allow the drone to make the delivery
-                        item.battery = (double)r.Next((int)minBattery, 100);
+                        double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                        if(minBattery<=100)
+                             item.battery = (double)r.Next((int)minBattery, 101);
+                        else
+                        {
+                            item.battery = (double)r.Next(0, 101);
+
+                        }
                     }
                     if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
                     {

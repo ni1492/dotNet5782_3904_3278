@@ -180,21 +180,34 @@ namespace IBL
         {
            droneForList drone = drones.Find(drone => drone.id == id);
             parcel temp = displayParcel(drone.parcelID);
-            parcelInDelivery p = (new parcelInDelivery
+            if(temp!=null)
             {
-                id = temp.id,
-                weight = temp.weight,
-                priority = temp.priority,
-                // status=getStatus(temp.id),
-                sender = temp.sender,
-                receiver = temp.receiver,
-                pickUp = senderLocation(temp.id),
-                destination = targetLocation(temp.id)
-            });
-            if (getStatus(temp.id) == ParcelStatus.PickedUp)
-                p.status = true;
-            else
-                p.status = false;
+                parcelInDelivery p = (new parcelInDelivery
+                {
+                    id = temp.id,
+                    weight = temp.weight,
+                    priority = temp.priority,
+                    // status=getStatus(temp.id),
+                    sender = temp.sender,
+                    receiver = temp.receiver,
+                    pickUp = senderLocation(temp.id),
+                    destination = targetLocation(temp.id)
+                });
+                if (getStatus(temp.id) == ParcelStatus.PickedUp)
+                    p.status = true;
+                else
+                    p.status = false;
+                return (new drone
+                {
+                    id = drone.id,
+                    model = drone.model,
+                    weight = drone.weight,
+                    currentLocation = drone.currentLocation,
+                    battery = drone.battery,
+                    status = drone.status,
+                    parcel = p
+                });
+            }
             return (new drone
             {
                 id = drone.id,
@@ -203,7 +216,7 @@ namespace IBL
                 currentLocation = drone.currentLocation,
                 battery = drone.battery,
                 status = drone.status,
-                parcel = p
+                parcel = null
             });
         }
         public IEnumerable<droneForList> displayDroneList() //displays the list of drones
