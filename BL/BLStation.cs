@@ -26,16 +26,18 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Station tempDL = dl.PrintStation(id); //catch  //finds the station in the DAL layer
-                dl.deleteStation(id);  //catch //deletes the station before the changes 
+                IDAL.DO.Station tempDL = dl.PrintStation(id); //finds the station in the DAL layer
+               
                 if (name != null) //if the function recieves the name to update  - it changes the name
                     tempDL.Name = name;
                 if (chargingSlots != 0) //if the function recieves the number of charging slots to update  -it changes it
                 {
                     if (chargingSlots > dl.displayChargings(id).Count())
                         tempDL.ChargeSlots = chargingSlots - dl.displayChargings(id).Count();
-                    //else- throw- not enoght slots //catch for display
+                    else
+                        throw new BO.exceptions.SlotsException("not enoght slots for the station");
                 }
+                dl.deleteStation(id); //deletes the station before the changes 
                 dl.AddStation(tempDL.Id, tempDL.Name, tempDL.Longitude, tempDL.Lattitude, tempDL.ChargeSlots);
             }
             catch (Exception ex) //catches if the ID not exists

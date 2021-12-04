@@ -96,16 +96,13 @@ namespace ConsoleUI_BL
                                     }
                                 case 2://add drone
                                     {
-                                        Console.WriteLine("enter: id, model, max weight, drone status, station id");
+                                        Console.WriteLine("enter: id, model, max weight, station id");
                                         Console.WriteLine("weight options: light, medium, heavy");
-                                        Console.WriteLine("DroneStatuses options: available, maintenance, delivery");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out dId);
                                         model = Console.ReadLine();
                                         input = Console.ReadLine();
                                         WeightCategories.TryParse(input, out weight);
-                                        input = Console.ReadLine();
-                                        DroneStatuses.TryParse(input, out status);
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         try
@@ -114,8 +111,7 @@ namespace ConsoleUI_BL
                                             {
                                                 id = dId,
                                                 model = model,
-                                                weight = weight,
-                                                status = status
+                                                weight = weight
                                             }, id);
                                         }
                                         catch (Exception x)
@@ -294,13 +290,13 @@ namespace ConsoleUI_BL
                                         }
                                         else if (num == 2)
                                         {
-                                            Console.WriteLine("enter number of charging slots");
+                                            Console.WriteLine("enter phone number");
                                             phone = Console.ReadLine();
                                             name = null;
                                         }
                                         else
                                         {
-                                            Console.WriteLine("enter name and number of charging slots");
+                                            Console.WriteLine("enter name and phone number");
                                             name = Console.ReadLine();
                                             phone = Console.ReadLine();
                                         }
@@ -319,7 +315,14 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        bl.sendDroneToCharge(id);
+                                        try
+                                        {
+                                            bl.sendDroneToCharge(id);
+                                        }
+                                        catch (Exception x)
+                                        {
+                                            Console.WriteLine(x.Message);
+                                        }
                                         break;
                                     }
                                 case 5://Update battery status: release drone frome charging
@@ -356,7 +359,7 @@ namespace ConsoleUI_BL
                                     }
                                 case 7://Update deliver parcel by drone
                                     {
-                                        Console.WriteLine("enter the parcel id");
+                                        Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         try
@@ -371,7 +374,7 @@ namespace ConsoleUI_BL
                                     }
                                 case 8://Update pick up parcel by drone
                                     {
-                                        Console.WriteLine("enter the pardel id");
+                                        Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         try

@@ -37,6 +37,24 @@ namespace IBL
                 public TimeException(string message, Exception inner) : base(message, inner) { }
                 public TimeException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
             }
+
+        [Serializable]
+            public class BatteryException : Exception //if the information already exists
+            {
+                public BatteryException() : base() { }
+                public BatteryException(string message) : base(message) { }
+                public BatteryException(string message, Exception inner) : base(message, inner) { }
+                public BatteryException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+            }
+
+            [Serializable]
+            public class SlotsException : Exception //if the information already exists
+            {
+                public SlotsException() : base() { }
+                public SlotsException(string message) : base(message) { }
+                public SlotsException(string message, Exception inner) : base(message, inner) { }
+                public SlotsException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+            }
         }
     }
 }

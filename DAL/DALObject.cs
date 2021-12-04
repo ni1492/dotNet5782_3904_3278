@@ -111,6 +111,7 @@ namespace DALObject
                 if (s.Id == sId)
                 {
                     b = true;
+                    break;
                 }
             }
             if (!b)
@@ -121,6 +122,7 @@ namespace DALObject
                 if (d.Id == dId)
                 {
                     b = true;
+                    break;
                 }
             }
             if (!b)

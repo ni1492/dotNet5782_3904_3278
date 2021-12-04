@@ -14,8 +14,8 @@ namespace IBL.BO
         public int usedSlots { get; set; }
         public override string ToString()
         {
-            return ("Base Station Id: " + id + "\nBase Station Name: " + name + "\nNumber of Available Slots" + availableSlots
-                + "\nNumber of Slots In Usage:" + usedSlots + "\n");
+            return ("Base Station Id: " + id + "\nBase Station Name: " + name + "\nNumber of Available Slots: " + availableSlots
+                + "\nNumber of Slots In Usage: " + usedSlots + "\n");
         }
 
     }

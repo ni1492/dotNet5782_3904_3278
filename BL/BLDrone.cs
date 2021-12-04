@@ -50,6 +50,7 @@ namespace IBL
                         if (item.id == id)
                         {
                             item.status = DroneStatuses.delivery;
+                            item.parcelID = parcelId;
                         }
                     }
                 }
@@ -98,11 +99,17 @@ namespace IBL
                         {
                             if (cust.Id == parcel.SenderId)
                             {
-                                drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
+                                double distance= calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
                                 {
                                     Latitude = cust.Lattitude,
                                     Longitude = cust.Longitude
                                 });
+                                if (drones.Find(drone => drone.id == id).battery - availablePK * distance >= 0)
+                                    drones.Find(drone => drone.id == id).battery -= availablePK * distance;
+                                else
+                                {
+                                    throw new BO.exceptions.BatteryException("not enough battery to pick up the parcel");
+                                }
                                 drones.Find(drone => drone.id == id).currentLocation = (new location
                                 {
                                     Latitude = cust.Lattitude,
@@ -143,11 +150,17 @@ namespace IBL
                         {
                             if (cust.Id == parcel.TargetId)
                             {
-                                drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
+                                double distance = calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
                                 {
                                     Latitude = cust.Lattitude,
                                     Longitude = cust.Longitude
                                 });
+                                if (drones.Find(drone => drone.id == id).battery - availablePK * distance >= 0)
+                                    drones.Find(drone => drone.id == id).battery -= availablePK * distance;
+                                else
+                                {
+                                    throw new BO.exceptions.BatteryException("not enough battery to get to destination");
+                                }
                                 drones.Find(drone => drone.id == id).currentLocation = (new location
                                 {
                                     Latitude = cust.Lattitude,
@@ -180,6 +193,7 @@ namespace IBL
                 double battery = calcMinBattery(d);
                 if (battery > d.battery)
                 {
+                    throw new BO.exceptions.BatteryException("drone dont have enough battery to get to station");
                     //throw- battery too low to get to station
                 }
                 location l = nearestCharging(d.currentLocation);
@@ -188,6 +202,7 @@ namespace IBL
                     if (item.Lattitude == l.Latitude && item.Longitude == l.Longitude)
                     {
                         dl.ChargingDrone(id, item.Id);
+                        break;
                     }
                 }
                 drones.Find(drone => drone.id == id).currentLocation = l;
@@ -207,9 +222,11 @@ namespace IBL
                 {
                     throw new BO.exceptions.TimeException("drone not in charging");
                 }
-                double battery = chargingPH * (time.Hour + time.Minute / 60);
+                double battery = drones.Find(drone => drone.id == id).battery + chargingPH * (time.Hour + time.Minute / 60);
+                if (battery > 100)
+                    battery = 100;
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;
-                drones.Find(drone => drone.id == id).battery += battery;
+                drones.Find(drone => drone.id == id).battery = battery;
                 dl.ReleaseChargingDrone(id);
             }
             catch (Exception ex) //catches if the ID not exists

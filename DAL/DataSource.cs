@@ -31,11 +31,11 @@ namespace DALObject
         }
         public static void Initialize()//initialization of data for the program
         {
-            Config.availablePK = R.Next(0, 100) + R.NextDouble();
-            Config.lightPK = R.Next(0, 100) + R.NextDouble();
-            Config.mediumPK = R.Next(0, 100) + R.NextDouble();
-            Config.heavyPK = R.Next(0, 100) + R.NextDouble();
-            Config.chargingPH = R.Next(0, 100) + R.NextDouble();
+            Config.availablePK = R.Next(0, 30) + R.NextDouble();
+            Config.lightPK = R.Next(0, 30) + R.NextDouble();
+            Config.mediumPK = R.Next(0, 30) + R.NextDouble();
+            Config.heavyPK = R.Next(0, 30) + R.NextDouble();
+            Config.chargingPH = R.Next(30, 90) + R.NextDouble();
             int num = R.Next(2, 5);
             for (int i = 0; i < num; i++)//initialization of 2-4 stations
             {
@@ -86,7 +86,8 @@ namespace DALObject
                 parcel.PickedUp = new DateTime(R.Next(3, parcel.Delivered.Year), R.Next(1, 13), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random pick up time
                 parcel.Scheduled = new DateTime(R.Next(2, parcel.PickedUp.Year), parcel.Requested.Year, R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random schedule time
                 parcel.Requested =new DateTime(R.Next(1, parcel.Scheduled.Year),R.Next(1,13),R.Next(1,29),R.Next(0,24),R.Next(0,60),R.Next(0,60));//initialization of random request time
-                
+                parcel.DroneId = 0;
+                bool deliver = false;
                //need to make sure it make sence
                 foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
                 {
@@ -99,7 +100,7 @@ namespace DALObject
                             break;
                         }
                     }
-                    if (((drone.MaxWeight >= parcel.Weight) && (!matched))||parcel.Delivered==DateTime.MinValue)//makes sure the maximum weight of the drone can hold the parcel
+                    if ((drone.MaxWeight >= parcel.Weight) && (!matched))//makes sure the maximum weight of the drone can hold the parcel
                     {
                         parcel.DroneId = drone.Id;
                         parcel.Delivered = DateTime.MinValue;
@@ -109,16 +110,16 @@ namespace DALObject
                     }
                     else if ((drone.MaxWeight >= parcel.Weight)&& R.Next(0, 2) == 0)
                     {
-                        parcel.DroneId = drone.Id;
-
-                    }
-                    else
-                    {
                         parcel.DroneId = 0;
-                        parcel.Scheduled = DateTime.MinValue;
-                        parcel.PickedUp = DateTime.MinValue;
-                        parcel.Delivered = DateTime.MinValue;
+                        deliver = true;
+                        break;
                     }
+                }
+                if(!deliver&&parcel.DroneId==0)
+                {
+                    parcel.Delivered = DateTime.MinValue;
+                    parcel.PickedUp = DateTime.MinValue;
+                    parcel.Scheduled = DateTime.MinValue;
                 }
                 parcels.Add(parcel);
             }
