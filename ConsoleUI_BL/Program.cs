@@ -53,16 +53,25 @@ namespace ConsoleUI_BL
                             {
                                 case 1://add station
                                     {
-                                        Console.WriteLine("enter: id, name, longitude(30-33), lattitude(-30--27), charge slots number");
+                                        Console.WriteLine("enter: id, name, charge slots number, longitude(30-33), lattitude(-30- -27)");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         name = Console.ReadLine();
                                         input = Console.ReadLine();
-                                        double.TryParse(input, out longitude);
-                                        input = Console.ReadLine();
-                                        double.TryParse(input, out lattitude);
-                                        input = Console.ReadLine();
                                         Int32.TryParse(input, out chargeSlots);
+                                        do
+                                        {
+                                            Console.WriteLine("enter: longitude(30-33)");
+                                            input = Console.ReadLine();
+                                            double.TryParse(input, out longitude);
+                                        } while (longitude > 33 || longitude < 30);
+                                        do
+                                        {
+                                            Console.WriteLine("enter: lattitude(-30- -27)");
+                                            input = Console.ReadLine();
+                                            double.TryParse(input, out lattitude);
+                                        } while (lattitude > -27 || lattitude < -30);
+                                        
                                         try
                                         {
                                             bl.addStation(new baseStation
@@ -78,11 +87,11 @@ namespace ConsoleUI_BL
                                                 dronesInCharging = new()
                                             });
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
-                                       
+
                                         break;
                                     }
                                 case 2://add drone
@@ -109,24 +118,32 @@ namespace ConsoleUI_BL
                                                 status = status
                                             }, id);
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
-                                       
+
                                         break;
                                     }
                                 case 3://add customer
                                     {
-                                        Console.WriteLine("enter: id, name, phone number, longitude(30-33), lattitude(-30--27)");
+                                        Console.WriteLine("enter: id, name, phone number, longitude(30-33), lattitude(-30- -27)");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         customerName = Console.ReadLine();
                                         phone = Console.ReadLine();
-                                        input = Console.ReadLine();
-                                        double.TryParse(input, out longitude);
-                                        input = Console.ReadLine();
-                                        double.TryParse(input, out lattitude);
+                                        do
+                                        {
+                                            Console.WriteLine("enter: longitude(30-33)");
+                                            input = Console.ReadLine();
+                                            double.TryParse(input, out longitude);
+                                        } while (longitude > 33 || longitude < 30);
+                                        do
+                                        {
+                                            Console.WriteLine("enter: lattitude(-30- -27)");
+                                            input = Console.ReadLine();
+                                            double.TryParse(input, out lattitude);
+                                        } while (lattitude > -27 || lattitude < -30);
                                         try
                                         {
                                             bl.addCustomer(new customer
@@ -141,9 +158,9 @@ namespace ConsoleUI_BL
                                                 }
                                             });
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         
                                         break;
@@ -177,11 +194,11 @@ namespace ConsoleUI_BL
                                                 priority = priority
                                             });
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
-                                        
+
                                         break;
                                     }
                                 default:
@@ -217,9 +234,9 @@ namespace ConsoleUI_BL
                                         {
                                             bl.updateDrone(id, model);
                                         }
-                                        catch(Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -255,9 +272,9 @@ namespace ConsoleUI_BL
                                         {
                                             bl.updateStation(id, name, chargeSlots);
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -291,9 +308,9 @@ namespace ConsoleUI_BL
                                         {
                                             bl.updateCustomer(id, name, phone);
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -316,9 +333,9 @@ namespace ConsoleUI_BL
                                         {
                                             bl.releaseDroneFromCharge(id, time);//datetime
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -331,9 +348,9 @@ namespace ConsoleUI_BL
                                         {
                                             bl.matchParcelToDrone(id);
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -346,9 +363,9 @@ namespace ConsoleUI_BL
                                         {
                                             bl.deliverParcel(id);
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -361,9 +378,9 @@ namespace ConsoleUI_BL
                                         {
                                             bl.pickupParcel(id);
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -393,11 +410,11 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(bl.displayStation(id));
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
-                                        
+
                                         break;
                                     }
                                 case 2://display drone
@@ -409,9 +426,9 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(bl.displayDrone(id));
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -424,9 +441,9 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(bl.displayCustomer(id));
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -439,9 +456,9 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine(bl.displayParcel(id));
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }
@@ -489,9 +506,9 @@ namespace ConsoleUI_BL
                                                 Console.WriteLine(item);
                                             }
                                         }
-                                        catch (Exception)
+                                        catch (Exception x)
                                         {
-                                            throw;
+                                            Console.WriteLine(x.Message);
                                         }
                                         break;
                                     }

@@ -19,47 +19,63 @@ namespace IBL
             }
             catch (Exception ex) //catches if the ID already exists
             {
-                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                throw new BO.exceptions.ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         }
         public void updateStation(int id, string name, int chargingSlots) //update station details
         {
-            IDAL.DO.Station tempDL = dl.PrintStation(id); //catch  //finds the station in the DAL layer
-            dl.deleteStation(id);  //catch //deletes the station before the changes 
-            if (name != null) //if the function recieves the name to update  - it changes the name
-                tempDL.Name = name;
-            if(chargingSlots!=0) //if the function recieves the number of charging slots to update  -it changes it
+            try
             {
-                if(chargingSlots> dl.displayChargings(id).Count())
-                    tempDL.ChargeSlots = chargingSlots - dl.displayChargings(id).Count();
-               //else- throw- not enoght slots //catch for display
+                IDAL.DO.Station tempDL = dl.PrintStation(id); //catch  //finds the station in the DAL layer
+                dl.deleteStation(id);  //catch //deletes the station before the changes 
+                if (name != null) //if the function recieves the name to update  - it changes the name
+                    tempDL.Name = name;
+                if (chargingSlots != 0) //if the function recieves the number of charging slots to update  -it changes it
+                {
+                    if (chargingSlots > dl.displayChargings(id).Count())
+                        tempDL.ChargeSlots = chargingSlots - dl.displayChargings(id).Count();
+                    //else- throw- not enoght slots //catch for display
+                }
+                dl.AddStation(tempDL.Id, tempDL.Name, tempDL.Longitude, tempDL.Lattitude, tempDL.ChargeSlots);
             }
-            dl.AddStation(tempDL.Id, tempDL.Name, tempDL.Longitude, tempDL.Lattitude, tempDL.ChargeSlots); //catch
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+            
         }
         public baseStation displayStation(int id) //display the base station requested
         {
-            IDAL.DO.Station stationDO = dl.PrintStation(id);
-            baseStation stationBO = (new baseStation()
+            try
             {
-                id = stationDO.Id,
-                name = stationDO.Name,
-                location = new location
+                IDAL.DO.Station stationDO = dl.PrintStation(id);
+                baseStation stationBO = (new baseStation()
                 {
-                    Latitude = stationDO.Lattitude,
-                    Longitude = stationDO.Longitude
-                },
-                chargingSlots = stationDO.ChargeSlots,
-                dronesInCharging = new List<droneInCharging>()
-            });
-            foreach (var item in dl.displayChargings(id)) //catch
-            {
-                stationBO.dronesInCharging.Add(new droneInCharging
-                {
-                    id = item.DroneId,
-                    battery = getBattery(item.DroneId) //catch
+                    id = stationDO.Id,
+                    name = stationDO.Name,
+                    location = new location
+                    {
+                        Latitude = stationDO.Lattitude,
+                        Longitude = stationDO.Longitude
+                    },
+                    chargingSlots = stationDO.ChargeSlots,
+                    dronesInCharging = new List<droneInCharging>()
                 });
+                foreach (var item in dl.displayChargings(id)) //catch
+                {
+                    stationBO.dronesInCharging.Add(new droneInCharging
+                    {
+                        id = item.DroneId,
+                        battery = getBattery(item.DroneId)
+                    });
+                }
+                return stationBO;
             }
-            return stationBO;
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+           
         }
 
         private double getBattery(int droneId)

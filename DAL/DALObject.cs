@@ -440,6 +440,16 @@ namespace DALObject
         }
         public IEnumerable<DroneCharge> displayChargings(int id)
         {
+            bool b = false;
+            foreach (Station s in DataSource.baseStations)
+            {
+                if (s.Id == id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("station doesn't exist");
             foreach (var item in DataSource.inCharging)
             {
                 if (item.StationId == id)
@@ -448,19 +458,58 @@ namespace DALObject
         }
         public void deleteDrone(int id)
         {
+            bool b = false;
+            foreach (Drone d in DataSource.drones)
+            {
+                if (d.Id == id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("drone doesn't exist");
             DataSource.drones.RemoveAll(Drone => Drone.Id == id);
         }
-
         public void deleteCustomer(int id)
         {
+            bool b = false;
+            foreach (Customer c in DataSource.customers)
+            {
+                if (c.Id == id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("customer doesn't exist");
             DataSource.customers.RemoveAll(Customer => Customer.Id == id);
         }
         public void deleteStation(int id)
         {
+            bool b = false;
+            foreach (Station s in DataSource.baseStations)
+            {
+                if (s.Id == id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("station doesn't exist");
             DataSource.baseStations.RemoveAll(Station => Station.Id == id);
         }
         public void deleteParcel(int id)
         {
+            bool b = false;
+            foreach (Parcel p in DataSource.parcels)
+            {
+                if (p.Id == id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("parcel doesn't exist");
             DataSource.parcels.RemoveAll(Parcel => Parcel.Id == id);
         }
     }

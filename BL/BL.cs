@@ -104,7 +104,6 @@ namespace IBL
                                 Longitude = r.Next(-90, 90) + (double)(r.Next(1000, 10000)) / 10000
                             };
                         //the location in random from a list of customers that have had parcels delivered to them
-                        //////PROBLEMPROBLEMPROBLEM!!! -- this is all assuming that exists a customer that has had parcels delivered to them!!! if not - it is randomized between NOTHING and it throws and exception!
                         double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
                         if(minBattery<=100)
                              item.battery = (double)r.Next((int)minBattery, 101);

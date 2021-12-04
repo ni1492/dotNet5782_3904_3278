@@ -5,28 +5,39 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace IBL.BO
+namespace IBL
 {
-    public class exceptions:Exception //exceptions class 
+    namespace BO
     {
-        [Serializable]
-        public class NotFoundException : Exception // if the information does not exist 
+        public class exceptions : Exception //exceptions class 
         {
-            public NotFoundException() : base() { }
-            public NotFoundException(string message) : base(message) { }
-            public NotFoundException(string message, Exception inner) : base(message, inner) { }
-            public NotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-        }
+            [Serializable]
+            public class NotFoundException : Exception // if the information does not exist 
+            {
+                public NotFoundException() : base() { }
+                public NotFoundException(string message) : base(message) { }
+                public NotFoundException(string message, Exception inner) : base(message, inner) { }
+                public NotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+            }
 
-        [Serializable]
-        public class ExistException : Exception //if the information already exists
-        {
-            public ExistException() : base() { }
-            public ExistException(string message) : base(message) { }
-            public ExistException(string message, Exception inner) : base(message, inner) { }
-            public ExistException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-        }
+            [Serializable]
+            public class ExistException : Exception //if the information already exists
+            {
+                public ExistException() : base() { }
+                public ExistException(string message) : base(message) { }
+                public ExistException(string message, Exception inner) : base(message, inner) { }
+                public ExistException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+            }
 
+            [Serializable]
+            public class TimeException : Exception //if the information already exists
+            {
+                public TimeException() : base() { }
+                public TimeException(string message) : base(message) { }
+                public TimeException(string message, Exception inner) : base(message, inner) { }
+                public TimeException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+            }
+        }
     }
 }
 

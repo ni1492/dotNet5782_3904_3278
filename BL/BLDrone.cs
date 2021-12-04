@@ -23,7 +23,7 @@ namespace IBL
             }
             catch (Exception ex) //catches if the ID already exists
             {
-                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                throw new BO.exceptions.ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
             try
             {
@@ -31,15 +31,15 @@ namespace IBL
             }
             catch (Exception ex) //catches if the ID of the drone and the station exists
             {
-                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
             drones.Add(drone); //if it doesnt already exist then we will add to the list of drones (BL)
 
         }
-
         public void matchParcelToDrone(int id)  //match fuction - recieves a drone ID
         {
-          
+            try
+            {
                 if (isMatched(id))
                 {
                     int parcelId = parcelToMatch(id); //catch
@@ -53,150 +53,203 @@ namespace IBL
                         }
                     }
                 }
-        
+            }
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
         }
         public void updateDrone(int id, string model)  //update the drone model name
         {
-           IDAL.DO.Drone tempDL = dl.PrintDrone(id); //catch  //find the drone in the DAL
-            dl.deleteDrone(id); //catch  //delltes the old drone before the changes
-            dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight); //catch  //adds the drone with the changes
-            droneForList tempBL = drones.Find(drone => drone.id == id); //finds it in the drone list
-            tempBL.model = model; ///changes the model name
-            drones.RemoveAll(drone => drone.id == id); //removes the old drone from the list
-            drones.Add(tempBL); //adds the drone with the changes
+            try
+            {
+                IDAL.DO.Drone tempDL = dl.PrintDrone(id); //catch  //find the drone in the DAL
+                dl.deleteDrone(id); //catch  //delltes the old drone before the changes
+                dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight); //catch  //adds the drone with the changes
+                droneForList tempBL = drones.Find(drone => drone.id == id); //finds it in the drone list
+                tempBL.model = model; ///changes the model name
+                drones.RemoveAll(drone => drone.id == id); //removes the old drone from the list
+                drones.Add(tempBL); //adds the drone with the changes
+            }
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
         }
         public void pickupParcel(int id) //sends a drone to pick up a parcel
         {
-            int parcelId = drones.Find(drone => drone.id == id).parcelID;
-            if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.Scheduled) 
+            try
             {
-                //trow- cant pick up parcel
-            }
-            dl.PickUpTime(new Parcel
-            {
-                Id = parcelId,
-                DroneId=id
-            });
-            foreach (var parcel in dl.PrintAllParcel())
-            {
-                if(parcel.Id==parcelId)
+                int parcelId = drones.Find(drone => drone.id == id).parcelID;
+                if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.Scheduled)
                 {
-                    foreach (var cust in dl.PrintAllCustomer())
+                    throw new BO.exceptions.TimeException("parcel not scheduled yet");
+                }
+                dl.PickUpTime(new Parcel
+                {
+                    Id = parcelId,
+                    DroneId = id
+                });
+                foreach (var parcel in dl.PrintAllParcel())
+                {
+                    if (parcel.Id == parcelId)
                     {
-                        if (cust.Id == parcel.SenderId)
+                        foreach (var cust in dl.PrintAllCustomer())
                         {
-                            drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
+                            if (cust.Id == parcel.SenderId)
                             {
-                                Latitude = cust.Lattitude,
-                                Longitude = cust.Longitude
-                            });
-                            drones.Find(drone => drone.id == id).currentLocation = (new location
-                            {
-                                Latitude = cust.Lattitude,
-                                Longitude = cust.Longitude
-                            });
-                            break;
+                                drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
+                                {
+                                    Latitude = cust.Lattitude,
+                                    Longitude = cust.Longitude
+                                });
+                                drones.Find(drone => drone.id == id).currentLocation = (new location
+                                {
+                                    Latitude = cust.Lattitude,
+                                    Longitude = cust.Longitude
+                                });
+                                break;
+                            }
                         }
+                        break;
                     }
-                    break;
                 }
             }
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+
         }
         public void deliverParcel(int id) // drone delivers the parcel
         {
-            int parcelId = drones.Find(drone => drone.id == id).parcelID;
-            if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.PickedUp)
+            try
             {
-                //trow- cant deliver parcel
-            }
-            dl.DeliveryTime(new Parcel
-            {
-                Id = parcelId,
-                DroneId = id
-            });
-            foreach (var parcel in dl.PrintAllParcel())
-            {
-                if (parcel.Id == parcelId)
+                int parcelId = drones.Find(drone => drone.id == id).parcelID;
+                if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.PickedUp)
                 {
-                    foreach (var cust in dl.PrintAllCustomer())
-                    {
-                        if (cust.Id == parcel.TargetId)
-                        {
-                            drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
-                            {
-                                Latitude = cust.Lattitude,
-                                Longitude = cust.Longitude
-                            });
-                            drones.Find(drone => drone.id == id).currentLocation = (new location
-                            {
-                                Latitude = cust.Lattitude,
-                                Longitude = cust.Longitude
-                            });
-                            break;
-                        }
-                    }
-                    break;
+                    throw new BO.exceptions.TimeException("parcel not picked up yet");
                 }
+                dl.DeliveryTime(new Parcel
+                {
+                    Id = parcelId,
+                    DroneId = id
+                });
+                foreach (var parcel in dl.PrintAllParcel())
+                {
+                    if (parcel.Id == parcelId)
+                    {
+                        foreach (var cust in dl.PrintAllCustomer())
+                        {
+                            if (cust.Id == parcel.TargetId)
+                            {
+                                drones.Find(drone => drone.id == id).battery -= availablePK * calcDistance(drones.Find(drone => drone.id == id).currentLocation, new location
+                                {
+                                    Latitude = cust.Lattitude,
+                                    Longitude = cust.Longitude
+                                });
+                                drones.Find(drone => drone.id == id).currentLocation = (new location
+                                {
+                                    Latitude = cust.Lattitude,
+                                    Longitude = cust.Longitude
+                                });
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                drones.Find(drone => drone.id == id).status = DroneStatuses.available;
+                drones.Find(drone => drone.id == id).parcelID = 0;
             }
-            drones.Find(drone => drone.id == id).status = DroneStatuses.available;
-            drones.Find(drone => drone.id == id).parcelID = 0;
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
         }
         public void sendDroneToCharge(int id) //sends the drone to charge
         {
-            droneForList d = drones.Find(drone => drone.id == id);
-            if (d.status != DroneStatuses.available)
+            try
             {
-                //throw-drone in delivery/maintane- cant send to charge
-            }
-            double battery = calcMinBattery(d);
-            if (battery> d.battery)
-            {
-                //throw- battery too low to get to station
-            }
-            location l = nearestCharging(d.currentLocation);
-            foreach (var item in dl.PrintAllStation())
-            {
-                if (item.Lattitude == l.Latitude && item.Longitude==l.Longitude)
+                droneForList d = drones.Find(drone => drone.id == id);
+                if (d.status != DroneStatuses.available)
                 {
-                    dl.ChargingDrone(id, item.Id);
+                    throw new BO.exceptions.TimeException("drone not available");
+                    //throw-drone in delivery/maintane- cant send to charge
                 }
+                double battery = calcMinBattery(d);
+                if (battery > d.battery)
+                {
+                    //throw- battery too low to get to station
+                }
+                location l = nearestCharging(d.currentLocation);
+                foreach (var item in dl.PrintAllStation())
+                {
+                    if (item.Lattitude == l.Latitude && item.Longitude == l.Longitude)
+                    {
+                        dl.ChargingDrone(id, item.Id);
+                    }
+                }
+                drones.Find(drone => drone.id == id).currentLocation = l;
+                drones.Find(drone => drone.id == id).status = DroneStatuses.maintenance;
+                drones.Find(drone => drone.id == id).battery -= battery;
             }
-            drones.Find(drone => drone.id == id).currentLocation = l;
-            drones.Find(drone => drone.id == id).status = DroneStatuses.maintenance;
-            drones.Find(drone => drone.id == id).battery -= battery;
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
         }
         public void releaseDroneFromCharge(int id, DateTime time) //releases the drone from charging
         {
-            if (drones.Find(drone => drone.id == id).status != DroneStatuses.maintenance) 
+            try
             {
-                //throw
+                if (drones.Find(drone => drone.id == id).status != DroneStatuses.maintenance)
+                {
+                    throw new BO.exceptions.TimeException("drone not in charging");
+                }
+                double battery = chargingPH * (time.Hour + time.Minute / 60);
+                drones.Find(drone => drone.id == id).status = DroneStatuses.available;
+                drones.Find(drone => drone.id == id).battery += battery;
+                dl.ReleaseChargingDrone(id);
             }
-            double battery = chargingPH * (time.Hour + time.Minute / 60);
-            drones.Find(drone => drone.id == id).status = DroneStatuses.available;
-            drones.Find(drone => drone.id == id).battery += battery;
-            dl.ReleaseChargingDrone(id);
-        }
+            catch (Exception ex) //catches if the ID not exists
+            {
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+        } 
         public drone displayDrone(int id) //displays the requested drone //remember to throw and catch
         {
-           droneForList drone = drones.Find(drone => drone.id == id);
-            parcel temp = displayParcel(drone.parcelID);
-            if(temp!=null)
+            try
             {
-                parcelInDelivery p = (new parcelInDelivery
+                droneForList drone = drones.Find(drone => drone.id == id);
+                parcel temp = displayParcel(drone.parcelID);
+                if (temp != null)
                 {
-                    id = temp.id,
-                    weight = temp.weight,
-                    priority = temp.priority,
-                    // status=getStatus(temp.id),
-                    sender = temp.sender,
-                    receiver = temp.receiver,
-                    pickUp = senderLocation(temp.id),
-                    destination = targetLocation(temp.id)
-                });
-                if (getStatus(temp.id) == ParcelStatus.PickedUp)
-                    p.status = true;
-                else
-                    p.status = false;
+                    parcelInDelivery p = (new parcelInDelivery
+                    {
+                        id = temp.id,
+                        weight = temp.weight,
+                        priority = temp.priority,
+                        sender = temp.sender,
+                        receiver = temp.receiver,
+                        pickUp = senderLocation(temp.id),
+                        destination = targetLocation(temp.id)
+                    });
+                    if (getStatus(temp.id) == ParcelStatus.PickedUp)
+                        p.status = true;
+                    else
+                        p.status = false;
+                    return (new drone
+                    {
+                        id = drone.id,
+                        model = drone.model,
+                        weight = drone.weight,
+                        currentLocation = drone.currentLocation,
+                        battery = drone.battery,
+                        status = drone.status,
+                        parcel = p
+                    });
+                }
                 return (new drone
                 {
                     id = drone.id,
@@ -205,19 +258,13 @@ namespace IBL
                     currentLocation = drone.currentLocation,
                     battery = drone.battery,
                     status = drone.status,
-                    parcel = p
+                    parcel = null
                 });
             }
-            return (new drone
+            catch (Exception ex) //catches if the ID not exists
             {
-                id = drone.id,
-                model = drone.model,
-                weight = drone.weight,
-                currentLocation = drone.currentLocation,
-                battery = drone.battery,
-                status = drone.status,
-                parcel = null
-            });
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
         }
         public IEnumerable<droneForList> displayDroneList() //displays the list of drones
         {

@@ -19,88 +19,100 @@ namespace IBL
             }
             catch (Exception ex) //catches if the ID already exists
             {
-                throw new ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                throw new BO.exceptions.ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
 
         }
         public void updateCustomer(int id, string name, string phone) //update a customers details
         {
-            IDAL.DO.Customer tempDL = dl.PrintCustomer(id); //catch
+            try
+            {
+                IDAL.DO.Customer tempDL = dl.PrintCustomer(id);
 
-            dl.deleteCustomer(id);  //catch
-            if (name != null) 
-                tempDL.Name = name;
-            if (phone != null)
-                tempDL.Phone = phone;
+                dl.deleteCustomer(id); 
+                if (name != null)
+                    tempDL.Name = name;
+                if (phone != null)
+                    tempDL.Phone = phone;
 
-            dl.AddCustomer(tempDL.Id, tempDL.Name, tempDL.Phone, tempDL.Longitude, tempDL.Lattitude); //catch 
-            //throw - if the customer doesnt exist
+                dl.AddCustomer(tempDL.Id, tempDL.Name, tempDL.Phone, tempDL.Longitude, tempDL.Lattitude);
+            }
+            catch (Exception ex) //throw - if the customer doesnt exist
+            {
+
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+
         }
         public customer displayCustomer(int id) //displays the customer requested
         {
-            IDAL.DO.Customer cus = dl.PrintCustomer(id); //catch
-            List<parcelAtCustomer> fromCus = new();
-            List<parcelAtCustomer> toCus = new();
-            int sId = 0;
-            int tId = 0;
-            foreach (var p in displayParcelList())
+            try
             {
-                foreach (var item in dl.PrintAllCustomer())
+                IDAL.DO.Customer cus = dl.PrintCustomer(id);
+                List<parcelAtCustomer> fromCus = new();
+                List<parcelAtCustomer> toCus = new();
+                int sId = 0;
+                int tId = 0;
+                foreach (var p in displayParcelList())
                 {
-                    if (item.Name == p.sender)
-                        sId = item.Id;
-                    if (item.Name == p.receiver)
-                        tId = item.Id;
-                }
-                if (p.receiver == cus.Name)
-                {
-                    toCus.Add(new parcelAtCustomer
+                    foreach (var item in dl.PrintAllCustomer())
                     {
-                        id = p.id,
-                        weight = p.weight,
-                        priority = p.priority,
-                        status = getStatus(p.id), //catch
-                        otherCus = new customerForParcel
-                        {
-                            name = p.sender,
-                            id=sId
- //                           id = dl.PrintAllCustomer().ToList().Find(customer => customer.Name == p.sender).Id
-
-                        }
-                    });
-                }
-               else if (p.sender == cus.Name)
-                {
-                    fromCus.Add(new parcelAtCustomer
+                        if (item.Name == p.sender)
+                            sId = item.Id;
+                        if (item.Name == p.receiver)
+                            tId = item.Id;
+                    }
+                    if (p.receiver == cus.Name)
                     {
-                        id = p.id,
-                        weight = p.weight,
-                        priority = p.priority,
-                        status = getStatus(p.id),
-                        otherCus = new customerForParcel
+                        toCus.Add(new parcelAtCustomer
                         {
-                            name = p.receiver,
-                            id = tId
-                            //   id = dl.PrintAllCustomer().ToList().Find(customer => customer.Name == p.receiver).Id
-
-                        }
-                    }) ;
+                            id = p.id,
+                            weight = p.weight,
+                            priority = p.priority,
+                            status = getStatus(p.id), 
+                            otherCus = new customerForParcel
+                            {
+                                name = p.sender,
+                                id = sId
+                            }
+                        });
+                    }
+                    else if (p.sender == cus.Name)
+                    {
+                        fromCus.Add(new parcelAtCustomer
+                        {
+                            id = p.id,
+                            weight = p.weight,
+                            priority = p.priority,
+                            status = getStatus(p.id),
+                            otherCus = new customerForParcel
+                            {
+                                name = p.receiver,
+                                id = tId
+                            }
+                        });
+                    }
                 }
+                return new customer
+                {
+                    id = cus.Id,
+                    name = cus.Name,
+                    phone = cus.Phone,
+                    location = new location
+                    {
+                        Latitude = cus.Lattitude,
+                        Longitude = cus.Longitude
+                    },
+                    fromCus = fromCus,
+                    toCus = toCus
+                };
             }
-            return new customer
+            catch (Exception ex) //throw - if the customer doesnt exist
             {
-                id = cus.Id,
-                name = cus.Name,
-                phone = cus.Phone,
-                location = new location
-                {
-                    Latitude = cus.Lattitude,
-                    Longitude = cus.Longitude
-                },
-                fromCus = fromCus,
-                toCus = toCus
-            };
-            //throw if the customer doesnt exist
+
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+
         }
 
         public IEnumerable<customerForList> displayCustomerList() //displays the list of customers
@@ -109,7 +121,7 @@ namespace IBL
             {
                 int notAcceptedPar = 0;
                 int notDeliveredPar = 0;
-                customer c = displayCustomer(cus.Id); //catch
+                customer c = displayCustomer(cus.Id);
                 foreach (var parcel in c.toCus)
                 {
                     if (parcel.status != ParcelStatus.Delivered)
