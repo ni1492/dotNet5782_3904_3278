@@ -53,7 +53,7 @@ namespace ConsoleUI_BL
                             {
                                 case 1://add station
                                     {
-                                        Console.WriteLine("enter: id, name(number), longitude, lattitude, charge slots number");
+                                        Console.WriteLine("enter: id, name, longitude(30-33), lattitude(-30--27), charge slots number");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         name = Console.ReadLine();
@@ -118,7 +118,7 @@ namespace ConsoleUI_BL
                                     }
                                 case 3://add customer
                                     {
-                                        Console.WriteLine("enter: id, name, phone number, longitude, lattitude");
+                                        Console.WriteLine("enter: id, name, phone number, longitude(30-33), lattitude(-30--27)");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
                                         customerName = Console.ReadLine();

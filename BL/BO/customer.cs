@@ -27,7 +27,7 @@ namespace IBL.BO
                 to += p.ToString();
             }
             return ("Customer Id: " + id + "\nCustomer Name: " + name + "\nPhone Number: " + phone
-                + "\nLocation: " + location + "\nParcels From Customer:" + from + "\nParcels To Customer:" + to + "\n");
+                + "\nLocation: " + location + "\nParcels From Customer:\n" + from + "\nParcels To Customer:\n" + to + "\n");
         }
     }
 }

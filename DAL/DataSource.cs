@@ -42,8 +42,8 @@ namespace DALObject
                 Station station = new Station();
                 station.Id = Config.StationID++;
                 station.Name = "station " + (i+1);
-                station.Longitude = R.Next(-180, 180) + (double)(R.Next(1000, 10000)) / 10000;
-                station.Lattitude = R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000;
+                station.Longitude = R.Next(30, 33) + (double)(R.Next(1000, 10000)) / 10000;
+                station.Lattitude = R.Next(-30, -27) + (double)(R.Next(1000, 10000)) / 10000;
                 station.ChargeSlots = R.Next(50);
                 baseStations.Add(station);
             }
@@ -67,8 +67,8 @@ namespace DALObject
                 customer.Id = Config.CustomerID++;
                 customer.Name = names[i];
                 customer.Phone = ("0" + R.Next(100000000, 1000000000).ToString());
-                customer.Longitude = R.Next(-180, 180) + (double)(R.Next(1000, 10000)) / 10000;
-                customer.Lattitude = R.Next(-90, 90) + (double)(R.Next(1000, 10000)) / 10000;
+                customer.Longitude = R.Next(30, 33) + (double)(R.Next(1000, 10000)) / 10000;
+                customer.Lattitude = R.Next(-30, -27) + (double)(R.Next(1000, 10000)) / 10000;
                 customers.Add(customer);
             }
             num = R.Next(10, 15);
