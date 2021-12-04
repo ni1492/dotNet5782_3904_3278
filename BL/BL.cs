@@ -50,24 +50,35 @@ namespace IBL
                 if ((isMatched(item.id)) && (!isDelivered(item.id)) && (isPickedUp(item.id))) //if matched and picked up but not delivered-on delivery
                 {
                     item.status = DroneStatuses.delivery;
-                    item.currentLocation = senderLocation(findParcelDelivery(item.id));//returns the location of the sender
+                    item.parcelID = findParcelDelivery(item.id);
+                    item.currentLocation = senderLocation(item.parcelID);//returns the location of the sender
 
-                    double minBattery = calcMinBattery(item)+1; //returns the minimum battery needed to allow the drone to make the delivery
-                    item.battery = (double)r.Next((int)minBattery, 100);
-
+                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                    if (minBattery <= 100)
+                        item.battery = (double)r.Next((int)minBattery, 101);
+                    else
+                    {
+                        item.battery = (double)r.Next(50, 101);
+                    }
                 }
-                if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
+                else if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
                 {
                     item.status = DroneStatuses.delivery;
-                    item.currentLocation = nearestStation(senderLocation(findParcelDelivery(item.id)));//returns the closet station to the sender
+                    item.parcelID = findParcelDelivery(item.id);
+                    item.currentLocation = nearestStation(senderLocation(item.parcelID));//returns the closet station to the sender
 
-                    double minBattery = calcMinBattery(item)+1; //returns the minimum battery needed to allow the drone to make the delivery
-                    item.battery = (double)r.Next((int)minBattery, 100);
+                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                    if (minBattery <= 100)
+                        item.battery = (double)r.Next((int)minBattery, 101);
+                    else
+                    {
+                        item.battery = (double)r.Next(50, 101);
+                    }
 
                 }
                 else//not matched to any parcel
                 {
-                    item.status = (DroneStatuses)r.Next(1, 2); //the status will be randomized between in available and maintenance
+                    item.status = (DroneStatuses)r.Next(1, 3); //the status will be randomized between in available and maintenance
                     if (item.status == DroneStatuses.available) //creating a list of all locations of customers that have had parcels delivered to them
                     {
                         List<location> locations = new List<location>();
@@ -109,17 +120,17 @@ namespace IBL
                              item.battery = (double)r.Next((int)minBattery, 101);
                         else
                         {
-                            item.battery = (double)r.Next(0, 101);
+                            item.battery = (double)r.Next(50, 101);//cant get to any station
 
                         }
                     }
-                    if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
+                    else if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
                     {
                         int stationId = r.Next(1, dl.PrintAllStation().Count()); 
                         item.currentLocation = stationLocation(stationId);
                             //the drone location will be the location of the station chosen
                         item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
-
+                        dl.AddCharging(item.id, stationId);
                     }
                 }
             }

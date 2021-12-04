@@ -17,7 +17,7 @@ namespace IBL.BO
         public override string ToString()//custom print function for parcel 
         {
             return ("Parcel Id: " + id + "\nSender name: " + sender + "\nReceiver name: " + receiver + "\nWeight of the parcel: " + weight +
-                "\nPriority: " + priority + "\nDrone Status: " + status + "\n");
+                "\nPriority: " + priority + "\nParcel Status: " + status + "\n");
         }
     }
 }

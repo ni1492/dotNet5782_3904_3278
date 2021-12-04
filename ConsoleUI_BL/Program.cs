@@ -254,7 +254,7 @@ namespace ConsoleUI_BL
                                             name = Console.ReadLine();
                                             chargeSlots = 0;
                                         }
-                                        if (num==2)
+                                        else if (num==2)
                                         {
                                             Console.WriteLine("enter number of charging slots");
                                             input = Console.ReadLine();
@@ -292,7 +292,7 @@ namespace ConsoleUI_BL
                                             name = Console.ReadLine();
                                             phone = null;
                                         }
-                                        if (num == 2)
+                                        else if (num == 2)
                                         {
                                             Console.WriteLine("enter number of charging slots");
                                             phone = Console.ReadLine();

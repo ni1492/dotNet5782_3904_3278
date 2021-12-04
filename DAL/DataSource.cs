@@ -53,7 +53,7 @@ namespace DALObject
                 Drone drone = new Drone();
                 drone.Id = Config.DroneID++;
                 drone.Model=((IDAL.DO.Models)R.Next(13)).ToString();//initialization of random model name using enum
-                drone.MaxWeight = ((IDAL.DO.WeightCategories)R.Next(3));//initialization of random weight using enum
+                drone.MaxWeight = ((IDAL.DO.WeightCategories)R.Next(1,4));//initialization of random weight using enum
               // drone.Status = ((IDAL.DO.DroneStatuses)R.Next(3));//initialization of random status using enum
                // drone.Battery = R.Next(0, 100) + R.NextDouble();
                 drones.Add(drone);
@@ -80,20 +80,20 @@ namespace DALObject
                 parcel.TargetId = R.Next(100000000, Config.CustomerID);//initialization of random target id
                 if (parcel.SenderId == parcel.TargetId)
                     parcel.SenderId++;
-               parcel.Weight = ((IDAL.DO.WeightCategories)R.Next(3));//initialization of random weight using enum
-               parcel.Priority = ((IDAL.DO.Priorities)R.Next(3));//initialization of random priority using enum
+               parcel.Weight = ((IDAL.DO.WeightCategories)R.Next(1,4));//initialization of random weight using enum
+               parcel.Priority = ((IDAL.DO.Priorities)R.Next(1,4));//initialization of random priority using enum
                 parcel.Delivered = new DateTime(R.Next(4, DateTime.Now.Year), R.Next(1, DateTime.Now.Month - 1), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random delivery time
                 parcel.PickedUp = new DateTime(R.Next(3, parcel.Delivered.Year), R.Next(1, 13), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random pick up time
                 parcel.Scheduled = new DateTime(R.Next(2, parcel.PickedUp.Year), parcel.Requested.Year, R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random schedule time
                 parcel.Requested =new DateTime(R.Next(1, parcel.Scheduled.Year),R.Next(1,13),R.Next(1,29),R.Next(0,24),R.Next(0,60),R.Next(0,60));//initialization of random request time
                 
-               //need to make sure it name sence
+               //need to make sure it make sence
                 foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
                 {
                     bool matched = false;
                     foreach (Parcel parcel1 in DataSource.parcels)
                     {
-                        if (parcel1.DroneId == drone.Id && parcel.Delivered < DateTime.Now) 
+                        if (parcel1.DroneId == drone.Id && parcel1.Delivered < DateTime.Now) 
                         {
                             matched = true;
                             break;
@@ -102,11 +102,23 @@ namespace DALObject
                     if (((drone.MaxWeight >= parcel.Weight) && (!matched))||parcel.Delivered==DateTime.MinValue)//makes sure the maximum weight of the drone can hold the parcel
                     {
                         parcel.DroneId = drone.Id;
-                        parcel.Scheduled = DateTime.Now;
+                        parcel.Delivered = DateTime.MinValue;
+                        if (R.Next(0, 2) == 0)
+                            parcel.PickedUp = DateTime.MinValue;
                         break;
                     }
+                    else if ((drone.MaxWeight >= parcel.Weight)&& R.Next(0, 2) == 0)
+                    {
+                        parcel.DroneId = drone.Id;
+
+                    }
                     else
+                    {
                         parcel.DroneId = 0;
+                        parcel.Scheduled = DateTime.MinValue;
+                        parcel.PickedUp = DateTime.MinValue;
+                        parcel.Delivered = DateTime.MinValue;
+                    }
                 }
                 parcels.Add(parcel);
             }
