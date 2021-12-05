@@ -63,7 +63,7 @@ namespace IBL
                     chargingSlots = stationDO.ChargeSlots,
                     dronesInCharging = new List<droneInCharging>()
                 });
-                foreach (var item in dl.displayChargings(id)) //catch
+                foreach (var item in dl.displayChargings(id))
                 {
                     stationBO.dronesInCharging.Add(new droneInCharging
                     {
@@ -83,7 +83,6 @@ namespace IBL
         private double getBattery(int droneId)
         {
             return drones.Find(drone => drone.id == droneId).battery;
-            //throw - if the Drone doesnt exist
         }
 
         public IEnumerable<baseStationForList> displayStationList()//displays the list of stations
@@ -95,13 +94,13 @@ namespace IBL
                     id = item.Id,
                     name=item.Name,
                     availableSlots=item.ChargeSlots,
-                    usedSlots= dl.displayChargings(item.Id).Count() //catch
+                    usedSlots= dl.displayChargings(item.Id).Count() 
 
                 });          
             }
         }
 
-        public IEnumerable<baseStationForList> displayStationListSlotsAvailable()
+        public IEnumerable<baseStationForList> displayStationListSlotsAvailable()//displays the list of stations with available slots
         {
             foreach (var item in dl.PrintStationWithChargeSlots())
             {

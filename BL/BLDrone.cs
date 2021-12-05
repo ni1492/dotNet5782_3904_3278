@@ -19,6 +19,15 @@ namespace IBL
             drone.parcelID = 0;
             try
             {
+                dl.PrintStation(stationId);
+            }
+            catch (Exception ex)
+            {
+
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+            try
+            {
                 dl.AddDrone(drone.id, drone.model, (IDAL.DO.WeightCategories)drone.weight);
             }
             catch (Exception ex) //catches if the ID already exists
@@ -40,12 +49,11 @@ namespace IBL
         {
             try
             {
-                if (isMatched(id))
+                if (!isMatched(id))//if the drone isn't match yet
                 {
-                    int parcelId = parcelToMatch(id); //catch
-
-                    dl.Match(parcelId, id); //catch
-                    foreach (var item in drones)
+                    int parcelId = parcelToMatch(id);//find the parcel to match
+                    dl.Match(parcelId, id);//match
+                    foreach (var item in drones)//update the drones list BL
                     {
                         if (item.id == id)
                         {
@@ -53,6 +61,10 @@ namespace IBL
                             item.parcelID = parcelId;
                         }
                     }
+                }
+                else//if the drone is alredy matched
+                {
+                    throw new BO.exceptions.StatusException("drone not available");
                 }
             }
             catch (Exception ex) //catches if the ID not exists
@@ -64,9 +76,9 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Drone tempDL = dl.PrintDrone(id); //catch  //find the drone in the DAL
-                dl.deleteDrone(id); //catch  //delltes the old drone before the changes
-                dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight); //catch  //adds the drone with the changes
+                IDAL.DO.Drone tempDL = dl.PrintDrone(id);  //find the drone in the DAL
+                dl.deleteDrone(id); //delltes the old drone before the changes
+                dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight);//adds the drone with the changes
                 droneForList tempBL = drones.Find(drone => drone.id == id); //finds it in the drone list
                 tempBL.model = model; ///changes the model name
                 drones.RemoveAll(drone => drone.id == id); //removes the old drone from the list
@@ -82,7 +94,7 @@ namespace IBL
             try
             {
                 int parcelId = drones.Find(drone => drone.id == id).parcelID;
-                if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.Scheduled)
+                if (parcelId == 0 || getStatus(parcelId) != ParcelStatus.Scheduled)//if the parcel is scheduled or not exist
                 {
                     throw new BO.exceptions.TimeException("parcel not scheduled yet");
                 }
@@ -91,11 +103,11 @@ namespace IBL
                     Id = parcelId,
                     DroneId = id
                 });
-                foreach (var parcel in dl.PrintAllParcel())
+                foreach (var parcel in dl.PrintAllParcel())//serch the parcel to update
                 {
                     if (parcel.Id == parcelId)
                     {
-                        foreach (var cust in dl.PrintAllCustomer())
+                        foreach (var cust in dl.PrintAllCustomer())//serch the customer's parcel- to calc the distance
                         {
                             if (cust.Id == parcel.SenderId)
                             {
@@ -104,7 +116,7 @@ namespace IBL
                                     Latitude = cust.Lattitude,
                                     Longitude = cust.Longitude
                                 });
-                                if (drones.Find(drone => drone.id == id).battery - availablePK * distance >= 0)
+                                if (drones.Find(drone => drone.id == id).battery - availablePK * distance >= 0)//check if there is enough battery
                                     drones.Find(drone => drone.id == id).battery -= availablePK * distance;
                                 else
                                 {
@@ -142,11 +154,11 @@ namespace IBL
                     Id = parcelId,
                     DroneId = id
                 });
-                foreach (var parcel in dl.PrintAllParcel())
+                foreach (var parcel in dl.PrintAllParcel())//serch the parcel to update
                 {
                     if (parcel.Id == parcelId)
                     {
-                        foreach (var cust in dl.PrintAllCustomer())
+                        foreach (var cust in dl.PrintAllCustomer())//serch the customer's parcel- to calc the distance
                         {
                             if (cust.Id == parcel.TargetId)
                             {
@@ -155,7 +167,7 @@ namespace IBL
                                     Latitude = cust.Lattitude,
                                     Longitude = cust.Longitude
                                 });
-                                if (drones.Find(drone => drone.id == id).battery - availablePK * distance >= 0)
+                                if (drones.Find(drone => drone.id == id).battery - availablePK * distance >= 0)//check if there is enough battery
                                     drones.Find(drone => drone.id == id).battery -= availablePK * distance;
                                 else
                                 {
@@ -311,7 +323,7 @@ namespace IBL
             BO.WeightCategories w = new();
             double battery = 0;
             droneForList d = new();
-            foreach (var drone in drones)
+            foreach (var drone in drones)//find the drone to match
             {
                 if (droneId == drone.id)
                 {
@@ -327,8 +339,13 @@ namespace IBL
                 }
             }
             List<parcelInDelivery> list = new List<parcelInDelivery>();
-            foreach (var parcel in displayParcelListWithoutDrone())
+            foreach (var parcel in displayParcelListWithoutDrone())//select the parcels not matched yet that the drone can deliver
             {
+                double[] PK = { lightPK, mediumPK, heavyPK };
+                double minbattery = calcDistance(senderLocation(parcel.id), targetLocation(parcel.id)) * PK[(int)parcel.weight-1] + 
+                    calcDistance(d.currentLocation, senderLocation(parcel.id)) * availablePK;
+                if (minbattery <=battery)//check if the drone can deliver 
+                {
                     list.Add(new parcelInDelivery
                     {
                         id = parcel.id,
@@ -336,23 +353,24 @@ namespace IBL
                         priority = parcel.priority,
                         pickUp = senderLocation(parcel.id),
                         destination = targetLocation(parcel.id),
-                        status=false
+                        status = false
                     });
+                } 
             }
+            if (list.Count == 0)//if the drone cant deliver any parcel
+                throw new NotFoundException("no parcel can be matched to the drone");
             BO.Priorities p = BO.Priorities.urgent;
             List<parcelInDelivery> parcels = new List<parcelInDelivery>();
-            do
+            do//select the parcel by priority
             {
                 foreach (var item in parcelsByPriority(list, p))
                 {
                     parcels.Add(item);
                 }
                 p--;
-            } while (parcels == null && p != BO.Priorities.regular);
-            if (p == BO.Priorities.regular)
-                //trow exeption- no parcel to match
-                list.Clear();
-            do
+            } while (parcels == null);
+            list.Clear();
+            do//select the parcel by weight
             {
                 foreach (var item in parcelsByWeight(parcels, w))
                 {
@@ -362,11 +380,10 @@ namespace IBL
             } while (list == null);
             double smallest = calcDistance(d.currentLocation, list[0].pickUp);
             int parcelId = list[0].id;
-            foreach (var item in list)
+            foreach (var item in list)//select the parcel by distance
             {
                 double temp = calcDistance(d.currentLocation, item.pickUp);
-                d.parcelID = item.id;
-                if ((temp < smallest) && (calcMinBattery(d) <= battery))
+                if (temp < smallest)
                 {
                     smallest = temp;
                     parcelId = item.id;

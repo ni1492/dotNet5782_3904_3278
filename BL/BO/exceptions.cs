@@ -55,6 +55,15 @@ namespace IBL
                 public SlotsException(string message, Exception inner) : base(message, inner) { }
                 public SlotsException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
             }
+            
+            [Serializable]
+            public class StatusException : Exception //if the information already exists
+            {
+                public StatusException() : base() { }
+                public StatusException(string message) : base(message) { }
+                public StatusException(string message, Exception inner) : base(message, inner) { }
+                public StatusException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+            }
         }
     }
 }

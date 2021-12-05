@@ -13,7 +13,6 @@ namespace ConsoleUI_BL
             int id = 0;//id for parcel, station, customer
             string model = "";//drone model
             WeightCategories weight = WeightCategories.light;//weight within drone object and parcel
-            DroneStatuses status = DroneStatuses.available;//enum status
             string name = null;//station
             double longitude = 0;//0-50
             double lattitude = 0;//0-50
@@ -207,8 +206,8 @@ namespace ConsoleUI_BL
                         {
                             Console.WriteLine("Choose one of the following options:\n");
                             Console.WriteLine("1: Update drone name\n");
-                            Console.WriteLine("2: Update station detailes\n");
-                            Console.WriteLine("3: Update customer detailes\n");
+                            Console.WriteLine("2: Update station details\n");
+                            Console.WriteLine("3: Update customer details\n");
                             Console.WriteLine("4: Update battery status: send drone to charge\n");
                             Console.WriteLine("5: Update battery status: release drone frome charging\n");
                             Console.WriteLine("6: Update parcel and drone connection\n");

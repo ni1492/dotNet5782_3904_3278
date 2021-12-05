@@ -137,17 +137,7 @@ namespace IBL
         }
         private double calcDistance(location from, location to)//calculate thedistance between two locations 
             {
-                int R = 6371 * 1000;
-                double phi1=from.Latitude * Math.PI;
-                double phi2 = to.Latitude * Math.PI;
-                double deltaPhi = (to.Latitude - from.Latitude) * Math.PI / 180;
-                double deltaLambda = (to.Longitude - from.Longitude) * Math.PI / 180;
-                double a = Math.Sin(deltaPhi / 2) * Math.Sin(deltaPhi / 2) +
-                    Math.Cos(phi1) * Math.Cos(phi2) *
-                    Math.Sin(deltaLambda / 2) * Math.Sin(deltaLambda / 2);
-                double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-                double d = R * c / 1000;
-                return d;
+            return dl.CalculateDistance(from.Longitude, from.Latitude, to.Longitude, to.Latitude);
             }
         private bool isDelivered(int droneId)//chack if the drone is deliverd
         {
@@ -185,51 +175,24 @@ namespace IBL
         }
         private location senderLocation(int parcelId)//return tne sender location by the parcel id
         {
-            foreach (var item in dl.PrintAllParcel())//goes over the list of parcels to find the parcel 
-             {
-                if (item.Id == parcelId)
-                {
-                    foreach (var item2 in dl.PrintAllCustomer())
-                    {
-                        if (item.SenderId == item2.Id)
-                        {
-                            location l = new location();
-                            l.Latitude = item2.Lattitude;
-                            l.Longitude = item2.Longitude;
-                            return l;
-                        }
-                    }
-                }
-            }
-            location x = new location();
-            x.Latitude = 0;
-            x.Longitude = 0;
-            return x;
+            var p = dl.PrintParcel(parcelId);
+            var c = dl.PrintCustomer(p.SenderId);
+            return (new location
+            {
+                Latitude = c.Lattitude,
+                Longitude = c.Longitude
+            });
 
         }
         private location targetLocation(int parcelId)//return tne target location by the parcel id
         {
-            foreach (var item in dl.PrintAllParcel())//goes over the list of parcels to find the parcel 
+            var p = dl.PrintParcel(parcelId);
+            var c = dl.PrintCustomer(p.TargetId);
+            return (new location
             {
-                if (item.Id == parcelId)
-                {
-                    foreach (var item2 in dl.PrintAllCustomer())//goes over thre lust of customers in the DAL layer 
-                    {
-                        if (item.TargetId == item2.Id)//fide find the target customer
-                        {
-                            location l = new location();
-                            l.Latitude = item2.Lattitude;
-                            l.Longitude = item2.Longitude;
-                            return l;//return the lication
-                        }
-                    }
-                }
-            }
-            //maybe we need to do trow and catch in here.
-            location x = new location();
-            x.Latitude = 0;
-            x.Longitude = 0;
-            return x;
+                Latitude = c.Lattitude,
+                Longitude = c.Longitude
+            });
 
         }
         private location nearestStation(location loc)//return the closest statuon to the location given by the user

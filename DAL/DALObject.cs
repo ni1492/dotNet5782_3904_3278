@@ -72,25 +72,44 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
-        public void AddParcel(int id, int sId, int tId, WeightCategories weight, Priorities priority, int dId)//add new parcel
+        public void AddParcel(int sId, int tId, WeightCategories weight, Priorities priority, int dId)//add new parcel
         {
-            if (id == 0)
+            //if (id == 0)
+            //{
+            //    id = DataSource.Config.ParcelID;
+            //}
+            ////initialize new parcel object:
+            //foreach (Parcel p in DataSource.parcels)
+            //{
+            //    if (p.Id == id)
+            //    {
+            //        throw new ExistException("parcel alredy exist");
+            //    }
+            //}
+            try
             {
-                id = DataSource.Config.ParcelID;
+
+                PrintCustomer(sId);
             }
-            //initialize new parcel object:
-            foreach (Parcel p in DataSource.parcels)
+            catch(Exception ex)
             {
-                if (p.Id == id)
-                {
-                    throw new ExistException("parcel alredy exist");
-                }
+                throw new NotFoundException("sender: " + ex.Message, ex);
+            }
+            try
+            {
+
+                PrintCustomer(tId);
+            }
+            catch (Exception ex)
+            {
+
+                throw new NotFoundException("target: " + ex.Message, ex);
             }
             IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();
-            if (id == 0)
+           // if (id == 0)
                 parcel.Id = DataSource.Config.ParcelID++;
-            else
-                parcel.Id = id;
+          //  else
+            //    parcel.Id = id;
             parcel.SenderId = sId;
             parcel.TargetId = tId;
             parcel.Weight = weight;
@@ -428,7 +447,7 @@ namespace DALObject
             double lat2 = latitude2 * (Math.PI / 180.0);
             double long2 = longitude2 * (Math.PI / 180.0) - long1;
             double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
-            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)));
+            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance)))/1000;
         }
         public double[] powerUse()
         {

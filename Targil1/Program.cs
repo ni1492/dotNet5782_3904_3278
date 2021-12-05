@@ -111,7 +111,7 @@ namespace ConsoleUI
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
                                         Priorities.TryParse(input, out priority);
-                                        mainObject.AddParcel(0,sId, tId, weight, priority, 0);
+                                        mainObject.AddParcel(sId, tId, weight, priority, 0);
                                         break;
                                     }
                                 default:

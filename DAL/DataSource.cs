@@ -31,10 +31,10 @@ namespace DALObject
         }
         public static void Initialize()//initialization of data for the program
         {
-            Config.availablePK = R.Next(0, 30) + R.NextDouble();
-            Config.lightPK = R.Next(0, 30) + R.NextDouble();
-            Config.mediumPK = R.Next(0, 30) + R.NextDouble();
-            Config.heavyPK = R.Next(0, 30) + R.NextDouble();
+            Config.availablePK = R.Next(0, 4) + R.NextDouble();
+            Config.lightPK = Config.availablePK + R.NextDouble();
+            Config.mediumPK = Config.lightPK + R.NextDouble();
+            Config.heavyPK = Config.mediumPK + R.NextDouble();
             Config.chargingPH = R.Next(30, 90) + R.NextDouble();
             int num = R.Next(2, 5);
             for (int i = 0; i < num; i++)//initialization of 2-4 stations

@@ -14,7 +14,7 @@ namespace IBL
         {
             try
             {
-                dl.AddParcel(0, parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0);
+                dl.AddParcel(parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0);
             }
             catch (Exception ex) //catches if the ID already exists
             {
@@ -38,20 +38,18 @@ namespace IBL
                             {
                                 id = p.SenderId,
                                 name = dl.PrintCustomer(p.SenderId).Name
-                                //catch
                             },
                             receiver = new customerForParcel
                             {
                                 id = p.TargetId,
                                 name = dl.PrintCustomer(p.TargetId).Name
-                                //catch
                             },
                             weight = (BO.WeightCategories)p.Weight,
                             priority = (BO.Priorities)p.Priority,
                             drone = new droneForParcel
                             {
                                 id = p.DroneId,
-                                battery = getBattery(p.DroneId), //catch
+                                battery = getBattery(p.DroneId),
                                 currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
                             },
                             creation = p.Requested,
@@ -76,18 +74,18 @@ namespace IBL
                 yield return (new parcelForList
                 {
                     id = p.Id,
-                    sender = dl.PrintCustomer(p.SenderId).Name,   //catch
-                    receiver = dl.PrintCustomer(p.TargetId).Name,   //catch
+                    sender = dl.PrintCustomer(p.SenderId).Name,
+                    receiver = dl.PrintCustomer(p.TargetId).Name,  
                     weight = (BO.WeightCategories)p.Weight,
                     priority = (BO.Priorities)p.Priority,
-                    status = getStatus(p.Id) //catch
+                    status = getStatus(p.Id)
                 });
 
             }
         }
         private ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
         {
-            IDAL.DO.Parcel p = dl.PrintParcel(id);  //catch
+            IDAL.DO.Parcel p = dl.PrintParcel(id); 
             DateTime x = DateTime.MinValue;
             if (p.Delivered != x)
                 return ParcelStatus.Delivered;
@@ -96,22 +94,21 @@ namespace IBL
             if (p.Scheduled != x)
                 return ParcelStatus.Scheduled;
             return ParcelStatus.Requested;
-            //throw exception is id doesnt exist
         }
         public IEnumerable<parcelForList> displayParcelListWithoutDrone() //displays all the parcels that havent been matched with a drone
         {
             foreach (var p in dl.PrintAllParcel())
             {
-                if (getStatus(p.Id) != ParcelStatus.Requested)  //catch
+                if (getStatus(p.Id) == ParcelStatus.Requested)
                 {
                     yield return (new parcelForList
                     {
                         id = p.Id,
-                        sender = dl.PrintCustomer(p.SenderId).Name,  //catch
-                        receiver = dl.PrintCustomer(p.TargetId).Name,   //catch
+                        sender = dl.PrintCustomer(p.SenderId).Name, 
+                        receiver = dl.PrintCustomer(p.TargetId).Name,  
                         weight = (BO.WeightCategories)p.Weight,
                         priority = (BO.Priorities)p.Priority,
-                        status = getStatus(p.Id)   //catch
+                        status = getStatus(p.Id) 
                     });
                 }
             }
