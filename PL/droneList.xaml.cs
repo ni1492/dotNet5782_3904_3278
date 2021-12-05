@@ -32,27 +32,30 @@ namespace PL
 
         private void statusSelection(object sender, SelectionChangedEventArgs e )
         {
-            if (((weightSelector.SelectedItem == null)|| ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
+
+            if (((weightSelector.SelectedItem == null) || ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDroneList();
             else if ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)
                 DroneListView.ItemsSource = bl.displayDrones(drone => drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem);
-            else if (weightSelector.SelectedItem == null)
+            else if ((weightSelector.SelectedItem == null) || ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDrones(drone => drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem);
             else
                 DroneListView.ItemsSource = bl.displayDrones(drone => (drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem));
-        
+
         }
 
         private void weightSelection(object sender, SelectionChangedEventArgs e)
         {
-            if (((statusSelector.SelectedItem == null)|| ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all))
+
+            if (((statusSelector.SelectedItem == null) || ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDroneList();
             else if ((WeightCategories)weightSelector.SelectedItem == WeightCategories.all)
                 DroneListView.ItemsSource = bl.displayDrones(drone => drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem);
-            else if (statusSelector.SelectedItem == null)
+            else if ((statusSelector.SelectedItem == null) || ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDrones(drone => drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem);
             else
                 DroneListView.ItemsSource = bl.displayDrones(drone => (drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem));
+
         }
 
         private void addDrone_Click(object sender, RoutedEventArgs e)
@@ -73,6 +76,10 @@ namespace PL
 
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
     public enum WeightCategories { all, light = 1, medium, heavy };//enum of various types of weight: light, medium, heavy
     public enum DroneStatuses { all, available = 1, maintenance, delivery };//enum of various options for drone status: available, maintenance, delivery

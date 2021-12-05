@@ -76,8 +76,14 @@ namespace PL
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return;
             }
            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

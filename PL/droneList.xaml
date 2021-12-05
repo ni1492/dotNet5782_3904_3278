@@ -34,7 +34,8 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
         <Grid Name="bottomGrid" Grid.Row="2">
-            <Button Content="Add drone" HorizontalAlignment="Left" Margin="639,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" />
+            <Button Content="Add drone" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" />
+            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="Button_Click" />
 
         </Grid>
     </Grid>
