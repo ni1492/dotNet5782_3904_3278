@@ -14,50 +14,14 @@ namespace IBL.BO
         public WeightCategories weight { get; set; }
         public Priorities priority { get; set; }
         public droneForParcel drone { get; set; }
-        public DateTime creation { get; set; }
-        //{
-        //    get
-        //    {
-        //        return creation;
-        //    }
-        //    set
-        //    {
-        //        creation = DateTime.Now;
-        //    }
-        //}
-        public DateTime match { get; set; }
-        //{
-        //    get
-        //    {
-        //        return match;
-        //    }
-        //    set
-        //    {
-        //        match = DateTime.MinValue;
-        //    }
-        //}
-        public DateTime pickup { get; set; }
-        //{
-        //    get
-        //    {
-        //        return pickup;
-        //    }
-        //    set
-        //    {
-        //        pickup = DateTime.MinValue;
-        //    }
-        //}
-        public DateTime delivery { get; set; }
-        //{
-        //    get
-        //    {
-        //        return delivery;
-        //    }
-        //    set
-        //    {
-        //        delivery = DateTime.MinValue;
-        //    }
-        //}
+        public DateTime? creation { get; set; }
+      
+        public DateTime? match { get; set; }
+      
+        public DateTime? pickup { get; set; }
+      
+        public DateTime? delivery { get; set; }
+       
         public override string ToString()//custom print function for parcel 
         {
             return ("Parcel Id: " + id + "\nSender: " + sender + "\nReceiver: " + receiver + "\nWeight of the parcel: " + weight +

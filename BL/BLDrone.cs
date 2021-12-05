@@ -19,7 +19,7 @@ namespace IBL
             drone.parcelID = 0;
             try
             {
-                dl.PrintStation(stationId);
+                dl.DisplayStations(station=>station.Id==stationId);
             }
             catch (Exception ex)
             {
@@ -76,7 +76,7 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Drone tempDL = dl.PrintDrone(id);  //find the drone in the DAL
+                IDAL.DO.Drone tempDL = dl.DisplayDrones(drone => drone.Id == id).First();  //find the drone in the DAL
                 dl.deleteDrone(id); //delltes the old drone before the changes
                 dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight);//adds the drone with the changes
                 droneForList tempBL = drones.Find(drone => drone.id == id); //finds it in the drone list
@@ -103,11 +103,11 @@ namespace IBL
                     Id = parcelId,
                     DroneId = id
                 });
-                foreach (var parcel in dl.PrintAllParcel())//serch the parcel to update
+                foreach (var parcel in dl.DisplayParcels(parcel => true))//serch the parcel to update
                 {
                     if (parcel.Id == parcelId)
                     {
-                        foreach (var cust in dl.PrintAllCustomer())//serch the customer's parcel- to calc the distance
+                        foreach (var cust in dl.DisplayCustomers(customer=>true))//serch the customer's parcel- to calc the distance
                         {
                             if (cust.Id == parcel.SenderId)
                             {
@@ -154,11 +154,11 @@ namespace IBL
                     Id = parcelId,
                     DroneId = id
                 });
-                foreach (var parcel in dl.PrintAllParcel())//serch the parcel to update
+                foreach (var parcel in dl.DisplayParcels(parcel => true))//serch the parcel to update
                 {
                     if (parcel.Id == parcelId)
                     {
-                        foreach (var cust in dl.PrintAllCustomer())//serch the customer's parcel- to calc the distance
+                        foreach (var cust in dl.DisplayCustomers(customer=>true))//serch the customer's parcel- to calc the distance
                         {
                             if (cust.Id == parcel.TargetId)
                             {
@@ -209,7 +209,7 @@ namespace IBL
                     //throw- battery too low to get to station
                 }
                 location l = nearestCharging(d.currentLocation);
-                foreach (var item in dl.PrintAllStation())
+                foreach (var item in dl.DisplayStations(station => true))
                 {
                     if (item.Lattitude == l.Latitude && item.Longitude == l.Longitude)
                     {
@@ -226,7 +226,7 @@ namespace IBL
                 throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         }
-        public void releaseDroneFromCharge(int id, DateTime time) //releases the drone from charging
+        public void releaseDroneFromCharge(int id, DateTime? time) //releases the drone from charging
         {
             try
             {
@@ -234,7 +234,7 @@ namespace IBL
                 {
                     throw new BO.exceptions.TimeException("drone not in charging");
                 }
-                double battery = drones.Find(drone => drone.id == id).battery + chargingPH * (time.Hour + time.Minute / 60);
+                double battery = drones.Find(drone => drone.id == id).battery + chargingPH * (time.Value.Hour + time.Value.Minute / 60);
                 if (battery > 100)
                     battery = 100;
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;
@@ -391,5 +391,14 @@ namespace IBL
             }
             return parcelId;
         }
+        public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match) //display all drones
+        {
+            foreach (var drone in displayDroneList())
+            {
+                if (match(drone))
+                    yield return drone;
+            }
+        }
     }
+
 }

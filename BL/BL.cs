@@ -35,7 +35,7 @@ namespace IBL
         private void initializeDrone()
         {
             Random r = new Random(); 
-            foreach (var item in dl.PrintAllDrone())//bulding list of drones - adding them from the DAL layer
+            foreach (var item in dl.DisplayDrones(drone => true))//bulding list of drones - adding them from the DAL layer
             {
                 drones.Add(new droneForList
                 {
@@ -83,10 +83,10 @@ namespace IBL
                     {
                         List<location> locations = new List<location>();
                         int count = 0;
-                        foreach (var cus in dl.PrintAllCustomer())
+                        foreach (var cus in dl.DisplayCustomers(customer=>true))
                         {
                             bool accepted = false;
-                            foreach (var parcel in dl.PrintAllParcel())
+                            foreach (var parcel in dl.DisplayParcels(parcel => true))
                             {
                                 if(parcel.TargetId==cus.Id)
                                 {
@@ -126,7 +126,7 @@ namespace IBL
                     }
                     else if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
                     {
-                        int stationId = r.Next(1, dl.PrintAllStation().Count()); 
+                        int stationId = r.Next(1, dl.DisplayStations(station => true).Count()); 
                         item.currentLocation = stationLocation(stationId);
                             //the drone location will be the location of the station chosen
                         item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
@@ -142,9 +142,9 @@ namespace IBL
         private bool isDelivered(int droneId)//chack if the drone is deliverd
         {
 
-            foreach (var item in dl.PrintAllParcel())//goes over all the parcel in the DAL layer
+            foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
-                if ((item.DroneId == droneId) && (item.Delivered !=DateTime.MinValue))//chack if the drone is deliverd
+                if ((item.DroneId == droneId) && (item.Delivered !=null))//chack if the drone is deliverd
                 {
                     return true;
                 }
@@ -153,9 +153,9 @@ namespace IBL
         }
         private bool isPickedUp(int droneId)//chack if the parcel is picked up
         {
-            foreach (var item in dl.PrintAllParcel())//goes over all the parcel in the DAL layer
+            foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
-                if ((item.DroneId == droneId) && (item.PickedUp != DateTime.MinValue))//chack if the parcel is picked up
+                if ((item.DroneId == droneId) && (item.PickedUp != null))//chack if the parcel is picked up
                 {
                     return true;
                 }
@@ -164,7 +164,7 @@ namespace IBL
         }
         private bool isMatched(int droneId)//chack if the drone is match to parcel
         {
-            foreach (var item in dl.PrintAllParcel())//goes over all the parcel in the DAL layer
+            foreach (var item in dl.DisplayParcels(parcel=>true))//goes over all the parcel in the DAL layer
             {
                 if (item.DroneId == droneId)//chack if the drone is match to parcel
                 {
@@ -175,8 +175,8 @@ namespace IBL
         }
         private location senderLocation(int parcelId)//return tne sender location by the parcel id
         {
-            var p = dl.PrintParcel(parcelId);
-            var c = dl.PrintCustomer(p.SenderId);
+            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).First();
+            var c = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First();
             return (new location
             {
                 Latitude = c.Lattitude,
@@ -186,8 +186,8 @@ namespace IBL
         }
         private location targetLocation(int parcelId)//return tne target location by the parcel id
         {
-            var p = dl.PrintParcel(parcelId);
-            var c = dl.PrintCustomer(p.TargetId);
+            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).First();
+            var c = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First();
             return (new location
             {
                 Latitude = c.Lattitude,
@@ -198,7 +198,7 @@ namespace IBL
         private location nearestStation(location loc)//return the closest statuon to the location given by the user
         { 
             List<baseStation> locations = new List<baseStation>();
-            foreach (var baseStation in dl.PrintAllStation())//buliding a list of all the station with the locations
+            foreach (var baseStation in dl.DisplayStations(station=>true))//buliding a list of all the station with the locations
             {
                 locations.Add(new baseStation
                 {
@@ -227,7 +227,7 @@ namespace IBL
         {
 
             List<baseStation> locations = new List<baseStation>();
-            foreach (var baseStation in dl.PrintAllStation())//buliding a list of all the station with the locations
+            foreach (var baseStation in dl.DisplayStations(station=>true))//buliding a list of all the station with the locations
             {
                 if(baseStation.ChargeSlots>0)
                 {
@@ -257,7 +257,7 @@ namespace IBL
         }
         private location stationLocation(int stationId)//return thr location of the station, by the id
         {
-            foreach (var item in dl.PrintAllStation())//gos over the list of station in the DAL layer
+            foreach (var item in dl.DisplayStations(station => true))//gos over the list of station in the DAL layer
             {
                 if (item.Id == stationId)//fide the station by the id
                     return (new location
@@ -278,7 +278,7 @@ namespace IBL
             if (d.status == DroneStatuses.delivery)//if the drone is avilable-need to calc the batery to get to the dastination and to a station with a free slot
             {
                 WeightCategories weight;
-                foreach (var item in dl.PrintAllParcel())
+                foreach (var item in dl.DisplayParcels(parcel => true))
                 {
                     if (item.Id == d.parcelID && isPickedUp(d.id))
                     {
@@ -323,7 +323,7 @@ namespace IBL
         }
         private int findParcelDelivery(int droneId)//find the parcel that in delivery
         {
-            foreach (var item in dl.PrintAllParcel())//goes over the list of parcels to find the parcel 
+            foreach (var item in dl.DisplayParcels(parcel => true))//goes over the list of parcels to find the parcel 
             {
                 if (item.DroneId == droneId)//find the parcel that in delivery
                 {

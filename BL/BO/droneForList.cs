@@ -19,7 +19,7 @@ namespace IBL.BO
         {
             return ("Drone Id: " + id + "\nDrone Model: " + model + "\nWeight: " + weight
             + "\nDrone Battery:" + battery + "\nDrone status: " + status 
-            + "\nCurrent Location:" + currentLocation + "\nParcel Id:"+parcelID+ "\n");
+            + "\nCurrent Location:\n" + currentLocation + "\nParcel Id:"+parcelID+ "\n");
         }
     }
 }

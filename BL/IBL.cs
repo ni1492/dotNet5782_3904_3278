@@ -19,9 +19,10 @@ namespace IBL
         public void addDrone(droneForList drone, int stationId); //add drone 
         public void updateDrone(int id, string model); //update deone details
         public void sendDroneToCharge(int id); //send drone to charge 
-        public void releaseDroneFromCharge(int id, DateTime time); //release drone from charging
+        public void releaseDroneFromCharge(int id, DateTime? time); //release drone from charging
         public drone displayDrone(int id); //display requested drone 
         public IEnumerable<droneForList> displayDroneList(); //display all drones
+        public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match); //display all drones
 
         public void addCustomer(customer customer); //add customer
         public void updateCustomer(int id, string name, string phone); //update customer details
@@ -35,7 +36,6 @@ namespace IBL
         public parcel displayParcel(int id); //display requested parcel
         public IEnumerable<parcelForList> displayParcelList(); //display all parcels
         public IEnumerable<parcelForList> displayParcelListWithoutDrone(); //display all parcels that arent matched
-
 
     }
 }

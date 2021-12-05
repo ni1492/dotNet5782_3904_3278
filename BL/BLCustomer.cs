@@ -27,7 +27,7 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Customer tempDL = dl.PrintCustomer(id);
+                IDAL.DO.Customer tempDL = dl.DisplayCustomers(customer => customer.Id == id).First();
 
                 dl.deleteCustomer(id); 
                 if (name != null)
@@ -48,14 +48,14 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Customer cus = dl.PrintCustomer(id);
+                IDAL.DO.Customer cus = dl.DisplayCustomers(customer => customer.Id == id).First();
                 List<parcelAtCustomer> fromCus = new();
                 List<parcelAtCustomer> toCus = new();
                 int sId = 0;
                 int tId = 0;
                 foreach (var p in displayParcelList())
                 {
-                    foreach (var item in dl.PrintAllCustomer())
+                    foreach (var item in dl.DisplayCustomers(customer => true)) 
                     {
                         if (item.Name == p.sender)
                             sId = item.Id;
@@ -117,7 +117,7 @@ namespace IBL
 
         public IEnumerable<customerForList> displayCustomerList() //displays the list of customers
         {
-            foreach (var cus in dl.PrintAllCustomer())
+            foreach (var cus in dl.DisplayCustomers(customer=>true))
             {
                 int notAcceptedPar = 0;
                 int notDeliveredPar = 0;

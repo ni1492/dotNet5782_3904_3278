@@ -161,7 +161,7 @@ namespace ConsoleUI
                                 case 4://send drone to charge
                                     {
                                         Console.WriteLine("all the available stations:");
-                                        mainObject.PrintStationWithChargeSlots();
+                                        mainObject.DisplayStations(station => station.ChargeSlots != 0);
                                         Console.WriteLine("enter the drone and station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
@@ -201,7 +201,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the station id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(mainObject.PrintStation(id));
+                                        Console.WriteLine(mainObject.DisplayStations(station => station.Id == id));
                                         break;
                                     }
                                 case 2://display drone
@@ -209,7 +209,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the drone id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(mainObject.PrintDrone(id));
+                                        Console.WriteLine(mainObject.DisplayDrones(drone => drone.Id == id));
                                         break;
                                     }
                                 case 3://display customer
@@ -217,7 +217,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the customer id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(mainObject.PrintCustomer(id));
+                                        Console.WriteLine(mainObject.DisplayCustomers(customer => customer.Id == id));
                                         break;
                                     }
                                 case 4://display parcel
@@ -225,7 +225,7 @@ namespace ConsoleUI
                                         Console.WriteLine("enter the parcel id");
                                         input = Console.ReadLine();
                                         Int32.TryParse(input, out id);
-                                        Console.WriteLine(mainObject.PrintParcel(id));
+                                        Console.WriteLine(mainObject.DisplayParcels(parcel=>parcel.Id==id));
                                         break;
                                     }
                                 case 5://display distance from station to user location
@@ -264,7 +264,7 @@ namespace ConsoleUI
                             {
                                 case 1://display all base stations
                                     {
-                                        foreach (Station item in mainObject.PrintAllStation())
+                                        foreach (Station item in mainObject.DisplayStations(station => true))
                                         {
                                             Console.WriteLine(item);
                                         }
@@ -272,7 +272,7 @@ namespace ConsoleUI
                                     }
                                 case 2://display all drones
                                     {
-                                        foreach (Drone item in mainObject.PrintAllDrone())
+                                        foreach (Drone item in mainObject.DisplayDrones(drone => true))
                                         {
                                             Console.WriteLine(item);
                                         }
@@ -280,7 +280,7 @@ namespace ConsoleUI
                                     }
                                 case 3://display all customers
                                     {
-                                        foreach (Customer item in mainObject.PrintAllCustomer())
+                                        foreach (Customer item in mainObject.DisplayCustomers(customer => true))
                                         {
                                             Console.WriteLine(item);
                                         }
@@ -288,7 +288,7 @@ namespace ConsoleUI
                                     }
                                 case 4://display all parcels
                                     {
-                                        foreach (Parcel item in mainObject.PrintAllParcel())
+                                        foreach (Parcel item in mainObject.DisplayParcels(parcel => true)) 
                                         {
                                             Console.WriteLine(item);
                                         }
@@ -296,7 +296,7 @@ namespace ConsoleUI
                                     }
                                 case 5://display all parcels not assigned to any drone
                                     {
-                                        foreach (Parcel item in mainObject.PrintParcelsWithNoDrone())
+                                        foreach (Parcel item in mainObject.DisplayParcels(parcel=>parcel.DroneId==0))
                                         {
                                             Console.WriteLine(item);
                                         }
@@ -304,7 +304,7 @@ namespace ConsoleUI
                                     }
                                 case 6://display all base stations with available charging slots
                                     {
-                                        foreach (Station item in mainObject.PrintStationWithChargeSlots())
+                                        foreach (Station item in mainObject.DisplayStations(station => station.ChargeSlots != 0))
                                         {
                                             Console.WriteLine(item);
                                         }

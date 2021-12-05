@@ -27,7 +27,7 @@ namespace IBL
             {
                 if (id == 0)
                     return null;
-                foreach (var p in dl.PrintAllParcel())
+                foreach (var p in dl.DisplayParcels(parcel => true))
                 {
                     if (p.Id == id)
                     {
@@ -37,12 +37,12 @@ namespace IBL
                             sender = new customerForParcel
                             {
                                 id = p.SenderId,
-                                name = dl.PrintCustomer(p.SenderId).Name
+                                name = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First().Name
                             },
                             receiver = new customerForParcel
                             {
                                 id = p.TargetId,
-                                name = dl.PrintCustomer(p.TargetId).Name
+                                name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name
                             },
                             weight = (BO.WeightCategories)p.Weight,
                             priority = (BO.Priorities)p.Priority,
@@ -56,7 +56,7 @@ namespace IBL
                             match = p.Scheduled,
                             pickup = p.PickedUp,
                             delivery = p.Delivered
-                        });
+                        }) ;
                     }
                 }
                 return new parcel();
@@ -69,13 +69,13 @@ namespace IBL
         }
         public IEnumerable<parcelForList> displayParcelList() //displays the list of all parcels 
         {
-            foreach (var p in dl.PrintAllParcel())
+            foreach (var p in dl.DisplayParcels(parcel=>true))
             {
                 yield return (new parcelForList
                 {
                     id = p.Id,
-                    sender = dl.PrintCustomer(p.SenderId).Name,
-                    receiver = dl.PrintCustomer(p.TargetId).Name,  
+                    sender = dl.DisplayCustomers(customer=>customer.Id==p.SenderId).First().Name,
+                    receiver = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name,  
                     weight = (BO.WeightCategories)p.Weight,
                     priority = (BO.Priorities)p.Priority,
                     status = getStatus(p.Id)
@@ -85,8 +85,8 @@ namespace IBL
         }
         private ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
         {
-            IDAL.DO.Parcel p = dl.PrintParcel(id); 
-            DateTime x = DateTime.MinValue;
+            IDAL.DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).First();
+            DateTime? x = null;
             if (p.Delivered != x)
                 return ParcelStatus.Delivered;
             if (p.PickedUp != x)
@@ -97,15 +97,15 @@ namespace IBL
         }
         public IEnumerable<parcelForList> displayParcelListWithoutDrone() //displays all the parcels that havent been matched with a drone
         {
-            foreach (var p in dl.PrintAllParcel())
+            foreach (var p in dl.DisplayParcels(parcel=>parcel.DroneId==0))
             {
                 if (getStatus(p.Id) == ParcelStatus.Requested)
                 {
                     yield return (new parcelForList
                     {
                         id = p.Id,
-                        sender = dl.PrintCustomer(p.SenderId).Name, 
-                        receiver = dl.PrintCustomer(p.TargetId).Name,  
+                        sender = dl.DisplayCustomers(customer=>customer.Id==p.SenderId).First().Name, 
+                        receiver = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name,  
                         weight = (BO.WeightCategories)p.Weight,
                         priority = (BO.Priorities)p.Priority,
                         status = getStatus(p.Id) 

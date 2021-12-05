@@ -26,13 +26,13 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Station tempDL = dl.PrintStation(id); //finds the station in the DAL layer
+                IDAL.DO.Station tempDL = dl.DisplayStations(station => station.Id == id).First(); //finds the station in the DAL layer
                
                 if (name != null) //if the function recieves the name to update  - it changes the name
                     tempDL.Name = name;
                 if (chargingSlots != 0) //if the function recieves the number of charging slots to update  -it changes it
                 {
-                    if (chargingSlots > dl.displayChargings(id).Count())
+                    if (chargingSlots >= dl.displayChargings(id).Count())
                         tempDL.ChargeSlots = chargingSlots - dl.displayChargings(id).Count();
                     else
                         throw new BO.exceptions.SlotsException("not enoght slots for the station");
@@ -50,7 +50,7 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Station stationDO = dl.PrintStation(id);
+                IDAL.DO.Station stationDO = dl.DisplayStations(station=>station.Id==id).First();
                 baseStation stationBO = (new baseStation()
                 {
                     id = stationDO.Id,
@@ -87,7 +87,7 @@ namespace IBL
 
         public IEnumerable<baseStationForList> displayStationList()//displays the list of stations
         {
-            foreach (var item in dl.PrintAllStation())
+            foreach (var item in dl.DisplayStations(station => true))
             {
                 yield return (new baseStationForList
                 {
@@ -102,7 +102,7 @@ namespace IBL
 
         public IEnumerable<baseStationForList> displayStationListSlotsAvailable()//displays the list of stations with available slots
         {
-            foreach (var item in dl.PrintStationWithChargeSlots())
+            foreach (var item in dl.DisplayStations(station=>station.ChargeSlots!=0))
             {
                 yield return (new baseStationForList
                 {

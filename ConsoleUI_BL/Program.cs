@@ -24,7 +24,7 @@ namespace ConsoleUI_BL
             int tId = 0;//target
             int dId = 0;//drone
             int num = 0;
-            DateTime time = DateTime.MinValue;
+            DateTime time;
             Priorities priority = Priorities.regular;//enum priorities
             //end of initialization
             do
@@ -332,6 +332,7 @@ namespace ConsoleUI_BL
                                         Int32.TryParse(input, out id);
                                         input = Console.ReadLine();
                                         DateTime.TryParse(input, out time);
+                                        //time = Console.ReadLine().DT();
                                         try
                                         {
                                             bl.releaseDroneFromCharge(id, time);//datetime
@@ -557,5 +558,20 @@ namespace ConsoleUI_BL
             } while (inputVal1 != 5);
         }
     }
+    public static class Extensions
+    {
+        public static DateTime? DT(this string strLine)
+        {
+            DateTime result;
+            if (DateTime.TryParseExact(strLine, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
+}
 

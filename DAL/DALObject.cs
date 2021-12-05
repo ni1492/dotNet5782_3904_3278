@@ -74,31 +74,19 @@ namespace DALObject
         }
         public void AddParcel(int sId, int tId, WeightCategories weight, Priorities priority, int dId)//add new parcel
         {
-            //if (id == 0)
-            //{
-            //    id = DataSource.Config.ParcelID;
-            //}
-            ////initialize new parcel object:
-            //foreach (Parcel p in DataSource.parcels)
-            //{
-            //    if (p.Id == id)
-            //    {
-            //        throw new ExistException("parcel alredy exist");
-            //    }
-            //}
             try
             {
 
-                PrintCustomer(sId);
+                DisplayCustomers(customer => customer.Id == sId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new NotFoundException("sender: " + ex.Message, ex);
             }
             try
             {
 
-                PrintCustomer(tId);
+                DisplayCustomers(customer => customer.Id == tId);
             }
             catch (Exception ex)
             {
@@ -106,19 +94,16 @@ namespace DALObject
                 throw new NotFoundException("target: " + ex.Message, ex);
             }
             IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();
-           // if (id == 0)
-                parcel.Id = DataSource.Config.ParcelID++;
-          //  else
-            //    parcel.Id = id;
+            parcel.Id = DataSource.Config.ParcelID++;
             parcel.SenderId = sId;
             parcel.TargetId = tId;
             parcel.Weight = weight;
             parcel.Priority = priority;
             parcel.DroneId = dId;
             parcel.Requested = DateTime.Now;
-            parcel.Scheduled = DateTime.MinValue;
-            parcel.PickedUp = DateTime.MinValue;
-            parcel.Delivered = DateTime.MinValue;
+            parcel.Scheduled = null;
+            parcel.PickedUp = null;
+            parcel.Delivered = null;
             //add to parcels list
             DataSource.parcels.Add(parcel);
         }
@@ -307,97 +292,130 @@ namespace DALObject
                 }
             }
         }
-        public Station PrintStation(int id)//display station by station ID
-        {
-            foreach (Station station in DataSource.baseStations)//goes over the list of stations to find the station with that ID
-            {
-                if (station.Id == id)//when found- displays the station 
-                {
-                    return station;
-                }
-            }
-            throw new NotFoundException("station doesn't exist");
-
-        }
-        public Drone PrintDrone(int id)//display drone by drone ID
-        {
-            foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone with that ID
-            {
-                if (drone.Id == id)
-                {
-                    return drone;
-                }
-            }
-            throw new NotFoundException("drone doesn't exist");
-        }
-        public Customer PrintCustomer(int id)//display customer by customer ID
-        {
-            foreach (Customer customer in DataSource.customers)//goes over the list of customers to find the customer with that ID
-            {
-                if (customer.Id == id)//when found- displays the customer 
-                {
-                    return customer;
-                }
-            }
-            throw new NotFoundException("customer doesn't exist");
-
-        }
-        public Parcel PrintParcel(int id)//display parcel by parcel ID
-        {
-            foreach (Parcel parcel in DataSource.parcels)//goes over the list of parcels to find the parcel with that ID
-            {
-                if (parcel.Id == id)//when found- displays the parcel
-                {
-                    return parcel;
-                }
-            }
-            throw new NotFoundException("parcel doesn't exist");
-
-        }
-        public IEnumerable<Station> PrintAllStation()//display all stations
+        public IEnumerable<Station> DisplayStations(Predicate<Station> match)
         {
             foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
             {
-                yield return station;
-            }
-        }
-        public IEnumerable<Drone> PrintAllDrone()//display all drones
-        {
-            foreach (Drone drone in DataSource.drones)//goes over all the drones and prints all of them
-            {
-                yield return drone;
-            }
-        }
-        public IEnumerable<Customer> PrintAllCustomer()//display all customers
-        {
-            foreach (Customer customer in DataSource.customers)//goes over all the customers and prints all of them
-            {
-                yield return customer;
-            }
-        }
-        public IEnumerable<Parcel> PrintAllParcel()//display all parcels
-        {
-            foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and prints all of them
-            {
-                yield return parcel;
-            }
-        }
-        public IEnumerable<Parcel> PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
-        {
-            foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and if they are not assigned to any drone - print the,
-            {
-                if (parcel.DroneId == 0)//not assigned to drone= drone ID is 0
-                    yield return parcel;
-            }
-        }
-        public IEnumerable<Station> PrintStationWithChargeSlots()//display all stations with available charging slots 
-        {
-            foreach (Station station in DataSource.baseStations)//goes over all the stations and if the station has any available charging slots - it displays it
-            {
-                if (station.ChargeSlots > 0)//station with available charging slots= at least one charging slot
+                if (match(station))
                     yield return station;
             }
         }
+        public IEnumerable<Drone> DisplayDrones(Predicate<Drone> match)
+        {
+            foreach (Drone drone in DataSource.drones)//goes over all the stations and prints all of them
+            {
+                if (match(drone))
+                    yield return drone;
+            }
+        }
+        public IEnumerable<Customer> DisplayCustomers(Predicate<Customer> match)
+        {
+            foreach (Customer customer in DataSource.customers)//goes over all the stations and prints all of them
+            {
+                if (match(customer))
+                    yield return customer;
+            }
+        }
+        public IEnumerable<Parcel> DisplayParcels(Predicate<Parcel> match)
+        {
+            foreach (Parcel parcel in DataSource.parcels)//goes over all the stations and prints all of them
+            {
+                if (match(parcel))
+                    yield return parcel;
+            }
+        }
+        //public Station PrintStation(int id)//display station by station ID
+        //{
+        //    foreach (Station station in DataSource.baseStations)//goes over the list of stations to find the station with that ID
+        //    {
+        //        if (station.Id == id)//when found- displays the station 
+        //        {
+        //            return station;
+        //        }
+        //    }
+        //    throw new NotFoundException("station doesn't exist");
+
+        //}
+        //public Drone PrintDrone(int id)//display drone by drone ID
+        //{
+        //    foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone with that ID
+        //    {
+        //        if (drone.Id == id)
+        //        {
+        //            return drone;
+        //        }
+        //    }
+        //    throw new NotFoundException("drone doesn't exist");
+        //}
+        //public Customer PrintCustomer(int id)//display customer by customer ID
+        //{
+        //    foreach (Customer customer in DataSource.customers)//goes over the list of customers to find the customer with that ID
+        //    {
+        //        if (customer.Id == id)//when found- displays the customer 
+        //        {
+        //            return customer;
+        //        }
+        //    }
+        //    throw new NotFoundException("customer doesn't exist");
+
+        //}
+        //public Parcel PrintParcel(int id)//display parcel by parcel ID
+        //{
+        //    foreach (Parcel parcel in DataSource.parcels)//goes over the list of parcels to find the parcel with that ID
+        //    {
+        //        if (parcel.Id == id)//when found- displays the parcel
+        //        {
+        //            return parcel;
+        //        }
+        //    }
+        //    throw new NotFoundException("parcel doesn't exist");
+
+        //}
+        //public IEnumerable<Station> PrintAllStation()//display all stations
+        //{
+        //    foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
+        //    {
+        //        yield return station;
+        //    }
+        //}
+        //public IEnumerable<Drone> PrintAllDrone()//display all drones
+        //{
+        //    foreach (Drone drone in DataSource.drones)//goes over all the drones and prints all of them
+        //    {
+        //        yield return drone;
+        //    }
+        //}
+        //public IEnumerable<Customer> PrintAllCustomer()//display all customers
+        //{
+        //    foreach (Customer customer in DataSource.customers)//goes over all the customers and prints all of them
+        //    {
+        //        yield return customer;
+        //    }
+        //}
+        //public IEnumerable<Parcel> PrintAllParcel()//display all parcels
+        //{
+        //    foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and prints all of them
+        //    {
+        //        yield return parcel;
+        //    }
+        //}
+        //public IEnumerable<Parcel> PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
+        //{
+        //    foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and if they are not assigned to any drone - print the,
+        //    {
+        //        if (parcel.DroneId == 0)//not assigned to drone= drone ID is 0
+        //            yield return parcel;
+        //    }
+        //}
+        //public IEnumerable<Station> PrintStationWithChargeSlots()//display all stations with available charging slots 
+        //{
+        //    foreach (Station station in DataSource.baseStations)//goes over all the stations and if the station has any available charging slots - it displays it
+        //    {
+        //        if (station.ChargeSlots > 0)//station with available charging slots= at least one charging slot
+        //            yield return station;
+        //    }
+        //}
+        
         public Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
             int index = 0;

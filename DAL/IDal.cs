@@ -21,16 +21,23 @@ namespace DAL
             public void DeliveryTime(Parcel parcel);//Update delivery parcel status
             public void ChargingDrone(int dId, int sId);//send drone to charge
             public void ReleaseChargingDrone(int id);//release drone from charging
-            public Station PrintStation(int id);//display station by station ID
-            public Drone PrintDrone(int id);//display drone by drone ID
-            public Customer PrintCustomer(int id);//display customer by customer ID
-            public Parcel PrintParcel(int id);//display parcel by parcel ID
-            public IEnumerable<Station> PrintAllStation();//display all stations
-            public IEnumerable<Drone> PrintAllDrone();//display all drones
-            public IEnumerable<Customer> PrintAllCustomer();//display all customers
-            public IEnumerable<Parcel> PrintAllParcel();//display all parcels
-            public IEnumerable<Parcel> PrintParcelsWithNoDrone();//display all parcels that are not assigned to any drone
-            public IEnumerable<Station> PrintStationWithChargeSlots();//display all stations with available charging slots 
+
+            public IEnumerable<Station> DisplayStations(Predicate<Station> match);
+            public IEnumerable<Drone> DisplayDrones(Predicate<Drone> match);
+            public IEnumerable<Customer> DisplayCustomers(Predicate<Customer> match);
+            public IEnumerable<Parcel> DisplayParcels(Predicate<Parcel> match);
+
+            //public Station PrintStation(int id);//display station by station ID
+            //public IEnumerable<Station> PrintAllStation();//display all stations
+            //public IEnumerable<Station> PrintStationWithChargeSlots();//display all stations with available charging slots 
+            //public Drone PrintDrone(int id);//display drone by drone ID
+            //public IEnumerable<Drone> PrintAllDrone();//display all drones
+            //public Customer PrintCustomer(int id);//display customer by customer ID
+            //public IEnumerable<Customer> PrintAllCustomer();//display all customers
+            //public Parcel PrintParcel(int id);//display parcel by parcel ID
+            //public IEnumerable<Parcel> PrintAllParcel();//display all parcels
+            //public IEnumerable<Parcel> PrintParcelsWithNoDrone();//display all parcels that are not assigned to any drone
+          
             public Parcel ConvertParcel(int id);//returns the parcel of the ID that was given
             public Drone ConvertDrone(int id);//returns the drone of the ID that was given
             public Station ConvertStation(int id);//returns the station of the ID that was given
@@ -43,6 +50,7 @@ namespace DAL
             public void deleteParcel(int id);
 
         }
+
     }
 
 }
