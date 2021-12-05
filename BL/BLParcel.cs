@@ -83,7 +83,7 @@ namespace IBL
 
             }
         }
-        private ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
+        public ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
         {
             IDAL.DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).First();
             DateTime? x = null;

@@ -32,8 +32,10 @@ namespace PL
 
         private void statusSelection(object sender, SelectionChangedEventArgs e )
         {
+            if (((weightSelector.SelectedItem == null) && (statusSelector.SelectedItem == null)))
+                                DroneListView.ItemsSource = bl.displayDroneList();
 
-            if (((weightSelector.SelectedItem == null) || ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
+            else if (((weightSelector.SelectedItem == null) || ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDroneList();
             else if ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)
                 DroneListView.ItemsSource = bl.displayDrones(drone => drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem);
@@ -46,8 +48,9 @@ namespace PL
 
         private void weightSelection(object sender, SelectionChangedEventArgs e)
         {
-
-            if (((statusSelector.SelectedItem == null) || ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all))
+            if (((weightSelector.SelectedItem == null) && (statusSelector.SelectedItem == null)))
+                DroneListView.ItemsSource = bl.displayDroneList();
+            else if (((statusSelector.SelectedItem == null) || ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)) && ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDroneList();
             else if ((WeightCategories)weightSelector.SelectedItem == WeightCategories.all)
                 DroneListView.ItemsSource = bl.displayDrones(drone => drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem);

@@ -139,7 +139,7 @@ namespace IBL
             {
             return dl.CalculateDistance(from.Longitude, from.Latitude, to.Longitude, to.Latitude);
             }
-        private bool isDelivered(int droneId)//chack if the drone is deliverd
+        public bool isDelivered(int droneId)//chack if the drone is deliverd
         {
 
             foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
@@ -151,7 +151,7 @@ namespace IBL
             }
             return false;
         }
-        private bool isPickedUp(int droneId)//chack if the parcel is picked up
+        public bool isPickedUp(int droneId)//chack if the parcel is picked up
         {
             foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
@@ -162,7 +162,7 @@ namespace IBL
             }
             return false;
         }
-        private bool isMatched(int droneId)//chack if the drone is match to parcel
+        public bool isMatched(int droneId)//chack if the drone is match to parcel
         {
             foreach (var item in dl.DisplayParcels(parcel=>true))//goes over all the parcel in the DAL layer
             {

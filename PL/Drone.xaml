@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Drone" Height="320" Width="300">
+        Title="Drone" Height="320" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
@@ -21,12 +22,10 @@
             <RowDefinition Height="3*"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid Name="id" Grid.Row="1" Grid.Column="1">
-            <TextBox x:Name="ID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
-        </Grid>
         <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="enter drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
@@ -39,15 +38,11 @@
             <TextBlock HorizontalAlignment="Center" Text="enter model:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid Name="weight" Grid.Row="3" Grid.Column="1">
-            <ComboBox x:Name="WEIGHT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
-
-        </Grid>
         <Grid Name="enterWeight" Grid.Row="3" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="enter max weight:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid x:Name="Add" Grid.RowSpan="9" Grid.ColumnSpan="2" >
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -61,8 +56,17 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            <Grid Name="id" Grid.Row="1" Grid.Column="1">
+                <TextBox x:Name="ID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="weight" Grid.Row="3" Grid.Column="1">
+                <ComboBox x:Name="WEIGHT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
             <Grid Name="stationId" Grid.Row="4" Grid.Column="1">
                 <TextBox x:Name="STATION" HorizontalAlignment="Center" Text="station id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
@@ -71,16 +75,17 @@
                 <TextBlock HorizontalAlignment="Center" Text="enter station id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
-            <Grid Name="add" Grid.Row="9" Grid.Column="1">
-                <Button Content="ADD DRONE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,5,0,0" Click="addDrone_Click"/>
-                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="14,5,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click"/>
+            <Grid Name="add" Grid.Row="10" Grid.Column="1">
+                <Button Content="ADD DRONE" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="90,0,0,0" Click="addDrone_Click"/>
+                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="63" Click="Button_Click"/>
 
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="9" Grid.ColumnSpan="2" Visibility="Hidden">
+        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -92,47 +97,70 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-
-            <Grid Name="battery" Grid.Row="4" Grid.Column="1">
-                <TextBox x:Name="BATTERY" HorizontalAlignment="Center" Text="battery" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+            <Grid Name="viewId" Grid.Column="1" Margin="0,8,0,0" Grid.RowSpan="2">
+                <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
-            <Grid Name="showBattery" Grid.Row="4" Grid.Column="0">
+            <Grid Name="viewWeight" Grid.Row="2" Grid.Column="1" Margin="0,27,0,25" Grid.RowSpan="3">
+                <TextBlock x:Name="viewWEIGHT" HorizontalAlignment="Center" Text="weight" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="battery" Grid.Row="4" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
+                <TextBlock x:Name="BATTERY" HorizontalAlignment="Center" Text="battery" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="showBattery" Grid.Row="4" Grid.Column="0" Margin="0,0,0,25" Grid.RowSpan="2">
                 <TextBlock HorizontalAlignment="Center" Text="battery:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
-            <Grid Name="status" Grid.Row="5" Grid.Column="1">
-                <TextBox x:Name="STATUS" HorizontalAlignment="Center" Text="status" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+            <Grid Name="status" Grid.Row="5" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
+                <TextBlock x:Name="STATUS" HorizontalAlignment="Center" Text="status" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
-            <Grid Name="showStatus" Grid.Row="5" Grid.Column="0">
+            <Grid Name="showStatus" Grid.Row="5" Grid.Column="0" Margin="0,0,0,25" Grid.RowSpan="2">
                 <TextBlock HorizontalAlignment="Center" Text="status:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
             <Grid Name="latitude" Grid.Row="6" Grid.Column="1">
-                <TextBox x:Name="LATITUDE" HorizontalAlignment="Center" Text="location" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                <TextBlock x:Name="LATITUDE" HorizontalAlignment="Center" Text="location" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
             <Grid Name="showLatitude" Grid.Row="6" Grid.Column="0">
                 <TextBlock HorizontalAlignment="Center" Text="latitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
-            <Grid Name="longitude" Grid.Row="7" Grid.Column="1">
-                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Center" Text="location" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+            <Grid Name="longitude" Grid.Row="6" Grid.Column="1" Margin="0,25,0,0" Grid.RowSpan="2">
+                <TextBlock x:Name="LONGITUDE" HorizontalAlignment="Center" Text="location" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
-            <Grid Name="showLongitude" Grid.Row="7" Grid.Column="0">
+            <Grid Name="showLongitude" Grid.Row="6" Grid.Column="0" Margin="0,25,0,0" Grid.RowSpan="2">
                 <TextBlock HorizontalAlignment="Center" Text="longitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
-            <Grid Name="pacelId" Grid.Row="8" Grid.Column="1">
-                <TextBox x:Name="PARCEL" HorizontalAlignment="Center" Text="parcel" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+            <Grid Name="pacelId" Grid.Row="7" Grid.Column="1" Margin="0,25,0,0" Grid.RowSpan="2">
+                <TextBlock x:Name="PARCEL" HorizontalAlignment="Center" Text="parcel" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
-            <Grid Name="showPaecel" Grid.Row="8" Grid.Column="0">
+            <Grid Name="showPaecel" Grid.Row="7" Grid.Column="0" Margin="0,25,0,0" Grid.RowSpan="2">
                 <TextBlock HorizontalAlignment="Center" Text="parcel:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="2">
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Center" Width="45" Click="closeA_click"/>
+                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="60,2,0,0" VerticalAlignment="Top" Width="45" Click="updateA_click"/>
+                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="110,2,0,0" VerticalAlignment="Top" Width="45"/>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="160,2,0,0" VerticalAlignment="Center" Width="45"/>
+
+            </Grid>
+            <Grid x:Name="time" Grid.RowSpan="10"  Grid.ColumnSpan="2" Grid.Column="1" Margin="100,0,0,0" Visibility="Hidden"  >
+                <TextBox x:Name="Hour" HorizontalAlignment="Left" Margin="70,112,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+                <TextBox x:Name="Minute" HorizontalAlignment="Left" Margin="70,152,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+                <TextBlock HorizontalAlignment="Left" Margin="51,91,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="51,131,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Center" Margin="0,51,0,0" Text="to release drone from charging:" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="112" TextAlignment="Center"/>
 
             </Grid>
         </Grid>

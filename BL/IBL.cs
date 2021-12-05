@@ -36,6 +36,7 @@ namespace IBL
         public parcel displayParcel(int id); //display requested parcel
         public IEnumerable<parcelForList> displayParcelList(); //display all parcels
         public IEnumerable<parcelForList> displayParcelListWithoutDrone(); //display all parcels that arent matched
+        public ParcelStatus getStatus(int id);
 
     }
 }
