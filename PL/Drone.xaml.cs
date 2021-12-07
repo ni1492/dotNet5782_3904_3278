@@ -160,19 +160,24 @@ namespace PL
         {
             try
             {
-                int h;
-                Int32.TryParse(Hour.Text, out h);
-                int m;
-                Int32.TryParse(Minute.Text, out m);
-                DateTime dateTime= new DateTime(1, 1, 1, h, m, 0);
-                int id;
-                Int32.TryParse(viewID.Text, out id);
-                bl.releaseDroneFromCharge(id,dateTime);
-                time.Visibility = Visibility.Hidden;
+                if (checkTime(Hour.Text, Minute.Text))
+                {
+                    int h;
+                    Int32.TryParse(Hour.Text, out h);
+                    int m;
+                    Int32.TryParse(Minute.Text, out m);
+                    DateTime dateTime = new DateTime(1, 1, 1, h, m, 0);
+                    int id;
+                    Int32.TryParse(viewID.Text, out id);
+                    bl.releaseDroneFromCharge(id, dateTime);
+                    time.Visibility = Visibility.Hidden;
 
-                MessageBox.Show("released drone");
-                this.Close();
-                return;
+                    MessageBox.Show("released drone");
+                    this.Close();
+                    return;
+                }
+                else
+                    MessageBox.Show("incorrect input - release drone failed");
             }
             catch (Exception ex)
             {
@@ -196,20 +201,25 @@ namespace PL
         {
             try
             {
-                int x;
-                Int32.TryParse(ID.Text, out x);
-                IBL.BO.droneForList d = new IBL.BO.droneForList
+                if(checkId(ID.Text)&&checkModel(MODEL.Text)&&checkStationId(STATION.Text)&&WEIGHT.SelectedItem!=null)
                 {
-                    id = x,
-                    model = MODEL.Text,
-                    weight = (IBL.BO.WeightCategories)WEIGHT.SelectedItem
+                    int x;
+                    Int32.TryParse(ID.Text, out x);
+                    IBL.BO.droneForList d = new IBL.BO.droneForList
+                    {
+                        id = x,
+                        model = MODEL.Text,
+                        weight = (IBL.BO.WeightCategories)WEIGHT.SelectedItem
 
-                };
-                Int32.TryParse(STATION.Text.ToString(), out x);
-                bl.addDrone(d, x);
-                MessageBox.Show("Added");
-                this.Close();
-                return;
+                    };
+                    Int32.TryParse(STATION.Text.ToString(), out x);
+                    bl.addDrone(d, x);
+                    MessageBox.Show("Added");
+                    this.Close();
+                    return;
+                }
+                else
+                    MessageBox.Show("incorrect input - add drone failed");
             }
             catch (Exception ex)
             {
@@ -233,12 +243,17 @@ namespace PL
         {
             try
             {
-                int id;
-                Int32.TryParse(viewID.Text, out id);
-                bl.updateDrone(id, MODEL.Text);
-                MessageBox.Show("updated");
-                this.Close();
-                return;
+                if (checkModel(MODEL.Text))
+                {
+                    int id;
+                    Int32.TryParse(viewID.Text, out id);
+                    bl.updateDrone(id, MODEL.Text);
+                    MessageBox.Show("updated");
+                    this.Close();
+                    return;
+                }
+                else
+                    MessageBox.Show("incorrect input - update drone failed");
             }
             catch (Exception ex)
             {
@@ -246,5 +261,51 @@ namespace PL
                 return;
             }
         }
+        private bool checkModel(string text)
+        {
+            if ((text != null) && (text != ""))
+                return true;
+            return false;
+        }
+
+        private bool checkId(string text)
+        {
+            if (text == null)
+                return false;
+            if (!int.TryParse(text, out int id))
+                return false;
+            if (id <= 0)
+                return false;
+            if (bl.displayDrone(id) != null)
+                return false;
+            return true;
+        }
+
+        private bool checkStationId(string text)
+        {
+            if (text == null)
+                return false;
+            if (!int.TryParse(text, out int id))
+                return false;
+            if (id <= 0)
+                return false;
+            if (bl.displayStation(id) == null)
+                return false;
+            return true;
+        }
+
+        private bool checkTime(string hour, string min)
+        {
+            if ((hour == null)||(min==null))
+                return false;
+            if ((!int.TryParse(hour, out int h))|| (!int.TryParse(min, out int m)))
+                return false;
+            if (((m <= 0)||(m>=60)) || ((h>23)|| (h <= 0)))
+                return false;
+            return true;
+        }
+
     }
+
+    
 }
