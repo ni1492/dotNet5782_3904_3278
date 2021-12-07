@@ -31,7 +31,7 @@ namespace DALObject
         }
         public static void Initialize()//initialization of data for the program
         {
-            Config.availablePK = R.NextDouble();
+            Config.availablePK = R.NextDouble()/10;
             Config.lightPK = Config.availablePK + R.NextDouble();
             Config.mediumPK = Config.lightPK + R.NextDouble();
             Config.heavyPK = Config.mediumPK + R.NextDouble();
