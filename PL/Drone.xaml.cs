@@ -156,7 +156,6 @@ namespace PL
                 return;
             }
         }
-
         private void releaseChargeA_Click(object sender, RoutedEventArgs e)
         {
             try
