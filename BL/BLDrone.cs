@@ -304,7 +304,7 @@ namespace IBL
         }
         private IEnumerable<parcelInDelivery> parcelsByPriority(List<parcelInDelivery> list, BO.Priorities prioritiy) //returns all the parcels based on the priority requested ---should this be in BLParcel??
         {
-            foreach (var parcel in list)
+            foreach (parcelInDelivery parcel in list)
             {
                 if (parcel.priority == prioritiy)
                     yield return parcel;
@@ -323,6 +323,8 @@ namespace IBL
             BO.WeightCategories w = new();
             double battery = 0;
             droneForList d = new();
+            List<parcelInDelivery> parcels = new List<parcelInDelivery>();
+            List<parcelInDelivery> list = new List<parcelInDelivery>();
             foreach (var drone in drones)//find the drone to match
             {
                 if (droneId == drone.id)
@@ -338,7 +340,6 @@ namespace IBL
 
                 }
             }
-            List<parcelInDelivery> list = new List<parcelInDelivery>();
             foreach (var parcel in displayParcelListWithoutDrone())//select the parcels not matched yet that the drone can deliver
             {
                 double[] PK = { lightPK, mediumPK, heavyPK };
@@ -353,6 +354,7 @@ namespace IBL
                         priority = parcel.priority,
                         pickUp = senderLocation(parcel.id),
                         destination = targetLocation(parcel.id),
+                      //  distance = calcDistance(senderLocation(parcel.id), targetLocation(parcel.id)),
                         status = false
                     });
                 } 
@@ -360,15 +362,15 @@ namespace IBL
             if (list.Count == 0)//if the drone cant deliver any parcel
                 throw new NotFoundException("no parcel can be matched to the drone");
             BO.Priorities p = BO.Priorities.urgent;
-            List<parcelInDelivery> parcels = new List<parcelInDelivery>();
             do//select the parcel by priority
             {
-                foreach (var item in parcelsByPriority(list, p))
+                foreach (var item in dl.DisplayParcels(parcel=>parcel.Priority==(IDAL.DO.Priorities)p))
                 {
-                    parcels.Add(item);
+                    if (list.Find(parcel => parcel.id == item.Id) != null)
+                        parcels.Add(list.Find(parcel => parcel.id == item.Id));
                 }
                 p--;
-            } while (parcels == null);
+            } while (parcels.Count() == 0);
             list.Clear();
             do//select the parcel by weight
             {
@@ -377,7 +379,7 @@ namespace IBL
                     list.Add(item);
                 }
                 w--;
-            } while (list == null);
+            } while (list.Count() == 0);
             double smallest = calcDistance(d.currentLocation, list[0].pickUp);
             int parcelId = list[0].id;
             foreach (var item in list)//select the parcel by distance
