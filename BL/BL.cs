@@ -164,18 +164,13 @@ namespace IBL
         }
         public bool isMatched(int droneId)//chack if the drone is match to parcel
         {
-            foreach (var item in drones)
+            foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
-                if (item.id == droneId && item.parcelID != 0)
+                if (item.DroneId == droneId)//chack if the drone is match to parcel
+                {
                     return true;
+                }
             }
-            //foreach (var item in dl.DisplayParcels(parcel=>true))//goes over all the parcel in the DAL layer
-            //{
-            //    if (item.DroneId == droneId)//chack if the drone is match to parcel
-            //    {
-            //        return true;
-            //    }
-            //}
             return false;
         }
         private location senderLocation(int parcelId)//return tne sender location by the parcel id

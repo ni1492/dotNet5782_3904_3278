@@ -9,7 +9,11 @@
   <ItemGroup>
     <None Remove="drone.jpg" />
     <None Remove="drone.svg" />
+    <None Remove="dronefinal.jpeg" />
+    <None Remove="logo.jpg" />
+    <None Remove="logo.png" />
     <None Remove="pngwing.com.png" />
+    <None Remove="preview.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +23,11 @@
   <ItemGroup>
     <Resource Include="drone.jpg" />
     <Resource Include="drone.svg" />
+    <Resource Include="dronefinal.jpeg" />
+    <Resource Include="logo.jpg" />
+    <Resource Include="logo.png" />
     <Resource Include="pngwing.com.png" />
+    <Resource Include="preview.png" />
   </ItemGroup>
 
 </Project>

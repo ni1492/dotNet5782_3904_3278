@@ -49,7 +49,7 @@ namespace IBL
         {
             try
             {
-                if (!isMatched(id))//if the drone isn't match yet
+                if (drones.Find(drone=>drone.id==id).status!=DroneStatuses.delivery)//if the drone isn't match yet
                 {
                     int parcelId = parcelToMatch(id);//find the parcel to match
                     dl.Match(parcelId, id);//match
@@ -185,6 +185,9 @@ namespace IBL
                     }
                 }
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;
+                IDAL.DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == (drones.Find(drone => drone.id == id).parcelID)).First();
+                dl.deleteParcel(p.Id);
+                dl.AddParcel(p.SenderId, p.TargetId, p.Weight, p.Priority, 0);
                 drones.Find(drone => drone.id == id).parcelID = 0;
             }
             catch (Exception ex) //catches if the ID not exists

@@ -26,6 +26,8 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
+        <Image Grid.Column="2" HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Grid.RowSpan="4" VerticalAlignment="Top" Width="100" Source="/logo.png"/>
+
         <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
@@ -68,7 +70,7 @@
                     <ColumnDefinition Width="37*"/>
                     <ColumnDefinition Width="114*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="WEIGHT" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="15,0,0,0"  />
+                <ComboBox x:Name="WEIGHT" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>
             <Grid Name="stationId" Grid.Row="4" Grid.Column="1">
@@ -80,13 +82,35 @@
 
             </Grid>
             <Grid Name="add" Grid.Row="10" Grid.Column="1">
-                <Button Content="ADD DRONE" VerticalAlignment="Center" Margin="90,0,-19,0" Click="addDrone_Click"/>
-                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="63" Click="Button_Click"/>
+                <Button Content="ADD DRONE" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="Red"/>
+                            <GradientStop Color="#FFF89200" Offset="0.427"/>
+                            <GradientStop Color="#FFF79500" Offset="0.406"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="Red"/>
+                            <GradientStop Color="#FFF89200" Offset="0.427"/>
+                            <GradientStop Color="#FFF79500" Offset="0.406"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
 
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Hidden" >
+        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -153,13 +177,66 @@
 
             </Grid>
             <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="2">
-                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Center" Width="45" Click="closeA_click"/>
-                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="60,2,0,0" VerticalAlignment="Top" Width="45" Click="updateA_click"/>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="110,2,0,0" VerticalAlignment="Top" Width="45"/>
-                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="160,2,0,0" VerticalAlignment="Center" Width="45"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="134*"/>
+                    <ColumnDefinition Width="85*"/>
+                    <ColumnDefinition Width="31*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="Red"/>
+                            <GradientStop Color="#FFF89200" Offset="0.427"/>
+                            <GradientStop Color="#FFF79500" Offset="0.406"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="Red"/>
+                            <GradientStop Color="#FFF89200" Offset="0.427"/>
+                            <GradientStop Color="#FFF79500" Offset="0.406"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="Red"/>
+                            <GradientStop Color="#FFF89200" Offset="0.427"/>
+                            <GradientStop Color="#FFF79500" Offset="0.406"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="38,-2,0,0" VerticalAlignment="Top" Width="49" Grid.Column="1" Grid.ColumnSpan="2">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="#FFF3FF00" Offset="1"/>
+                            <GradientStop Color="Red"/>
+                            <GradientStop Color="#FFF89200" Offset="0.427"/>
+                            <GradientStop Color="#FFF79500" Offset="0.406"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
 
             </Grid>
-            <Grid x:Name="time" Grid.RowSpan="10"  Grid.ColumnSpan="2" Grid.Column="1" Margin="100,0,0,0" Visibility="Hidden"  >
+            <Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="211*"/>
+                    <RowDefinition Height="94*"/>
+                </Grid.RowDefinitions>
                 <TextBox x:Name="Hour" HorizontalAlignment="Left" Margin="70,112,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" LostFocus="HOURTextChanged"/>
                 <TextBox x:Name="Minute" HorizontalAlignment="Left" Margin="70,152,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" LostFocus="MINUTETextChanged"/>
                 <TextBlock HorizontalAlignment="Left" Margin="51,91,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -168,5 +245,6 @@
 
             </Grid>
         </Grid>
+
     </Grid>
 </Window>

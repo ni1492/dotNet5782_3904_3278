@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,333,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black">
+        <Image x:Name="fire" Source="/pngwing.com.png" Margin="100,2,-100,-2"></Image>
+
+        <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,185,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFCFF00"/>
@@ -23,5 +25,8 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
+        <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Left" Height="93" Margin="116,56,0,0" VerticalAlignment="Top" Width="93">
+
+        </Image>
     </Grid>
 </Window>

@@ -14,17 +14,32 @@
         </Grid.RowDefinitions>
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+VerticalAlignment="Stretch" Width="auto" Visibility="Visible">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#7FFFD100" Offset="0"/>
+                    <GradientStop Color="#7FFF0000" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox x:Name="statusSelector" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" Grid.Column="1" SelectionChanged="statusSelection"/>
-            <ComboBox x:Name="weightSelector" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" SelectionChanged="weightSelection"/>
-            <Label Content="Drone Status" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" Height="30" Margin="0,14,0,0"/>
-            <Label Content="Max Weight" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" Margin="0,19,0,0" Height="30"/>
+            <ComboBox x:Name="statusSelector" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" Grid.Column="1" SelectionChanged="statusSelection" Height="28"/>
+            <ComboBox x:Name="weightSelector" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" SelectionChanged="weightSelection" RenderTransformOrigin="0.5,0.5" Height="28" IsSynchronizedWithCurrentItem="True">
+                <ComboBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="-0.275"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-0.061"/>
+                    </TransformGroup>
+                </ComboBox.RenderTransform>
+            </ComboBox>
+            <Label Content="Drone Status" HorizontalAlignment="Left" VerticalAlignment="Top" Width="168" Height="38" FontSize="20" FontFamily="Berlin Sans FB" Margin="16,20,0,0" Grid.ColumnSpan="2"/>
+            <Label Content="Max Weight" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="168" Height="38" FontSize="20" FontFamily="Berlin Sans FB" Margin="16,20,0,0" Grid.ColumnSpan="2"/>
         </Grid>
         <ListView Grid.Row="1" x:Name="DroneListView" MouseDoubleClick="openDrone_DoubleClick">
             <ListView.View>
@@ -34,8 +49,26 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
         <Grid Name="bottomGrid" Grid.Row="2">
-            <Button Content="Add drone" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" />
-            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="Button_Click" />
+            <Button Content="Add drone" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" BorderBrush="Red" >
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#CCFF0000"/>
+                        <GradientStop Color="#FFF3FF00" Offset="1"/>
+                        <GradientStop Color="#FFDDDDDD" Offset="1"/>
+                        <GradientStop Color="#CCFFF300" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="Button_Click" BorderBrush="Red" >
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF3FF00"/>
+                        <GradientStop Color="#FFE5F017" Offset="0"/>
+                        <GradientStop Color="#CCFF0000" Offset="0"/>
+                        <GradientStop Color="#CCF3FF00" Offset="0.954"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
 
         </Grid>
     </Grid>
