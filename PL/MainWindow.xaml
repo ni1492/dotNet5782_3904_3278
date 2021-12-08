@@ -7,7 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,176,0,0" VerticalAlignment="Top" Height="73" Width="128" Click="showDronesButton_click"/>
-
+        <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,333,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFCFF00"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <TextBlock HorizontalAlignment="Center" Margin="0,71,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="474" FontSize="70" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
     </Grid>
 </Window>

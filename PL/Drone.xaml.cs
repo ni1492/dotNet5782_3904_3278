@@ -160,7 +160,7 @@ namespace PL
         {
             try
             {
-                if (checkTime(Hour.Text, Minute.Text))
+                if (checkHour(Hour.Text) && checkMinute(Minute.Text))
                 {
                     int h;
                     Int32.TryParse(Hour.Text, out h);
@@ -185,7 +185,7 @@ namespace PL
                 return;
             }
         }
-        
+
 
         public Drone(IBL.IBL bl)//add grid
         {
@@ -201,7 +201,7 @@ namespace PL
         {
             try
             {
-                if(checkId(ID.Text)&&checkModel(MODEL.Text)&&checkStationId(STATION.Text)&&WEIGHT.SelectedItem!=null)
+                if (checkId(ID.Text) && checkModel(MODEL.Text) && checkStationId(STATION.Text) && WEIGHT.SelectedItem != null)
                 {
                     int x;
                     Int32.TryParse(ID.Text, out x);
@@ -270,42 +270,129 @@ namespace PL
 
         private bool checkId(string text)
         {
-            if (text == null)
-                return false;
-            if (!int.TryParse(text, out int id))
-                return false;
-            if (id <= 0)
-                return false;
-            if (bl.displayDrone(id) != null)
-                return false;
-            return true;
+            try
+            {
+                if (text == null)
+                    return false;
+                if (!int.TryParse(text, out int id))
+                    return false;
+                if (id <= 0)
+                    return false;
+                if (bl.displayDrone(id) != null)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
         }
 
         private bool checkStationId(string text)
         {
-            if (text == null)
+            try
+            {
+                if (text == null)
+                    return false;
+                if (!int.TryParse(text, out int id))
+                    return false;
+                if (id <= 0)
+                    return false;
+                if (bl.displayStation(id) == null)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
                 return false;
-            if (!int.TryParse(text, out int id))
-                return false;
-            if (id <= 0)
-                return false;
-            if (bl.displayStation(id) == null)
-                return false;
-            return true;
+            }
+
         }
 
-        private bool checkTime(string hour, string min)
+        private bool checkHour(string hour)
         {
-            if ((hour == null)||(min==null))
-                return false;
-            if ((!int.TryParse(hour, out int h))|| (!int.TryParse(min, out int m)))
-                return false;
-            if (((m <= 0)||(m>=60)) || ((h>23)|| (h <= 0)))
+            if ((hour == null) || (!int.TryParse(hour, out int h)) || ((h > 23) || (h <= 0)))
                 return false;
             return true;
         }
+        private bool checkMinute(string min)
+        {
+            if ((min == null) || (!int.TryParse(min, out int m)) || ((m <= 0) || (m >= 60)))
+                return false;
+            return true;
+        }
+        private void IDTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkId(ID.Text))
+            {
+                ID.BorderBrush = Brushes.GreenYellow;
+                ID.Background = Brushes.White;
+            }
+            else
+            {
+                ID.BorderBrush = Brushes.DarkRed;
+                ID.Background = Brushes.Red;
+            }
+        }
+
+        private void MODELTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkModel(MODEL.Text))
+            {
+                MODEL.BorderBrush = Brushes.GreenYellow;
+                MODEL.Background = Brushes.White;
+            }
+            else
+            {
+                MODEL.BorderBrush = Brushes.DarkRed;
+                MODEL.Background = Brushes.Red;
+            }
+
+        }
+
+        private void STATIONTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkStationId(STATION.Text))
+            {
+                STATION.BorderBrush = Brushes.GreenYellow;
+                STATION.Background = Brushes.White;
+            }
+            else
+            {
+                STATION.BorderBrush = Brushes.DarkRed;
+                STATION.Background = Brushes.Red;
+            }
+        }
+
+        private void HOURTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkHour(Hour.Text))
+            {
+                Hour.BorderBrush = Brushes.GreenYellow;
+                Hour.Background = Brushes.White;
+            }
+            else
+            {
+                Hour.BorderBrush = Brushes.DarkRed;
+                Hour.Background = Brushes.Red;
+            }
+        }
+
+        private void MINUTETextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkMinute(Minute.Text))
+            {
+                Minute.BorderBrush = Brushes.GreenYellow;
+                Minute.Background = Brushes.White;
+            }
+            else
+            {
+                Minute.BorderBrush = Brushes.DarkRed;
+                Minute.Background = Brushes.Red;
+            }
+        }
+
 
     }
-
-    
 }

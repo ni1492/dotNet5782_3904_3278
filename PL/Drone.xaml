@@ -27,22 +27,22 @@
         </Grid.RowDefinitions>
 
         <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="enter drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" Text="drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
         <Grid Name="model" Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="MODEL" HorizontalAlignment="Center" Text="model" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+            <TextBox x:Name="MODEL" HorizontalAlignment="Center" Text="model" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="MODELTextChanged"/>
 
         </Grid>
         <Grid Name="enterModel" Grid.Row="2" Grid.Column="0" Visibility="Visible">
-            <TextBlock HorizontalAlignment="Center" Text="enter model:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" Text="model:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
         <Grid Name="enterWeight" Grid.Row="3" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="enter max weight:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" Text="max weight:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"  >
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -60,29 +60,33 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Name="id" Grid.Row="1" Grid.Column="1">
-                <TextBox x:Name="ID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="ID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="IDTextChanged"/>
 
             </Grid>
             <Grid Name="weight" Grid.Row="3" Grid.Column="1">
-                <ComboBox x:Name="WEIGHT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="114*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="WEIGHT" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="15,0,0,0"  />
 
             </Grid>
             <Grid Name="stationId" Grid.Row="4" Grid.Column="1">
-                <TextBox x:Name="STATION" HorizontalAlignment="Center" Text="station id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="STATION" HorizontalAlignment="Center" Text="station id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged"/>
 
             </Grid>
             <Grid Name="enterStation" Grid.Row="4" Grid.Column="0">
-                <TextBlock HorizontalAlignment="Center" Text="enter station id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Center" Text="station id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
             <Grid Name="add" Grid.Row="10" Grid.Column="1">
-                <Button Content="ADD DRONE" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="90,0,0,0" Click="addDrone_Click"/>
+                <Button Content="ADD DRONE" VerticalAlignment="Center" Margin="90,0,-19,0" Click="addDrone_Click"/>
                 <Button Content="CANCEL" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" Width="63" Click="Button_Click"/>
 
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" >
+        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Hidden" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -156,8 +160,8 @@
 
             </Grid>
             <Grid x:Name="time" Grid.RowSpan="10"  Grid.ColumnSpan="2" Grid.Column="1" Margin="100,0,0,0" Visibility="Hidden"  >
-                <TextBox x:Name="Hour" HorizontalAlignment="Left" Margin="70,112,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
-                <TextBox x:Name="Minute" HorizontalAlignment="Left" Margin="70,152,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+                <TextBox x:Name="Hour" HorizontalAlignment="Left" Margin="70,112,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" LostFocus="HOURTextChanged"/>
+                <TextBox x:Name="Minute" HorizontalAlignment="Left" Margin="70,152,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" LostFocus="MINUTETextChanged"/>
                 <TextBlock HorizontalAlignment="Left" Margin="51,91,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="51,131,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Center" Margin="0,51,0,0" Text="to release drone from charging:" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="112" TextAlignment="Center"/>
