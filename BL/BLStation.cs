@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-using DalApi.DO;
+using DO;
 
 namespace BlApi
 {
@@ -26,7 +26,7 @@ namespace BlApi
         {
             try
             {
-                DalApi.DO.Station tempDL = dl.DisplayStations(station => station.Id == id).First(); //finds the station in the DAL layer
+                DO.Station tempDL = dl.DisplayStations(station => station.Id == id).First(); //finds the station in the DAL layer
                
                 if (name != null) //if the function recieves the name to update  - it changes the name
                     tempDL.Name = name;
@@ -50,7 +50,7 @@ namespace BlApi
         {
             try
             {
-                DalApi.DO.Station stationDO = dl.DisplayStations(station=>station.Id==id).First();
+                DO.Station stationDO = dl.DisplayStations(station=>station.Id==id).First();
                 baseStation stationBO = (new baseStation()
                 {
                     id = stationDO.Id,

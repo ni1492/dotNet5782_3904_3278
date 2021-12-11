@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-using DalApi.DO;
+using DO;
 
 namespace BlApi
 {
@@ -28,7 +28,7 @@ namespace BlApi
             }
             try
             {
-                dl.AddDrone(drone.id, drone.model, (DalApi.DO.WeightCategories)drone.weight);
+                dl.AddDrone(drone.id, drone.model, (DO.WeightCategories)drone.weight);
             }
             catch (Exception ex) //catches if the ID already exists
             {
@@ -76,7 +76,7 @@ namespace BlApi
         {
             try
             {
-                DalApi.DO.Drone tempDL = dl.DisplayDrones(drone => drone.Id == id).First();  //find the drone in the DAL
+                DO.Drone tempDL = dl.DisplayDrones(drone => drone.Id == id).First();  //find the drone in the DAL
                 dl.deleteDrone(id); //delltes the old drone before the changes
                 dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight);//adds the drone with the changes
                 droneForList tempBL = drones.Find(drone => drone.id == id); //finds it in the drone list
@@ -185,7 +185,7 @@ namespace BlApi
                     }
                 }
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;
-                DalApi.DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == (drones.Find(drone => drone.id == id).parcelID)).First();
+                DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == (drones.Find(drone => drone.id == id).parcelID)).First();
                 dl.deleteParcel(p.Id);
                 dl.AddParcel(p.SenderId, p.TargetId, p.Weight, p.Priority, 0);
                 drones.Find(drone => drone.id == id).parcelID = 0;
@@ -367,7 +367,7 @@ namespace BlApi
             BO.Priorities p = BO.Priorities.urgent;
             do//select the parcel by priority
             {
-                foreach (var item in dl.DisplayParcels(parcel=>parcel.Priority==(DalApi.DO.Priorities)p))
+                foreach (var item in dl.DisplayParcels(parcel=>parcel.Priority==(DO.Priorities)p))
                 {
                     if (list.Find(parcel => parcel.id == item.Id) != null)
                         parcels.Add(list.Find(parcel => parcel.id == item.Id));

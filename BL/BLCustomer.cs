@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-using DalApi.DO;
+using DO;
 
 
 namespace BlApi
@@ -27,7 +27,7 @@ namespace BlApi
         {
             try
             {
-                DalApi.DO.Customer tempDL = dl.DisplayCustomers(customer => customer.Id == id).First();
+                DO.Customer tempDL = dl.DisplayCustomers(customer => customer.Id == id).First();
 
                 dl.deleteCustomer(id); 
                 if (name != null)
@@ -48,7 +48,7 @@ namespace BlApi
         {
             try
             {
-                DalApi.DO.Customer cus = dl.DisplayCustomers(customer => customer.Id == id).First();
+                DO.Customer cus = dl.DisplayCustomers(customer => customer.Id == id).First();
                 List<parcelAtCustomer> fromCus = new();
                 List<parcelAtCustomer> toCus = new();
                 int sId = 0;
