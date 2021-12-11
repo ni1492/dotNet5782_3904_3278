@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
-using IDAL.DO;
+using DalApi.DO;
 
 
 namespace IBL
@@ -27,7 +27,7 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Customer tempDL = dl.DisplayCustomers(customer => customer.Id == id).First();
+                DalApi.DO.Customer tempDL = dl.DisplayCustomers(customer => customer.Id == id).First();
 
                 dl.deleteCustomer(id); 
                 if (name != null)
@@ -48,7 +48,7 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Customer cus = dl.DisplayCustomers(customer => customer.Id == id).First();
+                DalApi.DO.Customer cus = dl.DisplayCustomers(customer => customer.Id == id).First();
                 List<parcelAtCustomer> fromCus = new();
                 List<parcelAtCustomer> toCus = new();
                 int sId = 0;

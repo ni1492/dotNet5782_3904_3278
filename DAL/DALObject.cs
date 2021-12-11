@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
-using DAL.IDAL;
+using DalApi.DO;
+using DAL.DalApi;
 
 
 namespace DALObject
@@ -25,7 +25,7 @@ namespace DALObject
                     throw new ExistException("station alredy exist");
                 }
             }
-            IDAL.DO.Station station = new IDAL.DO.Station();
+            DalApi.DO.Station station = new DalApi.DO.Station();
             station.Id = Id;
             station.Name = name;
             station.Longitude = longitude;
@@ -44,7 +44,7 @@ namespace DALObject
                     throw new ExistException("drone alredy exist");
                 }
             }
-            IDAL.DO.Drone drone = new IDAL.DO.Drone();
+            DalApi.DO.Drone drone = new DalApi.DO.Drone();
             drone.Id = Id;
             drone.Model = model;
             drone.MaxWeight = maxWeight;
@@ -63,7 +63,7 @@ namespace DALObject
                     throw new ExistException("customer alredy exist");
                 }
             }
-            IDAL.DO.Customer customer = new IDAL.DO.Customer();
+            DalApi.DO.Customer customer = new DalApi.DO.Customer();
             customer.Id = Id;
             customer.Name = name;
             customer.Phone = phone;
@@ -93,7 +93,7 @@ namespace DALObject
 
                 throw new NotFoundException("target: " + ex.Message, ex);
             }
-            IDAL.DO.Parcel parcel = new IDAL.DO.Parcel();
+            DalApi.DO.Parcel parcel = new DalApi.DO.Parcel();
             parcel.Id = DataSource.Config.ParcelID++;
             parcel.SenderId = sId;
             parcel.TargetId = tId;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 //using IDAL.DO;
-using DAL.IDAL;
+using DAL.DalApi;
 using IBL.BO;
 namespace IBL
 {

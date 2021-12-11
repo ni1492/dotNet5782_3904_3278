@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBL.BO;
-using IDAL.DO;
+using DalApi.DO;
 
 namespace IBL
 {
@@ -14,7 +14,7 @@ namespace IBL
         {
             try
             {
-                dl.AddParcel(parcel.sender.id, parcel.receiver.id, (IDAL.DO.WeightCategories)parcel.weight, (IDAL.DO.Priorities)parcel.priority, 0);
+                dl.AddParcel(parcel.sender.id, parcel.receiver.id, (DalApi.DO.WeightCategories)parcel.weight, (DalApi.DO.Priorities)parcel.priority, 0);
             }
             catch (Exception ex) //catches if the ID already exists
             {
@@ -85,7 +85,7 @@ namespace IBL
         }
         public ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
         {
-            IDAL.DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).First();
+            DalApi.DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).First();
             DateTime? x = null;
             if (p.Delivered != x)
                 return ParcelStatus.Delivered;
