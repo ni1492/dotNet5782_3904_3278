@@ -1,96 +1,96 @@
-﻿////targil 2
-//using System;
-//using IBL.BO;
-//using IBL;
-//namespace ConsoleUI_BL
-//{
-//    class Program
-//    {
-//        static void Main(string[] args)
-//        {
-//            IBL.IBL bl = new BL();
-//            int inputVal1 = 0;//first user choice - outer switch-case
-//            int inputVal2 = 0;//second user choice - inner switch-case
-//            int id = 0;//id for parcel, station, customer
-//            string model = "";//drone model
-//            WeightCategories weight = WeightCategories.light;//weight within drone object and parcel
-//            string name = null;//station
-//            double longitude = 0;//0-50
-//            double lattitude = 0;//0-50
-//            int chargeSlots = 0;//amount of charging spots
-//            string customerName = "";//customer name
-//            string phone = "";//in order to write a zero in the beginning
-//            int sId = 0;//sender
-//            int tId = 0;//target
-//            int dId = 0;//drone
-//            int num = 0;
-//            DateTime time;
-//            Priorities priority = Priorities.regular;//enum priorities
-//            //end of initialization
-//            do
-//            {
-//                //main menu for user: add, update, display, list display, exit.
-//                Console.WriteLine("Choose one of the following options:\n");
-//                Console.WriteLine("1: Adding options\n");
-//                Console.WriteLine("2: Update options\n");
-//                Console.WriteLine("3: Display options\n");
-//                Console.WriteLine("4: List display options\n");
-//                Console.WriteLine("5: exit\n");
-//                string input = Console.ReadLine();//read first choice
-//                Int32.TryParse(input, out inputVal1);
-//                switch (inputVal1)
-//                {
-//                    case 1://add
-//                        {
-//                            Console.WriteLine("Choose one of the following options:\n");
-//                            Console.WriteLine("1: Add new base-station \n");
-//                            Console.WriteLine("2: Add new drone\n");
-//                            Console.WriteLine("3: Add new customer\n");
-//                            Console.WriteLine("4: Add new parcel for delivery\n");
-//                            input = Console.ReadLine();
-//                            Int32.TryParse(input, out inputVal2);
-//                            switch (inputVal2)
-//                            {
-//                                case 1://add station
-//                                    {
-//                                        Console.WriteLine("enter: id, name, charge slots number, longitude(30-33), lattitude(-30- -27)");
-//                                        input = Console.ReadLine();
-//                                        Int32.TryParse(input, out id);
-//                                        name = Console.ReadLine();
-//                                        input = Console.ReadLine();
-//                                        Int32.TryParse(input, out chargeSlots);
-//                                        do
-//                                        {
-//                                            Console.WriteLine("enter: longitude(30-33)");
-//                                            input = Console.ReadLine();
-//                                            double.TryParse(input, out longitude);
-//                                        } while (longitude > 33 || longitude < 30);
-//                                        do
-//                                        {
-//                                            Console.WriteLine("enter: lattitude(-30- -27)");
-//                                            input = Console.ReadLine();
-//                                            double.TryParse(input, out lattitude);
-//                                        } while (lattitude > -27 || lattitude < -30);
-
-//                                        try
-//                                        {
-//                                            bl.addStation(new baseStation
-//                                            {
-//                                                id = id,
-//                                                name = name,
-//                                                location = new location
-//                                                {
-//                                                    Longitude = longitude,
-//                                                    Latitude = lattitude
-//                                                },
-//                                                chargingSlots = chargeSlots,
-//                                                dronesInCharging = new()
-//                                            });
-//                                        }
-//                                        catch (Exception x)
-//                                        {
-//                                            Console.WriteLine(x.Message);
-//                                        }
+﻿//targil 2
+using System;
+using BlApi.BO;
+using BlApi;
+namespace ConsoleUI_BL
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            BlApi.IBL bl = new BL();
+            int inputVal1 = 0;//first user choice - outer switch-case
+            int inputVal2 = 0;//second user choice - inner switch-case
+            int id = 0;//id for parcel, station, customer
+            string model = "";//drone model
+            WeightCategories weight = WeightCategories.light;//weight within drone object and parcel
+            string name = null;//station
+            double longitude = 0;//0-50
+            double lattitude = 0;//0-50
+            int chargeSlots = 0;//amount of charging spots
+            string customerName = "";//customer name
+            string phone = "";//in order to write a zero in the beginning
+            int sId = 0;//sender
+            int tId = 0;//target
+            int dId = 0;//drone
+            int num = 0;
+            DateTime time;
+            Priorities priority = Priorities.regular;//enum priorities
+            //end of initialization
+            do
+            {
+                //main menu for user: add, update, display, list display, exit.
+                Console.WriteLine("Choose one of the following options:\n");
+                Console.WriteLine("1: Adding options\n");
+                Console.WriteLine("2: Update options\n");
+                Console.WriteLine("3: Display options\n");
+                Console.WriteLine("4: List display options\n");
+                Console.WriteLine("5: exit\n");
+                string input = Console.ReadLine();//read first choice
+                Int32.TryParse(input, out inputVal1);
+                switch (inputVal1)
+                {
+                    case 1://add
+                        {
+                            Console.WriteLine("Choose one of the following options:\n");
+                            Console.WriteLine("1: Add new base-station \n");
+                            Console.WriteLine("2: Add new drone\n");
+                            Console.WriteLine("3: Add new customer\n");
+                            Console.WriteLine("4: Add new parcel for delivery\n");
+                            input = Console.ReadLine();
+                            Int32.TryParse(input, out inputVal2);
+                            switch (inputVal2)
+                            {
+                                case 1://add station
+                                    {
+                                        Console.WriteLine("enter: id, name, charge slots number, longitude(30-33), lattitude(-30- -27)");
+                                        input = Console.ReadLine();
+                                        Int32.TryParse(input, out id);
+                                        name = Console.ReadLine();
+                                        input = Console.ReadLine();
+                                        Int32.TryParse(input, out chargeSlots);
+                                        do
+                                        {
+                                            Console.WriteLine("enter: longitude(30-33)");
+                                            input = Console.ReadLine();
+                                            double.TryParse(input, out longitude);
+                                        } while (longitude > 33 || longitude < 30);
+                                        do
+                                        {
+                                            Console.WriteLine("enter: lattitude(-30- -27)");
+                                            input = Console.ReadLine();
+                                            double.TryParse(input, out lattitude);
+                                        } while (lattitude > -27 || lattitude < -30);
+                                        
+                                        try
+                                        {
+                                            bl.addStation(new baseStation
+                                            {
+                                                id = id,
+                                                name = name,
+                                                location = new location
+                                                {
+                                                    Longitude = longitude,
+                                                    Latitude = lattitude
+                                                },
+                                                chargingSlots = chargeSlots,
+                                                dronesInCharging = new()
+                                            });
+                                        }
+                                        catch (Exception x)
+                                        {
+                                            Console.WriteLine(x.Message);
+                                        }
 
 //                                        break;
 //                                    }

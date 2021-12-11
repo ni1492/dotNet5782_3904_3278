@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace IBL
-{
+
     namespace BO
     {
         public class exceptions : Exception //exceptions class 
@@ -66,5 +65,5 @@ namespace IBL
             }
         }
     }
-}
+
 

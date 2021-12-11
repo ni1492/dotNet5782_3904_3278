@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 //using IDAL.DO;
 using DAL.DalApi;
-using IBL.BO;
-namespace IBL
+using BO;
+namespace BlApi
 {
-    public partial class BL:IBL
+    public partial class BL: IBL
     {
         public IDal dl; //the DAL object 
         public List<droneForList> drones; //the list of drones saved in the BL layer
