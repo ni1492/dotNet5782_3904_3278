@@ -23,5 +23,12 @@ using System.Threading.Tasks;
             public ExistException(string message, Exception inner) : base(message, inner) { }
             public ExistException(SerializationInfo info, StreamingContext context) : base(info, context) { }
         }
-       
+    public class DALException : Exception
+    {
+        public DALException() : base() { }
+        public DALException(string message) : base(message) { }
+        public DALException(string message, Exception inner) : base(message, inner) { }
+        public DALException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
+
+}

@@ -9,12 +9,21 @@ using DAL.DalApi;
 
 namespace DALObject
 {
-    public class DALObject : IDal
+    class DALObject : IDal
     {
-        public DALObject()
+        #region singelton
+        internal static readonly DALObject instance = new DALObject();
+        static DALObject()
         {
             DataSource.Initialize();
         }
+        DALObject() { }
+       public static DALObject Instance => instance;
+        #endregion
+        //public DALObject()
+        //{
+        //    DataSource.Initialize();
+        //}
         public void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
             //initialize new station object:

@@ -25,7 +25,7 @@ namespace PL
 
         public MainWindow()
         {
-            bl = new BlApi.BL();
+            bl =BlFactory.GetBl();
             InitializeComponent();
         }
 

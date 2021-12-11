@@ -6,32 +6,52 @@ using System.Threading.Tasks;
 //using IDAL.DO;
 using DAL.DalApi;
 using BO;
+using DalApi;
 namespace BlApi
 {
     public partial class BL: IBL
     {
-        public IDal dl; //the DAL object 
-        public List<droneForList> drones; //the list of drones saved in the BL layer
+        public readonly IDal dl = DalFactory.getDal("DALObject");//initialize the DAL object
+        public List<droneForList> drones = new List<droneForList>(); //the list of drones saved in the BL layer
         //שדות נוספים: פנוי, נושא משקל קל, בינוני וכבד+שדה של הטענה לשעה
-        public double availablePK; 
+        public double availablePK;
         public double lightPK;
         public double mediumPK;
         public double heavyPK;
         public double chargingPH;
-        public BL()
+
+        #region singelton
+        static readonly BL instance = new BL();
+        static BL()
         {
-            dl = new DALObject.DALObject(); //initialize the DAL object
-            drones = new List<droneForList>(); //initialize the list of drones 
+            instance.drones = new List<droneForList>(); //initialize the list of drones 
             //initializing the different variables 
-            double[] powerUse = dl.powerUse(); 
-            availablePK = powerUse[0];
-            lightPK = powerUse[1];
-            mediumPK = powerUse[2];
-            heavyPK = powerUse[3];
-            chargingPH = powerUse[4];
-            initializeDrone(); //initializing the program
-            
+            double[] powerUse = instance.dl.powerUse();
+            instance.availablePK = powerUse[0];
+            instance.lightPK = powerUse[1];
+            instance.mediumPK = powerUse[2];
+            instance.heavyPK = powerUse[3];
+            instance.chargingPH = powerUse[4];
+            instance.initializeDrone(); //initializing the program}
         }
+        BL() { }
+        public static BL Instance => instance;
+        #endregion
+
+        //public BL()
+        //{
+        //    dl = DalFactory.getDal("DALObject");//initialize the DAL object
+        //    drones = new List<droneForList>(); //initialize the list of drones 
+        //    //initializing the different variables 
+        //    double[] powerUse = dl.powerUse(); 
+        //    availablePK = powerUse[0];
+        //    lightPK = powerUse[1];
+        //    mediumPK = powerUse[2];
+        //    heavyPK = powerUse[3];
+        //    chargingPH = powerUse[4];
+        //    initializeDrone(); //initializing the program
+
+        //}
         private void initializeDrone()
         {
             Random r = new Random(); 
