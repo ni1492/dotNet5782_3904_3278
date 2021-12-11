@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalApi
-{
-    namespace DO
+ namespace DO
     {
         public enum WeightCategories { light, medium, heavy };//enum of various types of weight: light, medium, heavy
       
@@ -15,4 +13,3 @@ namespace DalApi
 
 
     }
-}

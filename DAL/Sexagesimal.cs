@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalApi
-{
-    namespace DO
+ namespace DO
     {
         public class Sexagesimal
         {
@@ -71,5 +69,3 @@ namespace DalApi
             }
         }
     }
-    
-}

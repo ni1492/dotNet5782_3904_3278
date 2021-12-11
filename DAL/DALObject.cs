@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi.DO;
+using DO;
 using DAL.DalApi;
 
 
@@ -25,7 +25,7 @@ namespace DALObject
                     throw new ExistException("station alredy exist");
                 }
             }
-            DalApi.DO.Station station = new DalApi.DO.Station();
+            DO.Station station = new DO.Station();
             station.Id = Id;
             station.Name = name;
             station.Longitude = longitude;
@@ -44,7 +44,7 @@ namespace DALObject
                     throw new ExistException("drone alredy exist");
                 }
             }
-            DalApi.DO.Drone drone = new DalApi.DO.Drone();
+            DO.Drone drone = new DO.Drone();
             drone.Id = Id;
             drone.Model = model;
             drone.MaxWeight = maxWeight;
@@ -63,7 +63,7 @@ namespace DALObject
                     throw new ExistException("customer alredy exist");
                 }
             }
-            DalApi.DO.Customer customer = new DalApi.DO.Customer();
+            DO.Customer customer = new DO.Customer();
             customer.Id = Id;
             customer.Name = name;
             customer.Phone = phone;
@@ -93,7 +93,7 @@ namespace DALObject
 
                 throw new NotFoundException("target: " + ex.Message, ex);
             }
-            DalApi.DO.Parcel parcel = new DalApi.DO.Parcel();
+            DO.Parcel parcel = new DO.Parcel();
             parcel.Id = DataSource.Config.ParcelID++;
             parcel.SenderId = sId;
             parcel.TargetId = tId;

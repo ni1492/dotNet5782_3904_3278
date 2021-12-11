@@ -5,8 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalApi
-{
+
     namespace DO
     {
         public class NotFoundException : Exception
@@ -26,4 +25,3 @@ namespace DalApi
         }
        
     }
-}

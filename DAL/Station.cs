@@ -1,8 +1,6 @@
 ﻿using System;
 
-namespace DalApi
-{
-    namespace DO
+namespace DO
     {
         public struct Station
         {
@@ -21,4 +19,3 @@ namespace DalApi
 
         };
     }
-}

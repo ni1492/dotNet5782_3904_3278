@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi.DO;
+using DO;
 
 namespace DALObject
 {
@@ -52,8 +52,8 @@ namespace DALObject
             {
                 Drone drone = new Drone();
                 drone.Id = Config.DroneID++;
-                drone.Model = ((DalApi.DO.Models)R.Next(13)).ToString();//initialization of random model name using enum
-                drone.MaxWeight = ((DalApi.DO.WeightCategories)R.Next(1, 4));//initialization of random weight using enum
+                drone.Model = ((DO.Models)R.Next(13)).ToString();//initialization of random model name using enum
+                drone.MaxWeight = ((DO.WeightCategories)R.Next(1, 4));//initialization of random weight using enum
                 drones.Add(drone);
             }
             num = R.Next(10, 15);
@@ -78,8 +78,8 @@ namespace DALObject
                 parcel.TargetId = R.Next(100000000, Config.CustomerID);//initialization of random target id
                 if (parcel.SenderId == parcel.TargetId)
                     parcel.SenderId++;
-                parcel.Weight = ((DalApi.DO.WeightCategories)R.Next(1, 4));//initialization of random weight using enum
-                parcel.Priority = ((DalApi.DO.Priorities)R.Next(1, 4));//initialization of random priority using enum
+                parcel.Weight = ((DO.WeightCategories)R.Next(1, 4));//initialization of random weight using enum
+                parcel.Priority = ((DO.Priorities)R.Next(1, 4));//initialization of random priority using enum
                 parcel.Delivered = new DateTime(R.Next(4, DateTime.Now.Year), R.Next(1, DateTime.Now.Month - 1), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random delivery time
                 parcel.PickedUp = new DateTime(R.Next(3, parcel.Delivered.Value.Year), R.Next(1, 13), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random pick up time
                 parcel.Scheduled = new DateTime(R.Next(2, parcel.PickedUp.Value.Year), R.Next(1, 13), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random schedule time
@@ -123,8 +123,8 @@ namespace DALObject
                 parcel.TargetId = R.Next(100000000, Config.CustomerID);//initialization of random target id
                 if (parcel.SenderId == parcel.TargetId)
                     parcel.SenderId++;
-                parcel.Weight = ((DalApi.DO.WeightCategories)R.Next(1, 4));//initialization of random weight using enum
-                parcel.Priority = ((DalApi.DO.Priorities)R.Next(1, 4));//initialization of random priority using enum
+                parcel.Weight = ((DO.WeightCategories)R.Next(1, 4));//initialization of random weight using enum
+                parcel.Priority = ((DO.Priorities)R.Next(1, 4));//initialization of random priority using enum
                 parcel.Delivered = null;
                 parcel.PickedUp = null;
                 parcel.Scheduled = null;

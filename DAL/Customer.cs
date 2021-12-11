@@ -1,8 +1,6 @@
 ﻿using System;
 
-namespace DalApi
-{
-    namespace DO
+namespace DO
     {
         public struct Customer
         {
@@ -17,5 +15,4 @@ namespace DalApi
                 return ("Customer Id: " + Id + "\nCustomer Name: " + Name + "\nPhone Number: " + Phone + "\nLocation: " + "(" + Longitude + "," + Lattitude + ") \n" + Location + "\n");
             }
         };
-    }
 }
