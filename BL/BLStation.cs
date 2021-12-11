@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
 using DalApi.DO;
 
-namespace IBL
+namespace BlApi
 {
     public partial class BL : IBL
     {

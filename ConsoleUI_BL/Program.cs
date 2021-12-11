@@ -1,14 +1,14 @@
 ﻿//targil 2
 using System;
-using IBL.BO;
-using IBL;
+using BlApi.BO;
+using BlApi;
 namespace ConsoleUI_BL
 {
     class Program
     {
         static void Main(string[] args)
         {
-            IBL.IBL bl = new BL();
+            BlApi.IBL bl = new BL();
             int inputVal1 = 0;//first user choice - outer switch-case
             int inputVal2 = 0;//second user choice - inner switch-case
             int id = 0;//id for parcel, station, customer

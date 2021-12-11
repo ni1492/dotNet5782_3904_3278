@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using IBL.BO;
+using BlApi.BO;
 
 namespace PL
 {
@@ -21,8 +21,8 @@ namespace PL
     /// </summary>
     public partial class Drone : Window
     {
-        IBL.IBL bl;
-        public Drone(IBL.IBL bl, IBL.BO.drone drone)//action grid
+        BlApi.IBL bl;
+        public Drone(BlApi.IBL bl, BlApi.BO.drone drone)//action grid
         {
             this.bl = bl;
             InitializeComponent();
@@ -187,13 +187,13 @@ namespace PL
         }
 
 
-        public Drone(IBL.IBL bl)//add grid
+        public Drone(BlApi.IBL bl)//add grid
         {
             this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
-            WEIGHT.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategories));
+            WEIGHT.ItemsSource = Enum.GetValues(typeof(BlApi.BO.WeightCategories));
             //"enter: id, model, max weight, station id";
         }
 
@@ -205,11 +205,11 @@ namespace PL
                 {
                     int x;
                     Int32.TryParse(ID.Text, out x);
-                    IBL.BO.droneForList d = new IBL.BO.droneForList
+                    BlApi.BO.droneForList d = new BlApi.BO.droneForList
                     {
                         id = x,
                         model = MODEL.Text,
-                        weight = (IBL.BO.WeightCategories)WEIGHT.SelectedItem
+                        weight = (BlApi.BO.WeightCategories)WEIGHT.SelectedItem
 
                     };
                     Int32.TryParse(STATION.Text.ToString(), out x);

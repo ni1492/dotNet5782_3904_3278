@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
 //using IDAL.DO;
 
-namespace IBL
+namespace BlApi
 {
     public interface IBL
     {

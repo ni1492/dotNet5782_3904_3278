@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
+using BlApi;
 namespace PL
 {
     /// <summary>
@@ -19,8 +19,8 @@ namespace PL
     /// </summary>
     public partial class droneList : Window
     {
-        IBL.IBL bl;
-        public droneList(IBL.IBL bl)
+        BlApi.IBL bl;
+        public droneList(BlApi.IBL bl)
         {
             this.bl = bl;
             InitializeComponent();
@@ -40,11 +40,11 @@ namespace PL
             else if (((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDroneList();
             else if ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)
-                DroneListView.ItemsSource = bl.displayDrones(drone => drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem);
+                DroneListView.ItemsSource = bl.displayDrones(drone => drone.weight == (BlApi.BO.WeightCategories)weightSelector.SelectedItem);
             else if ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all)
-                DroneListView.ItemsSource = bl.displayDrones(drone => drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem);
+                DroneListView.ItemsSource = bl.displayDrones(drone => drone.status == (BlApi.BO.DroneStatuses)statusSelector.SelectedItem);
             else
-                DroneListView.ItemsSource = bl.displayDrones(drone => (drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem));
+                DroneListView.ItemsSource = bl.displayDrones(drone => (drone.status == (BlApi.BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BlApi.BO.WeightCategories)weightSelector.SelectedItem));
 
         }
 
@@ -58,11 +58,11 @@ namespace PL
             else if (((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all) && ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all))
                 DroneListView.ItemsSource = bl.displayDroneList();
             else if ((WeightCategories)weightSelector.SelectedItem == WeightCategories.all)
-                DroneListView.ItemsSource = bl.displayDrones(drone => drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem);
+                DroneListView.ItemsSource = bl.displayDrones(drone => drone.status == (BlApi.BO.DroneStatuses)statusSelector.SelectedItem);
             else if ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)
-                DroneListView.ItemsSource = bl.displayDrones(drone => drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem);
+                DroneListView.ItemsSource = bl.displayDrones(drone => drone.weight == (BlApi.BO.WeightCategories)weightSelector.SelectedItem);
             else
-                DroneListView.ItemsSource = bl.displayDrones(drone => (drone.status == (IBL.BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (IBL.BO.WeightCategories)weightSelector.SelectedItem));
+                DroneListView.ItemsSource = bl.displayDrones(drone => (drone.status == (BlApi.BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BlApi.BO.WeightCategories)weightSelector.SelectedItem));
 
         }
 
@@ -76,7 +76,7 @@ namespace PL
 
         private void openDrone_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int id = ((IBL.BO.droneForList)(sender as ListView).SelectedItem).id;
+            int id = ((BlApi.BO.droneForList)(sender as ListView).SelectedItem).id;
             new Drone(bl, bl.displayDrone(id)).ShowDialog();
             DroneListView.ItemsSource = bl.displayDroneList();
             statusSelection(statusSelector, null);
