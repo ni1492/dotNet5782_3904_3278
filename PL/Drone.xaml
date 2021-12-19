@@ -44,7 +44,7 @@
             <TextBlock HorizontalAlignment="Center" Text="max weight:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2"   >
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -232,7 +232,7 @@
                 </Button>
 
             </Grid>
-            <Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" >
+            <Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" Visibility="Hidden" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="211*"/>
                     <RowDefinition Height="94*"/>

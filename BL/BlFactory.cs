@@ -10,7 +10,7 @@ namespace BlApi
     {
         public static IBL GetBl()
         {
-            return BlFactory.GetBl();
+            return BL.Instance;
         }
     }
 }

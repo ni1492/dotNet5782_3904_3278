@@ -14,12 +14,12 @@ namespace DalApi
     {
         public static IDal getDal(string type)
         {
-           if (type == "DalObject")
+         //  if (type == "DalObject")
                 return DALObject.DALObject.Instance;
             //  else(type=="DalXmi")
            // return new DalXml();
-            else
-                throw new DALException("type not found");
+         //   else
+           //     throw new DALException("type not found");
 
         }
     }
