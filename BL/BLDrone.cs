@@ -229,7 +229,7 @@ namespace BlApi
                 throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         }
-        public void releaseDroneFromCharge(int id, DateTime? time) //releases the drone from charging
+        public void releaseDroneFromCharge(int id) //releases the drone from charging
         {
             try
             {
@@ -237,7 +237,8 @@ namespace BlApi
                 {
                     throw new BO.exceptions.TimeException("drone not in charging");
                 }
-                double battery = drones.Find(drone => drone.id == id).battery + chargingPH * (time.Value.Hour + time.Value.Minute / 60);
+                DateTime temp = dl.displayDronesInCharge(drone => drone.DroneId == id).First().chargTime;
+                double battery = drones.Find(drone => drone.id == id).battery + chargingPH * ((double)((DateTime.Now.Hour-temp.Hour)+(double)((DateTime.Now.Minute-temp.Minute)/ 60)));
                 if (battery > 100)
                     battery = 100;
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;

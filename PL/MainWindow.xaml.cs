@@ -33,5 +33,20 @@ namespace PL
         {
             new droneList(bl).Show();
         }
+
+        private void AdminSignIn(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void UserSignIn(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SignUp(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

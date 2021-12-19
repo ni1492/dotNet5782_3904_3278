@@ -7,9 +7,60 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Image x:Name="fire" Source="/pngwing.com.png" Margin="100,2,-100,-2"></Image>
 
-        <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,185,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606">
+        <TabControl x:Name="TabControl_Login" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <!--SelectionChanged="TabControl_SelectionChanged">-->
+            <TabControl.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </TabControl.Background>
+            <TabItem Header="main window" Width="180" Height="30" FontSize="16">
+                <Grid>
+                    <Image x:Name="fire" Source="/pngwing.com.png" Margin="-118,2,118,-2" FlowDirection="RightToLeft"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="58,102,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Top" Height="236" Width="742" FontSize="130" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic" Foreground="Black"/>
+                    <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Left" Height="93" Margin="619,35,0,0" VerticalAlignment="Top" Width="93">
+
+                    </Image>
+                    <!--<Button Content="user" HorizontalAlignment="Center" Margin="-150,0,0,0" VerticalAlignment="Center" Height="50" Width="86" Click="UserSignIn"/>
+        <Button Content="admin" HorizontalAlignment="Center" Margin="150,0,0,0" VerticalAlignment="Center" Height="50" Width="86" Click="AdminSignIn" />
+        <Button Content="sign up" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="99" Click="SignUp"/>-->
+                    <Grid Margin="-70,0,-85,-2">
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="admin" Width="180" Height="30" FontSize="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border x:Name="AdminPasswordBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden">
+                        <StackPanel Height="120" Width="300">
+                            <TextBlock Text="enter password:" Height="28" Width="232" Margin="0,15,0,0"/>
+                            <PasswordBox x:Name="PassBox_passAdmin" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />
+                            <!--KeyDown="PassBox_passAdmin_KeyDown"/>-->
+                            <Button Content="sign in" Width="91" Margin="0,10,0,0"/>
+                            <!--Click="Button_Click_EnterAsAdmin"/>-->
+                        </StackPanel>
+                    </Border>
+                    <Border x:Name="AdminMainWindowBorder" Margin="10" Visibility="Visible" Grid.RowSpan="2">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 0 18 0">
+                                <Button Content="sign out"  Width="100"  ToolTipService.ShowDuration="8000">
+                                    <!--Click="Button_Click_LogOut">-->
+                                    <Button.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock FontWeight="Bold">press to sign out</TextBlock>
+                                            <TextBlock>after signing out you will be able to sign in again at any point</TextBlock>
+                                        </StackPanel>
+                                    </Button.ToolTip>
+                                </Button>
+                            </StackPanel>
+                            <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,185,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFCFF00"/>
@@ -17,16 +68,57 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <TextBlock HorizontalAlignment="Center" Margin="0,71,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="474" FontSize="70" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic">
-            <TextBlock.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </TextBlock.Foreground>
-        </TextBlock>
-        <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Left" Height="93" Margin="116,56,0,0" VerticalAlignment="Top" Width="93">
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
 
-        </Image>
+
+            <!-- Existing Trainee Window -->
+            <TabItem Header="customer"  Width="180" Height="30" FontSize="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border x:Name="ExistingTraineeIDBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" Height="229" Margin="0,68,0,0" Grid.RowSpan="2">
+                        <StackPanel Width="300" Margin="0,-5,0,-21">
+                            <TextBlock Text="enter username"/>
+                            <TextBox x:Name="TextBox_TraineeID" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />
+                            <!--KeyDown="TextBox_TraineeID_KeyDown" GotFocus="TextBox_ExistingTraineeID_GotFocus" TextChanged="TextBox_TraineeID_TextChanged"/>-->
+                            <TextBlock Text="enter password:" Height="28" Width="232" Margin="0,15,0,0"/>
+                            <PasswordBox x:Name="PassBox_user" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0"  Width="240" />
+                            <!--KeyDown="PassBox_user_KeyDown"/>-->
+                            <Button Content="sign in" Width="125" Margin="0,20,0,0" />
+                            <!--Click="Button_Click_EnterAsExistingTrainee"/>-->
+
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.RowSpan="2">
+
+                        <!--here-->
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <!-- sign up Window -->
+            <TabItem Header="sign up"  Width="180" Height="30" FontSize="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--<Border x:Name="ExistingTesterIDBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Collapsed">
+                        <StackPanel Height="120" Width="300">
+                            <TextBlock Text="הכנס מס' תעודת זהות:"/>
+                            <TextBox x:Name="TextBox_TesterID" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0 10" MaxLength="9" KeyDown="TextBox_TesterID_KeyDown" GotFocus="TextBox_ExistingTesterID_GotFocus" TextChanged="TextBox_TesterID_TextChanged"/>
+                            <Button Content="היכנס" Click="Button_Click_EnterAsExistingTester"/>
+                        </StackPanel>
+                    </Border>-->
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
     </Grid>
 </Window>

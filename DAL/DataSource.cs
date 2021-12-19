@@ -35,7 +35,7 @@ namespace DALObject
             Config.lightPK = Config.availablePK + R.NextDouble();
             Config.mediumPK = Config.lightPK + R.NextDouble();
             Config.heavyPK = Config.mediumPK + R.NextDouble();
-            Config.chargingPH = R.Next(30, 90) + R.NextDouble();
+            Config.chargingPH = R.Next(1000, 2000) + R.NextDouble();
             int num = R.Next(2, 5);
             for (int i = 0; i < num; i++)//initialization of 2-4 stations
             {

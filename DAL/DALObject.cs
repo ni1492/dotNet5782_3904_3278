@@ -145,6 +145,8 @@ namespace DALObject
             DroneCharge charging = new DroneCharge();
             charging.DroneId = dId;
             charging.StationId = sId;
+            //  charging.chargTime = DateTime.Now;
+            charging.chargTime = DateTime.Now;
             //adds to charging list:
             DataSource.inCharging.Add(charging);
         }
@@ -501,6 +503,14 @@ namespace DALObject
             foreach (var item in DataSource.inCharging)
             {
                 if (item.StationId == id)
+                    yield return item;
+            }
+        }
+        public IEnumerable<DroneCharge> displayDronesInCharge(Predicate<DroneCharge> match)
+        {
+            foreach (var item in DataSource.inCharging)
+            {
+                if (match(item))
                     yield return item;
             }
         }

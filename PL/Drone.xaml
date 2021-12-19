@@ -232,7 +232,7 @@
                 </Button>
 
             </Grid>
-            <Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" Visibility="Hidden" >
+            <!--<Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" Visibility="Hidden" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="211*"/>
                     <RowDefinition Height="94*"/>
@@ -243,7 +243,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="51,131,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Center" Margin="0,51,0,0" Text="to release drone from charging:" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="112" TextAlignment="Center"/>
 
-            </Grid>
+            </Grid>-->
         </Grid>
 
     </Grid>
