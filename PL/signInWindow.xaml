@@ -1,0 +1,18 @@
+﻿<Window x:Class="PL.signInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="signInWindow" Height="250" Width="400">
+    <Grid>
+        <Button x:Name="user" Content="Enter" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="90" Margin="0,150,0,0" Click="enterUser"/>
+        <Button x:Name="admin" Content="Enter" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="90" Margin="0,150,0,0" Click="enterAdmin"/>
+        <TextBox HorizontalAlignment="Center" Text="username" TextWrapping="Wrap" VerticalAlignment="Center" Width="150" Height="30" Margin="150,0,0,100"/>
+        <TextBlock HorizontalAlignment="Center" Text="entrr username" TextWrapping="Wrap" VerticalAlignment="Center" Height="30" Width="150" Margin="0,0,150,100"/>
+        <TextBlock HorizontalAlignment="Center" Text="enter password" TextWrapping="Wrap" VerticalAlignment="Center" Height="30" Width="150" Margin="0,0,150,0"/>
+        <TextBox HorizontalAlignment="Center" Text="password" TextWrapping="Wrap" VerticalAlignment="Center" Width="150" Height="30" Margin="150,0,0,0"/>
+
+    </Grid>
+</Window>

@@ -50,7 +50,7 @@ namespace PL
 
             if ((DroneStatuses)drone.status == DroneStatuses.available)
             {
-                time.Visibility = Visibility.Hidden;
+                //time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action1.Content = "Charge";
                 action1.Click += chargeA_Click;
@@ -62,7 +62,7 @@ namespace PL
             }
             else if ((DroneStatuses)drone.status == DroneStatuses.maintenance)
             {
-                time.Visibility = Visibility.Visible;
+                //time.Visibility = Visibility.Visible;
                 action1.Visibility = Visibility.Visible;
                 action1.Content = "Release charge";
                 action1.Click += releaseChargeA_Click;
@@ -71,7 +71,7 @@ namespace PL
             }
             else if (bl.getStatus(drone.parcel.id) == ParcelStatus.PickedUp)
             {
-                time.Visibility = Visibility.Hidden;
+               // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
                 action1.Content = "Deliver parcel";
@@ -79,7 +79,7 @@ namespace PL
             }
             else
             {
-                time.Visibility = Visibility.Hidden;
+               // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
                 action1.Content = "Pick up parcel";
@@ -160,24 +160,15 @@ namespace PL
         {
             try
             {
-                if (checkHour(Hour.Text) && checkMinute(Minute.Text))
-                {
-                    int h;
-                    Int32.TryParse(Hour.Text, out h);
-                    int m;
-                    Int32.TryParse(Minute.Text, out m);
-                    DateTime dateTime = new DateTime(1, 1, 1, h, m, 0);
                     int id;
                     Int32.TryParse(viewID.Text, out id);
-                    bl.releaseDroneFromCharge(id, dateTime);
-                    time.Visibility = Visibility.Hidden;
+                    bl.releaseDroneFromCharge(id);
+                   // time.Visibility = Visibility.Hidden;
 
                     MessageBox.Show("released drone");
                     this.Close();
                     return;
-                }
-                else
-                    MessageBox.Show("incorrect input - release drone failed");
+                
             }
             catch (Exception ex)
             {
@@ -365,33 +356,33 @@ namespace PL
             }
         }
 
-        private void HOURTextChanged(object sender, RoutedEventArgs e)
-        {
-            if (checkHour(Hour.Text))
-            {
-                Hour.BorderBrush = Brushes.GreenYellow;
-                Hour.Background = Brushes.White;
-            }
-            else
-            {
-                Hour.BorderBrush = Brushes.DarkRed;
-                Hour.Background = Brushes.Red;
-            }
-        }
+        //private void HOURTextChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (checkHour(Hour.Text))
+        //    {
+        //        Hour.BorderBrush = Brushes.GreenYellow;
+        //        Hour.Background = Brushes.White;
+        //    }
+        //    else
+        //    {
+        //        Hour.BorderBrush = Brushes.DarkRed;
+        //        Hour.Background = Brushes.Red;
+        //    }
+        //}
 
-        private void MINUTETextChanged(object sender, RoutedEventArgs e)
-        {
-            if (checkMinute(Minute.Text))
-            {
-                Minute.BorderBrush = Brushes.GreenYellow;
-                Minute.Background = Brushes.White;
-            }
-            else
-            {
-                Minute.BorderBrush = Brushes.DarkRed;
-                Minute.Background = Brushes.Red;
-            }
-        }
+        //private void MINUTETextChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (checkMinute(Minute.Text))
+        //    {
+        //        Minute.BorderBrush = Brushes.GreenYellow;
+        //        Minute.Background = Brushes.White;
+        //    }
+        //    else
+        //    {
+        //        Minute.BorderBrush = Brushes.DarkRed;
+        //        Minute.Background = Brushes.Red;
+        //    }
+        //}
 
 
     }

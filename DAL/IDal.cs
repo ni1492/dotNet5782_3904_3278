@@ -44,6 +44,8 @@ namespace DAL
             public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2);
             public double[] powerUse();
             public IEnumerable<DroneCharge> displayChargings(int id);
+            public IEnumerable<DroneCharge> displayDronesInCharge(Predicate<DroneCharge> match);
+
             public void deleteDrone(int id);
             public void deleteCustomer(int id);
             public void deleteStation(int id);
