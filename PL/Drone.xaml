@@ -82,30 +82,9 @@
 
             </Grid>
             <Grid Name="add" Grid.Row="10" Grid.Column="1">
-                <Button Content="ADD DRONE" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0,1">
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="Red"/>
-                            <GradientStop Color="#FFF89200" Offset="0.427"/>
-                            <GradientStop Color="#FFF79500" Offset="0.406"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
-                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0,1">
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="Red"/>
-                            <GradientStop Color="#FFF89200" Offset="0.427"/>
-                            <GradientStop Color="#FFF79500" Offset="0.406"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
+                <Button Content="ADD DRONE" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click"/>
+                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click"/>
+
 
             </Grid>
         </Grid>
@@ -182,54 +161,12 @@
                     <ColumnDefinition Width="85*"/>
                     <ColumnDefinition Width="31*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="Red"/>
-                            <GradientStop Color="#FFF89200" Offset="0.427"/>
-                            <GradientStop Color="#FFF79500" Offset="0.406"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
-                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0,1">
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="Red"/>
-                            <GradientStop Color="#FFF89200" Offset="0.427"/>
-                            <GradientStop Color="#FFF79500" Offset="0.406"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0,1">
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="Red"/>
-                            <GradientStop Color="#FFF89200" Offset="0.427"/>
-                            <GradientStop Color="#FFF79500" Offset="0.406"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="38,-2,0,0" VerticalAlignment="Top" Width="49" Grid.Column="1" Grid.ColumnSpan="2">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0,1">
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="#FFF3FF00" Offset="1"/>
-                            <GradientStop Color="Red"/>
-                            <GradientStop Color="#FFF89200" Offset="0.427"/>
-                            <GradientStop Color="#FFF79500" Offset="0.406"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click"/>
+                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click"/>
+                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2"/>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="38,-2,0,0" VerticalAlignment="Top" Width="49" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+
 
             </Grid>
             <!--<Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" Visibility="Hidden" >

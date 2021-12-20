@@ -60,14 +60,8 @@
                                     </Button.ToolTip>
                                 </Button>
                             </StackPanel>
-                            <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,185,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFCFF00"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+                            <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,185,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606"/>
+
                         </Grid>
                     </Border>
                 </Grid>

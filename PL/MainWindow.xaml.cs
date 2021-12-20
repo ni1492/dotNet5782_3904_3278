@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlApi;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
@@ -22,11 +24,12 @@ namespace PL
     public partial class MainWindow : Window
     {
         BlApi.IBL bl;
-
+        public static ObservableCollection<Drone> drones;
         public MainWindow()
         {
             bl =BlFactory.GetBl();
             InitializeComponent();
+           
         }
 
         private void showDronesButton_click(object sender, RoutedEventArgs e)

@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.droneList"
+﻿<Window x:Class="PL.ParcelList"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -41,61 +41,77 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible">
             <Label Content="Drone Status" HorizontalAlignment="Left" VerticalAlignment="Top" Width="168" Height="38" FontSize="20" FontFamily="Berlin Sans FB" Margin="16,20,0,0" Grid.ColumnSpan="2"/>
             <Label Content="Max Weight" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="168" Height="38" FontSize="20" FontFamily="Berlin Sans FB" Margin="16,20,0,0" Grid.ColumnSpan="2"/>
         </Grid>
-        <DataGrid x:Name="droneDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource droneViewSource}}" Margin="88,72,88,134" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1">
+        <DataGrid x:Name="parcelDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource parcelViewSource}}" Margin="39,59,39,68" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTemplateColumn x:Name="batteryColumn" Header="Battery" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="creationColumn" Header="Creation" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Battery}"/>
+                            <TextBlock Text="{Binding Creation}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="dIdColumn" Header="DId" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="deliveryColumn" Header="Delivery" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DId}"/>
+                            <TextBlock Text="{Binding Delivery}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="latitudeColumn" Header="Latitude" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="droneIDColumn" Header="Drone ID" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Latitude}"/>
+                            <TextBlock Text="{Binding DroneID}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="longitudeColumn" Header="Longitude" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="matchColumn" Header="Match" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Longitude}"/>
+                            <TextBlock Text="{Binding Match}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="modelColumn" Header="Model" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="pickupColumn" Header="Pickup" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Model}"/>
+                            <TextBlock Text="{Binding Pickup}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="parcelColumn" Header="Parcel" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="pIDColumn" Header="PID" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Parcel}"/>
+                            <TextBlock Text="{Binding PID}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="statusColumn" Header="Status" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="priorityColumn" Header="Priority" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Status}"/>
+                            <ComboBox>
+                                <ComboBoxItem Content="{Binding Priority}"/>
+                            </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="weightColumn" Header="Weight" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="pWeightColumn" Header="PWeight" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Weight}"/>
+                            <TextBlock Text="{Binding PWeight}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="sIDColumn1" Header="SID" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SID}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="tIDColumn" Header="TID" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TID}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
