@@ -17,17 +17,17 @@ using BlApi;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ParcelList.xaml
+    /// Interaction logic for BaseStationList.xaml
     /// </summary>
-    public partial class ParcelList : Window
+    public partial class BaseStationList : Window
     {
         IBL bl;
 
-        public ParcelList(IBL bl, ObservableCollection<PO.Parcel> parcels)
+        public BaseStationList(IBL bl, ObservableCollection<PO.BaseStation> stations)
         {
             this.bl = bl;
             InitializeComponent();
-            parcelDataGrid.DataContext = parcels;
+            baseStationDataGrid.DataContext = stations;
         }
     }
 }

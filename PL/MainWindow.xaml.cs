@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using BlApi;
 using System.Collections;
 using System.Collections.ObjectModel;
+using PL.PO;
 
 namespace PL
 {
@@ -23,19 +24,28 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        BlApi.IBL bl;
-        public static ObservableCollection<Drone> drones;
+        public static ObservableCollection<PO.Drone> drones;
+        public static ObservableCollection<PO.Parcel> parcels;
+        public static ObservableCollection<PO.Customer> customers;
+        public static ObservableCollection<PO.BaseStation> stations;
+
         public MainWindow()
         {
-            bl =BlFactory.GetBl();
             InitializeComponent();
+            InitializeCollections();
+            
            
         }
 
-        private void showDronesButton_click(object sender, RoutedEventArgs e)
+        static public void InitializeCollections()
         {
-            new droneList(bl).Show();
+            drones = new ObservableCollection<PO.Drone>((from bl in App.bl.displayDroneList() select Converter.DronePO(bl)));
+            parcels = new ObservableCollection<Parcel>((from bl in App.bl.displayParcelList() select Converter.ParcelPO(App.bl.displayParcel(bl.id))));
+            customers = new ObservableCollection<Customer>((from bl in App.bl.displayCustomerList() select Converter.CustomerPO(App.bl.displayCustomer(bl.id))));
+            stations = new ObservableCollection<BaseStation>((from bl in App.bl.displayStationList() select Converter.StationPO(App.bl.displayStation(bl.id))));
         }
+
+       
 
         private void AdminSignIn(object sender, RoutedEventArgs e)
         {
@@ -50,6 +60,25 @@ namespace PL
         private void SignUp(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void showDronesButton_click(object sender, RoutedEventArgs e)
+        {
+            new droneList(App.bl,drones).Show();
+        }
+
+        private void showParcelsButton_click(object sender, RoutedEventArgs e)
+        {
+            new ParcelList(App.bl,parcels).Show();
+        }
+
+        private void showCustomersButton_click(object sender, RoutedEventArgs e)
+        {
+            new CustomerList(App.bl,customers).Show();
+        }
+
+        private void showStationButton_click(object sender, RoutedEventArgs e)
+        {
+            new BaseStationList(App.bl,stations).Show();
         }
     }
 }

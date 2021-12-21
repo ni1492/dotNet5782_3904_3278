@@ -10,12 +10,12 @@ namespace PL.PO
     public class Parcel: DependencyObject
     {
 
-        static readonly DependencyProperty PIDProperty = DependencyProperty.Register("ParcelID", typeof(int), typeof(Drone));
-        static readonly DependencyProperty SIDProperty = DependencyProperty.Register("SenderID", typeof(int), typeof(Drone));
-        static readonly DependencyProperty TIDProperty = DependencyProperty.Register("TargetID", typeof(int), typeof(Drone));
+        static readonly DependencyProperty PIDProperty = DependencyProperty.Register("Parcel_ID", typeof(int), typeof(Drone));
+        static readonly DependencyProperty SIDProperty = DependencyProperty.Register("Sender_ID", typeof(int), typeof(Drone));
+        static readonly DependencyProperty TIDProperty = DependencyProperty.Register("Target_ID", typeof(int), typeof(Drone));
         static readonly DependencyProperty PWeightProperty = DependencyProperty.Register("Parcel Weight", typeof(WeightCategories), typeof(Drone));
         static readonly DependencyProperty PriorityProperty = DependencyProperty.Register("Priority", typeof(Priorities), typeof(Drone));
-        static readonly DependencyProperty DroneIDProperty = DependencyProperty.Register("DroneID", typeof(int), typeof(Drone));
+        static readonly DependencyProperty DroneIDProperty = DependencyProperty.Register("Drone ID", typeof(int), typeof(Drone));
         static readonly DependencyProperty CreationProperty = DependencyProperty.Register("Creation", typeof(DateTime?), typeof(Drone));
         static readonly DependencyProperty MatchProperty = DependencyProperty.Register("Match", typeof(DateTime?), typeof(Drone));
         static readonly DependencyProperty PickupProperty = DependencyProperty.Register("Pickup", typeof(DateTime?), typeof(Drone));
@@ -26,7 +26,7 @@ namespace PL.PO
         public int TID { get => (int)GetValue(TIDProperty); set => SetValue(TIDProperty, value); }
         public WeightCategories PWeight { get => (WeightCategories)GetValue(PWeightProperty); set => SetValue(PWeightProperty, value); }
         public Priorities Priority { get => (Priorities)GetValue(PriorityProperty); set => SetValue(PriorityProperty, value); }
-        public int DroneID { get => (int)GetValue(DroneIDProperty); set => SetValue(DroneIDProperty, value); }
+        public int Drone_ID { get => (int)GetValue(DroneIDProperty); set => SetValue(DroneIDProperty, value); }
         public DateTime? Creation { get => (DateTime?)GetValue(CreationProperty); set => SetValue(CreationProperty, value); }
         public DateTime? Match { get => (DateTime?)GetValue(MatchProperty); set => SetValue(MatchProperty, value); }
         public DateTime? Pickup { get => (DateTime?)GetValue(PickupProperty); set => SetValue(PickupProperty, value); }

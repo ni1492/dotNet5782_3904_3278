@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,14 +21,16 @@ namespace PL
     public partial class droneList : Window
     {
          IBL bl;
-        public droneList( IBL bl)
+        public droneList( IBL bl, ObservableCollection<PO.Drone> drones)
         {
             this.bl = bl;
-            InitializeComponent();
+                InitializeComponent();
+           droneDataGrid.DataContext = drones;
 
-            droneDataGrid.ItemsSource = bl.displayDroneList();
-            statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+          //DataContext = drones;
+            //droneDataGrid.ItemsSource = bl.displayDroneList();
+            //statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            //weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
 
         private void statusSelection(object sender, SelectionChangedEventArgs e )

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace PL.PO
 {
-    public class Converter
+    public static class Converter
     {
-        public static Drone DronePO(BO.drone drone)
+        public static PO.Drone DronePO(BO.droneForList drone)
         {
             return new()
             {
@@ -19,11 +20,11 @@ namespace PL.PO
                 Status = (DroneStatuses)drone.status,
                 DLongitude = drone.currentLocation.convertLo(drone.currentLocation.Longitude),
                 DLatitude = drone.currentLocation.convertLa(drone.currentLocation.Latitude),
-                Parcel = drone.parcel.id
+                Parcel = drone.parcelID
             };
 
         }
-        public static Parcel ParcelPO(BO.parcel parcel)
+        public static PO.Parcel ParcelPO(BO.parcel parcel)
         {
             return new()
             {
@@ -32,14 +33,14 @@ namespace PL.PO
                 TID = parcel.receiver.id,
                 PWeight = (WeightCategories)parcel.weight,
                 Priority = (Priorities)parcel.priority,
-                DroneID = parcel.drone.id,
+                Drone_ID = parcel.drone.id,
                 Creation = parcel.creation,
                 Match = parcel.match,
                 Pickup = parcel.pickup,
                 Delivery = parcel.delivery
             };
         }
-        public static Customer CustomerPO(BO.customer customer)
+        public static PO.Customer CustomerPO(BO.customer customer)
         {
             return new()
             {
@@ -55,11 +56,11 @@ namespace PL.PO
             };
 
         }
-        public static BaseStation StationPO(BO.baseStation station)
+        public static PO.BaseStation StationPO(BO.baseStation station)
         {
             return new()
             {
-                SId = station.id,
+                BSId = station.id,
                 Name = station.name,
                 SLongitude = station.location.convertLo(station.location.Longitude),
                 SLatitude = station.location.convertLa(station.location.Latitude),

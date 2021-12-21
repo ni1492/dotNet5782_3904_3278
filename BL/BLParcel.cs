@@ -31,6 +31,35 @@ namespace BlApi
                 {
                     if (p.Id == id)
                     {
+                        if(p.DroneId==0)
+                        {
+                            return (new parcel
+                            {
+                                id = p.Id,
+                                sender = new customerForParcel
+                                {
+                                    id = p.SenderId,
+                                    name = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First().Name
+                                },
+                                receiver = new customerForParcel
+                                {
+                                    id = p.TargetId,
+                                    name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name
+                                },
+                                weight = (BO.WeightCategories)p.Weight,
+                                priority = (BO.Priorities)p.Priority,
+                                drone = new droneForParcel
+                                {
+                                    id = 0,
+                                    battery =  0,
+                                    currentLocation = null
+                                },
+                                creation = p.Requested,
+                                match = null,
+                                pickup = null,
+                                delivery = null
+                            });
+                        }
                         return (new parcel
                         {
                             id = p.Id,

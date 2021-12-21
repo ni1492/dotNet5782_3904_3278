@@ -17,17 +17,19 @@ using BlApi;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for ParcelList.xaml
+    /// Interaction logic for CustomerList.xaml
     /// </summary>
-    public partial class ParcelList : Window
+    public partial class CustomerList : Window
     {
         IBL bl;
-
-        public ParcelList(IBL bl, ObservableCollection<PO.Parcel> parcels)
+        public CustomerList(IBL bl, ObservableCollection<PO.Customer> customers)
         {
             this.bl = bl;
             InitializeComponent();
-            parcelDataGrid.DataContext = parcels;
+            customerDataGrid.DataContext = customers;
+            //droneDataGrid.ItemsSource = bl.displayDroneList();
+            //statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            //weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
     }
 }

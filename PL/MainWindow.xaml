@@ -1,14 +1,19 @@
-﻿<Window x:Class="PL.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Icon="/logo.png">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="101*"/>
+            <RowDefinition Height="333*"/>
+        </Grid.RowDefinitions>
 
-        <TabControl x:Name="TabControl_Login" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabControl x:Name="TabControl_Login" Grid.RowSpan="2">
             <!--SelectionChanged="TabControl_SelectionChanged">-->
             <TabControl.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -18,21 +23,17 @@
             </TabControl.Background>
             <TabItem Header="main window" Width="180" Height="30" FontSize="16">
                 <Grid>
-                    <Image x:Name="fire" Source="/pngwing.com.png" Margin="-118,2,118,-2" FlowDirection="RightToLeft"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="58,102,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Top" Height="236" Width="742" FontSize="130" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic" Foreground="Black"/>
-                    <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Left" Height="93" Margin="619,35,0,0" VerticalAlignment="Top" Width="93">
-
-                    </Image>
+                    <Image x:Name="fire" Source="/pngwing.com.png" Margin="0,20,50,0" FlowDirection="RightToLeft" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    <TextBlock HorizontalAlignment="Center" Margin="60,50,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Center" Height="236" Width="742" FontSize="130" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic" Foreground="Black"/>
+                    <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Center" Height="93" Margin="534,0,0,230" VerticalAlignment="Center" Width="94"/>
                     <!--<Button Content="user" HorizontalAlignment="Center" Margin="-150,0,0,0" VerticalAlignment="Center" Height="50" Width="86" Click="UserSignIn"/>
         <Button Content="admin" HorizontalAlignment="Center" Margin="150,0,0,0" VerticalAlignment="Center" Height="50" Width="86" Click="AdminSignIn" />
         <Button Content="sign up" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="99" Click="SignUp"/>-->
-                    <Grid Margin="-70,0,-85,-2">
-
-                    </Grid>
+                    <Grid Margin="-70,0,-85,-2"/>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="admin" Width="180" Height="30" FontSize="16">
+            <TabItem Header="admin" Width="180" Height="30" FontSize="16" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -54,13 +55,18 @@
                                     <!--Click="Button_Click_LogOut">-->
                                     <Button.ToolTip>
                                         <StackPanel>
-                                            <TextBlock FontWeight="Bold">press to sign out</TextBlock>
-                                            <TextBlock>after signing out you will be able to sign in again at any point</TextBlock>
+                                            <TextBlock FontWeight="Bold"><Run Text="press to sign out"/></TextBlock>
+                                            <TextBlock><Run Text="after signing out you will be able to sign in again at any point"/></TextBlock>
                                         </StackPanel>
                                     </Button.ToolTip>
                                 </Button>
                             </StackPanel>
-                            <Button Content="display drones list" HorizontalAlignment="Center" Margin="0,185,0,0" VerticalAlignment="Top" Height="51" Width="174" Click="showDronesButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606"/>
+
+                            <Button Content="display Drones list" HorizontalAlignment="Center" Margin="0,260,0,0" VerticalAlignment="Top" Height="51" Width="256" Click="showDronesButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606"/>
+                            <Button Content="display Parcels list" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Height="51" Width="256" Click="showParcelsButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606"/>
+                            <Button Content="display Customers list" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Height="51" Width="256" Click="showCustomersButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606"/>
+                            <Button Content="display BaseStations list" HorizontalAlignment="Center" Margin="0,190,0,0" VerticalAlignment="Top" Height="51" Width="256" Click="showStationButton_click" FontSize="20" Foreground="Black" BorderBrush="#FF060606"/>
+                            <Grid/>
 
                         </Grid>
                     </Border>

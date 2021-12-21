@@ -82,6 +82,8 @@ namespace BlApi
 
         private double getBattery(int droneId)
         {
+            if (droneId == 0)
+                return 0;
             return drones.Find(drone => drone.id == droneId).battery;
         }
 
