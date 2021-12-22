@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightGreen.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="Background">
                     <Setter.Value>
@@ -27,32 +28,42 @@
             </Style>
 
             <Style x:Key="GridBackground" TargetType="Grid">
-                    <Setter Property="Background">
-                        <Setter.Value>
+                <Setter Property="Background">
+                    <Setter.Value>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#7FFFD100" Offset="0"/>
                             <GradientStop Color="#7FFF0000" Offset="1"/>
                         </LinearGradientBrush>
                     </Setter.Value>
-                    </Setter>
-                <!--<Setter Property="GridView.AllowsColumnReorder">
-                    <Setter.Value>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions >
-                        </Grid>
-                    </Setter.Value>
-                </Setter>-->
+                </Setter>
             </Style>
-            <Style TargetType="TabItem">
+            
+            <Style x:Name="BackgroundBorder" TargetType="">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#7FFFD100" Offset="0"/>
+                            <GradientStop Color="#7FFF0000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Name="SelectedTabBackGround" TargetType="TabItem">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#7FFFD100" Offset="0"/>
+                            <GradientStop Color="#7FFF0000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <!--<Style TargetType="TabItem">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
-                            <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                            <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Red" CornerRadius="4,4,0,0" Margin="2,0">
                                 <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -60,17 +71,17 @@
                                     <Setter TargetName="Border" Property="Background" Value="{StaticResource SelectedTabBackGround}" />
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="False">
-                                    <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                    <Setter TargetName="Border" Property="Background" Value="Red" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True" SourceName="Border">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonsColor}"/>
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonStyle}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
 
                 </Setter>
-            </Style>
+            </Style>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

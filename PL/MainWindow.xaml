@@ -49,7 +49,7 @@
                         </StackPanel>
                     </Border>
                     <Border x:Name="AdminMainWindowBorder" Margin="10" Visibility="Visible" Grid.RowSpan="2">
-                        <Grid>
+                        <Grid Background="White">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 0 18 0">
                                 <Button Content="sign out"  Width="100"  ToolTipService.ShowDuration="8000">
                                     <!--Click="Button_Click_LogOut">-->
