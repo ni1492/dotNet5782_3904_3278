@@ -250,7 +250,7 @@ namespace BlApi
                 throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         } 
-        public drone displayDrone(int id) //displays the requested drone //remember to throw and catch
+        public drone displayDrone(int id) //displays the requested drone 
         {
             try
             {

@@ -33,8 +33,6 @@ namespace PL
         {
             InitializeComponent();
             InitializeCollections();
-            
-           
         }
 
         static public void InitializeCollections()

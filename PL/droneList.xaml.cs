@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using PL.PO;
+
 namespace PL
 {
     /// <summary>
@@ -21,54 +23,93 @@ namespace PL
     public partial class droneList : Window
     {
          IBL bl;
+        ObservableCollection<PO.Drone> drones;
         public droneList( IBL bl, ObservableCollection<PO.Drone> drones)
         {
             this.bl = bl;
                 InitializeComponent();
-           droneDataGrid.DataContext = drones;
+            this.drones = drones;
+           // droneDataGrid.DataContext = this.drones;
 
-          //DataContext = drones;
+           DataContext = drones;
             //droneDataGrid.ItemsSource = bl.displayDroneList();
-            //statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            //weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
         }
 
-        private void statusSelection(object sender, SelectionChangedEventArgs e )
+        private void statusSelection(object sender, SelectionChangedEventArgs e)
         {
+            //if ((sender as ComboBox).SelectedIndex == 0)
+            //    return;
+            //else if(weightSelector==null || weightSelector.SelectedIndex==0)
+            //       droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.status == (BO.DroneStatuses)statusSelector.SelectedItem)
+            //                                                                        select Converter.DronePO(bl)));
+            //else
+            //    droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
+            //                                                                       select Converter.DronePO(bl)));
             if (statusSelector.SelectedItem == null)
-                statusSelector.SelectedItem = DroneStatuses.all;
+                statusSelector.SelectedItem=DroneStatuses.all;
             if (weightSelector.SelectedItem == null)
                 weightSelector.SelectedItem = WeightCategories.all;
 
             else if (((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
-                droneDataGrid.ItemsSource = bl.displayDroneList();
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDroneList()
+                                                                                select Converter.DronePO(bl)));
+
             else if ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)
-                droneDataGrid.ItemsSource = bl.displayDrones(drone => drone.weight == ( BO.WeightCategories)weightSelector.SelectedItem);
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.weight == (BO.WeightCategories)weightSelector.SelectedItem)
+                                                                                select Converter.DronePO(bl)));
+
             else if ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all)
-                droneDataGrid.ItemsSource = bl.displayDrones(drone => drone.status == ( BO.DroneStatuses)statusSelector.SelectedItem);
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.status == (BO.DroneStatuses)statusSelector.SelectedItem)
+                                                                                select Converter.DronePO(bl)));
             else
-                droneDataGrid.ItemsSource = bl.displayDrones(drone => (drone.status == ( BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == ( BO.WeightCategories)weightSelector.SelectedItem));
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
+                                                                                select Converter.DronePO(bl)));
 
         }
-
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Drone d = cell.DataContext as PO.Drone;
+            new Drone(bl, bl.displayDrone(d.DId)).ShowDialog();
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
+           
+        }
         private void weightSelection(object sender, SelectionChangedEventArgs e)
         {
+            //if ((sender as ComboBox).SelectedIndex == 0)
+            //    return;
+            //else if (statusSelector == null || statusSelector.SelectedIndex == 0)
+            //    droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.weight == (BO.WeightCategories)weightSelector.SelectedItem)
+            //                                                                   select Converter.DronePO(bl)));
+            //else
+            //    droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
+            //                                                                    select Converter.DronePO(bl)));
             if (statusSelector.SelectedItem == null)
                 statusSelector.SelectedItem = DroneStatuses.all;
             if (weightSelector.SelectedItem == null)
                 weightSelector.SelectedItem = WeightCategories.all;
-            
+
             else if (((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all) && ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all))
-                droneDataGrid.ItemsSource = bl.displayDroneList();
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDroneList()
+                                                                                select Converter.DronePO(bl)));
             else if ((WeightCategories)weightSelector.SelectedItem == WeightCategories.all)
-                droneDataGrid.ItemsSource = bl.displayDrones(drone => drone.status == ( BO.DroneStatuses)statusSelector.SelectedItem);
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.status == (BO.DroneStatuses)statusSelector.SelectedItem)
+                                                                                select Converter.DronePO(bl)));
             else if ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all)
-                droneDataGrid.ItemsSource = bl.displayDrones(drone => drone.weight == ( BO.WeightCategories)weightSelector.SelectedItem);
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.weight == (BO.WeightCategories)weightSelector.SelectedItem)
+                                                                                select Converter.DronePO(bl)));
+
             else
-                droneDataGrid.ItemsSource = bl.displayDrones(drone => (drone.status == ( BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == ( BO.WeightCategories)weightSelector.SelectedItem));
+                droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
+                                                                                select Converter.DronePO(bl)));
+
 
         }
-
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {
             new Drone(bl).ShowDialog();
@@ -91,9 +132,27 @@ namespace PL
         {
             this.Close();
         }
+
+        private void ClearStatusFilledComboBox_Click(object sender, RoutedEventArgs e)
+        {
+            statusSelector.SelectedItem = null;
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
+            statusSelector.SelectedIndex=0;
+
+        }
+
+        private void ClearWeightFilledComboBox_Click(object sender, RoutedEventArgs e)
+        {
+            weightSelector.SelectedItem = null;
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
+            weightSelector.Text = "";
+
+        }
     }
-    public enum WeightCategories { all, light = 1, medium, heavy };//enum of various types of weight: light, medium, heavy
-    public enum DroneStatuses { all, available = 1, maintenance, delivery };//enum of various options for drone status: available, maintenance, delivery
+    public enum WeightCategories { all, light=1, medium, heavy };//enum of various types of weight: light, medium, heavy
+    public enum DroneStatuses { all, available=1, maintenance, delivery };//enum of various options for drone status: available, maintenance, delivery
     public enum Priorities { regular = 1, quick, urgent };//enum of various options for priority: regular, quick, urgent
 
 }

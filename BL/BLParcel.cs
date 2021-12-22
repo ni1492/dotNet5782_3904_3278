@@ -103,8 +103,8 @@ namespace BlApi
                 yield return (new parcelForList
                 {
                     id = p.Id,
-                    sender = dl.DisplayCustomers(customer=>customer.Id==p.SenderId).First().Name,
-                    receiver = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name,  
+                    sender = dl.DisplayCustomers(customer=>customer.Id==p.SenderId).FirstOrDefault().Name,
+                    receiver = dl.DisplayCustomers(customer => customer.Id == p.TargetId).FirstOrDefault().Name,  
                     weight = (BO.WeightCategories)p.Weight,
                     priority = (BO.Priorities)p.Priority,
                     status = getStatus(p.Id)
