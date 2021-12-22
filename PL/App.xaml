@@ -11,7 +11,17 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightGreen.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
+            <Style x:Name="BackgroundBorder" TargetType="Frame">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#7FFFD100" Offset="0"/>
+                            <GradientStop Color="#7FFF0000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="Background">
                     <Setter.Value>
@@ -38,16 +48,7 @@
                 </Setter>
             </Style>
             
-            <Style x:Name="BackgroundBorder" TargetType="">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#7FFFD100" Offset="0"/>
-                            <GradientStop Color="#7FFF0000" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+         
             <Style x:Name="SelectedTabBackGround" TargetType="TabItem">
                 <Setter Property="Background">
                     <Setter.Value>
