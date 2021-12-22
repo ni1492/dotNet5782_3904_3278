@@ -29,7 +29,7 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
             </Grid.ColumnDefinitions >
             <ComboBox x:Name="statusSelector" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" Grid.Column="1" SelectionChanged="statusSelection" Height="28"/>
             <Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}"  HorizontalAlignment="Right" 
-                    Grid.Column="1" Click="ClearStatusFilledComboBox_Click" Margin="0,0,0,37" />
+                    Grid.Column="1" Click="ClearStatusFilledComboBox_Click" Margin="0,0,0,37" FontWeight="Medium" />
             <ComboBox x:Name="weightSelector" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="168" SelectionChanged="weightSelection"  Height="28" >
                 <ComboBox.RenderTransform>
                     <TransformGroup>
@@ -124,7 +124,8 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
         </ListView>-->
         <Grid Name="bottomGrid" Grid.Row="2">
             <Button Content="Add drone" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" Style="{StaticResource ButtonStyle}"/>
-            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="Button_Click" BorderBrush="Red" />
+            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="Button_Click" 
+            Style="{StaticResource ButtonStyle}" />
 
         </Grid>
     </Grid>

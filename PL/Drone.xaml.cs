@@ -69,7 +69,7 @@ namespace PL
                 action2.Visibility = Visibility.Hidden;
 
             }
-            else if (bl.getStatus(drone.parcel.id) == ParcelStatus.PickedUp)
+            else if (bl.getStatus(drone.parcel.id) ==(BO.ParcelStatus) ParcelStatus.PickedUp)
             {
                // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;

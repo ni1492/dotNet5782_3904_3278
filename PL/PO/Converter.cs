@@ -24,48 +24,54 @@ namespace PL.PO
             };
 
         }
-        public static PO.Parcel ParcelPO(BO.parcel parcel)
+        public static PO.Parcel ParcelPO(BO.parcelForList parcel)
         {
             return new()
             {
                 PID = parcel.id,
-                SID = parcel.sender.id,
-                TID = parcel.receiver.id,
+                SenderName = parcel.sender,
+                TargetName = parcel.receiver,
                 PWeight = (WeightCategories)parcel.weight,
                 Priority = (Priorities)parcel.priority,
-                Drone_ID = parcel.drone.id,
-                Creation = parcel.creation,
-                Match = parcel.match,
-                Pickup = parcel.pickup,
-                Delivery = parcel.delivery
+                PStatus = (ParcelStatus)parcel.status
+                //Drone_ID = parcel.drone.id,
+                //Creation = parcel.creation,
+                //Match = parcel.match,
+                //Pickup = parcel.pickup,
+                //Delivery = parcel.delivery
             };
         }
-        public static PO.Customer CustomerPO(BO.customer customer)
+        public static PO.Customer CustomerPO(BO.customerForList customer)
         {
             return new()
             {
                 CID = customer.id,
                 CName = customer.name,
                 Phone = customer.phone,
-                CLongitude = customer.location.convertLo(customer.location.Longitude),
-                CLatitude = customer.location.convertLa(customer.location.Latitude),
-                Delivered = customer.fromCus.FindAll(p => p.status == BO.ParcelStatus.Delivered).Count(),
-                NDelivered = customer.fromCus.FindAll(p => p.status != BO.ParcelStatus.Delivered).Count(),
-                Accepted = customer.toCus.FindAll(p => p.status == BO.ParcelStatus.Delivered).Count(),
-                NAccepted = customer.toCus.FindAll(p => p.status != BO.ParcelStatus.Delivered).Count()
+                //CLongitude = customer.location.convertLo(customer.location.Longitude),
+                //CLatitude = customer.location.convertLa(customer.location.Latitude),
+                Delivered = customer.deliveredPar,
+                NDelivered = customer.notDeliveredPar,
+                Accepted = customer.acceptedPar,
+                NAccepted = customer.notAcceptedPar
+                //Delivered = customer.fromCus.FindAll(p => p.status == BO.ParcelStatus.Delivered).Count(),
+                //NDelivered = customer.fromCus.FindAll(p => p.status != BO.ParcelStatus.Delivered).Count(),
+                //Accepted = customer.toCus.FindAll(p => p.status == BO.ParcelStatus.Delivered).Count(),
+                //NAccepted = customer.toCus.FindAll(p => p.status != BO.ParcelStatus.Delivered).Count()
             };
 
         }
-        public static PO.BaseStation StationPO(BO.baseStation station)
+        public static PO.BaseStation StationPO(BO.baseStationForList station)
         {
             return new()
             {
                 BSId = station.id,
                 Name = station.name,
-                SLongitude = station.location.convertLo(station.location.Longitude),
-                SLatitude = station.location.convertLa(station.location.Latitude),
-                Available = station.chargingSlots,
-                Used = station.dronesInCharging.Count()
+                //SLongitude = station.location.convertLo(station.location.Longitude),
+                //SLatitude = station.location.convertLa(station.location.Latitude),
+                Available = station.availableSlots,
+                Used=station.usedSlots
+              //  Used = station.dronesInCharging.Count()
             };
         }
     }

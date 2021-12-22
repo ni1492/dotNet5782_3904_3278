@@ -32,7 +32,7 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions >
         </Grid>-->
-        <DataGrid x:Name="baseStationDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Top" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" Height="337" Width="632" Margin="0,20,0,0">
+        <DataGrid x:Name="baseStationDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Top" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" Height="337" Width="299" Margin="0,20,0,0">
             <DataGrid.Columns>
                 <DataGridTemplateColumn x:Name="sIdColumn" Header="ID" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
@@ -43,7 +43,7 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                 </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" FontSize="10" Header="Name" Width="90"/>
 
-                <DataGridTemplateColumn x:Name="sLatitudeColumn" Header="Latitude" Width="170">
+                <!--<DataGridTemplateColumn x:Name="sLatitudeColumn" Header="Latitude" Width="170">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding SLatitude}" FontSize="10"/>
@@ -56,7 +56,7 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                             <TextBlock Text="{Binding SLongitude}" FontSize="10"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
                 <DataGridTextColumn x:Name="availableColumn" Binding="{Binding Available}" FontSize="10" Header="Available" Width="SizeToHeader"/>
 
                 <DataGridTemplateColumn x:Name="usedColumn" Header="Used" Width="SizeToHeader">

@@ -104,8 +104,8 @@
 
             </Grid>
             <Grid Name="add" Grid.Row="10" Grid.Column="1">
-                <Button Content="ADD DRONE" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click" />
-                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click"/>
+                <Button Content="ADD DRONE" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click" Style="{StaticResource ButtonStyle}" />
+                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click" Style="{StaticResource ButtonStyle}"/>
 
 
             </Grid>
@@ -183,10 +183,10 @@
                     <ColumnDefinition Width="85*"/>
                     <ColumnDefinition Width="31*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click"/>
-                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click"/>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2"/>
-                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="38,-2,0,0" VerticalAlignment="Top" Width="49" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}"/>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="38,-2,0,0" VerticalAlignment="Top" Width="49" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}"/>
 
 
 

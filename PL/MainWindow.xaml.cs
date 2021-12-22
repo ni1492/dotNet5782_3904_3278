@@ -38,9 +38,9 @@ namespace PL
         static public void InitializeCollections()
         {
             drones = new ObservableCollection<PO.Drone>((from bl in App.bl.displayDroneList() select Converter.DronePO(bl)));
-            parcels = new ObservableCollection<Parcel>((from bl in App.bl.displayParcelList() select Converter.ParcelPO(App.bl.displayParcel(bl.id))));
-            customers = new ObservableCollection<Customer>((from bl in App.bl.displayCustomerList() select Converter.CustomerPO(App.bl.displayCustomer(bl.id))));
-            stations = new ObservableCollection<BaseStation>((from bl in App.bl.displayStationList() select Converter.StationPO(App.bl.displayStation(bl.id))));
+            parcels = new ObservableCollection<Parcel>((from bl in App.bl.displayParcelList() select Converter.ParcelPO(bl)));
+            customers = new ObservableCollection<Customer>((from bl in App.bl.displayCustomerList() select Converter.CustomerPO(bl)));
+            stations = new ObservableCollection<BaseStation>((from bl in App.bl.displayStationList() select Converter.StationPO(bl)));
         }
 
        

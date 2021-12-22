@@ -53,21 +53,34 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn x:Name="cLatitudeColumn" Header="Latitude" Width="170">
+                    <DataGridTemplateColumn x:Name="Delivered" Header="Delivered" Width="SizeToHeader">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CLatitude}" FontSize="10"/>
+                                <TextBlock Text="{Binding Delivered}" FontSize="10"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn x:Name="cLongitudeColumn" Header="Longitude" Width="170">
+                    <DataGridTemplateColumn x:Name="NDelivered" Header="Not Delivered" Width="SizeToHeader">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CLongitude}" FontSize="10"/>
+                                <TextBlock Text="{Binding NDelivered}" FontSize="10"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
+                    <DataGridTemplateColumn x:Name="Accepted" Header="Accepted" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Accepted}" FontSize="10"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="NAccepted" Header="Not Accepted" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding NAccepted}" FontSize="10"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 

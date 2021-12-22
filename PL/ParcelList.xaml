@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ParceList" Height="640" Width="800" >
+        Title="ParceList" Height="640" Width="800" SizeToContent="WidthAndHeight" >
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -42,14 +42,14 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                     <DataGridTemplateColumn x:Name="sIDColumn1" Header="Sender" Width="90">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding SID}" FontSize="10"/>
+                                <TextBlock Text="{Binding SenderName}" FontSize="10"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn x:Name="tIDColumn" Header="Target" Width="90">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding TID}" FontSize="10"/>
+                                <TextBlock Text="{Binding TargetName}" FontSize="10"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -67,10 +67,10 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn x:Name="droneIDColumn" Header="Drone" Width="90">
+                    <DataGridTemplateColumn x:Name="PStatusColumn" Header="Status" Width="90">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding  Drone_ID}" FontSize="10"/>
+                                <TextBlock Text="{Binding  PStatus}" FontSize="10"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
