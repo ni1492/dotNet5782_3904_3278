@@ -80,6 +80,7 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
 
         </Grid>
 
+        
         <!--<ListView Grid.Row="1" x:Name="DroneListView" MouseDoubleClick="openDrone_DoubleClick">
             <ListView.View>
                 <GridView>

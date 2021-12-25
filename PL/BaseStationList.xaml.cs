@@ -29,5 +29,14 @@ namespace PL
             InitializeComponent();
             baseStationDataGrid.DataContext = stations;
         }
+
+        //private void openStation_DoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    int id = ((BO.baseStationForList)(sender as ListView).SelectedItem).id;
+
+        //    baseStationDataGrid.ItemsSource = bl.displayStationList();
+            
+            
+        //}
     }
 }

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    public class Parcel: DependencyObject
+    public class Parcel: DependencyObject //for list
     {
 
         static readonly DependencyProperty PIDProperty = DependencyProperty.Register("Parcel_ID", typeof(int), typeof(Drone));
