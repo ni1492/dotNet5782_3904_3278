@@ -33,7 +33,7 @@
 
         </Grid>
         <Grid Name="model" Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="MODEL" HorizontalAlignment="Center" Text="model" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="MODELTextChanged"/>
+            <TextBox x:Name="MODEL" HorizontalAlignment="Center" Text="model" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="MODELTextChanged" />
 
         </Grid>
         <Grid Name="enterModel" Grid.Row="2" Grid.Column="0" Visibility="Visible">
@@ -88,7 +88,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
