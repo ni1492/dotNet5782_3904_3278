@@ -8,14 +8,14 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class ParcelSingle:DependencyObject//for display
+    public class ParcelSingle:DependencyObject//for display
     {
         static readonly DependencyProperty ParcelIDProperty = DependencyProperty.Register("Parcel_ID", typeof(int), typeof(ParcelSingle));
-        static readonly DependencyProperty SenderNProperty = DependencyProperty.Register("Sender_Name", typeof(string), typeof(ParcelSingle));
-        static readonly DependencyProperty TargetNProperty = DependencyProperty.Register("Target_Name", typeof(string), typeof(ParcelSingle));
+        static readonly DependencyProperty SenderNProperty = DependencyProperty.Register("Sender_Name", typeof(CustomerForParcel), typeof(ParcelSingle));
+        static readonly DependencyProperty TargetNProperty = DependencyProperty.Register("Target_Name", typeof(CustomerForParcel), typeof(ParcelSingle));
         static readonly DependencyProperty ParcelWeightProperty = DependencyProperty.Register("Parcel Weight", typeof(WeightCategories), typeof(ParcelSingle));
         static readonly DependencyProperty PPriorityProperty = DependencyProperty.Register("Priority", typeof(Priorities), typeof(ParcelSingle));
-        static readonly DependencyProperty ParcelStatusProperty = DependencyProperty.Register("Parcel_Status", typeof(ParcelStatus), typeof(ParcelSingle));
+        //static readonly DependencyProperty ParcelStatusProperty = DependencyProperty.Register("Parcel_Status", typeof(ParcelStatus), typeof(ParcelSingle));
 
         static readonly DependencyProperty DroneIDProperty = DependencyProperty.Register("Drone ID", typeof(int), typeof(ParcelSingle));
         static readonly DependencyProperty CreationProperty = DependencyProperty.Register("Creation", typeof(DateTime?), typeof(ParcelSingle));
@@ -24,11 +24,11 @@ namespace PL.PO
         static readonly DependencyProperty DeliveryProperty = DependencyProperty.Register("Delivery", typeof(DateTime?), typeof(ParcelSingle));
 
         public int PSID { get => (int)GetValue(ParcelIDProperty); set => SetValue(ParcelIDProperty, value); }
-        public string PSSenderName { get => (string)GetValue(SenderNProperty); set => SetValue(SenderNProperty, value); }
-        public string PSTargetName { get => (string)GetValue(TargetNProperty); set => SetValue(TargetNProperty, value); }
+        public CustomerForParcel PSSender { get => (CustomerForParcel)GetValue(SenderNProperty); set => SetValue(SenderNProperty, value); }
+        public CustomerForParcel PSTarget { get => (CustomerForParcel)GetValue(TargetNProperty); set => SetValue(TargetNProperty, value); }
         public WeightCategories PSWeight { get => (WeightCategories)GetValue(ParcelWeightProperty); set => SetValue(ParcelWeightProperty, value); }
         public Priorities PSPriority { get => (Priorities)GetValue(PPriorityProperty); set => SetValue(PPriorityProperty, value); }
-        public ParcelStatus PSStatus { get => (ParcelStatus)GetValue(ParcelStatusProperty); set => SetValue(ParcelStatusProperty, value); }
+        //public ParcelStatus PSStatus { get => (ParcelStatus)GetValue(ParcelStatusProperty); set => SetValue(ParcelStatusProperty, value); }
 
         public int PSDrone_ID { get => (int)GetValue(DroneIDProperty); set => SetValue(DroneIDProperty, value); }
         public DateTime? PSCreation { get => (DateTime?)GetValue(CreationProperty); set => SetValue(CreationProperty, value); }

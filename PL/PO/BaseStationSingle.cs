@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class BaseStationSingle: DependencyObject //for display
+    public class BaseStationSingle: DependencyObject //for display
     {
         static readonly DependencyProperty BaseStationIDProperty = DependencyProperty.Register("BaseStationID", typeof(int), typeof(BaseStationSingle));
         static readonly DependencyProperty BSNameProperty = DependencyProperty.Register("Station Name", typeof(string), typeof(BaseStationSingle));

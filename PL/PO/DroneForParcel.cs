@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class DroneForParcel:DependencyObject//for parcel
+    public class DroneForParcel:DependencyObject//for parcel
     {
         static readonly DependencyProperty DPIDProperty = DependencyProperty.Register("DroneID", typeof(int), typeof(DroneForParcel));
         static readonly DependencyProperty DPBatteryProperty = DependencyProperty.Register("Battery", typeof(double), typeof(DroneForParcel));

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class CustomerForParcel:DependencyObject //for parcel
+    public class CustomerForParcel:DependencyObject //for parcel
     {
         static readonly DependencyProperty CPIDProperty = DependencyProperty.Register("CustomerID", typeof(int), typeof(CustomerForParcel));
 
