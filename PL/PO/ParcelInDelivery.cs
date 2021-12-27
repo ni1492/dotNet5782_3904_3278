@@ -16,10 +16,10 @@ namespace PL.PO
         static readonly DependencyProperty PDPriorityProperty = DependencyProperty.Register("Priority", typeof(Priorities), typeof(ParcelInDelivery));
         static readonly DependencyProperty PDParcelStatusProperty = DependencyProperty.Register("Parcel_Status", typeof(string), typeof(ParcelInDelivery));
 
-        static readonly DependencyProperty PLongitude = DependencyProperty.Register("PickUp Longitude", typeof(int), typeof(ParcelInDelivery));
-        static readonly DependencyProperty PLatitude = DependencyProperty.Register("PickUp Latitude", typeof(DateTime?), typeof(ParcelInDelivery));
-        static readonly DependencyProperty DestinationLongitude = DependencyProperty.Register("Destination Longitude", typeof(DateTime?), typeof(ParcelInDelivery));
-        static readonly DependencyProperty DestinationLatitude = DependencyProperty.Register("Destination Latitude", typeof(DateTime?), typeof(ParcelInDelivery));
+        static readonly DependencyProperty PLongitude = DependencyProperty.Register("PickUp Longitude", typeof(string), typeof(ParcelInDelivery));
+        static readonly DependencyProperty PLatitude = DependencyProperty.Register("PickUp Latitude", typeof(string), typeof(ParcelInDelivery));
+        static readonly DependencyProperty DestinationLongitude = DependencyProperty.Register("Destination Longitude", typeof(string), typeof(ParcelInDelivery));
+        static readonly DependencyProperty DestinationLatitude = DependencyProperty.Register("Destination Latitude", typeof(string), typeof(ParcelInDelivery));
 
         public int PDID { get => (int)GetValue(PDIDProperty); set => SetValue(PDIDProperty, value); }
         public string PDSenderName { get => (string)GetValue(SenderProperty); set => SetValue(SenderProperty, value); }
@@ -27,10 +27,10 @@ namespace PL.PO
         public WeightCategories PDWeight { get => (WeightCategories)GetValue(PDarcelWeightProperty); set => SetValue(PDarcelWeightProperty, value); }
         public Priorities PDPriority { get => (Priorities)GetValue(PDPriorityProperty); set => SetValue(PDPriorityProperty, value); }
         public string PDStatus { get => (string)GetValue(PDParcelStatusProperty); set => SetValue(PDParcelStatusProperty, value); }
-        public DateTime? PickLongitude { get => (DateTime?)GetValue(PLongitude); set => SetValue(PLongitude, value); }
-        public DateTime? PickLatitude { get => (DateTime?)GetValue(PLatitude); set => SetValue(PLatitude, value); }
-        public DateTime? DesLongitude { get => (DateTime?)GetValue(DestinationLongitude); set => SetValue(DestinationLongitude, value); }
-        public DateTime? DesLatitude { get => (DateTime?)GetValue(DestinationLatitude); set => SetValue(DestinationLatitude, value); }
+        public string PickLongitude { get => (string)GetValue(PLongitude); set => SetValue(PLongitude, value); }
+        public string PickLatitude { get => (string)GetValue(PLatitude); set => SetValue(PLatitude, value); }
+        public string DesLongitude { get => (string)GetValue(DestinationLongitude); set => SetValue(DestinationLongitude, value); }
+        public string DesLatitude { get => (string)GetValue(DestinationLatitude); set => SetValue(DestinationLatitude, value); }
 
     }
 }

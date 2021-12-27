@@ -192,8 +192,8 @@ namespace PL.PO
                 PDStatus =s,
                 PickLongitude = parcel.pickUp.convertLo(parcel.pickUp.Longitude),
                 PickLatitude= parcel.pickUp.convertLa(parcel.pickUp.Latitude),
-                DesLongitude
-                DesLatitude
+                DesLongitude= parcel.destination.convertLo(parcel.destination.Longitude),
+                DesLatitude = parcel.destination.convertLa(parcel.destination.Latitude)
             };
 
         }
