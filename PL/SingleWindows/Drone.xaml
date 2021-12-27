@@ -33,7 +33,7 @@
 
         </Grid>
         <Grid Name="model" Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="MODEL" HorizontalAlignment="Center" Text="model" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="MODELTextChanged" />
+            <TextBox x:Name="MODEL" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="MODELTextChanged" Style="{StaticResource ModelWaterMark}"/>
 
         </Grid>
         <Grid Name="enterModel" Grid.Row="2" Grid.Column="0" Visibility="Visible">
@@ -44,7 +44,7 @@
             <TextBlock HorizontalAlignment="Center" Text="max weight:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Visible"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -73,7 +73,7 @@
 
             </Grid>
             <Grid Name="stationId" Grid.Row="4" Grid.Column="1">
-                <TextBox x:Name="STATION" HorizontalAlignment="Center" Text="station id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged"/>
+                <TextBox x:Name="STATION" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged" Style="{StaticResource StationIDWaterMark}"/>
 
             </Grid>
             <Grid Name="enterStation" Grid.Row="4" Grid.Column="0">
@@ -88,7 +88,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Visible">
+        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>

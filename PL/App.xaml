@@ -98,7 +98,69 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="LongitudeWaterMark" TargetType="{x:Type TextBox}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                <Style.Resources>
+                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                        <VisualBrush.Visual>
+                            <Label Content="Longitude" Foreground="LightGray" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Style.Resources>
+                <Style.Triggers>
+                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                        <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                    </Trigger>
+                    <Trigger Property="Text" Value="{x:Null}">
+                        <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Setter Property="Background" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
 
+            <Style x:Key="StationIDWaterMark" TargetType="{x:Type TextBox}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                <Style.Resources>
+                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                        <VisualBrush.Visual>
+                            <Label Content="Station ID" Foreground="LightGray" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Style.Resources>
+                <Style.Triggers>
+                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                        <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                    </Trigger>
+                    <Trigger Property="Text" Value="{x:Null}">
+                        <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Setter Property="Background" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="LatitudeWaterMark" TargetType="{x:Type TextBox}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                <Style.Resources>
+                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                        <VisualBrush.Visual>
+                            <Label Content="Latitude" Foreground="LightGray" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Style.Resources>
+                <Style.Triggers>
+                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                        <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                    </Trigger>
+                    <Trigger Property="Text" Value="{x:Null}">
+                        <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Setter Property="Background" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            
             <Style x:Name="BackgroundBorder" TargetType="Frame">
                 <Setter Property="Background">
                     <Setter.Value>
