@@ -19,9 +19,39 @@ namespace PL.SingleWindows
     /// </summary>
     public partial class Customer : Window
     {
-        public Customer()
+        BlApi.IBL bl;
+        public Customer(BlApi.IBL bl, BO.customer customer)//action grid
         {
+            this.bl = bl;
             InitializeComponent();
+            Actions.Visibility = Visibility.Visible;
+            Add.Visibility = Visibility.Hidden;
+            FCus.ItemsSource = customer.fromCus;
+            TCus.ItemsSource = customer.toCus;
+
+        }
+
+        private void closeA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void updateA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void deleteA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addCustomer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

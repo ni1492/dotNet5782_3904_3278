@@ -26,7 +26,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.Column="2" HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Grid.RowSpan="4" VerticalAlignment="Top" Width="100" Source="/SingleWindows/DroneView.png"/>
+        <Image Grid.Column="2" HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Grid.RowSpan="5" VerticalAlignment="Top" Width="100" Source="/SingleWindows/DroneView.png"/>
 
         <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
@@ -73,12 +73,18 @@
 
             </Grid>
             <Grid Name="stationId" Grid.Row="4" Grid.Column="1">
-                <TextBox x:Name="STATION" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged" Style="{StaticResource StationIDWaterMark}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="114*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="STATION" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>
+            <!--<Grid Name="stationId" Grid.Row="4" Grid.Column="1">
+                <TextBox x:Name="STATION" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged" Style="{StaticResource StationIDWaterMark}"/>
+            </Grid>-->
             <Grid Name="enterStation" Grid.Row="4" Grid.Column="0">
                 <TextBlock HorizontalAlignment="Center" Text="station id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
             </Grid>
             <Grid Name="add" Grid.Row="10" Grid.Column="1">
                 <Button Content="ADD DRONE" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click" Style="{StaticResource ButtonStyle}" />
@@ -154,7 +160,7 @@
                 <TextBlock HorizontalAlignment="Center" Text="parcel:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
-            <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="2">
+            <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="134*"/>
                     <ColumnDefinition Width="85*"/>
@@ -162,8 +168,9 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
                 <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="38,-2,0,0" VerticalAlignment="Top" Width="49" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="DELETE" HorizontalAlignment="Left" Margin="114,-2,0,0" VerticalAlignment="Top" Width="50" Click="deleteA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="169,-2,0,0" VerticalAlignment="Top" Width="49" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="9,-2,0,0" VerticalAlignment="Top" Width="49" Grid.Column="1" Style="{StaticResource ButtonStyle}"/>
 
 
 

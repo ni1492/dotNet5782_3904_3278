@@ -23,5 +23,52 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        private void NAMETextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SLOTSNUMTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LATITUDETextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LONGITUDETextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void IDTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void closeA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void updateA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void deleteA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void addStation_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="drone.jpg" />
     <None Remove="drone.svg" />
+    <None Remove="drone1.jpeg" />
     <None Remove="dronefinal.jpeg" />
     <None Remove="logo.jpg" />
     <None Remove="logo.png" />
@@ -16,6 +17,8 @@
     <None Remove="preview.png" />
     <None Remove="SingleWindows\CustomerView.png" />
     <None Remove="SingleWindows\DroneView.png" />
+    <None Remove="SingleWindows\ParclView.png" />
+    <None Remove="SingleWindows\StationView.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,13 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="drone1.jpeg" />
+    <Resource Include="logo.png" />
+    <Resource Include="pngwing.com.png" />
     <Resource Include="SingleWindows\CustomerView.png" />
     <Resource Include="SingleWindows\DroneView.png" />
-    <Resource Include="Sources\drone.jpg" />
-    <Resource Include="Sources\drone.svg" />
-    <Resource Include="Sources\logo.png" />
-    <Resource Include="Sources\pngwing.com.png" />
-    <Resource Include="Sources\preview.png" />
+    <Resource Include="SingleWindows\ParclView.png" />
+    <Resource Include="SingleWindows\StationView.png" />
   </ItemGroup>
 
 </Project>

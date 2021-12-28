@@ -185,6 +185,8 @@ namespace PL
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
             WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+            STATION.ItemsSource = bl.displayStationListSlotsAvailable();
+
             //"enter: id, model, max weight, station id";
         }
 
@@ -192,7 +194,7 @@ namespace PL
         {
             try
             {
-                if (checkId(ID.Text) && checkModel(MODEL.Text) && checkStationId(STATION.Text) && WEIGHT.SelectedItem != null)
+                if (checkId(ID.Text) && checkModel(MODEL.Text) && STATION.SelectedItem != null && WEIGHT.SelectedItem != null)
                 {
                     int x;
                     Int32.TryParse(ID.Text, out x);
@@ -354,6 +356,11 @@ namespace PL
                 STATION.BorderBrush = Brushes.DarkRed;
                 STATION.Background = Brushes.Red;
             }
+        }
+
+        private void deleteA_click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         //private void HOURTextChanged(object sender, RoutedEventArgs e)

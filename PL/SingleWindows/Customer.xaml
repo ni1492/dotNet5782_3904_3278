@@ -32,23 +32,21 @@
             <TextBlock HorizontalAlignment="Center" Text="Id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-       
-        
         <Grid Name="enterMame" Grid.Row="2" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="Name:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
         </Grid>
         
         <Grid Name="name" Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="NAME" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="NAMETextChanged" Style="{StaticResource NameWaterMark}"/>
-
+            <TextBox x:Name="NAME" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"  Style="{StaticResource NameWaterMark}"/>
+            <!--LostFocus="NAMETextChanged"-->
         </Grid>
         <Grid Name="enterPhone" Grid.Row="3" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="Phone number:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
         <Grid Name="phone" Grid.Row="3" Grid.Column="1">
-            <TextBox x:Name="PHONE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="NAMETextChanged" Style="{StaticResource PhoneNumWaterMark}"/>
-
+            <TextBox x:Name="PHONE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"  Style="{StaticResource PhoneNumWaterMark}"/> 
+            <!--LostFocus="NAMETextChanged"-->
         </Grid>
         <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
@@ -68,7 +66,8 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Name="id" Grid.Row="1" Grid.Column="1">
-                <TextBox x:Name="ID" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="IDTextChanged" Style="{StaticResource IDWaterMark}"/>
+                <TextBox x:Name="ID" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120"  Style="{StaticResource IDWaterMark}"/>
+                <!--LostFocus="IDTextChanged"-->
             </Grid>
             <Grid Name="weight" Grid.Row="3" Grid.Column="1">
                 <Grid.ColumnDefinitions>
@@ -79,11 +78,13 @@
 
             </Grid>
             <Grid Name="longitude" Grid.Row="4" Grid.Column="1">
-                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged" Style="{StaticResource LongitudeWaterMark}"/>
+                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"  Style="{StaticResource LongitudeWaterMark}"/>
+                <!--LostFocus="STATIONTextChanged"-->
 
             </Grid>
             <Grid Name="latitude" Grid.Row="5" Grid.Column="1">
-                <TextBox x:Name="LATITUDE" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged" Style="{StaticResource LatitudeWaterMark}"/>
+                <TextBox x:Name="LATITUDE" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120"  Style="{StaticResource LatitudeWaterMark}"/>
+                <!--LostFocus="STATIONTextChanged"-->
 
             </Grid>
             <Grid Name="enterlatitude" Grid.Row="5" Grid.Column="0" Visibility="Visible">
@@ -95,8 +96,8 @@
 
             </Grid>
             <Grid Name="add" Grid.Row="10" Grid.Column="1">
-                <Button Content="ADD CUSTOMER" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click" Style="{StaticResource ButtonStyle}" />
-                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="ADD CUSTOMER" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addCustomer_Click" Style="{StaticResource ButtonStyle}" />
+                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>
 
 
             </Grid>
@@ -150,8 +151,24 @@
                 <TextBlock HorizontalAlignment="Center" Text="from customer:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
+            <Grid Name="from" Grid.Row="6" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="114*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="FCus" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
+
+            </Grid>
             <Grid Name="showTo" Grid.Row="6" Grid.Column="0" Margin="0,25,0,0" Grid.RowSpan="2">
                 <TextBlock HorizontalAlignment="Center" Text="to customer:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="to" Grid.Row="7" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="114*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="TCus" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>
             <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3">

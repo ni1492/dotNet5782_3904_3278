@@ -5,8 +5,155 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Station" Height="450" Width="800">
+        Title="Station" Height="320" Width="400" >
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Column="2" HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Grid.RowSpan="4" VerticalAlignment="Top" Width="100" Source="/SingleWindows/StationView.png"/>
+
+        <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
+            <TextBlock HorizontalAlignment="Center" Text="station id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+        </Grid>
+        <Grid Name="name" Grid.Row="2" Grid.Column="1">
+            <TextBox x:Name="NAME" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="NAMETextChanged" Style="{StaticResource NameWaterMark}"/>
+
+        </Grid>
+        <Grid Name="enterName" Grid.Row="2" Grid.Column="0" Visibility="Visible">
+            <TextBlock HorizontalAlignment="Center" Text="name:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+        </Grid>
+        <Grid Name="enterlatitude" Grid.Row="4" Grid.Column="0" Visibility="Visible">
+            <TextBlock HorizontalAlignment="Center" Text="Latitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+        </Grid>
+        <Grid Name="enterlongitude" Grid.Row="3" Grid.Column="0" Visibility="Visible">
+            <TextBlock HorizontalAlignment="Center" Text="Longitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+        </Grid>
+        <Grid Name="enterSlots" Grid.Row="5" Grid.Column="0" Visibility="Visible">
+            <TextBlock HorizontalAlignment="Center" Text="charging slots:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+        </Grid>
+ 
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid Name="id" Grid.Row="1" Grid.Column="1">
+                <TextBox x:Name="ID" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="IDTextChanged" Style="{StaticResource IDWaterMark}"/>
+            </Grid>
+            
+            <Grid Name="longitude" Grid.Row="3" Grid.Column="1">
+                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="LONGITUDETextChanged" Style="{StaticResource LongitudeWaterMark}"/>
+
+            </Grid>
+            <Grid Name="latitude" Grid.Row="4" Grid.Column="1">
+                <TextBox x:Name="LATITUDE" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="LATITUDETextChanged" Style="{StaticResource LatitudeWaterMark}"/>
+
+            </Grid>
+            <Grid Name="chargingSlots" Grid.Row="5" Grid.Column="1">
+                <TextBox x:Name="SLOTS" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="SLOTSNUMTextChanged" Style="{StaticResource SlotsWaterMark}"/>
+
+            </Grid>
+            <Grid Name="add" Grid.Row="10" Grid.Column="1">
+                <Button Content="ADD STATION" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addStation_Click" Style="{StaticResource ButtonStyle}" />
+                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>
+
+
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid Name="viewId" Grid.Column="1" Margin="0,8,0,0" Grid.RowSpan="2">
+                <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="viewLongitude" Grid.Row="2" Grid.Column="1" Margin="0,27,0,25" Grid.RowSpan="3">
+                <TextBlock x:Name="viewLONG" HorizontalAlignment="Center" Text="longitude" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="viewLatitude" Grid.Row="4" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
+                <TextBlock x:Name="viewLAT" HorizontalAlignment="Center" Text="latitude" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="viewSlotsNum" Grid.Row="5" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
+                <TextBlock x:Name="viewSLOTS" HorizontalAlignment="Center" Text="slots number" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="drones" Grid.Row="6" Grid.Column="0" Visibility="Visible">
+                <TextBlock HorizontalAlignment="Center" Text="Drone in charging:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="DroneCharging" Grid.Row="6" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="114*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="DRONES" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
+
+            </Grid>
+
+            <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="134*"/>
+                    <ColumnDefinition Width="85*"/>
+                    <ColumnDefinition Width="31*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="DELETE" HorizontalAlignment="Left" Margin="114,-2,0,0" VerticalAlignment="Top" Width="50" Click="deleteA_click" Style="{StaticResource ButtonStyle}"/>
+
+            </Grid>
+        </Grid>
+
     </Grid>
 </Window>
+

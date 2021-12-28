@@ -23,5 +23,57 @@ namespace PL.SingleWindows
         {
             InitializeComponent();
         }
+
+        private void IDTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void SENDERTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void TARGETTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void CTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void MTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void PTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void DTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addParcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void closeA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void updateA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void deleteA_click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
