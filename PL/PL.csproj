@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="BACK.jpg" />
+    <None Remove="back1.png" />
+    <None Remove="background1.png" />
     <None Remove="drone.jpg" />
     <None Remove="drone.svg" />
     <None Remove="drone1.jpeg" />
@@ -30,6 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="BACK.jpg" />
+    <Resource Include="back1.png" />
+    <Resource Include="background1.png" />
     <Resource Include="drone1.jpeg" />
     <Resource Include="logo.png" />
     <Resource Include="pngwing.com.png" />
