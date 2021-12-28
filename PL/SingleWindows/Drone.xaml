@@ -27,7 +27,6 @@
         </Grid.RowDefinitions>
 
         <Image Grid.Column="2" HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Grid.RowSpan="4" VerticalAlignment="Top" Width="100" Source="/SingleWindows/DroneView.png"/>
-
         <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
