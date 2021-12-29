@@ -31,35 +31,35 @@ namespace BlApi
                 {
                     if (p.Id == id)
                     {
-                        if(p.DroneId==0)
-                        {
-                            return (new parcel
-                            {
-                                id = p.Id,
-                                sender = new customerForParcel
-                                {
-                                    id = p.SenderId,
-                                    name = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First().Name
-                                },
-                                receiver = new customerForParcel
-                                {
-                                    id = p.TargetId,
-                                    name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name
-                                },
-                                weight = (BO.WeightCategories)p.Weight,
-                                priority = (BO.Priorities)p.Priority,
-                                drone = new droneForParcel
-                                {
-                                    id = 0,
-                                    battery =  0,
-                                    currentLocation = null
-                                },
-                                creation = p.Requested,
-                                match = null,
-                                pickup = null,
-                                delivery = null
-                            });
-                        }
+                        //if(p.DroneId==0)
+                        //{
+                        //    return (new parcel
+                        //    {
+                        //        id = p.Id,
+                        //        sender = new customerForParcel
+                        //        {
+                        //            id = p.SenderId,
+                        //            name = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First().Name
+                        //        },
+                        //        receiver = new customerForParcel
+                        //        {
+                        //            id = p.TargetId,
+                        //            name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name
+                        //        },
+                        //        weight = (BO.WeightCategories)p.Weight,
+                        //        priority = (BO.Priorities)p.Priority,
+                        //        drone = new droneForParcel
+                        //        {
+                        //            id = 0,
+                        //            battery =  0,
+                        //            currentLocation = null
+                        //        },
+                        //        creation = p.Requested,
+                        //        match = null,
+                        //        pickup = null,
+                        //        delivery = null
+                        //    });
+                        //}
                         return (new parcel
                         {
                             id = p.Id,
@@ -75,12 +75,7 @@ namespace BlApi
                             },
                             weight = (BO.WeightCategories)p.Weight,
                             priority = (BO.Priorities)p.Priority,
-                            drone = new droneForParcel
-                            {
-                                id = p.DroneId,
-                                battery = getBattery(p.DroneId),
-                                currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
-                            },
+                            drone = newDrone(p),
                             creation = p.Requested,
                             match = p.Scheduled,
                             pickup = p.PickedUp,
@@ -95,6 +90,29 @@ namespace BlApi
                 throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
 
+        }
+        private droneForParcel newDrone(Parcel p)
+        {
+            if (p.DroneId == 0)
+                return new droneForParcel
+                {
+                    id = 0,
+                    battery = 0,
+                    currentLocation = null
+                };
+            if(p.DroneId == -1)
+                return new droneForParcel
+                {
+                    id = -1,
+                    battery =0,
+                    currentLocation = null
+                };
+            return new droneForParcel
+            {
+                id = p.DroneId,
+                battery = getBattery(p.DroneId),
+                currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
+            };
         }
         public IEnumerable<parcelForList> displayParcelList() //displays the list of all parcels 
         {

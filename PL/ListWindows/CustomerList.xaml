@@ -31,7 +31,12 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
         </Grid>
         <Grid x:Name="Data" Grid.Row="1">
             <DataGrid x:Name="customerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" Height="337">
-                <DataGrid.Columns>
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.Resources>
+                    <DataGrid.Columns>
                     <DataGridTemplateColumn x:Name="cIDColumn" Header="ID" Width="90">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

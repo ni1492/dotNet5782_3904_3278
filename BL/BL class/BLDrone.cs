@@ -187,7 +187,7 @@ namespace BlApi
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;
                 DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == (drones.Find(drone => drone.id == id).parcelID)).First();
                 dl.deleteParcel(p.Id);
-                dl.AddParcel(p.SenderId, p.TargetId, p.Weight, p.Priority, 0);
+                dl.AddParcel(p.SenderId, p.TargetId, p.Weight, p.Priority, -1);
                 drones.Find(drone => drone.id == id).parcelID = 0;
             }
             catch (Exception ex) //catches if the ID not exists

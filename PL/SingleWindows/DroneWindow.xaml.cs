@@ -14,15 +14,15 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using BO;
 
-namespace PL
+namespace PL.SingleWindows
 {
     /// <summary>
     /// Interaction logic for Drone.xaml
     /// </summary>
-    public partial class Drone : Window
+    public partial class DroneWindow : Window
     {
         BlApi.IBL bl;
-        public Drone(BlApi.IBL bl, BO.drone drone)//action grid
+        public DroneWindow(BlApi.IBL bl, BO.drone drone)//action grid
         {
             this.bl = bl;
             InitializeComponent();
@@ -69,9 +69,9 @@ namespace PL
                 action2.Visibility = Visibility.Hidden;
 
             }
-            else if (bl.getStatus(drone.parcel.id) ==(BO.ParcelStatus) ParcelStatus.PickedUp)
+            else if (bl.getStatus(drone.parcel.id) == (BO.ParcelStatus)ParcelStatus.PickedUp)
             {
-               // time.Visibility = Visibility.Hidden;
+                // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
                 action1.Content = "Deliver parcel";
@@ -79,7 +79,7 @@ namespace PL
             }
             else
             {
-               // time.Visibility = Visibility.Hidden;
+                // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
                 action1.Content = "Pick up parcel";
@@ -160,15 +160,15 @@ namespace PL
         {
             try
             {
-                    int id;
-                    Int32.TryParse(viewID.Text, out id);
-                    bl.releaseDroneFromCharge(id);
-                   // time.Visibility = Visibility.Hidden;
+                int id;
+                Int32.TryParse(viewID.Text, out id);
+                bl.releaseDroneFromCharge(id);
+                // time.Visibility = Visibility.Hidden;
 
-                    MessageBox.Show("released drone");
-                    this.Close();
-                    return;
-                
+                MessageBox.Show("released drone");
+                this.Close();
+                return;
+
             }
             catch (Exception ex)
             {
@@ -178,14 +178,14 @@ namespace PL
         }
 
 
-        public Drone(BlApi.IBL bl)//add grid
+        public DroneWindow(BlApi.IBL bl)//add grid
         {
             this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
             WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            STATION.ItemsSource = bl.displayStationListSlotsAvailable();
+            STATION.ItemsSource = stationAvailable(bl.displayStationListSlotsAvailable());
 
             //"enter: id, model, max weight, station id";
         }
@@ -222,16 +222,15 @@ namespace PL
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void close_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
         private void closeA_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
         private void updateA_click(object sender, RoutedEventArgs e)
         {
             try
@@ -271,7 +270,7 @@ namespace PL
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayDrone(id) != null)
+                if (bl.displayDrones(drone => drone.id == id).FirstOrDefault() != null)
                     return false;
                 return true;
             }
@@ -391,6 +390,12 @@ namespace PL
         //    }
         //}
 
-
+        public IEnumerable<int> stationAvailable(IEnumerable<baseStationForList> displayStationListSlotsAvailable)
+        {
+            foreach (var item in displayStationListSlotsAvailable)
+            {
+                yield return item.id;
+            }
+        }
     }
 }

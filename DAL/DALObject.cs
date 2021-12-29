@@ -85,7 +85,6 @@ namespace DALObject
         {
             try
             {
-
                 DisplayCustomers(customer => customer.Id == sId);
             }
             catch (Exception ex)

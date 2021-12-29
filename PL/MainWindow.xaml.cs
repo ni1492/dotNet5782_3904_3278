@@ -32,16 +32,8 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            InitializeCollections();
         }
 
-        static public void InitializeCollections()
-        {
-            drones = new ObservableCollection<PO.Drone>((from bl in App.bl.displayDroneList() select Converter.DronePO(bl)));
-            parcels = new ObservableCollection<Parcel>((from bl in App.bl.displayParcelList() select Converter.ParcelPO(bl)));
-            customers = new ObservableCollection<Customer>((from bl in App.bl.displayCustomerList() select Converter.CustomerPO(bl)));
-            stations = new ObservableCollection<BaseStation>((from bl in App.bl.displayStationList() select Converter.StationPO(bl)));
-        }
 
        
 
@@ -61,22 +53,22 @@ namespace PL
         }
         private void showDronesButton_click(object sender, RoutedEventArgs e)
         {
-            new droneList(App.bl,drones).Show();
+            new droneList(App.bl).Show();
         }
 
         private void showParcelsButton_click(object sender, RoutedEventArgs e)
         {
-            new ParcelList(App.bl,parcels).Show();
+            new ParcelList(App.bl).Show();
         }
 
         private void showCustomersButton_click(object sender, RoutedEventArgs e)
         {
-            new CustomerList(App.bl,customers).Show();
+            new CustomerList(App.bl).Show();
         }
 
         private void showStationButton_click(object sender, RoutedEventArgs e)
         {
-            new BaseStationList(App.bl,stations).Show();
+            new BaseStationList(App.bl).Show();
         }
     }
 }

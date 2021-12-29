@@ -12,41 +12,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.SingleWindows
 {
     /// <summary>
-    /// Interaction logic for Station.xaml
+    /// Interaction logic for Customer.xaml
     /// </summary>
-    public partial class Station : Window
+    public partial class CustomerWindow : Window
     {
-        public Station()
+        BlApi.IBL bl;
+        public CustomerWindow(BlApi.IBL bl, BO.customer customer)//action grid
         {
+            this.bl = bl;
             InitializeComponent();
-        }
-
-        private void NAMETextChanged(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SLOTSNUMTextChanged(object sender, RoutedEventArgs e)
-        {
+            Actions.Visibility = Visibility.Visible;
+            Add.Visibility = Visibility.Hidden;
+            FCus.ItemsSource = customer.fromCus;
+            TCus.ItemsSource = customer.toCus;
 
         }
-
-        private void LATITUDETextChanged(object sender, RoutedEventArgs e)
+        public CustomerWindow(BlApi.IBL bl)//add grid
         {
-
-        }
-
-        private void LONGITUDETextChanged(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void IDTextChanged(object sender, RoutedEventArgs e)
-        {
-
+            this.bl = bl;
+            InitializeComponent();
+            Actions.Visibility = Visibility.Hidden;
+            Add.Visibility = Visibility.Visible;
         }
         private void closeA_click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +49,8 @@ namespace PL
         {
 
         }
-        private void addStation_Click(object sender, RoutedEventArgs e)
+
+        private void addCustomer_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -69,6 +59,5 @@ namespace PL
         {
 
         }
-
     }
 }

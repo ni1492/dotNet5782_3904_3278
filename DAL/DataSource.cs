@@ -90,13 +90,13 @@ namespace DALObject
                     bool matched = false;
                     foreach (Parcel parcel1 in DataSource.parcels)
                     {
-                        if (parcel1.DroneId == drone.Id && parcel1.Delivered < DateTime.Now)
+                        if (parcel1.DroneId == drone.Id/* && parcel1.Delivered!=null*/)
                         {
                             matched = true;
                             break;
                         }
                     }
-                    if ((drone.MaxWeight >= parcel.Weight) && (!matched))//makes sure the maximum weight of the drone can hold the parcel
+                    if ((!matched)&&(drone.MaxWeight >= parcel.Weight))//makes sure the maximum weight of the drone can hold the parcel
                     {
                         parcel.DroneId = drone.Id;
                         parcel.Delivered = null;
@@ -113,6 +113,9 @@ namespace DALObject
                     parcel.Scheduled = null;
                     parcel.Requested = DateTime.Now;
                 }
+                else if (parcel.DroneId == 0)
+                    parcel.DroneId = -1;
+
                 parcels.Add(parcel);
             }
             for (int i = 0; i <  20; i++)//initialization of 10-14 parcels

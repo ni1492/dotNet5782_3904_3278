@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using PL.PO;
+using PL.SingleWindows;
 
 namespace PL
 {
@@ -23,15 +24,15 @@ namespace PL
     public partial class droneList : Window
     {
          IBL bl;
-        ObservableCollection<PO.Drone> drones;
-        public droneList( IBL bl, ObservableCollection<PO.Drone> drones)
+        public droneList( IBL bl)
         {
             this.bl = bl;
                 InitializeComponent();
-            this.drones = drones;
-           // droneDataGrid.DataContext = this.drones;
+            List<Drone> drones = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
+            DataContext = drones;
 
-           DataContext = drones;
+
+            DataContext = drones;
             //droneDataGrid.ItemsSource = bl.displayDroneList();
             statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -74,7 +75,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Drone d = cell.DataContext as PO.Drone;
-            new Drone(bl, bl.displayDrone(d.DId)).ShowDialog();
+            new DroneWindow(bl, bl.displayDrone(d.DId)).ShowDialog();
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
            
@@ -112,23 +113,23 @@ namespace PL
         }
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {
-            new Drone(bl).ShowDialog();
+            new DroneWindow(bl).ShowDialog();
             droneDataGrid.ItemsSource = bl.displayDroneList();
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
         }
 
-        private void openDrone_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            int id = (( BO.droneForList)(sender as ListView).SelectedItem).id;
-            new Drone(bl, bl.displayDrone(id)).ShowDialog();
-            droneDataGrid.ItemsSource = bl.displayDroneList();
-            statusSelection(statusSelector, null);
-            weightSelection(weightSelector, null);
+        //private void openDrone_DoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    int id = (( BO.droneForList)(sender as ListView).SelectedItem).id;
+        //    new Drone(bl, bl.displayDrone(id)).ShowDialog();
+        //    droneDataGrid.ItemsSource = bl.displayDroneList();
+        //    statusSelection(statusSelector, null);
+        //    weightSelection(weightSelector, null);
 
-        }
+        //}
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using PL.SingleWindows;
+using PL.PO;
 
 namespace PL
 {
@@ -23,11 +25,20 @@ namespace PL
     {
         IBL bl;
 
-        public ParcelList(IBL bl, ObservableCollection<PO.Parcel> parcels)
+        public ParcelList(IBL bl)
         {
             this.bl = bl;
             InitializeComponent();
-            parcelDataGrid.DataContext = parcels;
+            List < Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
+            //parcelDataGrid.DataContext = parcels;
+            DataContext = parcels;
+
+        }
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Parcel p = cell.DataContext as PO.Parcel;
+            new ParcelWindow(bl, bl.displayParcel(p.PID)).ShowDialog();
         }
     }
 }

@@ -17,13 +17,24 @@ namespace PL.SingleWindows
     /// <summary>
     /// Interaction logic for Parcel.xaml
     /// </summary>
-    public partial class Parcel : Window
+    public partial class ParcelWindow : Window
     {
-        public Parcel()
-        {
-            InitializeComponent();
-        }
+        BlApi.IBL bl;
 
+        public ParcelWindow(BlApi.IBL bl, BO.parcel parcel)//action grid
+        {
+            this.bl = bl;
+            InitializeComponent();
+            Actions.Visibility = Visibility.Visible;
+            Add.Visibility = Visibility.Hidden;
+        }
+        public ParcelWindow(BlApi.IBL bl)//add grid
+        {
+            this.bl = bl;
+            InitializeComponent();
+            Actions.Visibility = Visibility.Hidden;
+            Add.Visibility = Visibility.Visible;
+        }
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
 

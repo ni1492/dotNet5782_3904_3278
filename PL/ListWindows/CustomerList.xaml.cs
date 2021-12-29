@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using PL.PO;
+using PL.SingleWindows;
+
 
 namespace PL
 {
@@ -22,14 +25,23 @@ namespace PL
     public partial class CustomerList : Window
     {
         IBL bl;
-        public CustomerList(IBL bl, ObservableCollection<PO.Customer> customers)
+
+        public CustomerList(IBL bl)
         {
             this.bl = bl;
             InitializeComponent();
-            customerDataGrid.DataContext = customers;
+            List<Customer> customers = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+            DataContext = customers;
+
             //droneDataGrid.ItemsSource = bl.displayDroneList();
             //statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             //weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+        }
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Customer c = cell.DataContext as PO.Customer;
+            new CustomerWindow(bl, bl.displayCustomer(c.CID)).ShowDialog();
         }
     }
 }

@@ -11,26 +11,56 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.SingleWindows;
 
 namespace PL.SingleWindows
 {
     /// <summary>
-    /// Interaction logic for Customer.xaml
+    /// Interaction logic for Station.xaml
     /// </summary>
-    public partial class Customer : Window
+    public partial class StationWindow : Window
     {
         BlApi.IBL bl;
-        public Customer(BlApi.IBL bl, BO.customer customer)//action grid
-        {
+
+        public StationWindow(BlApi.IBL bl, BO.baseStation station)//action grid
+        { 
             this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
-            FCus.ItemsSource = customer.fromCus;
-            TCus.ItemsSource = customer.toCus;
+
+            }
+        public StationWindow(BlApi.IBL bl)//add grid
+          {
+           this.bl = bl;
+            InitializeComponent();
+            Actions.Visibility = Visibility.Hidden;
+            Add.Visibility = Visibility.Visible;
+          }
+    private void NAMETextChanged(object sender, RoutedEventArgs e)
+        {
 
         }
 
+        private void SLOTSNUMTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LATITUDETextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LONGITUDETextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void IDTextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void closeA_click(object sender, RoutedEventArgs e)
         {
 
@@ -43,8 +73,7 @@ namespace PL.SingleWindows
         {
 
         }
-
-        private void addCustomer_Click(object sender, RoutedEventArgs e)
+        private void addStation_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -53,5 +82,6 @@ namespace PL.SingleWindows
         {
 
         }
+
     }
 }

@@ -159,9 +159,8 @@ namespace BlApi
             {
             return dl.CalculateDistance(from.Longitude, from.Latitude, to.Longitude, to.Latitude);
             }
-        public bool isDelivered(int droneId)//chack if the drone is deliverd
+        public bool isDelivered(int droneId)//check if the drone is deliverd
         {
-
             foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
                 if ((item.DroneId == droneId) && (item.Delivered !=null))//chack if the drone is deliverd

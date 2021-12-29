@@ -124,7 +124,7 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
         </ListView>-->
         <Grid Name="bottomGrid" Grid.Row="2">
             <Button Content="Add drone" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" Style="{StaticResource ButtonStyle}"/>
-            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="Button_Click" 
+            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="close_Click" 
             Style="{StaticResource ButtonStyle}" />
 
         </Grid>

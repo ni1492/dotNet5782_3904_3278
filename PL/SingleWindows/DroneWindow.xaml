@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.Drone"
+﻿<Window x:Class="PL.SingleWindows.DroneWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -97,7 +97,7 @@
                 </Grid>
                 <Grid Name="add" Grid.Row="10" Grid.Column="1">
                     <Button Content="ADD DRONE" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addDrone_Click" Style="{StaticResource ButtonStyle}" />
-                    <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="Button_Click" Style="{StaticResource ButtonStyle}"/>
+                    <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="close_click" Style="{StaticResource ButtonStyle}"/>
 
 
                 </Grid>

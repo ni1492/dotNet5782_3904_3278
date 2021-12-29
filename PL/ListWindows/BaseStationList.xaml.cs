@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using PL.SingleWindows;
+using PL.PO;
+
 
 namespace PL
 {
@@ -23,11 +26,13 @@ namespace PL
     {
         IBL bl;
 
-        public BaseStationList(IBL bl, ObservableCollection<PO.BaseStation> stations)
+        public BaseStationList(IBL bl)
         {
             this.bl = bl;
             InitializeComponent();
-            baseStationDataGrid.DataContext = stations;
+            List<BaseStation> stations = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
+            DataContext = stations;
+
         }
 
         //private void openStation_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -35,8 +40,14 @@ namespace PL
         //    int id = ((BO.baseStationForList)(sender as ListView).SelectedItem).id;
 
         //    baseStationDataGrid.ItemsSource = bl.displayStationList();
-            
-            
+
+
         //}
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+        PO.BaseStation s = cell.DataContext as PO.BaseStation;
+        new StationWindow(bl, bl.displayStation(s.BSId)).ShowDialog();
     }
+}
 }
