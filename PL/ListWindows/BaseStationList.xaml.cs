@@ -49,5 +49,16 @@ namespace PL
         PO.BaseStation s = cell.DataContext as PO.BaseStation;
         new StationWindow(bl, bl.displayStation(s.BSId)).ShowDialog();
     }
-}
+
+        private void close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void addStation_Click(object sender, RoutedEventArgs e)
+        {
+            new StationWindow(bl).ShowDialog();
+            baseStationDataGrid.ItemsSource = bl.displayStationList();
+        }
+    }
 }

@@ -43,5 +43,16 @@ namespace PL
             PO.Customer c = cell.DataContext as PO.Customer;
             new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.CID))).ShowDialog();
         }
+
+        private void addCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomerWindow(bl).ShowDialog();
+            customerDataGrid.ItemsSource = bl.displayCustomerList();
+        }
+
+        private void close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -40,5 +40,16 @@ namespace PL
             PO.Parcel p = cell.DataContext as PO.Parcel;
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
         }
+
+        private void close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void addParcel_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(bl).ShowDialog();
+            DataContext=(from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
+        }
     }
 }
