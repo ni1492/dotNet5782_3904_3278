@@ -29,7 +29,7 @@ namespace BlApi
         public customer displayCustomer(int id); //display requested customer
         public IEnumerable<customerForList> displayCustomerList(); //display all customers
 
-        public void addParcel(parcelInDelivery parcel); //add parcel 
+        public void addParcel(parcelForList parcel); //add parcel 
         public void matchParcelToDrone(int id); //match function
         public void pickupParcel(int id); //parcel is picked up by drone
         public void deliverParcel(int id); //parcel is delivered by drone
@@ -37,6 +37,7 @@ namespace BlApi
         public IEnumerable<parcelForList> displayParcelList(); //display all parcels
         public IEnumerable<parcelForList> displayParcelListWithoutDrone(); //display all parcels that arent matched
         public ParcelStatus getStatus(int id);
+        public void deleteParcel(int id);
 
     }
 }

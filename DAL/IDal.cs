@@ -14,7 +14,7 @@ namespace DAL
             public void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots);//add a new station
             public void AddDrone(int Id, string model, WeightCategories maxWeight);//add a new drone
             public void AddCustomer(int Id, string name, string phone, double longitude, double lattitude);//add a new customer
-            public void AddParcel(int sId, int tId, WeightCategories weight, Priorities priority, int dId);//add new parcel
+            public void AddParcel(Parcel p);//add new parcel
             public void AddCharging(int dId, int sId);//adds a drone to charging
             public void Match(int pId, int dId); //matches a drone to a parcel
             public void PickUpTime(Parcel parcel);//Update pickup parcel by drone

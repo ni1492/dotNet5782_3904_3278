@@ -81,11 +81,11 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
-        public void AddParcel(int sId, int tId, WeightCategories weight, Priorities priority, int dId)//add new parcel
+        public void AddParcel(Parcel p)//add new parcel
         {
             try
             {
-                DisplayCustomers(customer => customer.Id == sId);
+                DisplayCustomers(customer => customer.Id == p.SenderId);
             }
             catch (Exception ex)
             {
@@ -94,7 +94,7 @@ namespace DALObject
             try
             {
 
-                DisplayCustomers(customer => customer.Id == tId);
+                DisplayCustomers(customer => customer.Id == p.TargetId);
             }
             catch (Exception ex)
             {
@@ -102,16 +102,19 @@ namespace DALObject
                 throw new NotFoundException("target: " + ex.Message, ex);
             }
             DO.Parcel parcel = new DO.Parcel();
-            parcel.Id = DataSource.Config.ParcelID++;
-            parcel.SenderId = sId;
-            parcel.TargetId = tId;
-            parcel.Weight = weight;
-            parcel.Priority = priority;
-            parcel.DroneId = dId;
-            parcel.Requested = DateTime.Now;
-            parcel.Scheduled = null;
-            parcel.PickedUp = null;
-            parcel.Delivered = null;
+            if (p.Id!=0)
+                parcel.Id = p.Id;
+            else
+                parcel.Id = DataSource.Config.ParcelID++;
+            parcel.SenderId = p.SenderId;
+            parcel.TargetId = p.TargetId;
+            parcel.Weight = p.Weight;
+            parcel.Priority = p.Priority;
+            parcel.DroneId = p.DroneId;
+            parcel.Requested = p.Requested;
+            parcel.Scheduled = p.Scheduled;
+            parcel.PickedUp = p.PickedUp;
+            parcel.Delivered = p.Delivered;
             //add to parcels list
             DataSource.parcels.Add(parcel);
         }
@@ -230,11 +233,11 @@ namespace DALObject
 
             for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone to update
             {
-                if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we updat status
-                {
-                    Drone d = DataSource.drones[i];
-                    //update pickup
-                    DataSource.drones[i] = d;
+                //if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we updat status
+                //{
+                //    Drone d = DataSource.drones[i];
+                //    //update pickup
+                //    DataSource.drones[i] = d;
                     for (int j = 0; j < DataSource.parcels.Count(); j++)//change the delivery time
                     {
                         if (DataSource.parcels[j].Id == parcel.Id)
@@ -245,8 +248,8 @@ namespace DALObject
                             break;
                         }
                     }
-                    break;
-                }
+                //    break;
+                //}
             }
         }
         public void ChargingDrone(int dId, int sId)//send drone to charge

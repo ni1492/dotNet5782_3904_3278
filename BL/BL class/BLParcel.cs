@@ -10,11 +10,11 @@ namespace BlApi
 {
     public partial class BL : IBL
     {
-        public void addParcel(parcelInDelivery parcel)
+        public void addParcel(parcelForList parcel)
         {
             try
             {
-                dl.AddParcel(parcel.sender.id, parcel.receiver.id, (DO.WeightCategories)parcel.weight, (DO.Priorities)parcel.priority, 0);
+                dl.AddParcel(new Parcel { Id = 0, SenderId= dl.DisplayCustomers(c=>c.Name== parcel.sender).FirstOrDefault().Id,TargetId= dl.DisplayCustomers(c => c.Name == parcel.receiver).FirstOrDefault().Id, Weight= (DO.WeightCategories)parcel.weight,Priority= (DO.Priorities)parcel.priority,DroneId= 0,Requested=DateTime.Now,Scheduled=null,PickedUp=null,Delivered=null }) ;
             }
             catch (Exception ex) //catches if the ID already exists
             {
@@ -159,6 +159,11 @@ namespace BlApi
                     });
                 }
             }
+        }
+        public void deleteParcel(int id)
+        {
+            if (dl.DisplayParcels(p => p.Id == id).FirstOrDefault().Scheduled == null)
+                dl.deleteParcel(id);
         }
     }
 }

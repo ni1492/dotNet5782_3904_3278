@@ -58,7 +58,7 @@ namespace DALObject
             }
             num = R.Next(10, 15);
             string[] names = { "hanna", "lenny", "ginny", "minnie", "bob", "benny", "yakob", "shuva", "etya", "hamutal",
-                "nelly", "hellen", "braidy", "daisy", "anastasia", "kevin" };//potential names for initialization of customers
+               "liorah", "nelly", "hellen", "braidy", "daisy", "anastasia", "kevin" };//potential names for initialization of customers
             for (int i = 0; i < num; i++)//initialization of 10-14 customers
             {
                 Customer customer = new Customer();
@@ -118,7 +118,7 @@ namespace DALObject
 
                 parcels.Add(parcel);
             }
-            for (int i = 0; i <  20; i++)//initialization of 10-14 parcels
+            for (int i = 0; i <  10; i++)//initialization of 10-14 parcels
             {
                 Parcel parcel = new Parcel();
                 parcel.Id = Config.ParcelID++;

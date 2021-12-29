@@ -41,6 +41,17 @@ namespace PL.SingleWindows
                 PARCEL.Text = drone.parcel.id.ToString();
             InitializeActionsButton(drone);
         }
+        public DroneWindow(BlApi.IBL bl)//add grid
+        {
+            this.bl = bl;
+            InitializeComponent();
+            Actions.Visibility = Visibility.Hidden;
+            Add.Visibility = Visibility.Visible;
+            WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+            STATION.ItemsSource = stationAvailable(bl.displayStationListSlotsAvailable());
+
+            //"enter: id, model, max weight, station id";
+        }
 
         private void InitializeActionsButton(drone drone)
         {
@@ -176,20 +187,6 @@ namespace PL.SingleWindows
                 return;
             }
         }
-
-
-        public DroneWindow(BlApi.IBL bl)//add grid
-        {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Hidden;
-            Add.Visibility = Visibility.Visible;
-            WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            STATION.ItemsSource = stationAvailable(bl.displayStationListSlotsAvailable());
-
-            //"enter: id, model, max weight, station id";
-        }
-
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -221,13 +218,7 @@ namespace PL.SingleWindows
             }
 
         }
-
-
         private void close_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-        private void closeA_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -259,7 +250,6 @@ namespace PL.SingleWindows
                 return true;
             return false;
         }
-
         private bool checkId(string text)
         {
             try
@@ -280,40 +270,26 @@ namespace PL.SingleWindows
             }
 
         }
+        //private bool checkStationId(string text)
+        //{
+        //    try
+        //    {
+        //        if (text == null)
+        //            return false;
+        //        if (!int.TryParse(text, out int id))
+        //            return false;
+        //        if (id <= 0)
+        //            return false;
+        //        if (bl.displayStation(id) == null)
+        //            return false;
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
 
-        private bool checkStationId(string text)
-        {
-            try
-            {
-                if (text == null)
-                    return false;
-                if (!int.TryParse(text, out int id))
-                    return false;
-                if (id <= 0)
-                    return false;
-                if (bl.displayStation(id) == null)
-                    return false;
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-        }
-
-        private bool checkHour(string hour)
-        {
-            if ((hour == null) || (!int.TryParse(hour, out int h)) || ((h > 23) || (h <= 0)))
-                return false;
-            return true;
-        }
-        private bool checkMinute(string min)
-        {
-            if ((min == null) || (!int.TryParse(min, out int m)) || ((m <= 0) || (m >= 60)))
-                return false;
-            return true;
-        }
+        //}
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -327,7 +303,6 @@ namespace PL.SingleWindows
                 ID.Background = Brushes.Red;
             }
         }
-
         private void MODELTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkModel(MODEL.Text))
@@ -342,24 +317,25 @@ namespace PL.SingleWindows
             }
 
         }
-
-        private void STATIONTextChanged(object sender, RoutedEventArgs e)
+        //private void STATIONTextChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (checkStationId(STATION.Text))
+        //    {
+        //        STATION.BorderBrush = Brushes.GreenYellow;
+        //        STATION.Background = Brushes.White;
+        //    }
+        //    else
+        //    {
+        //        STATION.BorderBrush = Brushes.DarkRed;
+        //        STATION.Background = Brushes.Red;
+        //    }
+        //}
+        public IEnumerable<int> stationAvailable(IEnumerable<baseStationForList> displayStationListSlotsAvailable)
         {
-            if (checkStationId(STATION.Text))
+            foreach (var item in displayStationListSlotsAvailable)
             {
-                STATION.BorderBrush = Brushes.GreenYellow;
-                STATION.Background = Brushes.White;
+                yield return item.id;
             }
-            else
-            {
-                STATION.BorderBrush = Brushes.DarkRed;
-                STATION.Background = Brushes.Red;
-            }
-        }
-
-        private void deleteA_click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         //private void HOURTextChanged(object sender, RoutedEventArgs e)
@@ -389,13 +365,17 @@ namespace PL.SingleWindows
         //        Minute.Background = Brushes.Red;
         //    }
         //}
-
-        public IEnumerable<int> stationAvailable(IEnumerable<baseStationForList> displayStationListSlotsAvailable)
-        {
-            foreach (var item in displayStationListSlotsAvailable)
-            {
-                yield return item.id;
-            }
-        }
+        //private bool checkHour(string hour)
+        //{
+        //    if ((hour == null) || (!int.TryParse(hour, out int h)) || ((h > 23) || (h <= 0)))
+        //        return false;
+        //    return true;
+        //}
+        //private bool checkMinute(string min)
+        //{
+        //    if ((min == null) || (!int.TryParse(min, out int m)) || ((m <= 0) || (m >= 60)))
+        //        return false;
+        //    return true;
+        //}
     }
 }

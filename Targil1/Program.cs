@@ -112,7 +112,19 @@ namespace ConsoleUI
                                         WeightCategories.TryParse(input, out weight);
                                         input = Console.ReadLine();
                                         Priorities.TryParse(input, out priority);
-                                        mainObject.AddParcel(sId, tId, weight, priority, 0);
+                                        mainObject.AddParcel(new Parcel
+                                        {
+                                            Id=0,
+                                            SenderId= sId,
+                                            TargetId= tId,
+                                            Weight=weight,
+                                            Priority=priority,
+                                            DroneId=0,
+                                            Requested=DateTime.Now,
+                                            Delivered=null,
+                                            PickedUp=null,
+                                            Scheduled=null
+                                        });
                                         break;
                                     }
                                 default:

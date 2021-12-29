@@ -66,26 +66,11 @@
 
         </Grid>
         
-        <Grid Name="enterCreation" Grid.Row="6" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="Created:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
-        </Grid>
-        <Grid Name="enterMatch" Grid.Row="7" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="Matched:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
-        </Grid>
-        <Grid Name="enterPickup" Grid.Row="8" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="Pickedup:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
-        </Grid>
-        <Grid Name="enterDelivery" Grid.Row="9" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="Deliverd:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
-        </Grid>
+        
        
         </Grid>
 
-        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Visible"   >
+        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -108,10 +93,10 @@
                 <TextBox x:Name="ID" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="IDTextChanged" Style="{StaticResource IDWaterMark}"/>
             </Grid>
             <Grid Name="sender" Grid.Row="2" Grid.Column="1">
-                <TextBox x:Name="SENDER" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="SENDERTextChanged" Style="{StaticResource IDWaterMark}"/>
+                <TextBox x:Name="SENDER" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="SENDERTextChanged" Style="{StaticResource NameWaterMark}"/>
             </Grid>
             <Grid Name="target" Grid.Row="3" Grid.Column="1">
-                <TextBox x:Name="TARGET" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="TARGETTextChanged" Style="{StaticResource IDWaterMark}"/>
+                <TextBox x:Name="TARGET" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="TARGETTextChanged" Style="{StaticResource NameWaterMark}"/>
             </Grid>
             <Grid Name="weight" Grid.Row="4" Grid.Column="1">
                 <Grid.ColumnDefinitions>
@@ -138,8 +123,8 @@
 
             </Grid>-->
            
-            <Grid Name="creation" Grid.Row="6" Grid.Column="1">
-                <TextBox x:Name="CREATION" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="CTextChanged" Style="{StaticResource IDWaterMark}"/>
+            <!--<Grid Name="creation" Grid.Row="6" Grid.Column="1">
+                <TextBox x:Name="CREATION" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="CTextChanged" Style="{StaticResource IDWaterMark}" TextChanged="CREATION_TextChanged"/>
             </Grid>
             <Grid Name="match" Grid.Row="7" Grid.Column="1">
                 <TextBox x:Name="MATCH" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="MTextChanged" Style="{StaticResource IDWaterMark}"/>
@@ -149,7 +134,7 @@
             </Grid>
             <Grid Name="delivery" Grid.Row="9" Grid.Column="1">
                 <TextBox x:Name="DELIVERY" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="PTextChanged" Style="{StaticResource IDWaterMark}"/>
-            </Grid>
+            </Grid>-->
             <Grid Name="add" Grid.Row="12" Grid.Column="1">
                 <Button Content="ADD PARCEL" VerticalAlignment="Top" Margin="145,-3,-89,0" Click="addParcel_Click" Style="{StaticResource ButtonStyle}" />
                 <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-3,0,0" VerticalAlignment="Top" Width="63" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>
@@ -158,7 +143,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -179,7 +164,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Name="viewId" Grid.Column="1" Margin="0,8,0,0" Grid.Row="1">
-                <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="ID"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" />
 
             </Grid>
             <Grid Name="viewSender" Grid.Column="1" Margin="0,8,0,0" Grid.Row="2">
@@ -222,16 +207,31 @@
                 <TextBlock HorizontalAlignment="Center" Text="drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
             </Grid>
+            <Grid Name="enterCreation" Grid.Row="6" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="Created:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="enterMatch" Grid.Row="7" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="Matched:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="enterPickup" Grid.Row="8" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="Pickedup:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="enterDelivery" Grid.Row="9" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="Deliverd:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
             <Grid x:Name="buttons" Grid.Row="12"  Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="134*"/>
                     <ColumnDefinition Width="85*"/>
                     <ColumnDefinition Width="31*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-3,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-3,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button Content="DELETE" HorizontalAlignment="Left" Margin="114,-3,0,0" VerticalAlignment="Top" Width="50" Click="deleteA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="169,-3,0,0" VerticalAlignment="Top" Width="49" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-3,0,0" VerticalAlignment="Top" Width="45" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="DELETE" HorizontalAlignment="Left" Margin="59,-3,0,0" VerticalAlignment="Top" Width="50" Click="deleteA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="113,-3,0,0" VerticalAlignment="Top" Width="49" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
 
 
 
