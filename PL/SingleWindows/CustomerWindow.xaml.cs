@@ -20,15 +20,20 @@ namespace PL.SingleWindows
     public partial class CustomerWindow : Window
     {
         BlApi.IBL bl;
-        public CustomerWindow(BlApi.IBL bl, BO.customer customer)//action grid
+        public CustomerWindow(BlApi.IBL bl, PO.CustomerSingle customer)//action grid
         {
             this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
-            FCus.ItemsSource = customer.fromCus;
-            TCus.ItemsSource = customer.toCus;
+            FCus.ItemsSource = customer.FromC;
+            TCus.ItemsSource = customer.ToC;
 
+            viewID.Text = customer.CusID.ToString();
+            ShowLat.Text = customer.CLatitude.ToString();
+            ShowLong.Text = customer.CLongitude.ToString();
+            NAME.Text = customer.CusName.ToString();
+            PHONE.Text = customer.CPhone.ToString();
         }
         public CustomerWindow(BlApi.IBL bl)//add grid
         {

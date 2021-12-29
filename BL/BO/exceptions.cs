@@ -63,7 +63,16 @@ using System.Threading.Tasks;
                 public StatusException(string message, Exception inner) : base(message, inner) { }
                 public StatusException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
             }
+        
+             [Serializable]
+            public class DeleteException : Exception //if the information already exists
+        {
+            public DeleteException() : base() { }
+            public DeleteException(string message) : base(message) { }
+            public DeleteException(string message, Exception inner) : base(message, inner) { }
+            public DeleteException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
         }
+    }
     }
 
 

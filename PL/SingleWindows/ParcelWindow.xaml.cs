@@ -21,25 +21,23 @@ namespace PL.SingleWindows
     {
         BlApi.IBL bl;
 
-        public ParcelWindow(BlApi.IBL bl, BO.parcel parcel)//action grid
+        public ParcelWindow(BlApi.IBL bl, PO.ParcelSingle parcel)//action grid
         {
             this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
-            viewID.Text = parcel.id.ToString();
-            viewSENDER.Text = parcel.sender.name;
-            viewTARGET.Text = parcel.receiver.name;
-            viewWEIGHT.Text = parcel.weight.ToString();
-            viewPRIOR.Text = parcel.priority.ToString();
-            viewCREATE.Text = parcel.creation.ToString();
-            viewMATCH.Text = parcel.match.ToString();
-            viewPICK.Text = parcel.pickup.ToString();
-            viewDELIV.Text = parcel.delivery.ToString();
-            if (parcel.id == -1||parcel.id==0)
-                viewDRONE.Text = "no drone matched";
-            else
-                viewDRONE.Text = parcel.drone.id.ToString();
+
+            viewID.Text = parcel.PSID.ToString();
+            viewSENDER.Text = parcel.PSSender.CPName;
+            viewTARGET.Text = parcel.PSTarget.CPName;
+            viewWEIGHT.Text = parcel.PSWeight.ToString();
+            viewPRIOR.Text = parcel.PSPriority.ToString();
+            viewCREATE.Text = parcel.PSCreation.ToString();
+            viewMATCH.Text = parcel.PSMatch.ToString();
+            viewPICK.Text = parcel.PSPickup.ToString();
+            viewDELIV.Text = parcel.PSDelivery.ToString();
+            viewDRONE.Text = parcel.PSDrone_ID.ToString();
         }
         public ParcelWindow(BlApi.IBL bl)//add grid
         {

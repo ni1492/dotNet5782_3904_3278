@@ -34,11 +34,16 @@ namespace PL.PO
                 PWeight = (WeightCategories)parcel.weight,
                 Priority = (Priorities)parcel.priority,
                 PStatus = (ParcelStatus)parcel.status
-                //Drone_ID = parcel.drone.id,
-                //Creation = parcel.creation,
-                //Match = parcel.match,
-                //Pickup = parcel.pickup,
-                //Delivery = parcel.delivery
+               
+            };
+        }
+      
+        public static PO.CustomerForParcel CustomerForParcelPO(BO.customerForParcel customer)
+        {
+            return new()
+            {
+                CPID=customer.id,
+                CPName=customer.name
             };
         }
         public static PO.Customer CustomerPO(BO.customerForList customer)
@@ -48,49 +53,28 @@ namespace PL.PO
                 CID = customer.id,
                 CName = customer.name,
                 Phone = customer.phone,
-                //CLongitude = customer.location.convertLo(customer.location.Longitude),
-                //CLatitude = customer.location.convertLa(customer.location.Latitude),
                 Delivered = customer.deliveredPar,
                 NDelivered = customer.notDeliveredPar,
                 Accepted = customer.acceptedPar,
-                NAccepted = customer.notAcceptedPar
-                //Delivered = customer.fromCus.FindAll(p => p.status == BO.ParcelStatus.Delivered).Count(),
-                //NDelivered = customer.fromCus.FindAll(p => p.status != BO.ParcelStatus.Delivered).Count(),
-                //Accepted = customer.toCus.FindAll(p => p.status == BO.ParcelStatus.Delivered).Count(),
-                //NAccepted = customer.toCus.FindAll(p => p.status != BO.ParcelStatus.Delivered).Count()
+                NAccepted = customer.notAcceptedPar 
             };
+        }
+        //public static PO.CustomerSingle CustomerSinglePO(BO.customer customer)
+        //{
+        //    return new()
+        //    {
+        //        CusID = customer.id,
+        //        CusName = customer.name,
+        //        CPhone = customer.phone,
+        //        CLongitude = customer.location.convertLo(customer.location.Longitude),
+        //        CLatitude = customer.location.convertLa(customer.location.Latitude),
+        //        FromC = (List<ParcelAtCustomer>)(from p in customer.fromCus
+        //                                         select ParcelAtCustomerPO(p)),
+        //        ToC = (List<ParcelAtCustomer>)(from p in customer.toCus
+        //                                       select ParcelAtCustomerPO(p))
+        //    };
 
-        }
-        public static PO.BaseStation StationPO(BO.baseStationForList station)
-        {
-            return new()
-            {
-                BSId = station.id,
-                Name = station.name,
-                //SLongitude = station.location.convertLo(station.location.Longitude),
-                //SLatitude = station.location.convertLa(station.location.Latitude),
-                Available = station.availableSlots,
-                Used = station.usedSlots
-                //  Used = station.dronesInCharging.Count()
-            };
-        }
-        public static PO.ParcelSingle SingleParcelPO(BO.parcel parcel)
-        {
-            return new()
-            {
-            PSID=parcel.id,
-                PSSender =CustomerForParcelPO( parcel.sender),
-                PSTarget = CustomerForParcelPO(parcel.receiver),
-                PSWeight=(WeightCategories)parcel.weight,
-                PSPriority=(Priorities)parcel.priority,
-                PSDrone_ID = parcel.drone.id,
-                PSCreation = parcel.creation,
-                PSMatch = parcel.match,
-                PSPickup = parcel.pickup,
-                PSDelivery = parcel.delivery
-            };
-
-        }
+        //}
         public static PO.CustomerSingle SingleCustomerPO(BO.customer customer)
         {
             List<ParcelAtCustomer> from = new List<ParcelAtCustomer>();
@@ -106,16 +90,45 @@ namespace PL.PO
             }
             return new()
             {
-            CusID=customer.id,
-            CusName = customer.name,
-            CPhone= customer.phone,
-            CLongitude=customer.location.convertLo(customer.location.Longitude),
-            CLatitude= customer.location.convertLa(customer.location.Latitude),
-            FromC= from,
-            ToC= to
+                CusID = customer.id,
+                CusName = customer.name,
+                CPhone = customer.phone,
+                CLongitude = customer.location.convertLo(customer.location.Longitude),
+                CLatitude = customer.location.convertLa(customer.location.Latitude),
+                FromC = from,
+                ToC = to
             };
 
         }
+
+        public static PO.BaseStation StationPO(BO.baseStationForList station)
+        {
+            return new()
+            {
+                BSId = station.id,
+                Name = station.name,
+                Available = station.availableSlots,
+                Used = station.usedSlots
+            };
+        }
+        public static PO.ParcelSingle SingleParcelPO(BO.parcel parcel)
+        {
+            return new()
+            {
+            PSID=parcel.id.ToString(),
+                PSSender =CustomerForParcelPO( parcel.sender),
+                PSTarget = CustomerForParcelPO(parcel.receiver),
+                PSWeight=(WeightCategories)parcel.weight,
+                PSPriority=(Priorities)parcel.priority,
+                PSDrone_ID = parcel.drone.id,
+                PSCreation = parcel.creation,
+                PSMatch = parcel.match,
+                PSPickup = parcel.pickup,
+                PSDelivery = parcel.delivery
+            };
+
+        }
+       
         public static PO.BaseStationSingle SingleStationPO(BO.baseStation station)
         {
             List<DroneInCharging> charging = new List<DroneInCharging>();
@@ -134,15 +147,7 @@ namespace PL.PO
             };
 
         }
-        public static PO.CustomerForParcel CustomerForParcelPO(BO.customerForParcel customer)
-        {
-            return new()
-            {
-             CPID=customer.id,
-            CPName=customer.name
-            };
-
-        }
+       
         public static PO.DroneForParcel DroneForParcelPO(BO.droneForParcel drone)
         {
             return new()

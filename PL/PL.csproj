@@ -14,6 +14,7 @@
     <None Remove="drone.svg" />
     <None Remove="drone1.jpeg" />
     <None Remove="dronefinal.jpeg" />
+    <None Remove="ListWindows\building.jpg" />
     <None Remove="logo.jpg" />
     <None Remove="logo.png" />
     <None Remove="pngwing.com.png" />
@@ -37,6 +38,7 @@
     <Resource Include="back1.png" />
     <Resource Include="background1.png" />
     <Resource Include="drone1.jpeg" />
+    <Resource Include="ListWindows\building.jpg" />
     <Resource Include="logo.png" />
     <Resource Include="pngwing.com.png" />
     <Resource Include="SingleWindows\CustomerView.png" />

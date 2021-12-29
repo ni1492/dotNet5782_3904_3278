@@ -38,7 +38,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Parcel p = cell.DataContext as PO.Parcel;
-            new ParcelWindow(bl, bl.displayParcel(p.PID)).ShowDialog();
+            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
         }
     }
 }

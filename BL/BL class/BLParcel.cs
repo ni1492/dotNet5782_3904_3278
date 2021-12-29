@@ -164,6 +164,9 @@ namespace BlApi
         {
             if (dl.DisplayParcels(p => p.Id == id).FirstOrDefault().Scheduled == null)
                 dl.deleteParcel(id);
+
+            else
+                throw new BO.exceptions.DeleteException("cannot delete drone");
         }
     }
 }
