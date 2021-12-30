@@ -35,7 +35,7 @@
 
         </Grid>
         <Grid Name="name" Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="NAME" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="NAMETextChanged" Style="{StaticResource NameWaterMark}"/>
+            <TextBox x:Name="NAME" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="NAMETextChanged"  Style="{StaticResource NameWaterMark}"/>
 
         </Grid>
         <Grid Name="enterName" Grid.Row="2" Grid.Column="0" Visibility="Visible">
@@ -55,7 +55,7 @@
 
         </Grid>
  
-        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Visible"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -90,13 +90,13 @@
             </Grid>
             <Grid Name="add" Grid.Row="10" Grid.Column="1">
                 <Button Content="ADD STATION" VerticalAlignment="Top" Margin="145,-14,-89,0" Click="addStation_Click" Style="{StaticResource ButtonStyle}" />
-                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-14,0,0" VerticalAlignment="Top" Width="63" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
 
 
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Visible">
+        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -151,7 +151,6 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
                 <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button Content="DELETE" HorizontalAlignment="Left" Margin="114,-2,0,0" VerticalAlignment="Top" Width="50" Click="deleteA_click" Style="{StaticResource ButtonStyle}"/>
 
             </Grid>
         </Grid>

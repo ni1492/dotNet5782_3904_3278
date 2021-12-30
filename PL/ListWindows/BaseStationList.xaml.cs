@@ -46,9 +46,9 @@ namespace PL
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
-        PO.BaseStation s = cell.DataContext as PO.BaseStation;
-        new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
-    }
+            PO.BaseStation s = cell.DataContext as PO.BaseStation;
+            new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
+        }
 
         private void close_Click(object sender, RoutedEventArgs e)
         {

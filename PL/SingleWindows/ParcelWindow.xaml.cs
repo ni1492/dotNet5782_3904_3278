@@ -88,6 +88,7 @@ namespace PL.SingleWindows
 
         private void addParcel_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
                 if (checkId(ID.Text) && checkName(SENDER.Text) &&checkName(TARGET.Text) && PRIORITY.SelectedItem != null && WEIGHT.SelectedItem != null)
@@ -110,7 +111,7 @@ namespace PL.SingleWindows
                     return;
                 }
                 else
-                    MessageBox.Show("incorrect input - add drone failed");
+                    MessageBox.Show("incorrect input - add parcel failed");
             }
             catch (Exception ex)
             {
@@ -138,9 +139,9 @@ namespace PL.SingleWindows
         {
             if ((text == null) || (text == ""))
                 return false;
-            if (bl.displayCustomerList().First(c=>c.name==text) != null)
-                return true;
-            return false;
+            if (bl.displayCustomerList().FirstOrDefault(c=>c.name==text) == null)
+                return false;
+            return true;
         }
         private bool checkId(string text)
         {

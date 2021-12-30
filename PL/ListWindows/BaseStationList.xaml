@@ -49,7 +49,13 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" FontSize="10" Header="Name" Width="90"/>
+                <DataGridTemplateColumn x:Name="nameColumn" Header="Name" Width="90">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" FontSize="10"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
                 <!--<DataGridTemplateColumn x:Name="sLatitudeColumn" Header="Latitude" Width="170">
                     <DataGridTemplateColumn.CellTemplate>
@@ -65,8 +71,14 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>-->
-                <DataGridTextColumn x:Name="availableColumn" Binding="{Binding Available}" FontSize="10" Header="Available" Width="SizeToHeader"/>
-
+                <DataGridTemplateColumn x:Name="availableColumn"  Header="Available" Width="SizeToHeader">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Available}" FontSize="10"/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            
                 <DataGridTemplateColumn x:Name="usedColumn" Header="Used" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

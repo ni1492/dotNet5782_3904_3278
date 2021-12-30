@@ -30,10 +30,6 @@ namespace PL
                 InitializeComponent();
             List<Drone> drones = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
             DataContext = drones;
-
-
-            DataContext = drones;
-            //droneDataGrid.ItemsSource = bl.displayDroneList();
             statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             statusSelection(statusSelector, null);

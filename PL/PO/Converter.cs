@@ -197,14 +197,16 @@ namespace PL.PO
         }
         public static PO.ParcelInDelivery ParcelInDeliveryPO(BO.parcelInDelivery parcel)
         {
-            string s="";
-            if(parcel!=null)
-            {
+            if (parcel == null)
+                return null;
+
+            string s ="";
+           
                 if (parcel.status)
                     s = "delivery";
                 else
                     s = "waiting";
-            }
+            
 
             return new()
             {
