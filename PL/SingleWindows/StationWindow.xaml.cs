@@ -22,22 +22,28 @@ namespace PL.SingleWindows
     {
         BlApi.IBL bl;
 
-        public StationWindow(BlApi.IBL bl, BO.baseStation station)//action grid
-        { 
+        public StationWindow(BlApi.IBL bl, PO.BaseStationSingle station)//action grid
+        {
             this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
+            viewID.Text = station.BaseSId.ToString();
+            viewLONG.Text = station.BSLongitude.ToString();
+            viewLAT.Text = station.BSLatitude.ToString();
+            viewSLOTS.Text = station.ChargingSlots.ToString();
+            DRONES.ItemsSource = station.InCharging;
+            NAME.Text = station.BSName.ToString();
 
-            }
+        }
         public StationWindow(BlApi.IBL bl)//add grid
-          {
-           this.bl = bl;
+        {
+            this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
-          }
-    private void NAMETextChanged(object sender, RoutedEventArgs e)
+        }
+        private void NAMETextChanged(object sender, RoutedEventArgs e)
         {
 
         }

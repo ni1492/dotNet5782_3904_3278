@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using BO;
+using PL.PO;
+
 
 namespace PL.SingleWindows
 {
@@ -22,23 +24,23 @@ namespace PL.SingleWindows
     public partial class DroneWindow : Window
     {
         BlApi.IBL bl;
-        public DroneWindow(BlApi.IBL bl, BO.drone drone)//action grid
+        public DroneWindow(BlApi.IBL bl, PO.DroneSingle drone)//action grid
         {
             this.bl = bl;
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
-            viewID.Text = drone.id.ToString();
-            MODEL.Text = drone.model;
-            viewWEIGHT.Text = drone.weight.ToString();
-            BATTERY.Text = drone.battery.ToString();
-            STATUS.Text = drone.status.ToString();
-            LATITUDE.Text = drone.currentLocation.Latitude.ToString();
-            LONGITUDE.Text = drone.currentLocation.Longitude.ToString();
-            if (drone.parcel == null)
+            viewID.Text = drone.DId.ToString();
+            MODEL.Text = drone.Model;
+            viewWEIGHT.Text = drone.Weight.ToString();
+            BATTERY.Text = drone.Battery.ToString();
+            STATUS.Text = drone.Status.ToString();
+            LATITUDE.Text = drone.DLatitude.ToString();
+            LONGITUDE.Text = drone.DLongitude.ToString();
+            if (drone.Parcel == null)
                 PARCEL.Text = "0";
             else
-                PARCEL.Text = drone.parcel.id.ToString();
+                PARCEL.Text = drone.Parcel.PDID.ToString();
             InitializeActionsButton(drone);
         }
         public DroneWindow(BlApi.IBL bl)//add grid
@@ -53,13 +55,13 @@ namespace PL.SingleWindows
             //"enter: id, model, max weight, station id";
         }
 
-        private void InitializeActionsButton(drone drone)
+        private void InitializeActionsButton(DroneSingle drone)
         {
 
             if (drone == null)
                 throw new ArgumentNullException("No drone");
 
-            if ((DroneStatuses)drone.status == DroneStatuses.available)
+            if ((DroneStatuses)drone.Status == DroneStatuses.available)
             {
                 //time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
@@ -71,7 +73,7 @@ namespace PL.SingleWindows
                 action2.Click += sendToDeliveryA_Click;
 
             }
-            else if ((DroneStatuses)drone.status == DroneStatuses.maintenance)
+            else if ((DroneStatuses)drone.Status == DroneStatuses.maintenance)
             {
                 //time.Visibility = Visibility.Visible;
                 action1.Visibility = Visibility.Visible;
@@ -80,7 +82,7 @@ namespace PL.SingleWindows
                 action2.Visibility = Visibility.Hidden;
 
             }
-            else if (bl.getStatus(drone.parcel.id) == (BO.ParcelStatus)ParcelStatus.PickedUp)
+            else if (bl.getStatus(drone.Parcel.PDID) == (BO.ParcelStatus)ParcelStatus.PickedUp)
             {
                 // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;

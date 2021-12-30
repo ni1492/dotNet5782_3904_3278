@@ -47,7 +47,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
         PO.BaseStation s = cell.DataContext as PO.BaseStation;
-        new StationWindow(bl, bl.displayStation(s.BSId)).ShowDialog();
+        new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
     }
 
         private void close_Click(object sender, RoutedEventArgs e)

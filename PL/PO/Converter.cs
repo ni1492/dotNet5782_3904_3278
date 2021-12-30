@@ -9,6 +9,21 @@ namespace PL.PO
 {
     public static class Converter
     {
+        public static PO.DroneSingle SingleDronePO(BO.drone drone)
+        {
+            return new()
+            {
+                DId = drone.id,
+                Model = drone.model,
+                Battery = drone.battery,
+                Weight = (WeightCategories)drone.weight,
+                Status = (DroneStatuses)drone.status,
+                DLongitude = drone.currentLocation.convertLo(drone.currentLocation.Longitude),
+                DLatitude = drone.currentLocation.convertLa(drone.currentLocation.Latitude),
+                Parcel = ParcelInDeliveryPO(drone.parcel)
+            };
+
+        }
         public static PO.Drone DronePO(BO.droneForList drone)
         {
             return new()
@@ -182,16 +197,20 @@ namespace PL.PO
         }
         public static PO.ParcelInDelivery ParcelInDeliveryPO(BO.parcelInDelivery parcel)
         {
-            string s;
-            if (parcel.status)
-                s = "delivery";
-            else
-                s = "waiting";
+            string s="";
+            if(parcel!=null)
+            {
+                if (parcel.status)
+                    s = "delivery";
+                else
+                    s = "waiting";
+            }
+
             return new()
             {
                 PDID = parcel.id,
-            PDSenderName = parcel.sender.name,
-            PDTargetName = parcel.receiver.name,
+                PDSender = CustomerForParcelPO(parcel.sender),
+                PDTarget = CustomerForParcelPO(parcel.receiver),
                 PDWeight=(WeightCategories)parcel.weight,
                 PDPriority = (Priorities)parcel.priority,
                 PDStatus =s,

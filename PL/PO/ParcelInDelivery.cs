@@ -22,8 +22,8 @@ namespace PL.PO
         static readonly DependencyProperty DestinationLatitude = DependencyProperty.Register("Destination Latitude", typeof(string), typeof(ParcelInDelivery));
 
         public int PDID { get => (int)GetValue(PDIDProperty); set => SetValue(PDIDProperty, value); }
-        public string PDSenderName { get => (string)GetValue(SenderProperty); set => SetValue(SenderProperty, value); }
-        public string PDTargetName { get => (string)GetValue(TargetProperty); set => SetValue(TargetProperty, value); }
+        public CustomerForParcel PDSender { get => (CustomerForParcel)GetValue(SenderProperty); set => SetValue(SenderProperty, value); }
+        public CustomerForParcel PDTarget { get => (CustomerForParcel)GetValue(TargetProperty); set => SetValue(TargetProperty, value); }
         public WeightCategories PDWeight { get => (WeightCategories)GetValue(PDarcelWeightProperty); set => SetValue(PDarcelWeightProperty, value); }
         public Priorities PDPriority { get => (Priorities)GetValue(PDPriorityProperty); set => SetValue(PDPriorityProperty, value); }
         public string PDStatus { get => (string)GetValue(PDParcelStatusProperty); set => SetValue(PDParcelStatusProperty, value); }
