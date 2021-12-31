@@ -22,6 +22,11 @@ namespace PL.PO
         public string BSLatitude { get => (string)GetValue(BSLatitudeProperty); set => SetValue(BSLatitudeProperty, value); }
         public int ChargingSlots { get => (int)GetValue(AvailableProperty); set => SetValue(AvailableProperty, value); }
         public List<DroneInCharging> InCharging { get => (List<DroneInCharging>)GetValue(DronesInChargingProperty); set => SetValue(DronesInChargingProperty, value); }
+        public override string ToString()
+        {
+            return ("Base Station Id: " + BaseSId + "\nBase Station Name: " + BSName + "\nLocation" + BSLongitude+","+ BSLatitude
+                + "\nNumber of Slots:" + ChargingSlots + "\nDrones in Charging:" + InCharging + "\n");
+        }
     }
 }
 

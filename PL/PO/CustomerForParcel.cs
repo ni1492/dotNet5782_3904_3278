@@ -15,6 +15,9 @@ namespace PL.PO
        
         public int CPID { get => (int)GetValue(CPIDProperty); set => SetValue(CPIDProperty, value); }
         public string CPName { get => (string)GetValue(CPNameProperty); set => SetValue(CPNameProperty, value); }
-        
+        public override string ToString()
+        {
+            return ("Customer Id: " + CPID + "\nCustomer Name: " + CPName + "\n");
+        }
     }
 }

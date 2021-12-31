@@ -230,6 +230,13 @@ namespace PL.SingleWindows
                 LONGITUDE.Background = Brushes.Red;
             }
         }
+        //public IEnumerable<PO.ParcelAtCustomer> parcels(List<PO.ParcelAtCustomer> cusParcels)
+        //{
+        //    foreach (var item in cusParcels)
+        //    {
+        //        yield return item;
+        //    }
+        //}
     }
 
 }

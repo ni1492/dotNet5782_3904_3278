@@ -24,7 +24,11 @@ namespace PL.PO
         public WeightCategories PWeight { get => (WeightCategories)GetValue(PWeightProperty); set => SetValue(PWeightProperty, value); }
         public Priorities Priority { get => (Priorities)GetValue(PriorityProperty); set => SetValue(PriorityProperty, value); }
         public ParcelStatus PStatus { get => (ParcelStatus)GetValue(PStatusProperty); set => SetValue(PStatusProperty, value); }
+        public override string ToString()//custom print function for parcel 
+        {
+            return ("Parcel Id: " + PID + "\nSender: " + SenderName + "\nReceiver: " + TargetName + "\nWeight of the parcel: " + PWeight +
+                "\nPriority: " + Priority + "\nParcel Status: " + PStatus + "\n");
+        }
 
-        
     }
 }

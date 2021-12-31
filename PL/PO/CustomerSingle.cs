@@ -24,6 +24,10 @@ namespace PL.PO
         public string CLatitude { get => (string)GetValue(CLatitudeProperty); set => SetValue(CLatitudeProperty, value); }
         public List<ParcelAtCustomer> FromC { get => (List<ParcelAtCustomer>)GetValue(FromCus); set => SetValue(FromCus, value); }
         public List<ParcelAtCustomer> ToC { get => (List<ParcelAtCustomer>)GetValue(ToCus); set => SetValue(ToCus, value); }
-       
+        public override string ToString()//custom print function for customer 
+        {
+            return ("Customer Id: " + CusID + "\nCustomer Name: " + CusName + "\nPhone Number: " + CPhone
+                + "\nLocation:\n" + CLongitude+","+ CLatitude + "\nParcels From Customer:\n" + FromC + "\nParcels To Customer:\n" + ToC + "\n");
+        }
     }
 }

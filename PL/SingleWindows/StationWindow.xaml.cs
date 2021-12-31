@@ -31,7 +31,7 @@ namespace PL.SingleWindows
             viewID.Text = station.BaseSId.ToString();
             viewLONG.Text = station.BSLongitude.ToString();
             viewLAT.Text = station.BSLatitude.ToString();
-            viewSLOTS.Text = station.ChargingSlots.ToString();
+            SLOTS.Text = station.ChargingSlots.ToString();
             DRONES.ItemsSource = station.InCharging;
             NAME.Text = station.BSName.ToString();
 
@@ -135,12 +135,12 @@ namespace PL.SingleWindows
         {
             try
             {
-                if (checkName(NAME.Text))
+                if (checkName(NAME.Text)&& checkPosNum(SLOTS.Text))
                 {
                     int id;
                     Int32.TryParse(viewID.Text, out id);
                     int slots;
-                    Int32.TryParse(viewSLOTS.Text, out slots);
+                    Int32.TryParse(SLOTS.Text, out slots);
                     bl.updateStation(id, NAME.Text, slots);
                     MessageBox.Show("updated");
                     this.Close();

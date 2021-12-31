@@ -58,7 +58,8 @@ namespace PL
         private void addStation_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow(bl).ShowDialog();
-            baseStationDataGrid.ItemsSource = bl.displayStationList();
+          //  baseStationDataGrid.ItemsSource = bl.displayStationList();
+           DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
         }
     }
 }

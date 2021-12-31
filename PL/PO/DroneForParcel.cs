@@ -18,6 +18,9 @@ namespace PL.PO
         public double DPBattery { get => (double)GetValue(DPBatteryProperty); set => SetValue(DPBatteryProperty, value); }
         public string DPLongitude { get => (string)GetValue(DPLongitudeProperty); set => SetValue(DPLongitudeProperty, value); }
         public string DPLatitude { get => (string)GetValue(DPLatitudeProperty); set => SetValue(DPLatitudeProperty, value); }
-
+        public override string ToString()//custom print function for drone 
+        {
+            return ("Drone Id: " + DPId + "\nDrone Battery:" + DPBattery + "\nCurrent Location:" + DPLongitude+","+ DPLatitude + "\n");
+        }
     }
 }

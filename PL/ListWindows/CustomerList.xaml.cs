@@ -47,7 +47,8 @@ namespace PL
         private void addCustomer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(bl).ShowDialog();
-            customerDataGrid.ItemsSource = bl.displayCustomerList();
+            //customerDataGrid.ItemsSource = bl.displayCustomerList();
+            DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
         }
 
         private void close_Click(object sender, RoutedEventArgs e)

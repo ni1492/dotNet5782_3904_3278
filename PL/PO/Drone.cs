@@ -25,8 +25,13 @@ namespace PL.PO
         public DroneStatuses Status { get => (DroneStatuses)GetValue(StatusProperty); set => SetValue(StatusProperty, value); }
         public string DLongitude { get => (string)GetValue(DLongitudeProperty); set => SetValue(DLongitudeProperty, value); }
         public string DLatitude { get => (string)GetValue(DLatitudeProperty); set => SetValue(DLatitudeProperty, value); }
-        public int Parcel { get => (int)GetValue(ParcelProperty); set => SetValue(ParcelProperty, value); } 
-
+        public int Parcel { get => (int)GetValue(ParcelProperty); set => SetValue(ParcelProperty, value); }
+        public override string ToString()//custom print function for drone 
+        {
+            return ("Drone Id: " + DId + "\nDrone Model: " + Model + "\nWeight: " + Weight
+            + "\nDrone Battery:" + Battery + "\nDrone status: " + Status
+            + "\nCurrent Location:\n" + DLongitude+","+ DLatitude + "\nParcel Id:" + Parcel + "\n");
+        }
 
 
 

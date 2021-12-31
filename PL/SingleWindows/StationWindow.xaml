@@ -42,19 +42,19 @@
             <TextBlock HorizontalAlignment="Center" Text="name:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid Name="enterlatitude" Grid.Row="4" Grid.Column="0" Visibility="Visible">
+        <Grid Name="enterlatitude" Grid.Row="5" Grid.Column="0" Visibility="Visible">
             <TextBlock HorizontalAlignment="Center" Text="Latitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid Name="enterlongitude" Grid.Row="3" Grid.Column="0" Visibility="Visible">
+        <Grid Name="enterlongitude" Grid.Row="4" Grid.Column="0" Visibility="Visible">
             <TextBlock HorizontalAlignment="Center" Text="Longitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid Name="enterSlots" Grid.Row="5" Grid.Column="0" Visibility="Visible">
+        <Grid Name="enterSlots" Grid.Row="3" Grid.Column="0" Visibility="Visible">
             <TextBlock HorizontalAlignment="Center" Text="charging slots:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
- 
+
         <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Visible"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -75,16 +75,16 @@
             <Grid Name="id" Grid.Row="1" Grid.Column="1">
                 <TextBox x:Name="ID" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="IDTextChanged" Style="{StaticResource IDWaterMark}"/>
             </Grid>
-            
-            <Grid Name="longitude" Grid.Row="3" Grid.Column="1">
-                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="LONGITUDETextChanged" Style="{StaticResource LongitudeWaterMark}"/>
+
+            <Grid Name="longitude" Grid.Row="4" Grid.Column="1" Margin="0,0,-148,0">
+                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="288" LostFocus="LONGITUDETextChanged" Style="{StaticResource LongitudeWaterMark}"/>
 
             </Grid>
-            <Grid Name="latitude" Grid.Row="4" Grid.Column="1">
-                <TextBox x:Name="LATITUDE" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="LATITUDETextChanged" Style="{StaticResource LatitudeWaterMark}"/>
+            <Grid Name="latitude" Grid.Row="4" Grid.Column="1" Margin="0,33,-148,0" Grid.RowSpan="2">
+                <TextBox x:Name="LATITUDE" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="288" LostFocus="LATITUDETextChanged" Style="{StaticResource LatitudeWaterMark}"/>
 
             </Grid>
-            <Grid Name="chargingSlots" Grid.Row="5" Grid.Column="1">
+            <Grid Name="chargingSlots" Grid.Row="3" Grid.Column="1">
                 <TextBox x:Name="SLOTS" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="SLOTSNUMTextChanged" Style="{StaticResource SlotsWaterMark}"/>
 
             </Grid>
@@ -118,18 +118,18 @@
                 <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
-            <Grid Name="viewLongitude" Grid.Row="2" Grid.Column="1" Margin="0,27,0,25" Grid.RowSpan="3">
+            <Grid Name="viewLongitude" Grid.Row="3" Grid.Column="1" Margin="0,27,0,25" Grid.RowSpan="3">
                 <TextBlock x:Name="viewLONG" HorizontalAlignment="Center" Text="longitude" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
-            <Grid Name="viewLatitude" Grid.Row="4" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
+            <Grid Name="viewLatitude" Grid.Row="5" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
                 <TextBlock x:Name="viewLAT" HorizontalAlignment="Center" Text="latitude" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
-            <Grid Name="viewSlotsNum" Grid.Row="5" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
-                <TextBlock x:Name="viewSLOTS" HorizontalAlignment="Center" Text="slots number" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+            <!--<Grid Name="viewSlotsNum" Grid.Row="3" Grid.Column="1" Margin="0,0,0,25" Grid.RowSpan="2">
+                <TextBox x:Name="viewSLOTS" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="SLOTSNUMTextChanged"  Style="{StaticResource SlotsWaterMark}"/>
 
-            </Grid>
+            </Grid>-->
             <Grid Name="drones" Grid.Row="6" Grid.Column="0" Visibility="Visible">
                 <TextBlock HorizontalAlignment="Center" Text="Drone in charging:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 

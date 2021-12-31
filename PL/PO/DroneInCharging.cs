@@ -14,6 +14,9 @@ namespace PL.PO
        
         public int DCId { get => (int)GetValue(DCIDProperty); set => SetValue(DCIDProperty, value); }
         public double DCBattery { get => (double)GetValue(DCBatteryProperty); set => SetValue(DCBatteryProperty, value); }
-       
+        public override string ToString()//custom print function for drone 
+        {
+            return ("Drone Id: " + DCId + "\nDrone Battery:" + DCBattery + "\n");
+        }
     }
 }

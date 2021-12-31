@@ -67,15 +67,6 @@ namespace PL
                                                                                 select Converter.DronePO(bl)));
 
         }
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.Drone d = cell.DataContext as PO.Drone;
-            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
-            statusSelection(statusSelector, null);
-            weightSelection(weightSelector, null);
-           
-        }
         private void weightSelection(object sender, SelectionChangedEventArgs e)
         {
             //if ((sender as ComboBox).SelectedIndex == 0)
@@ -106,6 +97,16 @@ namespace PL
                                                                                 select Converter.DronePO(bl)));
 
 
+        }
+
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Drone d = cell.DataContext as PO.Drone;
+            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
+           
         }
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {

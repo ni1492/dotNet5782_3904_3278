@@ -20,6 +20,7 @@ namespace PL.PO
         static readonly DependencyProperty PLatitude = DependencyProperty.Register("PickUp Latitude", typeof(string), typeof(ParcelInDelivery));
         static readonly DependencyProperty DestinationLongitude = DependencyProperty.Register("Destination Longitude", typeof(string), typeof(ParcelInDelivery));
         static readonly DependencyProperty DestinationLatitude = DependencyProperty.Register("Destination Latitude", typeof(string), typeof(ParcelInDelivery));
+        static readonly DependencyProperty Distance = DependencyProperty.Register("Distance", typeof(double), typeof(ParcelInDelivery));
 
         public int PDID { get => (int)GetValue(PDIDProperty); set => SetValue(PDIDProperty, value); }
         public CustomerForParcel PDSender { get => (CustomerForParcel)GetValue(SenderProperty); set => SetValue(SenderProperty, value); }
@@ -31,6 +32,13 @@ namespace PL.PO
         public string PickLatitude { get => (string)GetValue(PLatitude); set => SetValue(PLatitude, value); }
         public string DesLongitude { get => (string)GetValue(DestinationLongitude); set => SetValue(DestinationLongitude, value); }
         public string DesLatitude { get => (string)GetValue(DestinationLatitude); set => SetValue(DestinationLatitude, value); }
+        public string PDDistance { get => (string)GetValue(Distance); set => SetValue(Distance, value); }
 
+        public override string ToString()//custom print function for parcel 
+        {
+            return ("Parcel Id: " + PDID + "\nWeight of the parcel: " + PDWeight + "\nPriority: " + PDPriority
+                + "\nDrone Status: " + PDStatus + "\nSender: " + PDSender + "\nReceiver: " + PDTarget + "\nCreation Time: " +
+                "\nPickedUp Location:" + PickLongitude+","+ PickLatitude + "\nDestination Location: " + DesLongitude+","+ DesLatitude + "\nDistance:" + PDDistance + "\n");
+        }
     }
 }

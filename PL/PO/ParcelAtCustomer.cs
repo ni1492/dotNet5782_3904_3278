@@ -20,6 +20,10 @@ namespace PL.PO
         public Priorities PCPriority { get => (Priorities)GetValue(PCPriorityProperty); set => SetValue(PCPriorityProperty, value); }
         public ParcelStatus PCStatus { get => (ParcelStatus)GetValue(PCParcelStatusProperty); set => SetValue(PCParcelStatusProperty, value); }
         public CustomerForParcel OtherC { get => (CustomerForParcel)GetValue(OtherCus); set => SetValue(OtherCus, value); }
-
+        public override string ToString()//custom print function for parcel 
+        {
+            return ("Parcel Id: " + PCID + ", Weight of the parcel: " + PCWeight +
+                ", Priority: " + PCPriority + ", Drone Status: " + PCStatus + ", Sender/receiver: " + OtherC + "");
+        }
     }
 }

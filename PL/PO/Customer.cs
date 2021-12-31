@@ -24,7 +24,13 @@ namespace PL.PO
         public int NDelivered { get => (int)GetValue(NotDeliveredProperty); set => SetValue(NotDeliveredProperty, value); }
         public int Accepted { get => (int)GetValue(AcceptedProperty); set => SetValue(AcceptedProperty, value); }
         public int NAccepted { get => (int)GetValue(NotAcceptedProperty); set => SetValue(NotAcceptedProperty, value); }
-
+        public override string ToString()
+        {
+            return ("Customer Id: " + CID + "\nCustomer Name: " + CName + "\nPhone Number: " + Phone
+                + "\nDelivered: " + Delivered + "\nNOT Delivered: "
+                + NDelivered + "\nAccepted: " + Accepted + "\nNOT Accepted: "
+                + NAccepted + "\n");
+        }
 
     }
 }

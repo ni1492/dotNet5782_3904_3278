@@ -35,6 +35,11 @@ namespace PL.PO
         public DateTime? PSMatch { get => (DateTime?)GetValue(MatchProperty); set => SetValue(MatchProperty, value); }
         public DateTime? PSPickup { get => (DateTime?)GetValue(PickupProperty); set => SetValue(PickupProperty, value); }
         public DateTime? PSDelivery { get => (DateTime?)GetValue(DeliveryProperty); set => SetValue(DeliveryProperty, value); }
-
+        public override string ToString()//custom print function for parcel 
+        {
+            return ("Parcel Id: " + PSID + "\nSender: " + PSSender + "\nReceiver: " + PSTarget + "\nWeight of the parcel: " + PSWeight +
+                "\nPriority: " + PSPriority + "\nDrone: " + PSDrone_ID + "\nCreation Time: " + PSCreation + "\nMatch Time: " + PSMatch +
+                "\nPickedUp Time:" + PSPickup + "\nDelivered Time: " + PSDelivery + "\n");
+        }
     }
 }
