@@ -17,7 +17,7 @@ namespace DalApi
          //  if (type == "DalObject")
                 return DALObject.DALObject.Instance;
             //  else(type=="DalXmi")
-           // return new DalXml();
+           // return new DALXML();
          //   else
            //     throw new DALException("type not found");
 
