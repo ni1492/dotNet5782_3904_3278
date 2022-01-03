@@ -7,19 +7,18 @@ using DalApi;
 using DAL.DalApi;
 using DALObject;
 using DO;
+using DALXML;
 
 namespace DalApi
 {
     public static class DalFactory
     {
-        public static IDal getDal(string type)
+        public static IDal getDal(bool useXML)
         {
-         //  if (type == "DalObject")
+            if (useXML)
+                return DALXML.DALXML.Instance;
+            else
                 return DALObject.DALObject.Instance;
-            //  else(type=="DalXmi")
-           // return new DALXML();
-         //   else
-           //     throw new DALException("type not found");
 
         }
     }

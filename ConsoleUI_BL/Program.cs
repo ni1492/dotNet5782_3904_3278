@@ -176,19 +176,28 @@ namespace ConsoleUI_BL
                                         Priorities.TryParse(input, out priority);
                                         try
                                         {
-                                            bl.addParcel(new parcelInDelivery
+                                            bl.addParcel(new parcelForList
                                             {
-                                                sender = new customerForParcel
-                                                {
-                                                    id = sId
-                                                },
-                                                receiver = new customerForParcel
-                                                {
-                                                    id = tId
-                                                },
+                                                id=0,
+                                                sender = bl.displayCustomer(sId).name,
+                                                receiver = bl.displayCustomer(tId).name,
                                                 weight = weight,
-                                                priority = priority
+                                                priority = priority,
+                                             status=ParcelStatus.Requested
                                             });
+                                            //bl.addParcel(new parcelInDelivery
+                                            //{
+                                            //    sender = new customerForParcel
+                                            //    {
+                                            //        id = sId
+                                            //    },
+                                            //    receiver = new customerForParcel
+                                            //    {
+                                            //        id = tId
+                                            //    },
+                                            //    weight = weight,
+                                            //    priority = priority
+                                            //});
                                         }
                                         catch (Exception x)
                                         {

@@ -8,7 +8,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            DAL.DalApi.IDal mainObject = DalApi.DalFactory.getDal("DalObject");
+            DAL.DalApi.IDal mainObject = DalApi.DalFactory.getDal(false);
             //DALObject.DALObject mainObject = new DALObject.DALObject();
             //the following initializations is going to be used later on in the program:
             int inputVal1 = 0;//first user choice - outer switch-case

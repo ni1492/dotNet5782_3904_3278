@@ -11,7 +11,7 @@ namespace BlApi
 {
     public partial class BL: IBL
     {
-        public readonly IDal dl = DalFactory.getDal("DALObject");//initialize the DAL object
+        public readonly IDal dl = DalFactory.getDal(true);//initialize the DAL object
         public List<droneForList> drones = new List<droneForList>(); //the list of drones saved in the BL layer
         //שדות נוספים: פנוי, נושא משקל קל, בינוני וכבד+שדה של הטענה לשעה
         public double availablePK;

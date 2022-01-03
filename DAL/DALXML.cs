@@ -32,6 +32,7 @@ namespace DALXML
         string parcelsPath = @"ParcelXML.xml"; //XMLSerializer
         string customersPath = @"CustomerXML.xml"; //XElement
         string dronesInChargingPath = @"DroneChargingXML.xml"; //XElement
+        string configPath = @"config.xml"; //XElement
 
         #endregion
 
@@ -105,20 +106,40 @@ namespace DALXML
 
             if (parcel != null)
                 throw new DO.ExistException("parcel already exist");
+            if (p.Id != 0)
+            {
+                XElement parcelElem = new XElement("Parcel",
+                                          new XElement("Id", p.Id.ToString()),
+                                          new XElement("SenderId", p.SenderId.ToString()),
+                                          new XElement("TargetId", p.TargetId.ToString()),
+                                          new XElement("Weight", p.Weight),
+                                          new XElement("Priority", p.Priority),
+                                          new XElement("DroneId", p.DroneId.ToString()),
+                                          new XElement("Requested", p.Requested.ToString()),
+                                          new XElement("Scheduled", p.Scheduled.ToString()),
+                                          new XElement("PickedUp", p.PickedUp.ToString()),
+                                          new XElement("Delivered", p.Delivered.ToString()));
 
-            XElement parcelElem = new XElement("Parcel",
-                           new XElement("Id", p.Id.ToString()),
-                           new XElement("SenderId", p.SenderId.ToString()),
-                           new XElement("TargetId", p.TargetId.ToString()),
-                           new XElement("Weight", p.Weight),
-                           new XElement("Priority", p.Priority),
-                           new XElement("DroneId", p.DroneId.ToString()),
-                           new XElement("Requested", p.Requested.ToString()),
-                           new XElement("Scheduled", p.Scheduled.ToString()),
-                           new XElement("PickedUp", p.PickedUp.ToString()),
-                           new XElement("Delivered", p.Delivered.ToString()));
+                parcelRootElem.Add(parcelElem);
+            }
+            else
+            {
+                XElement configRootElem = XMLTools.LoadListFromXMLElement(configPath);
 
-            parcelRootElem.Add(parcelElem);
+                XElement parcelElem = new XElement("Parcel",
+                                         new XElement("Id", configRootElem.Element("ParcelID"),
+                                         new XElement("SenderId", p.SenderId.ToString()),
+                                         new XElement("TargetId", p.TargetId.ToString()),
+                                         new XElement("Weight", p.Weight),
+                                         new XElement("Priority", p.Priority),
+                                         new XElement("DroneId", p.DroneId.ToString()),
+                                         new XElement("Requested", p.Requested.ToString()),
+                                         new XElement("Scheduled", p.Scheduled.ToString()),
+                                         new XElement("PickedUp", p.PickedUp.ToString()),
+                                         new XElement("Delivered", p.Delivered.ToString())));
+
+                parcelRootElem.Add(parcelElem);
+            }
 
             XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
@@ -320,8 +341,15 @@ namespace DALXML
         }
         public double[] powerUse()
         {
-            return null;
+            XElement configRootElem = XMLTools.LoadListFromXMLElement(configPath);
 
+            double[] power = new double[5];
+            power[0] = double.Parse(configRootElem.Element("availablePK").Value);
+            power[1] = double.Parse(configRootElem.Element("lightPK").Value);
+            power[2] = double.Parse(configRootElem.Element("mediumPK").Value);
+            power[3] = double.Parse(configRootElem.Element("heavyPK").Value);
+            power[4] = double.Parse(configRootElem.Element("chargingPH").Value);
+            return power;
         }
         public IEnumerable<DroneCharge> displayChargings(int id)
         {

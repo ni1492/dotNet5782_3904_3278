@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <config>
-  <DroneID>1001</DroneID>
   <ParcelID>2</ParcelID>
   <availablePK>0.2</availablePK>
   <lightPK>0/3</lightPK>
