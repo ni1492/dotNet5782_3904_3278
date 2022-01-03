@@ -15,11 +15,12 @@ namespace DAL
     /// </summary>
     public class XMLTools
     {
-        static string dir = @"xml";
+       // static string dir = @"xml\";
+
         static XMLTools()
         {
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
+            //if (!Directory.Exists(dir))
+            //    Directory.CreateDirectory(dir);
         }
         #region SaveLoadWithXElement
         /// <summary>
@@ -31,7 +32,7 @@ namespace DAL
         {
             try
             {
-                rootElem.Save(dir + filePath);
+                rootElem.Save( filePath);
             }
             catch (Exception ex)
             {
@@ -48,20 +49,19 @@ namespace DAL
         {
             try
             {
-                if (File.Exists(dir + filePath))
+                if (File.Exists(filePath))
                 {
-                    return XElement.Load(dir + filePath);
+                    return XElement.Load(filePath);
                 }
                 else
                 {
-                    XElement rootElem = new XElement(dir + filePath);
-                    rootElem.Save(dir + filePath);
+                    XElement rootElem = new XElement( filePath);
+                    rootElem.Save( filePath);
                     return rootElem;
                 }
             }
             catch (Exception ex)
             {
-                throw;
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
             }
         }
@@ -78,7 +78,7 @@ namespace DAL
         {
             try
             {
-                FileStream file = new FileStream(dir + filePath, FileMode.Create);
+                FileStream file = new FileStream( filePath, FileMode.Create);
                 XmlSerializer x = new XmlSerializer(list.GetType());
                 x.Serialize(file, list);
                 file.Close();
@@ -99,11 +99,11 @@ namespace DAL
         {
             try
             {
-                if (File.Exists(dir + filePath))
+                if (File.Exists(filePath))
                 {
                     List<T> list;
                     XmlSerializer x = new XmlSerializer(typeof(List<T>));
-                    FileStream file = new FileStream(dir + filePath, FileMode.Open);
+                    FileStream file = new FileStream(filePath, FileMode.Open);
                     list = (List<T>)x.Deserialize(file);
                     file.Close();
                     return list;

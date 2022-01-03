@@ -3,5 +3,6 @@
   <DroneCharge>
     <DroneId> 1000 </DroneId>
     <StationId>1000</StationId>
+    <ChargTime>2/1/2022 10:50:32</ChargTime>
   </DroneCharge>
 </DroneCharges>

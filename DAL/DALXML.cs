@@ -153,7 +153,8 @@ namespace DALXML
 
             XElement chargingElem = new XElement("DroneCharge",
                                   new XElement("DroneId", dId.ToString()),
-                                  new XElement("StationId", sId.ToString()));
+                                  new XElement("StationId", sId.ToString()),
+                                  new XElement("ChargTime"),DateTime.Now.ToString());
 
             chargingRootElem.Add(chargingElem);
 
@@ -327,8 +328,19 @@ namespace DALXML
         }
         public Station ConvertStation(int id)//returns the station of the ID that was given
         {
-            return new();
+            XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
 
+            XElement station = (from b in stationRootElem.Elements()
+                                where b.Element("Id").Value == id.ToString()
+                                select b).FirstOrDefault();
+            return new Station
+            {
+                Id = Int32.Parse(station.Element("Id").Value),
+                Name = station.Element("Name").Value,
+                Longitude = double.Parse(station.Element("Longitude").Value),
+                Lattitude = double.Parse(station.Element("Lattitude").Value),
+                ChargeSlots = Int32.Parse(station.Element("ChargeSlots").Value)
+            };
         }
         public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
@@ -344,23 +356,48 @@ namespace DALXML
             XElement configRootElem = XMLTools.LoadListFromXMLElement(configPath);
 
             double[] power = new double[5];
-            power[0] = double.Parse(configRootElem.Element("availablePK").Value);
-            power[1] = double.Parse(configRootElem.Element("lightPK").Value);
-            power[2] = double.Parse(configRootElem.Element("mediumPK").Value);
-            power[3] = double.Parse(configRootElem.Element("heavyPK").Value);
-            power[4] = double.Parse(configRootElem.Element("chargingPH").Value);
+            XElement config = (from b in configRootElem.Elements()
+                               select b).FirstOrDefault();
+            power[0] = double.Parse(config.Element("availablePK").Value);
+            power[1] = double.Parse(config.Element("lightPK").Value);
+            power[2] = double.Parse(config.Element("mediumPK").Value);
+            power[3] = double.Parse(config.Element("heavyPK").Value);
+            power[4] = double.Parse(config.Element("chargingPH").Value);
             return power;
         }
         public IEnumerable<DroneCharge> displayChargings(int id)
         {
+            XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
+            XElement station = (from b in stationRootElem.Elements()
+                                where b.Element("Id").Value == id.ToString()
+                                select b).FirstOrDefault();
 
-            return null;
+            if (station == null)
+                throw new DO.NotFoundException("station doesn't exist");
+
+            return from b in stationRootElem.Elements()
+                   let droneCharge = new DroneCharge()
+                   {
+                       DroneId = Int32.Parse(b.Element("Id").Value),
+                       StationId = Int32.Parse(b.Element("Id").Value)
+                   }
+                   where ("StationId")==id.ToString()
+                   select droneCharge;
 
         }
         public IEnumerable<DroneCharge> displayDronesInCharge(Predicate<DroneCharge> match)
         {
-            return null;
+            XElement droneChargeRootElem = XMLTools.LoadListFromXMLElement(dronesInChargingPath);
 
+            return from b in droneChargeRootElem.Elements()
+                   let drone = new DroneCharge()
+                   {
+                       DroneId = Int32.Parse(b.Element("Id").Value),
+                     StationId = Int32.Parse(b.Element("Id").Value),
+                     chargTime=DateTime.Parse(b.Element("ChargTime").Value)
+                   }
+                   where match(drone)
+                   select drone;
         }
         public void deleteDrone(int id)
         {
