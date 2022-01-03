@@ -43,12 +43,12 @@ namespace DO
 
         public override string ToString() => base.ToString() + $", fail to load or create xml file: {xmlFilePath}";
     }
-         public class InvalidInformationException : Exception
-    {
-        public InvalidInformationException() : base() { }
-        public InvalidInformationException(string message) : base(message) { }
-        public InvalidInformationException(string message, Exception inner) : base(message, inner) { }
-        public InvalidInformationException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    }
+    //     public class InvalidInformationException : Exception
+    //{
+    //    public InvalidInformationException() : base() { }
+    //    public InvalidInformationException(string message) : base(message) { }
+    //    public InvalidInformationException(string message, Exception inner) : base(message, inner) { }
+    //    public InvalidInformationException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    //}
 
 }

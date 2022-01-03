@@ -27,10 +27,10 @@ namespace DALXML
 
         #region DS XML Files
 
-        string dronesPath = @"DroneXML.xml"; //XElement
-        string stationsPath = @"StationXML.xml"; //XMLSerializer
+        string dronesPath = @"DroneXML.xml"; //XMLSerializer
+        string stationsPath = @"StationXML.xml"; //XElement
         string parcelsPath = @"ParcelXML.xml"; //XMLSerializer
-        string customersPath = @"CustomerXML.xml"; //XMLSerializer
+        string customersPath = @"CustomerXML.xml"; //XElement
         string dronesInChargingPath = @"DroneChargingXML.xml"; //XElement
 
         #endregion
@@ -43,7 +43,7 @@ namespace DALXML
                                 select b).FirstOrDefault();
 
             if (station != null)
-                throw new DO.InvalidInformationException("Duplicate bus license number");
+                throw new DO.ExistException("station already exist");
 
             XElement stationElem = new XElement("Station",
                                   new XElement("Id", Id.ToString()),
@@ -64,7 +64,7 @@ namespace DALXML
                               select b).FirstOrDefault();
 
             if (drone != null)
-                throw new DO.InvalidInformationException("Duplicate bus license number");
+                throw new DO.ExistException("drone already exist");
 
             XElement droneElem = new XElement("Drone",
                                   new XElement("Id", Id.ToString()),
@@ -83,7 +83,7 @@ namespace DALXML
                                  select b).FirstOrDefault();
 
             if (customer != null)
-                throw new DO.InvalidInformationException("Duplicate bus license number");
+                throw new DO.ExistException("customer already exist");
 
             XElement customerElem = new XElement("Customer",
                                   new XElement("Id", Id.ToString()),
@@ -104,49 +104,31 @@ namespace DALXML
                                select b).FirstOrDefault();
 
             if (parcel != null)
-                throw new DO.InvalidInformationException("Duplicate bus license number");
+                throw new DO.ExistException("parcel already exist");
 
             XElement parcelElem = new XElement("Parcel",
-                                  new XElement("Id", p.Id.ToString()),
-                                  new XElement("SenderId", p.SenderId.ToString()),
-                                  new XElement("TargetId", p.TargetId.ToString()),
-                                  new XElement("Weight", p.Weight),
-                                  new XElement("Priority", p.Priority),
-                                  new XElement("DroneId", p.DroneId.ToString()),
-                                  new XElement("Requested", p.Requested.ToString()),
-                                  new XElement("Scheduled", p.Scheduled.ToString()),
-                                  new XElement("PickedUp", p.PickedUp.ToString()),
-                                  new XElement("Delivered", p.Delivered.ToString()));
+                           new XElement("Id", p.Id.ToString()),
+                           new XElement("SenderId", p.SenderId.ToString()),
+                           new XElement("TargetId", p.TargetId.ToString()),
+                           new XElement("Weight", p.Weight),
+                           new XElement("Priority", p.Priority),
+                           new XElement("DroneId", p.DroneId.ToString()),
+                           new XElement("Requested", p.Requested.ToString()),
+                           new XElement("Scheduled", p.Scheduled.ToString()),
+                           new XElement("PickedUp", p.PickedUp.ToString()),
+                           new XElement("Delivered", p.Delivered.ToString()));
 
             parcelRootElem.Add(parcelElem);
 
             XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
-
         public void AddCharging(int dId, int sId)//adds a drone to charging
         {
-            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
-            XElement drone = (from b in droneRootElem.Elements()
-                              where b.Element("Id").Value == dId.ToString()
-                              select b).FirstOrDefault();
-
-            if (drone == null)
-                throw new DO.InvalidInformationException("Duplicate bus license number");
-          
-            XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
-            XElement station = (from b in stationRootElem.Elements()
-                                where b.Element("Id").Value == sId.ToString()
-                                select b).FirstOrDefault();
-
-            if (station == null)
-                throw new DO.InvalidInformationException("Duplicate bus license number");
             XElement chargingRootElem = XMLTools.LoadListFromXMLElement(dronesInChargingPath);
             XElement charging = (from b in chargingRootElem.Elements()
-                                     where b.Element("DroneId").Value == dId.ToString()
-                                     select b).FirstOrDefault();
+                                 where b.Element("DroneId").Value == dId.ToString()
+                                 select b).FirstOrDefault();
 
-            if (charging != null)
-                throw new DO.InvalidInformationException("Duplicate bus license number");
 
             XElement chargingElem = new XElement("DroneCharge",
                                   new XElement("DroneId", dId.ToString()),
@@ -158,61 +140,168 @@ namespace DALXML
         }
         public void Match(int pId, int dId) //matches a drone to a parcel
         {
-            return;
+            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            XElement parcel = (from b in parcelRootElem.Elements()
+                               where b.Element("Id").Value == pId.ToString()
+                               select b).FirstOrDefault();
+
+            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            XElement drone = (from b in droneRootElem.Elements()
+                              where b.Element("Id").Value == dId.ToString()
+                              select b).FirstOrDefault();
+
+            if (drone == null)
+                throw new DO.NotFoundException("drone doesn't exist");
 
 
+            if (parcel != null)
+            {
+                parcel.Element("DroneId").Value = dId.ToString();
+                parcel.Element("Scheduled").Value = DateTime.Now.ToString();
+                XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
+            }
+            else
+                throw new DO.NotFoundException("parcel doesn't exist");
         }
         public void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
-            return;
-
+            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            XElement Parcel = (from b in parcelRootElem.Elements()
+                               where b.Element("Id").Value == parcel.Id.ToString()
+                               select b).FirstOrDefault();
+            if (Parcel == null)
+                throw new DO.NotFoundException("parcel doesn't exist");
+            Parcel.Element("PickedUp").Value = DateTime.Now.ToString();
+            XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
         public void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
-            return;
-
+            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            XElement Parcel = (from b in parcelRootElem.Elements()
+                               where b.Element("Id").Value == parcel.Id.ToString()
+                               select b).FirstOrDefault();
+            if (Parcel == null)
+                throw new DO.NotFoundException("parcel doesn't exist");
+            Parcel.Element("Delivered").Value = DateTime.Now.ToString();
+            XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
         public void ChargingDrone(int dId, int sId)//send drone to charge
         {
-            return;
+            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            XElement drone = (from b in droneRootElem.Elements()
+                              where b.Element("Id").Value == dId.ToString()
+                              select b).FirstOrDefault();
 
+            if (drone == null)
+                throw new DO.NotFoundException("drone dosen't exist");
+
+            XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
+            XElement station = (from b in stationRootElem.Elements()
+                                where b.Element("Id").Value == sId.ToString()
+                                select b).FirstOrDefault();
+
+            if (station == null)
+                throw new DO.NotFoundException("station dosen't exist");
+
+            XElement chargingRootElem = XMLTools.LoadListFromXMLElement(dronesInChargingPath);
+            XElement charging = (from b in chargingRootElem.Elements()
+                                 where b.Element("DroneId").Value == dId.ToString()
+                                 select b).FirstOrDefault();
+
+            if (charging != null)
+                throw new DO.ExistException("drone already in charge");
+
+
+            station.Element("ChargeSlots").Value = (Int32.Parse(station.Element("ChargeSlots").Value) - 1).ToString();
+            AddCharging(dId, sId);
+            XMLTools.SaveListToXMLElement(stationRootElem, stationsPath);
         }
         public void ReleaseChargingDrone(int id)//release drone from charging
         {
-            return;
+            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            XElement drone = (from b in droneRootElem.Elements()
+                              where b.Element("Id").Value == id.ToString()
+                              select b).FirstOrDefault();
+
+            if (drone == null)
+                throw new DO.NotFoundException("drone doesn't exist");
+
+            XElement chargingRootElem = XMLTools.LoadListFromXMLElement(dronesInChargingPath);
+            XElement charging = (from b in chargingRootElem.Elements()
+                                 where b.Element("DroneId").Value == id.ToString()
+                                 select b).FirstOrDefault();
+
+            if (charging == null)
+                throw new DO.ExistException("drone isn't in charge");
+
+            XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
+            XElement station = (from b in stationRootElem.Elements()
+                                where b.Element("Id").Value == charging.Element("StationId").Value
+                                select b).FirstOrDefault();
+
+            station.Element("ChargeSlots").Value = (Int32.Parse(station.Element("ChargeSlots").Value) + 1).ToString();
+            charging.Remove();
+
+            XMLTools.SaveListToXMLElement(chargingRootElem, dronesInChargingPath);
+            XMLTools.SaveListToXMLElement(stationRootElem, stationsPath);
 
         }
         public IEnumerable<Station> DisplayStations(Predicate<Station> match)
         {
-            return null;
+            XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
 
+            return from b in stationRootElem.Elements()
+                   let station = new Station()
+                   {
+                       Id = Int32.Parse(b.Element("Id").Value),
+                       Name = b.Element("Name").Value,
+                       Longitude = double.Parse(b.Element("Longitude").Value),
+                       Lattitude = double.Parse(b.Element("Lattitude").Value),
+                       ChargeSlots = Int32.Parse(b.Element("ChargeSlots").Value)
+                   }
+                   where match(station)
+                   select station;
         }
         public IEnumerable<Drone> DisplayDrones(Predicate<Drone> match)
         {
-            return null;
-
+            List<Drone> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            return from drone in ListBusLineStations
+                   where match(drone)
+                   select drone;
         }
         public IEnumerable<Customer> DisplayCustomers(Predicate<Customer> match)
         {
-            return null;
+            XElement customerRootElem = XMLTools.LoadListFromXMLElement(customersPath);
 
-
+            return from b in customerRootElem.Elements()
+                   let customer = new Customer()
+                   {
+                       Id = Int32.Parse(b.Element("Id").Value),
+                       Name = b.Element("Name").Value,
+                       Phone = b.Element("Phone").Value,
+                       Longitude = double.Parse(b.Element("Longitude").Value),
+                       Lattitude = double.Parse(b.Element("Lattitude").Value)
+                   }
+                   where match(customer)
+                   select customer;
         }
         public IEnumerable<Parcel> DisplayParcels(Predicate<Parcel> match)
         {
-            return null;
-
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            return from parcel in parcels
+                   where match(parcel)
+                   select parcel;
         }
 
         public Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
-            return new();
-
+            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            return parcels.Find(parcel => parcel.Id == id);
         }
         public Drone ConvertDrone(int id)//returns the drone of the ID that was given
         {
-            return new();
-
+            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            return drones.Find(drone => drone.Id == id);
 
         }
         public Station ConvertStation(int id)//returns the station of the ID that was given
@@ -222,8 +311,12 @@ namespace DALXML
         }
         public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
-            return new();
-
+            double lat1 = latitude1 * (Math.PI / 180.0);
+            double long1 = longitude1 * (Math.PI / 180.0);
+            double lat2 = latitude2 * (Math.PI / 180.0);
+            double long2 = longitude2 * (Math.PI / 180.0) - long1;
+            double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
+            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance))) / 1000;
         }
         public double[] powerUse()
         {
@@ -243,20 +336,52 @@ namespace DALXML
         }
         public void deleteDrone(int id)
         {
-            return;
+            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            XElement drone = (from b in droneRootElem.Elements()
+                              where b.Element("Id").Value == id.ToString()
+                              select b).FirstOrDefault();
 
+            if (drone == null)
+                throw new DO.NotFoundException("drone doesn't exist");
+            drone.Remove();
+            XMLTools.SaveListToXMLElement(droneRootElem, dronesPath);
         }
         public void deleteCustomer(int id)
         {
-            return;
+            XElement customerRootElem = XMLTools.LoadListFromXMLElement(customersPath);
+            XElement customer = (from b in customerRootElem.Elements()
+                                 where b.Element("Id").Value == id.ToString()
+                                 select b).FirstOrDefault();
+
+            if (customer == null)
+                throw new DO.NotFoundException("customer doesn't exist");
+            customer.Remove();
+            XMLTools.SaveListToXMLElement(customerRootElem, customersPath);
         }
         public void deleteStation(int id)
         {
-            return;
+            XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
+            XElement station = (from b in stationRootElem.Elements()
+                                where b.Element("Id").Value == id.ToString()
+                                select b).FirstOrDefault();
+
+            if (station == null)
+                throw new DO.NotFoundException("station doesn't exist");
+            station.Remove();
+            XMLTools.SaveListToXMLElement(stationRootElem, stationsPath);
+
         }
         public void deleteParcel(int id)
         {
-            return;
+            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            XElement parcel = (from b in parcelRootElem.Elements()
+                               where b.Element("Id").Value == id.ToString()
+                               select b).FirstOrDefault();
+
+            if (parcel == null)
+                throw new DO.NotFoundException("parcel doesn't exist");
+            parcel.Remove();
+            XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
     }
 

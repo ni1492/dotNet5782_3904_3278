@@ -6,7 +6,7 @@
     <TargetId>101010101</TargetId>
     <Weight>heavy</Weight>
     <Priority>urgent</Priority>
-    <DroneId>1000</DroneId>
+    <DroneId>0</DroneId>
     <Requested>1/1/2022 10:10:10</Requested>
     <Scheduled>2/1/2022 10:10:10</Scheduled>
     <PickedUp>2/1/2022 12:10:10</PickedUp>
