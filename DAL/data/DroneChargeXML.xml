@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DroneCharges>
+  <DroneCharge>
+    <DroneId> 1000 </DroneId>
+    <StationId>1000</StationId>
+  </DroneCharge>
+</DroneCharges>

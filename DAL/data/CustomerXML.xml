@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Customers>
+  <Customer>
+    <Id> 111111111 </Id>
+    <Name>g</Name>
+    <Phone>0542224242</Phone>
+    <Longitude>27.9</Longitude>
+    <Lattitude>29.98</Lattitude>
+  </Customer>
+  
+  <Customer>
+    <Id> 101010101 </Id>
+    <Name>s</Name>
+    <Phone>0542424242</Phone>
+    <Longitude>28.2</Longitude>
+    <Lattitude>28.8</Lattitude>
+  </Customer>
+</Customers>
