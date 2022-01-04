@@ -7,13 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE0A1349-E58E-49B5-B055-96991E4BF33F}"
 	ProjectSection(SolutionItems) = preProject
-		DAL\data\config.xml = DAL\data\config.xml
-		DAL\data\CustomerXML.xml = DAL\data\CustomerXML.xml
-		DAL\data\DroneChargeXML.xml = DAL\data\DroneChargeXML.xml
-		DAL\data\DroneXML.xml = DAL\data\DroneXML.xml
-		DAL\data\ParcelXML.xml = DAL\data\ParcelXML.xml
 		README.md = README.md
-		DAL\data\StationXML.xml = DAL\data\StationXML.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "Targil1\ConsoleUI.csproj", "{52664AC7-4987-49A8-BA11-E7303F49A77B}"
@@ -25,6 +19,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI_BL", "ConsoleUI_BL\ConsoleUI_BL.csproj", "{A51A635D-F255-4C6A-9351-D0D910E2FAAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{8A558FDC-31E1-4B21-9187-2F11A40A0429}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{52FD0148-251A-4BDC-929C-9B0A8EEFCCD3}"
+	ProjectSection(SolutionItems) = preProject
+		DAL\data\config.xml = DAL\data\config.xml
+		DAL\data\CustomerXML.xml = DAL\data\CustomerXML.xml
+		DAL\data\DroneChargeXML.xml = DAL\data\DroneChargeXML.xml
+		DAL\data\DroneXML.xml = DAL\data\DroneXML.xml
+		DAL\data\ParcelXML.xml = DAL\data\ParcelXML.xml
+		DAL\data\StationXML.xml = DAL\data\StationXML.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{52FD0148-251A-4BDC-929C-9B0A8EEFCCD3} = {DE0A1349-E58E-49B5-B055-96991E4BF33F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07F3F848-FB32-42A8-82DB-93C455117CFD}

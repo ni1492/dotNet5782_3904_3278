@@ -15,12 +15,12 @@ namespace DAL
     /// </summary>
     public class XMLTools
     {
-       // static string dir = @"xml\";
+        static string dir = @"";
 
         static XMLTools()
         {
-            //if (!Directory.Exists(dir))
-            //    Directory.CreateDirectory(dir);
+            if (dir!="" && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
         }
         #region SaveLoadWithXElement
         /// <summary>
