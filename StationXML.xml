@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Stations>
+  <Station>
+    <Id>1</Id>
+    <Name>sat1</Name>
+    <Longitude>31</Longitude>
+    <Lattitude>31</Lattitude>
+    <ChargeSlots>12</ChargeSlots>
+  </Station>
+</Stations>
