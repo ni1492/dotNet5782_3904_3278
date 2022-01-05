@@ -143,7 +143,7 @@ namespace DALXML
             XElement chargingElem = new XElement("DroneCharge",
                                   new XElement("DroneId", dId.ToString()),
                                   new XElement("StationId", sId.ToString()),
-                                  new XElement("ChargTime"),DateTime.Now.ToString());
+                                  new XElement("ChargTime"),DateTime.Now.ToString("0"));
 
             chargingRootElem.Add(chargingElem);
 
@@ -168,7 +168,7 @@ namespace DALXML
             if (parcel != null)
             {
                 parcel.Element("DroneId").Value = dId.ToString();
-                parcel.Element("Scheduled").Value = DateTime.Now.ToString();
+                parcel.Element("Scheduled").Value = DateTime.Now.ToString("0");
                 XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
             }
             else
@@ -182,7 +182,7 @@ namespace DALXML
                                select b).FirstOrDefault();
             if (Parcel == null)
                 throw new DO.NotFoundException("parcel doesn't exist");
-            Parcel.Element("PickedUp").Value = DateTime.Now.ToString();
+            Parcel.Element("PickedUp").Value = DateTime.Now.ToString("0");
             XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
         public void DeliveryTime(Parcel parcel)//Update delivery parcel status
@@ -193,7 +193,7 @@ namespace DALXML
                                select b).FirstOrDefault();
             if (Parcel == null)
                 throw new DO.NotFoundException("parcel doesn't exist");
-            Parcel.Element("Delivered").Value = DateTime.Now.ToString();
+            Parcel.Element("Delivered").Value = DateTime.Now.ToString("0");
             XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
         public void ChargingDrone(int dId, int sId)//send drone to charge
