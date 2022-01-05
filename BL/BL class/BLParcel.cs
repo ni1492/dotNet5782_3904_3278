@@ -14,7 +14,8 @@ namespace BlApi
         {
             try
             {
-                dl.AddParcel(new Parcel { Id = 0, SenderId= dl.DisplayCustomers(c=>c.Name== parcel.sender).FirstOrDefault().Id,TargetId= dl.DisplayCustomers(c => c.Name == parcel.receiver).FirstOrDefault().Id, Weight= (DO.WeightCategories)parcel.weight,Priority= (DO.Priorities)parcel.priority,DroneId= 0,Requested=DateTime.Now,Scheduled=null,PickedUp=null,Delivered=null }) ;
+                DateTime? x = DateTime.Now;
+                dl.AddParcel(new Parcel { Id = 0, SenderId= dl.DisplayCustomers(c=>c.Name== parcel.sender).FirstOrDefault().Id,TargetId= dl.DisplayCustomers(c => c.Name == parcel.receiver).FirstOrDefault().Id, Weight= (DO.WeightCategories)(parcel.weight-1),Priority= (DO.Priorities)(parcel.priority-1),DroneId= 0,Requested=x,Scheduled=null,PickedUp=null,Delivered=null }) ;
             }
             catch (Exception ex) //catches if the ID already exists
             {
@@ -31,35 +32,6 @@ namespace BlApi
                 {
                     if (p.Id == id)
                     {
-                        //if(p.DroneId==0)
-                        //{
-                        //    return (new parcel
-                        //    {
-                        //        id = p.Id,
-                        //        sender = new customerForParcel
-                        //        {
-                        //            id = p.SenderId,
-                        //            name = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First().Name
-                        //        },
-                        //        receiver = new customerForParcel
-                        //        {
-                        //            id = p.TargetId,
-                        //            name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name
-                        //        },
-                        //        weight = (BO.WeightCategories)p.Weight,
-                        //        priority = (BO.Priorities)p.Priority,
-                        //        drone = new droneForParcel
-                        //        {
-                        //            id = 0,
-                        //            battery =  0,
-                        //            currentLocation = null
-                        //        },
-                        //        creation = p.Requested,
-                        //        match = null,
-                        //        pickup = null,
-                        //        delivery = null
-                        //    });
-                        //}
                         return (new parcel
                         {
                             id = p.Id,
