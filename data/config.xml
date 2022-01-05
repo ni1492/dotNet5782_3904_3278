@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+    <availablePK>
+		<double>0.2</double>
+	</availablePK>
+    <lightPK>0.3</lightPK>
+    <mediumPK>0.4</mediumPK>
+    <heavyPK>0.6</heavyPK>
+    <chargingPH>2.5</chargingPH>
+</config>

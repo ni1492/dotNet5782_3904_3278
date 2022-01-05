@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Parcels>
+  <Parcel>
+    <Id> 1000 </Id>
+    <SenderId>111111111</SenderId>
+    <TargetId>101010101</TargetId>
+    <Weight>heavy</Weight>
+    <Priority>urgent</Priority>
+    <DroneId>0</DroneId>
+    <Requested>1/1/2022 10:10:10</Requested>
+    <Scheduled>2/1/2022 10:10:10</Scheduled>
+    <PickedUp>2/1/2022 12:10:10</PickedUp>
+    <Delivered>3/1/2022 08:12:12</Delivered>
+  </Parcel>
+</Parcels>

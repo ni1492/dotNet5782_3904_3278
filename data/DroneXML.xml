@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Drones>
+  <Drone>
+    <Id> 1000 </Id>
+    <Model>xxx</Model>
+    <MaxWeight>heavy</MaxWeight>
+  </Drone>
+</Drones>
