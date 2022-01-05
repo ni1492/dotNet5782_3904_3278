@@ -14,7 +14,8 @@ namespace BlApi
         {
             try
             {
-                DateTime? x = DateTime.Now;
+                DateTime? x = new DateTime
+                    (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 dl.AddParcel(new Parcel { Id = 0, SenderId= dl.DisplayCustomers(c=>c.Name== parcel.sender).FirstOrDefault().Id,TargetId= dl.DisplayCustomers(c => c.Name == parcel.receiver).FirstOrDefault().Id, Weight= (DO.WeightCategories)(parcel.weight-1),Priority= (DO.Priorities)(parcel.priority-1),DroneId= 0,Requested=x,Scheduled=null,PickedUp=null,Delivered=null }) ;
             }
             catch (Exception ex) //catches if the ID already exists
@@ -45,8 +46,8 @@ namespace BlApi
                                 id = p.TargetId,
                                 name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name
                             },
-                            weight = (BO.WeightCategories)p.Weight,
-                            priority = (BO.Priorities)p.Priority,
+                            weight = (BO.WeightCategories)p.Weight+1,
+                            priority = (BO.Priorities)p.Priority+1,
                             drone = newDrone(p),
                             creation = p.Requested,
                             match = p.Scheduled,
@@ -95,8 +96,8 @@ namespace BlApi
                     id = p.Id,
                     sender = dl.DisplayCustomers(customer=>customer.Id==p.SenderId).FirstOrDefault().Name,
                     receiver = dl.DisplayCustomers(customer => customer.Id == p.TargetId).FirstOrDefault().Name,  
-                    weight = (BO.WeightCategories)p.Weight,
-                    priority = (BO.Priorities)p.Priority,
+                    weight = (BO.WeightCategories)p.Weight+1,
+                    priority = (BO.Priorities)p.Priority+1,
                     status = getStatus(p.Id)
                 });
 

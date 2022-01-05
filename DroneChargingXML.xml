@@ -1,2 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<DroneChargingXML.xml />
+<DroneChargingXML.xml>
+  <DroneCharge>
+    <DroneId>1003</DroneId>
+    <StationId>1</StationId>
+    <ChargTime />05/01/2022 17:21:42</DroneCharge>
+  <DroneCharge>
+    <DroneId>1001</DroneId>
+    <StationId>1</StationId>
+    <ChargTime />05/01/2022 17:22:43</DroneCharge>
+  <DroneCharge>
+    <DroneId>1003</DroneId>
+    <StationId>1</StationId>
+    <ChargTime />05/01/2022 17:22:43</DroneCharge>
+  <DroneCharge>
+    <DroneId>1000</DroneId>
+    <StationId>1</StationId>
+    <ChargTime />05/01/2022 17:23:47</DroneCharge>
+  <DroneCharge>
+    <DroneId>1000</DroneId>
+    <StationId>1</StationId>
+    <ChargTime />05/01/2022 17:26:10</DroneCharge>
+</DroneChargingXML.xml>

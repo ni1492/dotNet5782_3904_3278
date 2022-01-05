@@ -1,10 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CustomerXML.xml>
   <Customer>
-    <Id>111111114</Id>
+    <Id>222333444</Id>
     <Name>asdf</Name>
-    <Phone>0987654322</Phone>
-    <Longitude>21</Longitude>
-    <Lattitude>23</Lattitude>
+    <Phone>0444444444</Phone>
+    <Longitude>31</Longitude>
+    <Lattitude>31</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>333444555</Id>
+    <Name>fdsa</Name>
+    <Phone>0999999999</Phone>
+    <Longitude>31</Longitude>
+    <Lattitude>31</Lattitude>
   </Customer>
 </CustomerXML.xml>

@@ -19,9 +19,9 @@ namespace PL
         public static IBL bl = BlFactory.GetBl();
         public App()
         {
-            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
-            ci.DateTimeFormat.ShortDatePattern = "DD/MM/YYYY";
-            Thread.CurrentThread.CurrentCulture = ci;
+            //CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
+            //ci.DateTimeFormat.ShortDatePattern = "DD/MM/YYYY HH:MM:SS";
+            //Thread.CurrentThread.CurrentCulture = ci;
         }
 
     }
