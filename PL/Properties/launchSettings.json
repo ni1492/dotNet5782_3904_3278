@@ -2,7 +2,7 @@
   "profiles": {
     "PL": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\Noa Friedman\\source\\repos\\dotNet5782_3904_3278"
+      "workingDirectory": "$(SolutionDir)"
     }
   }
 }
