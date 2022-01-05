@@ -184,6 +184,14 @@
 
 
             </Grid>
+            <Grid x:Name="OpenParcel" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,10,0" Visibility="Visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="16*"/>
+                    <ColumnDefinition Width="129*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="OPENPARCEL" Content="open" HorizontalAlignment="Left" Margin="40,-31,0,0" VerticalAlignment="Top" Width="49" Style="{StaticResource ButtonStyle}" Click="OpenParcel_Click" Grid.Column="1"/>
+
+            </Grid>
 
             <!--<Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" Visibility="Hidden" >
                 <Grid.RowDefinitions>

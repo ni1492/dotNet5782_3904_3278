@@ -179,7 +179,7 @@ namespace DALXML
             XElement chargingElem = new XElement("DroneCharge",
                                   new XElement("DroneId", dId.ToString()),
                                   new XElement("StationId", sId.ToString()),
-                                  new XElement("ChargTime"),DateTime.Now.ToString("0"));
+                                  new XElement("ChargTime"),DateTime.Now.ToString());
 
             chargingRootElem.Add(chargingElem);
 
@@ -455,14 +455,15 @@ namespace DALXML
             if (station == null)
                 throw new DO.NotFoundException("station doesn't exist");
 
-            return from b in stationRootElem.Elements()
-                   let droneCharge = new DroneCharge()
-                   {
-                       DroneId = Int32.Parse(b.Element("Id").Value),
-                       StationId = Int32.Parse(b.Element("Id").Value)
-                   }
-                   where ("StationId")==id.ToString()
-                   select droneCharge;
+          return displayDronesInCharge(drone => drone.StationId == id);
+            //return from b in stationRootElem.Elements()
+            //       let droneCharge = new DroneCharge()
+            //       {
+            //           DroneId = Int32.Parse(b.Element("Id").Value),
+            //           StationId = Int32.Parse(b.Element("Id").Value)
+            //       }
+            //       where ("StationId")==id.ToString()
+            //       select droneCharge;
 
         }
         public IEnumerable<DroneCharge> displayDronesInCharge(Predicate<DroneCharge> match)
@@ -473,8 +474,8 @@ namespace DALXML
                    let drone = new DroneCharge()
                    {
                        DroneId = Int32.Parse(b.Element("Id").Value),
-                     StationId = Int32.Parse(b.Element("Id").Value),
-                     chargTime=DateTime.Parse(b.Element("ChargTime").Value)
+                       StationId = Int32.Parse(b.Element("Id").Value),
+                       chargTime = DateTime.Parse(b.Element("ChargTime").Value)
                    }
                    where match(drone)
                    select drone;

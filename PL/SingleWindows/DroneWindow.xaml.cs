@@ -49,6 +49,8 @@ namespace PL.SingleWindows
             InitializeComponent();
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
+            OpenParcel.Visibility = Visibility.Hidden;
+
             WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             STATION.ItemsSource = stationAvailable(bl.displayStationListSlotsAvailable());
 
@@ -63,7 +65,6 @@ namespace PL.SingleWindows
 
             if ((DroneStatuses)drone.Status == DroneStatuses.available)
             {
-                //time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action1.Content = "Charge";
                 action1.Click += chargeA_Click;
@@ -71,32 +72,34 @@ namespace PL.SingleWindows
                 action2.Visibility = Visibility.Visible;
                 action2.Content = "Send to delivery";
                 action2.Click += sendToDeliveryA_Click;
+                OpenParcel.Visibility = Visibility.Hidden;
 
             }
             else if ((DroneStatuses)drone.Status == DroneStatuses.maintenance)
             {
-                //time.Visibility = Visibility.Visible;
                 action1.Visibility = Visibility.Visible;
                 action1.Content = "Release charge";
                 action1.Click += releaseChargeA_Click;
                 action2.Visibility = Visibility.Hidden;
+                OpenParcel.Visibility = Visibility.Hidden;
 
             }
             else if (bl.getStatus(drone.Parcel.PDID) == (BO.ParcelStatus)ParcelStatus.PickedUp)
             {
-                // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
                 action1.Content = "Deliver parcel";
                 action1.Click += deliverA_Click;
+                OpenParcel.Visibility = Visibility.Visible;
             }
             else
             {
-                // time.Visibility = Visibility.Hidden;
                 action1.Visibility = Visibility.Visible;
                 action2.Visibility = Visibility.Hidden;
                 action1.Content = "Pick up parcel";
                 action1.Click += pickupA_Click;
+                OpenParcel.Visibility = Visibility.Visible;
+
             }
         }
         private void chargeA_Click(object sender, RoutedEventArgs e)
@@ -338,6 +341,13 @@ namespace PL.SingleWindows
             {
                 yield return item.id;
             }
+        }
+
+        private void OpenParcel_Click(object sender, RoutedEventArgs e)
+        {
+            int id;
+            Int32.TryParse(PARCEL.Text, out id);
+            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
         }
 
         //private void HOURTextChanged(object sender, RoutedEventArgs e)
