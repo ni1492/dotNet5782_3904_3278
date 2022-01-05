@@ -77,11 +77,11 @@
             </Grid>
 
             <Grid Name="longitude" Grid.Row="4" Grid.Column="1" Margin="0,0,-148,0">
-                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="288" LostFocus="LONGITUDETextChanged" Style="{StaticResource LongitudeWaterMark}"/>
+                <TextBox x:Name="LONGITUDE" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="122" LostFocus="LONGITUDETextChanged" Style="{StaticResource LongitudeWaterMark}" Margin="15,0,0,0"/>
 
             </Grid>
             <Grid Name="latitude" Grid.Row="4" Grid.Column="1" Margin="0,33,-148,0" Grid.RowSpan="2">
-                <TextBox x:Name="LATITUDE" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="288" LostFocus="LATITUDETextChanged" Style="{StaticResource LatitudeWaterMark}"/>
+                <TextBox x:Name="LATITUDE" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="123" LostFocus="LATITUDETextChanged" Style="{StaticResource LatitudeWaterMark}" Margin="13,0,0,0"/>
 
             </Grid>
             <Grid Name="chargingSlots" Grid.Row="3" Grid.Column="1">

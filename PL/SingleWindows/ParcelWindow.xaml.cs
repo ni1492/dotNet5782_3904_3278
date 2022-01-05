@@ -45,20 +45,22 @@ namespace PL.SingleWindows
             InitializeComponent();
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
+            WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+            PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
         }
-        private void IDTextChanged(object sender, RoutedEventArgs e)
-        {
-            if (checkId(ID.Text))
-            {
-                ID.BorderBrush = Brushes.GreenYellow;
-                ID.Background = Brushes.White;
-            }
-            else
-            {
-                ID.BorderBrush = Brushes.DarkRed;
-                ID.Background = Brushes.Red;
-            }
-        }
+        //private void IDTextChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (checkId(ID.Text))
+        //    {
+        //        ID.BorderBrush = Brushes.GreenYellow;
+        //        ID.Background = Brushes.White;
+        //    }
+        //    else
+        //    {
+        //        ID.BorderBrush = Brushes.DarkRed;
+        //        ID.Background = Brushes.Red;
+        //    }
+        //}
         private void SENDERTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(SENDER.Text))
@@ -91,13 +93,11 @@ namespace PL.SingleWindows
             
             try
             {
-                if (checkId(ID.Text) && checkName(SENDER.Text) &&checkName(TARGET.Text) && PRIORITY.SelectedItem != null && WEIGHT.SelectedItem != null)
+                if (checkName(SENDER.Text) &&checkName(TARGET.Text) && PRIORITY.SelectedItem != null && WEIGHT.SelectedItem != null)
                 {
-                    int x;
-                    Int32.TryParse(ID.Text, out x);
                     BO.parcelForList p = new BO.parcelForList
                     {
-                        id = x,
+                        id = 0,
                         sender = SENDER.Text,
                         receiver=TARGET.Text,
                         weight = (BO.WeightCategories)WEIGHT.SelectedItem,

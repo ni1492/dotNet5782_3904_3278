@@ -45,10 +45,7 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="parcel id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
-        </Grid>
+            
         <Grid Name="entersender" Grid.Row="2" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="sender:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
@@ -70,7 +67,7 @@
        
         </Grid>
 
-        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Hidden"   >
+        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Visible"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -89,9 +86,7 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Grid Name="id" Grid.Row="1" Grid.Column="1">
-                <TextBox x:Name="ID" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="IDTextChanged" Style="{StaticResource IDWaterMark}"/>
-            </Grid>
+            <Grid Name="id" Grid.Row="1" Grid.Column="1"/>
             <Grid Name="sender" Grid.Row="2" Grid.Column="1">
                 <TextBox x:Name="SENDER" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="SENDERTextChanged" Style="{StaticResource NameWaterMark}"/>
             </Grid>
@@ -143,7 +138,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Visible">
+        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -163,6 +158,10 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="parcel id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
             <Grid Name="viewId" Grid.Column="1" Margin="0,8,0,0" Grid.Row="1">
                 <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="ID"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" />
 
