@@ -60,22 +60,34 @@ namespace DALXML
         }
         public void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
         {
-            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
-            XElement drone = (from b in droneRootElem.Elements()
-                              where b.Element("Id").Value == Id.ToString()
-                              select b).FirstOrDefault();
-
-            if (drone != null)
+            List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            Drone temp = ListDrones.FirstOrDefault(s => s.Id == Id);
+            if (ListDrones.FirstOrDefault(s => s.Id == Id).Id!=0)
                 throw new DO.ExistException("drone already exist");
+            Drone drone = new Drone
+            {
+                Id = Id,
+                Model = model,
+                MaxWeight = maxWeight
+            };
+            ListDrones.Add(drone);
+            XMLTools.SaveListToXMLSerializer(ListDrones, dronesPath);
+            //XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            //XElement drone = (from b in droneRootElem.Elements()
+            //                  where b.Element("Id").Value == Id.ToString()
+            //                  select b).FirstOrDefault();
 
-            XElement droneElem = new XElement("Drone",
-                                  new XElement("Id", Id.ToString()),
-                                  new XElement("Model", model),
-                                  new XElement("MaxWeight", maxWeight));
+            //if (drone != null)
+            //    throw new DO.ExistException("drone already exist");
 
-            droneRootElem.Add(droneElem);
+            //XElement droneElem = new XElement("Drone",
+            //                      new XElement("Id", Id.ToString()),
+            //                      new XElement("Model", model),
+            //                      new XElement("MaxWeight", maxWeight));
 
-            XMLTools.SaveListToXMLElement(droneRootElem, dronesPath);
+            //droneRootElem.Add(droneElem);
+
+            //XMLTools.SaveListToXMLElement(droneRootElem, dronesPath);
         }
         public void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
         {
@@ -100,37 +112,62 @@ namespace DALXML
         }
         public void AddParcel(Parcel p)//add new parcel
         {
-            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
-            XElement parcel = (from b in parcelRootElem.Elements()
-                               where b.Element("Id").Value == p.Id.ToString()
-                               select b).FirstOrDefault();
+            List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
 
-            if (parcel != null)
-                throw new DO.ExistException("parcel already exist");
 
             XElement counterRootElem = XMLTools.LoadListFromXMLElement(counterPath);
             int count = Int32.Parse(counterRootElem.Element("ParcelID").Value);
-
             if (p.Id == 0)
             {
                 p.Id = count++;
             }
-                XElement parcelElem = new XElement("Parcel",
-                                          new XElement("Id", p.Id.ToString()),
-                                          new XElement("SenderId", p.SenderId.ToString()),
-                                          new XElement("TargetId", p.TargetId.ToString()),
-                                          new XElement("Weight", p.Weight),
-                                          new XElement("Priority", p.Priority),
-                                          new XElement("DroneId", p.DroneId.ToString()),
-                                          new XElement("Requested", p.Requested.ToString()),
-                                          new XElement("Scheduled", p.Scheduled.ToString()),
-                                          new XElement("PickedUp", p.PickedUp.ToString()),
-                                          new XElement("Delivered", p.Delivered.ToString()));
+            Parcel parcel = new Parcel
+            {
+                Id = p.Id,
+                SenderId = p.SenderId,
+                TargetId = p.TargetId,
+                Weight = p.Weight,
+                Priority = p.Priority,
+                DroneId = p.DroneId,
+                Requested = p.Requested,
+                Scheduled = p.Scheduled,
+                PickedUp = p.PickedUp,
+                Delivered = p.Delivered
+            };
+            ListParcels.Add(parcel);
+            XMLTools.SaveListToXMLSerializer(ListParcels, parcelsPath);
+            
+            //XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            //XElement parcel = (from b in parcelRootElem.Elements()
+            //                   where b.Element("Id").Value == p.Id.ToString()
+            //                   select b).FirstOrDefault();
 
-                parcelRootElem.Add(parcelElem);
-            counterRootElem.Element("ParcelID").Value = count.ToString();
-            XMLTools.SaveListToXMLElement(counterRootElem, counterPath);
-            XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
+            //if (parcel != null)
+            //    throw new DO.ExistException("parcel already exist");
+
+            //XElement counterRootElem = XMLTools.LoadListFromXMLElement(counterPath);
+            //int count = Int32.Parse(counterRootElem.Element("ParcelID").Value);
+
+            //if (p.Id == 0)
+            //{
+            //    p.Id = count++;
+            //}
+            //    XElement parcelElem = new XElement("Parcel",
+            //                              new XElement("Id", p.Id.ToString()),
+            //                              new XElement("SenderId", p.SenderId.ToString()),
+            //                              new XElement("TargetId", p.TargetId.ToString()),
+            //                              new XElement("Weight", p.Weight),
+            //                              new XElement("Priority", p.Priority),
+            //                              new XElement("DroneId", p.DroneId.ToString()),
+            //                              new XElement("Requested", p.Requested.ToString()),
+            //                              new XElement("Scheduled", p.Scheduled.ToString()),
+            //                              new XElement("PickedUp", p.PickedUp.ToString()),
+            //                              new XElement("Delivered", p.Delivered.ToString()));
+
+            //    parcelRootElem.Add(parcelElem);
+            //counterRootElem.Element("ParcelID").Value = count.ToString();
+            //XMLTools.SaveListToXMLElement(counterRootElem, counterPath);
+            //XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
         public void AddCharging(int dId, int sId)//adds a drone to charging
         {
@@ -138,7 +175,6 @@ namespace DALXML
             XElement charging = (from b in chargingRootElem.Elements()
                                  where b.Element("DroneId").Value == dId.ToString()
                                  select b).FirstOrDefault();
-
 
             XElement chargingElem = new XElement("DroneCharge",
                                   new XElement("DroneId", dId.ToString()),
@@ -151,60 +187,105 @@ namespace DALXML
         }
         public void Match(int pId, int dId) //matches a drone to a parcel
         {
-            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
-            XElement parcel = (from b in parcelRootElem.Elements()
-                               where b.Element("Id").Value == pId.ToString()
-                               select b).FirstOrDefault();
+            List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (ListParcels.FirstOrDefault(s => s.Id == pId).Equals(null))
+                throw new DO.NotFoundException("parcel doesn't exist");
 
-            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
-            XElement drone = (from b in droneRootElem.Elements()
-                              where b.Element("Id").Value == dId.ToString()
-                              select b).FirstOrDefault();
-
-            if (drone == null)
+            List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (ListDrones.FirstOrDefault(s => s.Id == dId).Equals(null))
                 throw new DO.NotFoundException("drone doesn't exist");
 
 
-            if (parcel != null)
-            {
-                parcel.Element("DroneId").Value = dId.ToString();
-                parcel.Element("Scheduled").Value = DateTime.Now.ToString("0");
-                XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
-            }
-            else
-                throw new DO.NotFoundException("parcel doesn't exist");
+            Parcel parcel = ListParcels.Find(parcel => parcel.Id == pId);
+            parcel.DroneId = dId;
+            parcel.Scheduled = DateTime.Now;
+            ListParcels.RemoveAll(parcel => parcel.Id == pId);
+            ListParcels.Add(parcel);
+
+            XMLTools.SaveListToXMLSerializer(ListParcels, parcelsPath);
+
+            //XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            //XElement parcel = (from b in parcelRootElem.Elements()
+            //                   where b.Element("Id").Value == pId.ToString()
+            //                   select b).FirstOrDefault();
+
+            //XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            //XElement drone = (from b in droneRootElem.Elements()
+            //                  where b.Element("Id").Value == dId.ToString()
+            //                  select b).FirstOrDefault();
+
+            //if (drone == null)
+            //    throw new DO.NotFoundException("drone doesn't exist");
+            //if (parcel != null)
+            //{
+            //    parcel.Element("DroneId").Value = dId.ToString();
+            //    parcel.Element("Scheduled").Value = DateTime.Now.ToString("0");
+            //    XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
+            //}
+            //else
+            //    throw new DO.NotFoundException("parcel doesn't exist");
+
+
+
         }
         public void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
-            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
-            XElement Parcel = (from b in parcelRootElem.Elements()
-                               where b.Element("Id").Value == parcel.Id.ToString()
-                               select b).FirstOrDefault();
-            if (Parcel == null)
+            List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (ListParcels.FirstOrDefault(s => s.Id == parcel.Id).Equals(null))
                 throw new DO.NotFoundException("parcel doesn't exist");
-            Parcel.Element("PickedUp").Value = DateTime.Now.ToString("0");
-            XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
+
+            Parcel p = ListParcels.Find(Parcel => Parcel.Id == parcel.Id);
+            p.PickedUp = DateTime.Now;
+            ListParcels.RemoveAll(Parcel => Parcel.Id == parcel.Id);
+            ListParcels.Add(p);
+
+            XMLTools.SaveListToXMLSerializer(ListParcels, parcelsPath);
+
+            //XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            //XElement Parcel = (from b in parcelRootElem.Elements()
+            //                   where b.Element("Id").Value == parcel.Id.ToString()
+            //                   select b).FirstOrDefault();
+            //if (Parcel == null)
+            //    throw new DO.NotFoundException("parcel doesn't exist");
+            //Parcel.Element("PickedUp").Value = DateTime.Now.ToString("0");
+            //XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
         public void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
-            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
-            XElement Parcel = (from b in parcelRootElem.Elements()
-                               where b.Element("Id").Value == parcel.Id.ToString()
-                               select b).FirstOrDefault();
-            if (Parcel == null)
+            List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (ListParcels.FirstOrDefault(s => s.Id == parcel.Id).Equals(null))
                 throw new DO.NotFoundException("parcel doesn't exist");
-            Parcel.Element("Delivered").Value = DateTime.Now.ToString("0");
-            XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
+
+            Parcel p = ListParcels.Find(Parcel => Parcel.Id == parcel.Id);
+            p.Delivered = DateTime.Now;
+            ListParcels.RemoveAll(Parcel => Parcel.Id == parcel.Id);
+            ListParcels.Add(p);
+
+            XMLTools.SaveListToXMLSerializer(ListParcels, parcelsPath);
+
+            //    XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            //    XElement Parcel = (from b in parcelRootElem.Elements()
+            //                       where b.Element("Id").Value == parcel.Id.ToString()
+            //                       select b).FirstOrDefault();
+            //    if (Parcel == null)
+            //        throw new DO.NotFoundException("parcel doesn't exist");
+            //    Parcel.Element("Delivered").Value = DateTime.Now.ToString("0");
+            //    XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
         public void ChargingDrone(int dId, int sId)//send drone to charge
         {
-            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
-            XElement drone = (from b in droneRootElem.Elements()
-                              where b.Element("Id").Value == dId.ToString()
-                              select b).FirstOrDefault();
-
-            if (drone == null)
+            List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (ListDrones.FirstOrDefault(s => s.Id == dId).Equals(null))
                 throw new DO.NotFoundException("drone dosen't exist");
+          
+
+            //XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            //XElement drone = (from b in droneRootElem.Elements()
+            //                  where b.Element("Id").Value == dId.ToString()
+            //                  select b).FirstOrDefault();
+
+            //if (drone == null)
+            //    throw new DO.NotFoundException("drone dosen't exist");
 
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
             XElement station = (from b in stationRootElem.Elements()
@@ -224,18 +305,24 @@ namespace DALXML
 
 
             station.Element("ChargeSlots").Value = (Int32.Parse(station.Element("ChargeSlots").Value) - 1).ToString();
+            
             AddCharging(dId, sId);
             XMLTools.SaveListToXMLElement(stationRootElem, stationsPath);
         }
         public void ReleaseChargingDrone(int id)//release drone from charging
         {
-            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
-            XElement drone = (from b in droneRootElem.Elements()
-                              where b.Element("Id").Value == id.ToString()
-                              select b).FirstOrDefault();
+            List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (ListDrones.FirstOrDefault(s => s.Id == id).Equals(null))
+                throw new DO.NotFoundException("drone dosen't exist");
 
-            if (drone == null)
-                throw new DO.NotFoundException("drone doesn't exist");
+
+            //    XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            //    XElement drone = (from b in droneRootElem.Elements()
+            //                      where b.Element("Id").Value == id.ToString()
+            //                      select b).FirstOrDefault();
+
+            //    if (drone == null)
+            //        throw new DO.NotFoundException("drone doesn't exist");
 
             XElement chargingRootElem = XMLTools.LoadListFromXMLElement(dronesInChargingPath);
             XElement charging = (from b in chargingRootElem.Elements()
@@ -394,15 +481,23 @@ namespace DALXML
         }
         public void deleteDrone(int id)
         {
-            XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
-            XElement drone = (from b in droneRootElem.Elements()
-                              where b.Element("Id").Value == id.ToString()
-                              select b).FirstOrDefault();
+            List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
+            if (ListDrones.FirstOrDefault(s => s.Id == id).Equals(null))
+                throw new DO.NotFoundException("drone dosen't exist");
 
-            if (drone == null)
-                throw new DO.NotFoundException("drone doesn't exist");
-            drone.Remove();
-            XMLTools.SaveListToXMLElement(droneRootElem, dronesPath);
+            ListDrones.RemoveAll(s => s.Id == id);
+            XMLTools.SaveListToXMLSerializer(ListDrones, dronesPath);
+
+
+            //XElement droneRootElem = XMLTools.LoadListFromXMLElement(dronesPath);
+            //XElement drone = (from b in droneRootElem.Elements()
+            //                  where b.Element("Id").Value == id.ToString()
+            //                  select b).FirstOrDefault();
+
+            //if (drone == null)
+            //    throw new DO.NotFoundException("drone doesn't exist");
+            //drone.Remove();
+            //XMLTools.SaveListToXMLElement(droneRootElem, dronesPath);
         }
         public void deleteCustomer(int id)
         {
@@ -431,15 +526,23 @@ namespace DALXML
         }
         public void deleteParcel(int id)
         {
-            XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
-            XElement parcel = (from b in parcelRootElem.Elements()
-                               where b.Element("Id").Value == id.ToString()
-                               select b).FirstOrDefault();
-
-            if (parcel == null)
+            List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
+            if (ListParcels.FirstOrDefault(s => s.Id == id).Equals(null))
                 throw new DO.NotFoundException("parcel doesn't exist");
-            parcel.Remove();
-            XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
+
+           
+            ListParcels.RemoveAll(Parcel => Parcel.Id == id);
+
+            XMLTools.SaveListToXMLSerializer(ListParcels, parcelsPath);
+            //XElement parcelRootElem = XMLTools.LoadListFromXMLElement(parcelsPath);
+            //XElement parcel = (from b in parcelRootElem.Elements()
+            //                   where b.Element("Id").Value == id.ToString()
+            //                   select b).FirstOrDefault();
+
+            //if (parcel == null)
+            //    throw new DO.NotFoundException("parcel doesn't exist");
+            //parcel.Remove();
+            //XMLTools.SaveListToXMLElement(parcelRootElem, parcelsPath);
         }
     }
 
