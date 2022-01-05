@@ -31,7 +31,7 @@ namespace DALXML
         private readonly string stationsPath = @"StationXML.xml"; //XElement
         private readonly string parcelsPath = @"ParcelXML.xml"; //XMLSerializer
         private readonly string customersPath = @"CustomerXML.xml"; //XElement
-        private readonly string dronesInChargingPath = @"DroneChargingXML.xml"; //XElement
+        private readonly string dronesInChargingPath = @"DroneChargeXML.xml"; //XElement
         private readonly string configPath = @"config.xml"; //XElement
         private readonly string counterPath = @"Counter.xml"; //XElement
 

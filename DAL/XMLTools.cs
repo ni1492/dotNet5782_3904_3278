@@ -85,7 +85,6 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw;
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
             }
         }
@@ -113,7 +112,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw;
+                
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
             }
         }
