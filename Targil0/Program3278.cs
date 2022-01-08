@@ -15,7 +15,7 @@ namespace Targil0
         {
             Console.Write("Enter your name: ");
             string userName = Console.ReadLine();
-            Console.WriteLine("{0}, welcome to my first console application", userName);
+            Console.WriteLine("{0}, welcome to my FirstOrDefault console application", userName);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace BlApi
         {
             try
             {
-                DO.Customer tempDL = dl.DisplayCustomers(customer => customer.Id == id).First();
+                DO.Customer tempDL = dl.DisplayCustomers(customer => customer.Id == id).FirstOrDefault();
 
                 dl.deleteCustomer(id); 
                 if (name != null)
@@ -48,7 +48,7 @@ namespace BlApi
         {
             try
             {
-                DO.Customer cus = dl.DisplayCustomers(customer => customer.Id == id).First();
+                DO.Customer cus = dl.DisplayCustomers(customer => customer.Id == id).FirstOrDefault();
                 List<parcelAtCustomer> fromCus = new();
                 List<parcelAtCustomer> toCus = new();
                 int sId = 0;

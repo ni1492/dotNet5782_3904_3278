@@ -39,12 +39,12 @@ namespace BlApi
                             sender = new customerForParcel
                             {
                                 id = p.SenderId,
-                                name = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First().Name
+                                name = dl.DisplayCustomers(customer => customer.Id == p.SenderId).FirstOrDefault().Name
                             },
                             receiver = new customerForParcel
                             {
                                 id = p.TargetId,
-                                name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name
+                                name = dl.DisplayCustomers(customer => customer.Id == p.TargetId).FirstOrDefault().Name
                             },
                             weight = (BO.WeightCategories)p.Weight+1,
                             priority = (BO.Priorities)p.Priority+1,
@@ -105,7 +105,7 @@ namespace BlApi
         }
         public ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
         {
-            DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).First();
+            DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).FirstOrDefault();
             DateTime? x = null;
             if (p.Delivered != x)
                 return ParcelStatus.Delivered;
@@ -124,8 +124,8 @@ namespace BlApi
                     yield return (new parcelForList
                     {
                         id = p.Id,
-                        sender = dl.DisplayCustomers(customer=>customer.Id==p.SenderId).First().Name, 
-                        receiver = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First().Name,  
+                        sender = dl.DisplayCustomers(customer=>customer.Id==p.SenderId).FirstOrDefault().Name, 
+                        receiver = dl.DisplayCustomers(customer => customer.Id == p.TargetId).FirstOrDefault().Name,  
                         weight = (BO.WeightCategories)p.Weight,
                         priority = (BO.Priorities)p.Priority,
                         status = getStatus(p.Id) 
