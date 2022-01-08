@@ -51,6 +51,11 @@ namespace DAL
             public void deleteStation(int id);
             public void deleteParcel(int id);
 
+            public void AddUser(int id, string userN, string email, string password, bool isManager);
+            public void deleteUser(int id);
+            public User displayUser(string userN);
+            public bool userCorrect(string userN, string password, bool isManager);
+           
         }
 
     }

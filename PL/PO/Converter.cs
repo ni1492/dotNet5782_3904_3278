@@ -223,5 +223,17 @@ namespace PL.PO
             };
 
         }
+        public static PO.User UserPO(BO.user user)
+        {
+            return new()
+            {
+                UId = user.Id,
+                UName = user.UserName,
+                HashedPassword = user.HashedPassword,
+                Salt=user.Salt,
+                IsManager=user.IsManager,
+                Email=user.Email
+            };
+        }
     }
 }

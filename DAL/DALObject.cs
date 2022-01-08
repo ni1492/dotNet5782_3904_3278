@@ -595,7 +595,64 @@ namespace DALObject
 
         #endregion
 
+        #region user
+        public void AddUser(int id, string userN, string email, string password, bool isManager)
+        {
+            foreach (User u in DataSource.users) //if a user with the same name or id already exists
+            {
+                if (u.Id == id||u.UserName==userN)
+                {
+                    throw new ExistException("user alredy exists");
+                }
+            }
+            int salt = PasswordHandler.generateSalt();
+            User temp = new()
+            {
+                Id = id,
+                UserName = userN,
+                Email = email,
+                Salt = salt,
+                HashedPassword = PasswordHandler.generateNewPassword(password, salt),
+                IsManager = isManager
+            };
+            DataSource.users.Add(temp);
+        }
 
+        public void deleteUser(int id)
+        {
+            bool b = false;
+            foreach (User u in DataSource.users)
+            {
+                if (u.Id == id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("user doesn't exist");
+            DataSource.users.RemoveAll(u => u.Id == id);
+        }
+
+        public User displayUser(string userN)
+        {
+            bool b = false;
+            foreach (User u in DataSource.users)
+            {
+                if (u.UserName == userN)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("user doesn't exist");
+            return DataSource.users.Find(u => u.UserName==userN);
+        }
+
+        public bool userCorrect(string userN, string password, bool isManager)
+        {
+            return DataSource.users.Exists(u => u.UserName == userN && u.IsManager == isManager && PasswordHandler.checkPassword(password, u.HashedPassword, u.Salt));
+        }
+        #endregion
     }
 
 }
