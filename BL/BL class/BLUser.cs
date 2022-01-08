@@ -25,7 +25,7 @@ namespace BlApi
         {
             try
             {
-                User user =dl.displayUser(userN);
+                User user = dl.displayUsers(user => user.UserName == userN).FirstOrDefault();
                 return new UserForDisplay()
                 {
                     Id = user.Id,
@@ -42,6 +42,21 @@ namespace BlApi
                 throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
 
+        }
+        public IEnumerable<UserForDisplay> displayUsersList()
+        {
+            foreach (User user in dl.displayUsers(user=>true))
+            {
+                yield return new UserForDisplay()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    IsManager = user.IsManager,
+                    Salt = user.Salt,
+                    HashedPassword = user.HashedPassword
+                };
+            }
         }
         public bool userCorrect(string userN, string password, bool isManager)
         {

@@ -34,7 +34,7 @@ namespace DALXML
         private readonly string dronesInChargingPath = @"DroneChargeXML.xml"; //XMLSerializer
         private readonly string configPath = @"config.xml"; //XElement
         private readonly string counterPath = @"Counter.xml"; //XElement
-        private readonly string usersPath = @" UserXML.xml"; //XElement
+        private readonly string usersPath = @"UserXML.xml"; //XElement
 
 
         #endregion
@@ -515,28 +515,48 @@ namespace DALXML
         }
 
         #endregion
-        #region display user
-        public User displayUser(string userN)
-        {
-            XElement userRootElem = XMLTools.LoadListFromXMLElement(usersPath);
-            XElement user = (from b in userRootElem.Elements()
-                                where b.Element("UserName").Value == userN.ToString()
-                                select b).FirstOrDefault();
-            if(user==null)
-                throw new DO.NotFoundException("station doesn't exist");
+        #region display users
+        //public User displayUser(string userN)
+        //{
+        //    XElement userRootElem = XMLTools.LoadListFromXMLElement(usersPath);
+        //    XElement user = (from b in userRootElem.Elements()
+        //                        where b.Element("UserName").Value == userN.ToString()
+        //                        select b).FirstOrDefault();
+        //    if(user==null)
+        //        throw new DO.NotFoundException("station doesn't exist");
 
-            return new User()
-            {
-                Id = Int32.Parse(user.Element("Id").Value),
-                UserName = user.Element("UserName").Value,
-                Email = user.Element("Email").Value,
-                IsManager = bool.Parse(user.Element("IsManager").Value),
-                Salt = Int32.Parse(user.Element("Salt").Value),
-                HashedPassword = user.Element("HashedPassword").Value
-            };
+        //    return new User()
+        //    {
+        //        Id = Int32.Parse(user.Element("Id").Value),
+        //        UserName = user.Element("UserName").Value,
+        //        Email = user.Element("Email").Value,
+        //        IsManager = bool.Parse(user.Element("IsManager").Value),
+        //        Salt = Int32.Parse(user.Element("Salt").Value),
+        //        HashedPassword = user.Element("HashedPassword").Value
+        //    };
 
           
+        //}
+        public IEnumerable<User> displayUsers(Predicate<User> match)
+        {
+            XElement userRootElem = XMLTools.LoadListFromXMLElement(usersPath);
+            return from b in userRootElem.Elements()
+                   let user = new User()
+                   {
+                       Id = Int32.Parse(b.Element("Id").Value),
+                       UserName = b.Element("UserName").Value,
+                       Email = b.Element("Email").Value,
+                       IsManager = bool.Parse(b.Element("IsManager").Value),
+                       Salt = Int32.Parse(b.Element("Salt").Value),
+                       HashedPassword = b.Element("HashedPassword").Value
+                   }
+                   where match(user)
+                   select user;
+
+
+
         }
+
         #endregion
         #region find user
         public bool userCorrect(string userN, string password, bool isManager)

@@ -75,6 +75,7 @@ namespace PL
         {
             if (checkPassword(PassBox_passAdmin.Password))
                 AdminPasswordBorder.Visibility = Visibility.Hidden;
+            logOut.Visibility = Visibility.Visible;
         }
         private bool checkPassword(string text)
         {
@@ -83,9 +84,138 @@ namespace PL
             return false;
         }
 
-        private void PassBox_passAdmin_KeyDown(object sender, KeyEventArgs e)
+        private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            PassBox_passAdmin.Visibility = Visibility.Visible;
+            try
+            {
+                if (checkId(ID.Text) && checkName(USER.Text)&& checkPass(PASS.Text))
+                {
+                    App.bl.AddUser(Int32.Parse(ID.Text), USER.Text, EMAIL.Text, PASS.Text, MANAGER.IsEnabled);
+                    MessageBox.Show("signed up");
+                    ID.Clear();
+                    USER.Clear();
+                    EMAIL.Clear();
+                    PASS.Clear();
+                    MANAGER.ClearValue(IconProperty);
+                }
+                else
+                    MessageBox.Show("incorrect input - signing up failed");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+        private bool checkId(string text)
+        {
+            try
+            {
+                if (text == null)
+                    return false;
+                if (!int.TryParse(text, out int id))
+                    return false;
+                if (id <= 0 && id > 100000000 && id < 1000000000)
+                    return false;
+                if (App.bl.displayUsersList().Any(user => user.Id == id))
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
+        }
+        private bool checkName(string text)
+        {
+            try
+            {
+                if (text == null)
+                    return false;
+                if (App.bl.displayUser(text) != null)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
+        }
+        private bool checkPass(string text)
+        {
+            if (text == null)
+                return false;
+            if (text.Length < 8)
+                return false;
+            else
+                return true;
+
+
+        }
+        private bool checkEmail(string text)
+        {
+            if (text == null)
+                return false;
+            else
+                return true;
+
+
+        }
+
+        private void IDTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkId(ID.Text))
+            {
+                ID.BorderBrush = Brushes.GreenYellow;
+                ID.Background = Brushes.White;
+            }
+            else
+            {
+                ID.BorderBrush = Brushes.DarkRed;
+                ID.Background = Brushes.Red;
+            }
+        }
+        private void NameTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkName(USER.Text))
+            {
+                USER.BorderBrush = Brushes.GreenYellow;
+                USER.Background = Brushes.White;
+            }
+            else
+            {
+                USER.BorderBrush = Brushes.DarkRed;
+                USER.Background = Brushes.Red;
+            }
+        }
+        private void PassTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkPass(PASS.Text))
+            {
+                PASS.BorderBrush = Brushes.GreenYellow;
+                PASS.Background = Brushes.White;
+            }
+            else
+            {
+                PASS.BorderBrush = Brushes.DarkRed;
+                PASS.Background = Brushes.Red;
+            }
+        }
+        private void EmailTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (checkEmail(EMAIL.Text))
+            {
+                EMAIL.BorderBrush = Brushes.GreenYellow;
+                EMAIL.Background = Brushes.White;
+            }
+            else
+            {
+                EMAIL.BorderBrush = Brushes.DarkRed;
+                EMAIL.Background = Brushes.Red;
+            }
         }
     }
 }

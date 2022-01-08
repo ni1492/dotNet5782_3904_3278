@@ -40,6 +40,7 @@ namespace BlApi
         public void deleteParcel(int id);
         public void AddUser(int id, string userN, string email, string password, bool isManager);
         public UserForDisplay displayUser(string userN);
+        public IEnumerable<UserForDisplay> displayUsersList();
         public bool userCorrect(string userN, string password, bool isManager);
         
 }

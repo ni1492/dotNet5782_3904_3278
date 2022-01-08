@@ -633,25 +633,37 @@ namespace DALObject
             DataSource.users.RemoveAll(u => u.Id == id);
         }
 
-        public User displayUser(string userN)
+        //public User displayUser(string userN)
+        //{
+        //    bool b = false;
+        //    foreach (User u in DataSource.users)
+        //    {
+        //        if (u.UserName == userN)
+        //        {
+        //            b = true;
+        //        }
+        //    }
+        //    if (!b)
+        //        throw new NotFoundException("user doesn't exist");
+        //    return DataSource.users.Find(u => u.UserName==userN);
+        //}
+        public IEnumerable<User> displayUsers(Predicate<User> match)
         {
-            bool b = false;
             foreach (User u in DataSource.users)
             {
-                if (u.UserName == userN)
+                if (match(u))
                 {
-                    b = true;
+                    yield return u;
                 }
             }
-            if (!b)
-                throw new NotFoundException("user doesn't exist");
-            return DataSource.users.Find(u => u.UserName==userN);
+            
         }
-
         public bool userCorrect(string userN, string password, bool isManager)
         {
             return DataSource.users.Exists(u => u.UserName == userN && u.IsManager == isManager && PasswordHandler.checkPassword(password, u.HashedPassword, u.Salt));
         }
+
+        
         #endregion
     }
 

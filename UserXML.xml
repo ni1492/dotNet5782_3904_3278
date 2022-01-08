@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <UserXML.xml>
   <User>
+    <Id>11111111</Id>
+    <UserName>manager</UserName>
+    <Email>@gmail.com</Email>
+    <IsManager>True</IsManager>
+    <Salt>346990307</Salt>
+    <HashedPassword>8alv1eEZ6m00iwg8M7Z2P05eBH/rDEQ1uEQRnK+cbNE7+HDwN/7r/ttnvgbsAI5BFV3i6U17E0DiK2HpknB+yg==</HashedPassword>
   </User>
 </UserXML.xml>

@@ -58,7 +58,7 @@
                             <Grid>
 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 0 18 0">
-                                    <Button Content="sign out"  Width="100"  ToolTipService.ShowDuration="8000" Style="{StaticResource ButtonStyle}">
+                                    <Button x:Name="logOut" Content="sign out"  Width="100"  ToolTipService.ShowDuration="8000" Style="{StaticResource ButtonStyle}" Visibility="Hidden">
                                         <!--Click="Button_Click_LogOut">-->
                                         <Button.ToolTip>
                                             <StackPanel>
@@ -119,15 +119,15 @@
             <!-- sign up Window -->
             <TabItem Header="sign up"  Width="180" Height="30" FontSize="16">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="269*"/>
-                        <RowDefinition Height="127*"/>
-                    </Grid.RowDefinitions>
-                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="93,180,0,0" VerticalAlignment="Top" Height="23" Width="91"/>
-                    <TextBox HorizontalAlignment="Left" Margin="93,30,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="40"/>
-                    <TextBox HorizontalAlignment="Left" Margin="93,70,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="40"/>
-                    <TextBox HorizontalAlignment="Left" Margin="93,110,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="40"/>
-                    <TextBox HorizontalAlignment="Left" Margin="93,140,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"  Height="40"/>
+
+                    <CheckBox x:Name="MANAGER" Content="is manager" HorizontalAlignment="Left" Margin="100,280,0,0" VerticalAlignment="Top" Height="23" Width="150"/>
+                    <TextBox x:Name="ID" HorizontalAlignment="Left" Margin="100,40,0,0" Text="id" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource IDWaterMark}" LostFocus="IDTextChanged"/>
+                    <TextBox  x:Name="USER" HorizontalAlignment="Left" Margin="100,90,0,0" Text="username" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource UserWaterMark}" LostFocus="NameTextChanged"/>
+                    <TextBox  x:Name="EMAIL" HorizontalAlignment="Left" Margin="100,140,0,0" Text="email" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource EmailWaterMark}"/>
+                    <TextBox  x:Name="PASS" HorizontalAlignment="Left" Margin="100,190,0,0" Text="password" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  Height="30" Style="{StaticResource PasswordWaterMark}" LostFocus="PassTextChanged"/>
+                    <Button  Content="sign up" HorizontalAlignment="Left" Width="100" Margin="613,320,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" FontSize="16" Click="SignUp_Click"/>
+                    <Image x:Name="pic" Source="/logo.png" HorizontalAlignment="Center" Height="93" Margin="534,0,0,230" VerticalAlignment="Center" Width="94"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="100,220,0,0" Text="at least 8 characters" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="11" Opacity="0.6"/>
 
                     <!--<Border x:Name="ExistingTesterIDBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Collapsed">
                         <StackPanel Height="120" Width="300">
