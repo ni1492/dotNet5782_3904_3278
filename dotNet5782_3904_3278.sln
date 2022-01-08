@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ParcelXML.xml = ParcelXML.xml
 		README.md = README.md
 		StationXML.xml = StationXML.xml
+		UserXML.xml = UserXML.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "Targil1\ConsoleUI.csproj", "{52664AC7-4987-49A8-BA11-E7303F49A77B}"
