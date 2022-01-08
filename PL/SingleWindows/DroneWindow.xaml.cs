@@ -275,26 +275,6 @@ namespace PL.SingleWindows
             }
 
         }
-        //private bool checkStationId(string text)
-        //{
-        //    try
-        //    {
-        //        if (text == null)
-        //            return false;
-        //        if (!int.TryParse(text, out int id))
-        //            return false;
-        //        if (id <= 0)
-        //            return false;
-        //        if (bl.displayStation(id) == null)
-        //            return false;
-        //        return true;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //    }
-
-        //}
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -322,19 +302,6 @@ namespace PL.SingleWindows
             }
 
         }
-        //private void STATIONTextChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if (checkStationId(STATION.Text))
-        //    {
-        //        STATION.BorderBrush = Brushes.GreenYellow;
-        //        STATION.Background = Brushes.White;
-        //    }
-        //    else
-        //    {
-        //        STATION.BorderBrush = Brushes.DarkRed;
-        //        STATION.Background = Brushes.Red;
-        //    }
-        //}
         public IEnumerable<int> stationAvailable(IEnumerable<baseStationForList> displayStationListSlotsAvailable)
         {
             foreach (var item in displayStationListSlotsAvailable)
@@ -350,44 +317,5 @@ namespace PL.SingleWindows
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
         }
 
-        //private void HOURTextChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if (checkHour(Hour.Text))
-        //    {
-        //        Hour.BorderBrush = Brushes.GreenYellow;
-        //        Hour.Background = Brushes.White;
-        //    }
-        //    else
-        //    {
-        //        Hour.BorderBrush = Brushes.DarkRed;
-        //        Hour.Background = Brushes.Red;
-        //    }
-        //}
-
-        //private void MINUTETextChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if (checkMinute(Minute.Text))
-        //    {
-        //        Minute.BorderBrush = Brushes.GreenYellow;
-        //        Minute.Background = Brushes.White;
-        //    }
-        //    else
-        //    {
-        //        Minute.BorderBrush = Brushes.DarkRed;
-        //        Minute.Background = Brushes.Red;
-        //    }
-        //}
-        //private bool checkHour(string hour)
-        //{
-        //    if ((hour == null) || (!int.TryParse(hour, out int h)) || ((h > 23) || (h <= 0)))
-        //        return false;
-        //    return true;
-        //}
-        //private bool checkMinute(string min)
-        //{
-        //    if ((min == null) || (!int.TryParse(min, out int m)) || ((m <= 0) || (m >= 60)))
-        //        return false;
-        //    return true;
-        //}
     }
 }

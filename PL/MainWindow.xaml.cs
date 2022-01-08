@@ -35,11 +35,11 @@ namespace PL
         }
 
 
-       
+
 
         private void AdminSignIn(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void UserSignIn(object sender, RoutedEventArgs e)
@@ -69,6 +69,23 @@ namespace PL
         private void showStationButton_click(object sender, RoutedEventArgs e)
         {
             new BaseStationList(App.bl).Show();
+        }
+
+        private void signIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkPassword(PassBox_passAdmin.Password))
+                AdminPasswordBorder.Visibility = Visibility.Hidden;
+        }
+        private bool checkPassword(string text)
+        {
+            if (App.bl.userCorrect("manager", text, true))
+                return true;
+            return false;
+        }
+
+        private void PassBox_passAdmin_KeyDown(object sender, KeyEventArgs e)
+        {
+            PassBox_passAdmin.Visibility = Visibility.Visible;
         }
     }
 }

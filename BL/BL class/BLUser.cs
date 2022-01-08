@@ -21,11 +21,20 @@ namespace BlApi
                 throw new BO.exceptions.ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         }
-        public User displayUser(string userN)
+        public UserForDisplay displayUser(string userN)
         {
             try
             {
-                return dl.displayUser(userN);
+                User user =dl.displayUser(userN);
+                return new UserForDisplay()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    IsManager = user.IsManager,
+                    Salt = user.Salt,
+                    HashedPassword = user.HashedPassword
+                };
             }
             catch (Exception ex) //throw - if the customer doesnt exist
             {

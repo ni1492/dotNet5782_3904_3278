@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class user
+    public class UserForDisplay
     {
         public int Id { get; set; }
         public string UserName { get; set; }

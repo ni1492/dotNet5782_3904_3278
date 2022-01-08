@@ -38,6 +38,9 @@ namespace BlApi
         public IEnumerable<parcelForList> displayParcelListWithoutDrone(); //display all parcels that arent matched
         public ParcelStatus getStatus(int id);
         public void deleteParcel(int id);
-
-    }
+        public void AddUser(int id, string userN, string email, string password, bool isManager);
+        public UserForDisplay displayUser(string userN);
+        public bool userCorrect(string userN, string password, bool isManager);
+        
+}
 }

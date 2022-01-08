@@ -223,7 +223,7 @@ namespace PL.PO
             };
 
         }
-        public static PO.User UserPO(BO.user user)
+        public static PO.User UserPO(BO.UserForDisplay user)
         {
             return new()
             {
