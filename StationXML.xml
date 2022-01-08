@@ -1,10 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Stations>
+<StationXML.xml>
   <Station>
     <Id>1</Id>
-    <Name>asd</Name>
+    <Name>station1</Name>
     <Longitude>32</Longitude>
-    <Lattitude>31</Lattitude>
-    <ChargeSlots>66</ChargeSlots>
+    <Lattitude>29</Lattitude>
+    <ChargeSlots>41</ChargeSlots>
   </Station>
-</Stations>
+  <Station>
+    <Id>2</Id>
+    <Name>station2</Name>
+    <Longitude>35</Longitude>
+    <Lattitude>42</Lattitude>
+    <ChargeSlots>76</ChargeSlots>
+  </Station>
+</StationXML.xml>

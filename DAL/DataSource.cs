@@ -86,7 +86,7 @@ namespace DALObject
                 parcel.Scheduled = new DateTime(R.Next(2, parcel.PickedUp.Value.Year), R.Next(1, 13), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random schedule time
                 parcel.Requested = new DateTime(R.Next(1, parcel.Scheduled.Value.Year), R.Next(1, 13), R.Next(1, 29), R.Next(0, 24), R.Next(0, 60), R.Next(0, 60));//initialization of random request time
                 parcel.DroneId = 0;
-                foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the first one that matches the standards of the given parcel
+                foreach (Drone drone in DataSource.drones)//goes over the list of drones and finds the FirstOrDefault one that matches the standards of the given parcel
                 {
                     bool matched = false;
                     foreach (Parcel parcel1 in DataSource.parcels)

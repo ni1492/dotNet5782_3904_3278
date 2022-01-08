@@ -76,7 +76,7 @@ namespace BlApi
         {
             try
             {
-                DO.Drone tempDL = dl.DisplayDrones(drone => drone.Id == id).First();  //find the drone in the DAL
+                DO.Drone tempDL = dl.DisplayDrones(drone => drone.Id == id).FirstOrDefault();  //find the drone in the DAL
                 dl.deleteDrone(id); //delltes the old drone before the changes
                 dl.AddDrone(tempDL.Id, model, tempDL.MaxWeight);//adds the drone with the changes
                 droneForList tempBL = drones.Find(drone => drone.id == id); //finds it in the drone list
@@ -185,7 +185,7 @@ namespace BlApi
                     }
                 }
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;
-                DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == (drones.Find(drone => drone.id == id).parcelID)).First();
+                DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == (drones.Find(drone => drone.id == id).parcelID)).FirstOrDefault();
                 dl.deleteParcel(p.Id);
                 p.Delivered = DateTime.Now;
                 dl.AddParcel(p);
@@ -239,7 +239,7 @@ namespace BlApi
                 {
                     throw new BO.exceptions.TimeException("drone not in charging");
                 }
-                DateTime temp = dl.displayDronesInCharge(drone => drone.DroneId == id).First().chargeTime;
+                DateTime temp = dl.displayDronesInCharge(drone => drone.DroneId == id).FirstOrDefault().chargeTime;
                 double battery = drones.Find(drone => drone.id == id).battery + chargingPH * ((double)((DateTime.Now.Hour-temp.Hour)+(double)((DateTime.Now.Minute-temp.Minute)/ 60)));
                 if (battery > 100)
                     battery = 100;

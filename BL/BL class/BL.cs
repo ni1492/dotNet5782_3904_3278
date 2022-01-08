@@ -96,11 +96,16 @@ namespace BlApi
                     }
 
                 }
-                else//not matched to any parcel
+                else if(inCharge(item)!=0)//if drone is in chargeing
                 {
-                    item.status = (DroneStatuses)r.Next(1, 3); //the status will be randomized between in available and maintenance
-                    if (item.status == DroneStatuses.available) //creating a list of all locations of customers that have had parcels delivered to them
-                    {
+                    item.status = DroneStatuses.maintenance;
+                    item.currentLocation = stationLocation(inCharge(item));
+                    //the drone location will be the location of the station chosen
+                    item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
+                }
+                else//not matched to any parcel or charge->available
+                {
+                    item.status = DroneStatuses.available;
                         List<location> locations = new List<location>();
                         int count = 0;
                         foreach (var cus in dl.DisplayCustomers(customer=>true))
@@ -144,17 +149,15 @@ namespace BlApi
 
                         }
                     }
-                    else if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
-                    {
-                        int stationId = r.Next(1, dl.DisplayStations(station => true).Count()); 
-                        item.currentLocation = stationLocation(stationId);
-                            //the drone location will be the location of the station chosen
-                        item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
-                        dl.AddCharging(item.id, stationId);
-                    }
-                }
+               
             }
         }
+
+        private int inCharge(droneForList drone)
+        {
+            return dl.displayDronesInCharge(charge => charge.DroneId == drone.id).FirstOrDefault().StationId;
+        }
+
         private double calcDistance(location from, location to)//calculate thedistance between two locations 
             {
             return dl.CalculateDistance(from.Longitude, from.Latitude, to.Longitude, to.Latitude);
@@ -194,8 +197,8 @@ namespace BlApi
         }
         private location senderLocation(int parcelId)//return tne sender location by the parcel id
         {
-            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).First();
-            var c = dl.DisplayCustomers(customer => customer.Id == p.SenderId).First();
+            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).FirstOrDefault();
+            var c = dl.DisplayCustomers(customer => customer.Id == p.SenderId).FirstOrDefault();
             return (new location
             {
                 Latitude = c.Lattitude,
@@ -205,8 +208,8 @@ namespace BlApi
         }
         private location targetLocation(int parcelId)//return tne target location by the parcel id
         {
-            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).First();
-            var c = dl.DisplayCustomers(customer => customer.Id == p.TargetId).First();
+            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).FirstOrDefault();
+            var c = dl.DisplayCustomers(customer => customer.Id == p.TargetId).FirstOrDefault();
             return (new location
             {
                 Latitude = c.Lattitude,

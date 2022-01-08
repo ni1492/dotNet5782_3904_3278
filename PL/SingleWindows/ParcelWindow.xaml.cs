@@ -153,7 +153,7 @@ namespace PL.SingleWindows
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayParcelList().First(p=>p.id==id) != null)
+                if (bl.displayParcelList().FirstOrDefault(p=>p.id==id) != null)
                     return false;
                 return true;
             }

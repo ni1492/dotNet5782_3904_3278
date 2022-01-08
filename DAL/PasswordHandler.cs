@@ -8,6 +8,6 @@ namespace DO
 {
     public class PasswordHandler
     {
-        private static Random saltGenerator
+        private static Random saltGenerator;
     }
 }
