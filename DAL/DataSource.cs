@@ -16,6 +16,7 @@ namespace DALObject
         internal static List<Customer> customers = new();
         internal static List<Parcel> parcels = new();
         internal static List<DroneCharge> inCharging = new();
+        internal static List<User> users = new();
 
         internal class Config//initialization of running numbers for station list, drone list, customer list, and parcel list
         {

@@ -1,15 +1,3 @@
 <?xml version="1.0"?>
 <ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Parcel>
-    <Id>1000</Id>
-    <SenderId>222333444</SenderId>
-    <TargetId>333444555</TargetId>
-    <Weight>light</Weight>
-    <Priority>quick</Priority>
-    <Requested>2022-01-05T16:20:05</Requested>
-    <DroneId>0</DroneId>
-    <Scheduled xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
-  </Parcel>
 </ArrayOfParcel>

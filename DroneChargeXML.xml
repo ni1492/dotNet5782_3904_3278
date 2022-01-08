@@ -1,3 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DroneCharges>
+  <DroneCharge>
+    <DroneId>1000</DroneId>
+    <StationId>1</StationId>
+    <ChargeTime />06/01/2022 11:12:59</DroneCharge>
 </DroneCharges>

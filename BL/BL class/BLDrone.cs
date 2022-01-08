@@ -239,7 +239,7 @@ namespace BlApi
                 {
                     throw new BO.exceptions.TimeException("drone not in charging");
                 }
-                DateTime temp = dl.displayDronesInCharge(drone => drone.DroneId == id).First().chargTime;
+                DateTime temp = dl.displayDronesInCharge(drone => drone.DroneId == id).First().chargeTime;
                 double battery = drones.Find(drone => drone.id == id).battery + chargingPH * ((double)((DateTime.Now.Hour-temp.Hour)+(double)((DateTime.Now.Minute-temp.Minute)/ 60)));
                 if (battery > 100)
                     battery = 100;

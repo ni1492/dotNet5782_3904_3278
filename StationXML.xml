@@ -2,9 +2,9 @@
 <Stations>
   <Station>
     <Id>1</Id>
-    <Name>stat1</Name>
-    <Longitude>21</Longitude>
-    <Lattitude>29</Lattitude>
-    <ChargeSlots>7</ChargeSlots>
+    <Name>asd</Name>
+    <Longitude>32</Longitude>
+    <Lattitude>31</Lattitude>
+    <ChargeSlots>66</ChargeSlots>
   </Station>
 </Stations>

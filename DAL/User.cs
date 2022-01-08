@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.BO
+namespace DO
 {
-    public class user
+    public class User
     {
         public int Id { get; set; }
         public string UserName { get; set; }
