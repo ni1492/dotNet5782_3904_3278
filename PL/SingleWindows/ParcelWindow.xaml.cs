@@ -199,12 +199,20 @@ namespace PL.SingleWindows
 
         private void deleteA_click(object sender, RoutedEventArgs e)
         {
-            int id;
-            Int32.TryParse(viewID.Text, out id);
-            bl.deleteParcel(id);
-            MessageBox.Show("parcel deleted");
-            this.Close();
-            return;
+            try
+            {
+                int id;
+                Int32.TryParse(viewID.Text, out id);
+                bl.deleteParcel(id);
+                MessageBox.Show("parcel deleted");
+                this.Close();
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
         }
         private bool checkName(string text)
         {

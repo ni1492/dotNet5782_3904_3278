@@ -139,7 +139,7 @@ namespace BlApi
                 dl.deleteParcel(id);
 
             else
-                throw new BO.exceptions.DeleteException("cannot delete drone");
+                throw new BO.exceptions.DeleteException("cannot delete parcel");
         }
     }
 }
