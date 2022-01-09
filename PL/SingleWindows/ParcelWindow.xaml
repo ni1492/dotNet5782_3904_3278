@@ -45,29 +45,29 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            
-        <Grid Name="entersender" Grid.Row="2" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="sender:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            <Grid Name="entersender" Grid.Row="2" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="sender:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="entertarget" Grid.Row="3" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="receiver:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="enterweight" Grid.Row="4" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="weight:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+            <Grid Name="enterpriority" Grid.Row="5" Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Text="priority:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+
+            </Grid>
+
+
 
         </Grid>
-        <Grid Name="entertarget" Grid.Row="3" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="receiver:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
-        </Grid>
-        <Grid Name="enterweight" Grid.Row="4" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="weight:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
-        </Grid>
-        <Grid Name="enterpriority" Grid.Row="5" Grid.Column="0">
-            <TextBlock HorizontalAlignment="Center" Text="priority:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
-
-        </Grid>
-        
-        
-       
-        </Grid>
-
-        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Visible"   >
+        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -117,7 +117,7 @@
                 <ComboBox x:Name="DRONEID" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>-->
-           
+
             <!--<Grid Name="creation" Grid.Row="6" Grid.Column="1">
                 <TextBox x:Name="CREATION" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="CTextChanged" Style="{StaticResource IDWaterMark}" TextChanged="CREATION_TextChanged"/>
             </Grid>
@@ -138,7 +138,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -168,11 +168,12 @@
             </Grid>
             <Grid Name="viewSender" Grid.Column="1" Margin="0,8,0,0" Grid.Row="2">
                 <TextBlock x:Name="viewSENDER" HorizontalAlignment="Center" Text="sender" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                <Button x:Name="OPCus1" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
 
             </Grid>
             <Grid Name="viewTarget" Grid.Column="1" Margin="0,8,0,0" Grid.Row="3">
                 <TextBlock x:Name="viewTARGET" HorizontalAlignment="Center" Text="target" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-
+                <Button x:Name="OPCus2" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
             </Grid>
             <Grid Name="viewWeight" Grid.Column="1" Margin="0,8,0,0" Grid.Row="4">
                 <TextBlock x:Name="viewWEIGHT" HorizontalAlignment="Center" Text="weight" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
@@ -200,7 +201,7 @@
             </Grid>
             <Grid Name="viewDrone" Grid.Column="1" Margin="0,8,0,0" Grid.Row="10">
                 <TextBlock x:Name="viewDRONE" HorizontalAlignment="Center" Text="drone" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-
+                <Button x:Name="OPDrone" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
             </Grid>
             <Grid Name="enterDroneId" Grid.Row="10" Grid.Column="0">
                 <TextBlock HorizontalAlignment="Center" Text="drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
@@ -230,7 +231,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-3,0,0" VerticalAlignment="Top" Width="45" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>
                 <Button Content="DELETE" HorizontalAlignment="Left" Margin="59,-3,0,0" VerticalAlignment="Top" Width="50" Click="deleteA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="113,-3,0,0" VerticalAlignment="Top" Width="49" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
+                <Button x:Name="UPDATE" Content="UPDATE" HorizontalAlignment="Left" Margin="113,-3,0,0" VerticalAlignment="Top" Width="49" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
 
 
 

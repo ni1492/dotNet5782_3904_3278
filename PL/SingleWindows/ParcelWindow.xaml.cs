@@ -38,7 +38,69 @@ namespace PL.SingleWindows
             viewPICK.Text = parcel.PSPickup.ToString();
             viewDELIV.Text = parcel.PSDelivery.ToString();
             viewDRONE.Text = parcel.PSDrone_ID.ToString();
+            InitializeActionsButton(parcel);
+
         }
+        private void InitializeActionsButton(PO.ParcelSingle parcel)
+        {
+
+            if (parcel == null)
+                throw new ArgumentNullException("No drone");
+
+            if (parcel.PSDelivery!=null)
+            {
+                UPDATE.Visibility = Visibility.Hidden;
+            }
+            else if (parcel.PSPickup!=null)
+            {
+                UPDATE.Visibility = Visibility.Visible;
+                UPDATE.Content = "deliverd";
+                UPDATE.Click += isDelivered_Click;
+            }
+            else if (parcel.PSMatch != null)
+            {
+                UPDATE.Visibility = Visibility.Visible;
+                UPDATE.Content = "picked-up";
+                UPDATE.Click += isPickedup_Click;
+            }
+            else
+            {
+                UPDATE.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public void isPickedup_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.pickupParcel(Int32.Parse(viewDRONE.Text));
+                this.Close();
+                return;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+        public void isDelivered_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.deliverParcel(Int32.Parse(viewDRONE.Text));
+                this.Close();
+                return;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
         public ParcelWindow(BlApi.IBL bl)//add grid
         {
             this.bl = bl;
@@ -48,19 +110,7 @@ namespace PL.SingleWindows
             WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
         }
-        //private void IDTextChanged(object sender, RoutedEventArgs e)
-        //{
-        //    if (checkId(ID.Text))
-        //    {
-        //        ID.BorderBrush = Brushes.GreenYellow;
-        //        ID.Background = Brushes.White;
-        //    }
-        //    else
-        //    {
-        //        ID.BorderBrush = Brushes.DarkRed;
-        //        ID.Background = Brushes.Red;
-        //    }
-        //}
+     
         private void SENDERTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(SENDER.Text))
