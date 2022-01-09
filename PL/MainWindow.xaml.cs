@@ -34,6 +34,10 @@ namespace PL
         {
             bl = App.bl;
             InitializeComponent();
+            UserPasswordBorder.Visibility = Visibility.Visible;
+            window_User.Visibility = Visibility.Hidden;
+            AdminPasswordBorder.Visibility = Visibility.Visible;
+            window_Admin.Visibility = Visibility.Hidden;
         }
 
 

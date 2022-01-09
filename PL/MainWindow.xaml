@@ -99,7 +99,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="/BACK.jpg"/>
                     </Grid.Background>
-                    <Grid x:Name="window_User" Visibility="Visible">
+                    <Grid x:Name="window_User" Visibility="Hidden">
                         <TextBlock x:Name="USERNAME"  HorizontalAlignment="Right" Margin="0,5,20,0" Text="USER" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="11" Width="100" TextAlignment="Right"/>
                         <Button x:Name="logOutUser" Content="sign out" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" ToolTipService.ShowDuration="8000" Style="{StaticResource ButtonStyle}"  Click="Button_Click_LogOutUser">
 
@@ -248,7 +248,7 @@
                         <Button Content="send new parcel!" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyle}" Height="35" Width="135" Click="newParcel_Click"/>
 
                     </Grid>
-                    <Border x:Name="UserPasswordBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
+                    <Border x:Name="UserPasswordBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Visible" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
                         <StackPanel Width="300" Margin="0,-5,0,-21">
                             <TextBlock Text="enter username:" Height="28" Width="232" Margin="0,15,0,0"/>
                             <TextBox x:Name="TextBox_TraineeID" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />
