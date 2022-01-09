@@ -26,6 +26,8 @@ namespace BlApi
             try
             {
                 User user = dl.displayUsers(user => user.UserName == userN).FirstOrDefault();
+                if (user == null)
+                    return null;
                 return new UserForDisplay()
                 {
                     Id = user.Id,

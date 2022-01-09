@@ -115,7 +115,7 @@ namespace PL
                     return false;
                 if (!int.TryParse(text, out int id))
                     return false;
-                if (id <= 0 && id > 100000000 && id < 1000000000)
+                if (id <= 0 || id < 100000000  || id > 1000000000)
                     return false;
                 if (App.bl.displayUsersList().Any(user => user.Id == id))
                     return false;
@@ -146,21 +146,37 @@ namespace PL
         }
         private bool checkPass(string text)
         {
-            if (text == null)
+            try
+            {
+                if (text == null)
+                    return false;
+                if (text.Length < 8)
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception)
+            {
                 return false;
-            if (text.Length < 8)
-                return false;
-            else
-                return true;
+            }
 
 
         }
         private bool checkEmail(string text)
         {
-            if (text == null)
+            try
+            {
+                if (text.Length==0)
+                    return false;
+                if (App.bl.displayUsersList().Any(user => user.Email.Equals(text)))
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception)
+            {
                 return false;
-            else
-                return true;
+            }
 
 
         }
@@ -217,5 +233,6 @@ namespace PL
                 EMAIL.Background = Brushes.Red;
             }
         }
+    
     }
 }
