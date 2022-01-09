@@ -43,8 +43,8 @@
     <Weight>medium</Weight>
     <Priority>urgent</Priority>
     <Requested>2022-01-09T17:09:22</Requested>
-    <DroneId>0</DroneId>
-    <Scheduled xsi:nil="true" />
+    <DroneId>1002</DroneId>
+    <Scheduled>2022-01-09T18:47:46.474+02:00</Scheduled>
     <PickedUp xsi:nil="true" />
     <Delivered xsi:nil="true" />
   </Parcel>
