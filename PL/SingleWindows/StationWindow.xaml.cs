@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.SingleWindows;
+using BO;
+using PL.PO;
 
 namespace PL.SingleWindows
 {
@@ -231,6 +233,13 @@ namespace PL.SingleWindows
                 return true;
             }
 
+        }
+
+        private void openDrone_click(object sender, RoutedEventArgs e)
+        {
+            int id;
+            Int32.TryParse(DRONES.Text, out id);//!!!!!!!!!!!!!1
+            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(id))).ShowDialog();
         }
     }
 }

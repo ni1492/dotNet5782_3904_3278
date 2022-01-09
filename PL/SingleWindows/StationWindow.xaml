@@ -55,7 +55,7 @@
 
         </Grid>
 
-        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Visible"   >
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -96,7 +96,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -142,7 +142,9 @@
                 <ComboBox x:Name="DRONES" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>
-
+            <Grid Grid.Row="6" Grid.Column="2">
+                <Button x:Name="OPdrone" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="0,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10" Click="openDrone_click"/>
+            </Grid>
             <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="134*"/>

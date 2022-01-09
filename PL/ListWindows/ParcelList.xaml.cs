@@ -31,7 +31,6 @@ namespace PL
             this.bl = bl;
             InitializeComponent();
             List < Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
-            //parcelDataGrid.DataContext = parcels;
             DataContext = parcels;
             parcelDataGrid.Visibility = Visibility.Visible;
             parcelGroupingDataGrid.Visibility = Visibility.Hidden;
@@ -44,6 +43,8 @@ namespace PL
             DataGridCell cell = sender as DataGridCell;
             PO.Parcel p = cell.DataContext as PO.Parcel;
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
+            DataContext = parcels;
         }
 
         private void close_Click(object sender, RoutedEventArgs e)
