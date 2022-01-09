@@ -168,12 +168,12 @@
             </Grid>
             <Grid Name="viewSender" Grid.Column="1" Margin="0,8,0,0" Grid.Row="2">
                 <TextBlock x:Name="viewSENDER" HorizontalAlignment="Center" Text="sender" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-                <Button x:Name="OPCus1" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
+                <Button x:Name="OPCus1" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10" Click="openSender_Click"/>
 
             </Grid>
             <Grid Name="viewTarget" Grid.Column="1" Margin="0,8,0,0" Grid.Row="3">
                 <TextBlock x:Name="viewTARGET" HorizontalAlignment="Center" Text="target" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-                <Button x:Name="OPCus2" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
+                <Button x:Name="OPCus2" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10" Click="openTarget_Click"/>
             </Grid>
             <Grid Name="viewWeight" Grid.Column="1" Margin="0,8,0,0" Grid.Row="4">
                 <TextBlock x:Name="viewWEIGHT" HorizontalAlignment="Center" Text="weight" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
@@ -200,8 +200,8 @@
 
             </Grid>
             <Grid Name="viewDrone" Grid.Column="1" Margin="0,8,0,0" Grid.Row="10">
-                <TextBlock x:Name="viewDRONE" HorizontalAlignment="Center" Text="drone" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-                <Button x:Name="OPDrone" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
+                <TextBlock x:Name="viewDRONE" HorizontalAlignment="Left" Text="drone" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,-1,0,0"/>
+                <Button x:Name="OPDrone" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="100,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10" Click="openDrone_Click"/>
             </Grid>
             <Grid Name="enterDroneId" Grid.Row="10" Grid.Column="0">
                 <TextBlock HorizontalAlignment="Center" Text="drone id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>

@@ -38,10 +38,18 @@ namespace PL.SingleWindows
             LATITUDE.Text = drone.DLatitude.ToString();
             LONGITUDE.Text = drone.DLongitude.ToString();
             if (drone.Parcel == null)
-                PARCEL.Text = "0";
+            {
+                OPENPARCEL.Visibility = Visibility.Hidden;
+                PARCEL.Text = "no parcel matched";
+            }
             else
+            {
                 PARCEL.Text = drone.Parcel.PDID.ToString();
+                OPENPARCEL.Visibility = Visibility.Visible;
+
+            }
             InitializeActionsButton(drone);
+
         }
         public DroneWindow(BlApi.IBL bl)//add grid
         {
@@ -91,6 +99,9 @@ namespace PL.SingleWindows
                 action1.Content = "Deliver parcel";
                 action1.Click += deliverA_Click;
                 OpenParcel.Visibility = Visibility.Visible;
+                
+
+
             }
             else
             {
@@ -99,7 +110,7 @@ namespace PL.SingleWindows
                 action1.Content = "Pick up parcel";
                 action1.Click += pickupA_Click;
                 OpenParcel.Visibility = Visibility.Visible;
-
+                
             }
         }
         private void chargeA_Click(object sender, RoutedEventArgs e)
