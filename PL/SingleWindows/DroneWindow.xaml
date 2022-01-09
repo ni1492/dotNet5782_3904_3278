@@ -51,7 +51,7 @@
 
         </Grid>
 
-        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Visible"   >
+        <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -103,7 +103,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Grid x:Name="Actions"  Grid.RowSpan="10" Grid.ColumnSpan="3" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -163,8 +163,8 @@
 
             </Grid>
             <Grid Name="pacelId" Grid.Row="7" Grid.Column="1" Margin="0,44,0,0" Grid.RowSpan="2">
-                <TextBlock x:Name="PARCEL" HorizontalAlignment="Center" Text="parcel" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-                <Button x:Name="OPENPARCEL" Content="open" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" Height="20" Width="40" Style="{StaticResource ButtonStyle}" Click="OpenParcel_Click" Grid.Column="1" FontSize="10"/>
+                <TextBlock x:Name="PARCEL" HorizontalAlignment="Left" Text="parcel" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                <Button x:Name="OPENPARCEL" Visibility="Visible" Content="open" HorizontalAlignment="Left" Margin="90,0,0,0" VerticalAlignment="Center" Height="20" Width="50" Style="{StaticResource ButtonStyle}" Click="OpenParcel_Click" Grid.Column="1" FontSize="10"/>
 
 
             </Grid>
@@ -180,8 +180,8 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="close_click" Style="{StaticResource ButtonStyle}"/>
                 <Button Content="UPDATE" HorizontalAlignment="Left" Margin="60,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="80" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="200,-2,0,0" VerticalAlignment="Top" Width="80" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
+                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="100" Style="{StaticResource ButtonStyle}"/>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="220,-2,0,0" VerticalAlignment="Top" Width="100" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
 
 
 

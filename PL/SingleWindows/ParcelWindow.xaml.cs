@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
+using PL.PO;
 
 namespace PL.SingleWindows
 {
@@ -37,9 +39,28 @@ namespace PL.SingleWindows
             viewMATCH.Text = parcel.PSMatch.ToString();
             viewPICK.Text = parcel.PSPickup.ToString();
             viewDELIV.Text = parcel.PSDelivery.ToString();
-            viewDRONE.Text = parcel.PSDrone_ID.ToString();
             InitializeActionsButton(parcel);
-
+            if (parcel.PSDrone_ID == 0)
+            {
+                viewDRONE.Text = "no drone matched";
+                OPDrone.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                viewDRONE.Text = parcel.PSDrone_ID.ToString();
+                OPDrone.Visibility = Visibility.Visible;
+            }
+            if (viewDELIV.Text != "")
+            {
+                OPCus1.Visibility = Visibility.Hidden;
+                OPCus2.Visibility = Visibility.Hidden;
+                OPDrone.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                OPCus1.Visibility = Visibility.Visible;
+                OPCus2.Visibility = Visibility.Visible;
+            }
         }
         private void InitializeActionsButton(PO.ParcelSingle parcel)
         {
@@ -219,6 +240,40 @@ namespace PL.SingleWindows
             {
                 return true;
             }
+        }
+
+        private void openSender_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(var c in bl.displayCustomerList())
+            {
+
+                if(c.name==viewSENDER.Text)
+                {
+                    new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.id))).ShowDialog();
+                    break;
+                }
+            }
+            
+        }
+
+        private void openTarget_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var c in bl.displayCustomerList())
+            {
+
+                if (c.name == viewTARGET.Text)
+                {
+                    new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.id))).ShowDialog();
+                    break;
+                }
+            }
+        }
+
+        private void openDrone_Click(object sender, RoutedEventArgs e)
+        {
+            int id;
+            Int32.TryParse(viewDRONE.Text, out id);
+            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(id))).ShowDialog();
         }
     }
 }
