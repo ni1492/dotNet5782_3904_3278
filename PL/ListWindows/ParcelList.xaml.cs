@@ -24,6 +24,7 @@ namespace PL
     public partial class ParcelList : Window
     {
         IBL bl;
+        public List<IGrouping<string, Parcel>> GroupingData;
 
         public ParcelList(IBL bl)
         {
@@ -32,6 +33,10 @@ namespace PL
             List < Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
             //parcelDataGrid.DataContext = parcels;
             DataContext = parcels;
+            parcelDataGrid.Visibility = Visibility.Visible;
+            parcelGroupingDataGrid.Visibility = Visibility.Hidden;
+            group.Visibility = Visibility.Visible;
+            ungroup.Visibility = Visibility.Hidden;
 
         }
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -50,6 +55,24 @@ namespace PL
         {
             new ParcelWindow(bl).ShowDialog();
             DataContext=(from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
+        }
+        private void group_Click(object sender, RoutedEventArgs e)
+        {
+            List<Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
+            GroupingData = parcels.GroupBy(x => x.SenderName).ToList();
+            parcelGroupingDataGrid.DataContext = GroupingData;
+            parcelDataGrid.Visibility = Visibility.Hidden;
+            parcelGroupingDataGrid.Visibility = Visibility.Visible;
+            group.Visibility = Visibility.Hidden;
+            ungroup.Visibility = Visibility.Visible;
+        }
+
+        private void ungroup_Click(object sender, RoutedEventArgs e)
+        {
+            parcelGroupingDataGrid.Visibility = Visibility.Hidden;
+            parcelDataGrid.Visibility = Visibility.Visible;
+            group.Visibility = Visibility.Visible;
+            ungroup.Visibility = Visibility.Hidden;
         }
     }
 }

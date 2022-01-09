@@ -24,16 +24,21 @@ namespace PL
     public partial class droneList : Window
     {
          IBL bl;
+        public List<IGrouping<DroneStatuses, Drone>> GroupingData;
         public droneList( IBL bl)
         {
             this.bl = bl;
                 InitializeComponent();
             List<Drone> drones = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
             DataContext = drones;
+            droneDataGrid.Visibility = Visibility.Visible;
+            groupingDataGrid.Visibility = Visibility.Hidden;
             statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
+            group.Visibility = Visibility.Visible;
+            ungroup.Visibility = Visibility.Hidden;
         }
 
         private void statusSelection(object sender, SelectionChangedEventArgs e)
@@ -95,8 +100,6 @@ namespace PL
             else
                 droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
                                                                                 select Converter.DronePO(bl)));
-
-
         }
 
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -108,6 +111,16 @@ namespace PL
             weightSelection(weightSelector, null);
            
         }
+        private void DataGridCell_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Drone d = cell.DataContext as PO.Drone;
+            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
+
+        }
+        
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).ShowDialog();
@@ -147,6 +160,27 @@ namespace PL
             weightSelection(weightSelector, null);
             weightSelector.Text = "";
 
+        }
+
+        private void group_Click(object sender, RoutedEventArgs e)
+        {
+            List<Drone> drones = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
+            GroupingData = drones.GroupBy(x => x.Status).ToList();
+            groupingDataGrid.DataContext = GroupingData;
+            droneDataGrid.Visibility = Visibility.Hidden;
+            groupingDataGrid.Visibility = Visibility.Visible;
+            UpGrid.Visibility = Visibility.Hidden;
+            group.Visibility = Visibility.Hidden;
+            ungroup.Visibility = Visibility.Visible;
+        }
+
+        private void ungroup_Click(object sender, RoutedEventArgs e)
+        {
+            groupingDataGrid.Visibility = Visibility.Hidden;
+            droneDataGrid.Visibility = Visibility.Visible;
+            UpGrid.Visibility = Visibility.Visible;
+            group.Visibility = Visibility.Visible;
+            ungroup.Visibility = Visibility.Hidden;
         }
     }
     

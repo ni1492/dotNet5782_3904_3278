@@ -25,6 +25,7 @@ namespace PL
     public partial class BaseStationList : Window
     {
         IBL bl;
+        public List<IGrouping<int, BaseStation>> GroupingData;
 
         public BaseStationList(IBL bl)
         {
@@ -32,7 +33,10 @@ namespace PL
             InitializeComponent();
             List<BaseStation> stations = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
             DataContext = stations;
-
+            baseStationDataGrid.Visibility = Visibility.Visible;
+            baseStationGroupingDataGrid.Visibility = Visibility.Hidden;
+            group.Visibility = Visibility.Visible;
+            ungroup.Visibility = Visibility.Hidden;
         }
 
         //private void openStation_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -60,6 +64,32 @@ namespace PL
             new StationWindow(bl).ShowDialog();
           //  baseStationDataGrid.ItemsSource = bl.displayStationList();
            DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
+        }
+
+             private void DataGridCell_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.BaseStation s = cell.DataContext as PO.BaseStation;
+            new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
+        }
+
+        private void group_Click(object sender, RoutedEventArgs e)
+        {
+            List<BaseStation> stations = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
+            GroupingData = stations.GroupBy(x => x.Available).ToList();
+            baseStationGroupingDataGrid.DataContext = GroupingData;
+            baseStationDataGrid.Visibility = Visibility.Hidden;
+            baseStationGroupingDataGrid.Visibility = Visibility.Visible;
+            group.Visibility = Visibility.Hidden;
+            ungroup.Visibility = Visibility.Visible;
+        }
+
+        private void ungroup_Click(object sender, RoutedEventArgs e)
+        {
+            baseStationGroupingDataGrid.Visibility = Visibility.Hidden;
+            baseStationDataGrid.Visibility = Visibility.Visible;
+            group.Visibility = Visibility.Visible;
+            ungroup.Visibility = Visibility.Hidden;
         }
     }
 }
