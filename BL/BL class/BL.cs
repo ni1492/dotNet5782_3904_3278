@@ -253,20 +253,21 @@ namespace BlApi
             }
         public bool isDelivered(int droneId)//check if the drone is deliverd
         {
+            bool delivered = true;
             foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
-                if ((item.DroneId == droneId) && (item.Delivered !=null))//chack if the drone is deliverd
+                if ((item.DroneId == droneId) && (item.Delivered ==null))//chack if the drone is deliverd
                 {
-                    return true;
+                    delivered=false;
                 }
             }
-            return false;
+            return delivered;
         }
         public bool isPickedUp(int droneId)//chack if the parcel is picked up
         {
             foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
-                if ((item.DroneId == droneId) && (item.PickedUp != null))//chack if the parcel is picked up
+                if ((item.DroneId == droneId) && (item.PickedUp != null)&&item.Delivered==null)//chack if the parcel is picked up
                 {
                     return true;
                 }
@@ -277,7 +278,7 @@ namespace BlApi
         {
             foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
             {
-                if (item.DroneId == droneId)//chack if the drone is match to parcel
+                if (item.DroneId == droneId &&item.Delivered==null)//chack if the drone is match to parcel
                 {
                     return true;
                 }
