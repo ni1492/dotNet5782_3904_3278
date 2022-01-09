@@ -174,14 +174,15 @@
             </Grid>
             <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="134*"/>
-                    <ColumnDefinition Width="85*"/>
-                    <ColumnDefinition Width="31*"/>
+                    <ColumnDefinition Width="237*"/>
+                    <ColumnDefinition Width="11*"/>
+                    <ColumnDefinition Width="121*"/>
+                    <ColumnDefinition Width="32*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="close_click" Style="{StaticResource ButtonStyle}"/>
-                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="60,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action1" Content="action1" HorizontalAlignment="Left" Margin="115,-2,0,0" VerticalAlignment="Top" Width="100" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="action2" Content="action2" HorizontalAlignment="Left" Margin="220,-2,0,0" VerticalAlignment="Top" Width="100" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2"/>
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="close_click" Style="{StaticResource ButtonStyle}" Height="20"/>
+                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="60,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}" Height="20"/>
+                <Button x:Name="action1" Content="action1" Margin="115,-2,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Left" Width="120" Height="20"/>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Center" Margin="0,-2,0,0" VerticalAlignment="Top" Width="120" Style="{StaticResource ButtonStyle}" Grid.Column="1" Height="20" Grid.ColumnSpan="2"/>
 
 
 

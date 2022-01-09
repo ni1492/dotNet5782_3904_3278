@@ -573,6 +573,8 @@ namespace DALXML
             XElement user = (from b in userRootElem.Elements()
                              where b.Element("UserName").Value == userN.ToString()
                              select b).FirstOrDefault();
+            if (user == null)
+                return false;
             if (bool.Parse(user.Element("IsManager").Value) == isManager &&
                PasswordHandler.checkPassword(password, user.Element("HashedPassword").Value, Int32.Parse(user.Element("Salt").Value)))
                 return true;

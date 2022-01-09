@@ -14,4 +14,18 @@
     <Longitude>26</Longitude>
     <Lattitude>31</Lattitude>
   </Customer>
+  <Customer>
+    <Id>212121212</Id>
+    <Name>we</Name>
+    <Phone>0323232333</Phone>
+    <Longitude>30</Longitude>
+    <Lattitude>29</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>121212121</Id>
+    <Name>ew</Name>
+    <Phone>0242424244</Phone>
+    <Longitude>29</Longitude>
+    <Lattitude>30</Lattitude>
+  </Customer>
 </CustomerXML.xml>
