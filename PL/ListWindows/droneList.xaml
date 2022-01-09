@@ -126,7 +126,7 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible">
         <DataGrid x:Name="groupingDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Visibility="Visible" ItemsSource="{Binding}"  HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" Height="292" Width="800" Opacity="0.8">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
-                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick_1"/>
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>

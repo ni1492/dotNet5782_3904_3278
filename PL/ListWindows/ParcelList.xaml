@@ -77,13 +77,87 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
             </DataGrid.Columns>
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" Text="{Binding }" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
         </DataGrid>
+
+        <DataGrid x:Name="parcelGroupingDataGrid" Grid.RowSpan="4" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Height="338" Width="528" Opacity="0.8">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding SenderName , Mode=OneWay}"/>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn x:Name="pIDColumn" Header="ID" Width="70">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PID}" FontSize="10"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="sIDColumn1" Header="Sender" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SenderName}" FontSize="10"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="tIDColumn" Header="Target" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TargetName}" FontSize="10"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="priorityColumn" Header="Priority" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Priority}" FontSize="10"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="pWeightColumn" Header="Weight" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PWeight}" FontSize="10"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="PStatusColumn" Header="Status" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding  PStatus}" FontSize="10"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+
         <Grid Name="bottomGrid" Grid.Row="2" Grid.ColumnSpan="4">
             <Button Content="Add parcel" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addParcel_Click" Style="{StaticResource ButtonStyle}"/>
-            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="close_Click" 
-            Style="{StaticResource ButtonStyle}" />
+            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="close_Click" Style="{StaticResource ButtonStyle}" />
+            <Button x:Name="group"  Content="Group" HorizontalAlignment="Left"  Margin="15,0,0,0" VerticalAlignment="Center" Height="22" Width="74"  Style="{StaticResource ButtonStyle}" Click="group_Click"/>
+            <Button x:Name="ungroup" Content="Ungroup" HorizontalAlignment="Left" Height="22" Width="74" Margin="15,0,0,0" VerticalAlignment="Center"  Style="{StaticResource ButtonStyle}" Click="ungroup_Click"/>
+
         </Grid>
     </Grid>
 
