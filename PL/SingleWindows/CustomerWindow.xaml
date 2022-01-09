@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.SingleWindows"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Customer" Height="400" Width="400" >
+        Title="Customer" Height="560" Width="500" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -16,19 +17,19 @@
             <ImageBrush ImageSource="/BACK.jpg" Stretch="Fill"/>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.Column="2" HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Grid.RowSpan="5" VerticalAlignment="Top" Width="100" Source="/SingleWindows/CustomerView.png"/>
+        <Image Grid.Column="2" HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Width="100" Source="/SingleWindows/CustomerView.png" Grid.Row="1" Margin="0,36,0,0" Grid.RowSpan="3"/>
 
         <Grid Name="enterId" Grid.Row="1" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="Id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
@@ -39,14 +40,14 @@
         </Grid>
 
         <Grid Name="name" Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="NAME" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="NAMETextChanged" Style="{StaticResource NameWaterMark}"/>
+            <TextBox x:Name="NAME" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="-65,0,0,0" VerticalAlignment="Center" Width="120" LostFocus="NAMETextChanged" Style="{StaticResource NameWaterMark}"/>
         </Grid>
         <Grid Name="enterPhone" Grid.Row="3" Grid.Column="0">
             <TextBlock HorizontalAlignment="Center" Text="Phone number:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
         <Grid Name="phone" Grid.Row="3" Grid.Column="1">
-            <TextBox x:Name="PHONE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="PHONETextChanged"  Style="{StaticResource PhoneNumWaterMark}"/>
+            <TextBox x:Name="PHONE" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Margin="-65,0,0,0" Width="120" LostFocus="PHONETextChanged"  Style="{StaticResource PhoneNumWaterMark}"/>
         </Grid>
         <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
@@ -54,15 +55,15 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Name="id" Grid.Row="1" Grid.Column="1">
@@ -100,15 +101,16 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <!--<Grid Name="viewId" Grid.Column="1" Margin="0,8,0,0" Grid.RowSpan="2">
@@ -117,63 +119,98 @@
             </Grid>-->
 
 
-            <Grid Name="viewId" Grid.Column="1"  Grid.Row="1">
-                <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+            <Grid Name="viewId" Grid.Column="1" Grid.Row="0" Margin="0,2,0,8" Grid.RowSpan="3">
+                <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="-63,21,0,0"/>
 
             </Grid>
-            <Grid Name="Latitude" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,42" Grid.RowSpan="2">
-                <TextBlock x:Name="ShowLat" HorizontalAlignment="Left" Text="location" TextWrapping="Wrap" VerticalAlignment="Center" Width="203"/>
+            <Grid Name="Latitude" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,62,0,42" Grid.RowSpan="3">
+                <TextBlock x:Name="ShowLat" HorizontalAlignment="Left" Text="location" TextWrapping="Wrap" VerticalAlignment="Top" Width="203" Margin="0,-33,0,0"/>
 
             </Grid>
-            <Grid Name="showLatitude" Grid.Row="5" Grid.Column="0">
-                <TextBlock HorizontalAlignment="Center" Text="latitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+            <Grid Name="showLatitude" Grid.Row="5" Grid.Column="0" Margin="0,62,0,62" Grid.RowSpan="3">
+                <TextBlock HorizontalAlignment="Center" Text="latitude:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Margin="0,-33,0,0"/>
 
             </Grid>
-            <Grid Name="Longitude" Grid.Row="3" Grid.Column="1" Margin="0,42,0,43" Grid.RowSpan="3" Grid.ColumnSpan="2">
-                <TextBlock x:Name="ShowLong" HorizontalAlignment="Left" Text="location" TextWrapping="Wrap" VerticalAlignment="Center" Width="232"/>
+            <Grid Name="Longitude" Grid.Row="4" Grid.Column="1" Margin="0,42,0,43" Grid.RowSpan="3" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="43*"/>
+                    <ColumnDefinition Width="257*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="ShowLong" HorizontalAlignment="Left" Text="location" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" Grid.ColumnSpan="2" Margin="0,-11,0,0"/>
 
             </Grid>
-            <Grid Name="showLongitude" Grid.Row="3" Grid.Column="0" Margin="0,42,0,43" Grid.RowSpan="3">
-                <TextBlock HorizontalAlignment="Center" Text="longitude:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+            <Grid Name="showLongitude" Grid.Row="4" Grid.Column="0" Margin="0,42,0,43" Grid.RowSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="78*"/>
+                    <ColumnDefinition Width="47*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock HorizontalAlignment="Left" Text="longitude:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Margin="-8,-11,0,0" Grid.ColumnSpan="2"/>
 
             </Grid>
-            <Grid Name="showFrom" Grid.Row="5" Grid.Column="0" Margin="0,25,0,0" Grid.RowSpan="2">
-                <TextBlock HorizontalAlignment="Center" Text="from customer:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+            <Grid Name="showFrom" Grid.Row="4" Grid.Column="0" Margin="0,37,0,42" Grid.RowSpan="6">
+                <TextBlock HorizontalAlignment="Center" Text="from customer:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Margin="0,99,0,0"/>
 
             </Grid>
-            <Grid Name="from" Grid.Row="6" Grid.Column="1">
+            <Grid Name="from" Grid.Row="7" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="37*"/>
                     <ColumnDefinition Width="114*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="FCus" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
+                <!--<ComboBox x:Name="FCus" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />-->
             </Grid>
-            <Grid Grid.Row="6" Grid.Column="2">
-                <Button x:Name="OPparc1" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="0,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
+            <DataGrid x:Name="FromCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="124,9,10,31" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="6" Grid.RowSpan="3" RenderTransformOrigin="0.505,0.216" Grid.ColumnSpan="2" Opacity="0.75">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="idColumn" Binding="{Binding PCID}" Header="id" Width="300" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="ToCustomerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="124,34,10,9" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="8" Grid.RowSpan="3" RenderTransformOrigin="0.505,0.216" Grid.ColumnSpan="2" Opacity="0.75">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="fidColumn" Binding="{Binding PCID}" Header="id" Width="300" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="187,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="155"/>
+                </Grid.ColumnDefinitions>
+                <!--<Button x:Name="OPparc1" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="0,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>-->
             </Grid>
-            <Grid Grid.Row="7" Grid.Column="2">
-                <Button x:Name="OPparc2" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="0,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>
+            <Grid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="187,62,0,62" Grid.RowSpan="3">
+                <!--<Button x:Name="OPparc2" Content="open" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Margin="0,0,0,0" Width="40" Style="{StaticResource ButtonStyle}" FontSize="10"/>-->
             </Grid>
-            <Grid Name="showTo" Grid.Row="6" Grid.Column="0" Margin="0,25,0,0" Grid.RowSpan="2">
-                <TextBlock HorizontalAlignment="Center" Text="to customer:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
+            <Grid Name="showTo" Grid.Row="8" Grid.Column="0" Margin="0,25,0,0" Grid.RowSpan="2">
+                <TextBlock HorizontalAlignment="Center" Text="to customer:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Margin="0,29,0,0"/>
 
             </Grid>
-            <Grid Name="to" Grid.Row="7" Grid.Column="1">
+            <Grid Name="to" Grid.Row="7" Grid.Column="1" Margin="0,62,0,62" Grid.RowSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="37*"/>
                     <ColumnDefinition Width="114*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="TCus" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
+                <!--<ComboBox x:Name="TCus" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />-->
 
             </Grid>
-            <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3">
+            <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3" Margin="0,62,0,0" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="134*"/>
-                    <ColumnDefinition Width="85*"/>
-                    <ColumnDefinition Width="31*"/>
+                    <ColumnDefinition Width="165*"/>
+                    <ColumnDefinition Width="77*"/>
+                    <ColumnDefinition Width="153*"/>
+                    <ColumnDefinition Width="56*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
-                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="59,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="CLOSE" HorizontalAlignment="Left" Margin="6,10,0,0" VerticalAlignment="Top" Width="45" Click="closeA_click" Style="{StaticResource ButtonStyle}"/>
+                <Button Content="UPDATE" HorizontalAlignment="Left" Margin="53,10,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}"/>
 
             </Grid>
 
