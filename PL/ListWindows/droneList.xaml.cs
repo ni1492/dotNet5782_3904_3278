@@ -113,9 +113,13 @@ namespace PL
         }
         private void DataGridCell_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
+            if (!((sender as DataGridCell).DataContext is Drone))
+                return;
             DataGridCell cell = sender as DataGridCell;
             PO.Drone d = cell.DataContext as PO.Drone;
             new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
+            DataContext = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
+            GroupingData = (DataContext as List<Drone>).GroupBy(s => s.Status).ToList();
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
 
