@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.PO;
+
 
 namespace PL.SingleWindows
 {
@@ -26,8 +28,10 @@ namespace PL.SingleWindows
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
-            FCus.ItemsSource = customer.FromC;
-            TCus.ItemsSource = customer.ToC;
+            //FCus.ItemsSource = customer.FromC;
+            //TCus.ItemsSource = customer.ToC;
+            ToCustomerDataGrid.ItemsSource = customer.ToC;
+            FromCustomerDataGrid.DataContext = customer.FromC;
 
             viewID.Text = customer.CusID.ToString();
             ShowLat.Text = customer.CLatitude.ToString();
@@ -238,6 +242,13 @@ namespace PL.SingleWindows
         //        yield return item;
         //    }
         //}
-    }
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
+            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
 
+        }
+    }
+   
 }

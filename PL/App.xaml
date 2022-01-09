@@ -14,7 +14,11 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepOrange.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-           
+            <Style TargetType="{x:Type TextBlock}" x:Key="HorizontalExpanderContentTextBlock">
+                <Setter Property="Opacity" Value=".68"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+
             <Style x:Key="IDWaterMark" TargetType="{x:Type TextBox}" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                 <Style.Resources>
                     <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">

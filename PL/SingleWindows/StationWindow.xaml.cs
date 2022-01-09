@@ -33,10 +33,10 @@ namespace PL.SingleWindows
             viewID.Text = station.BaseSId.ToString();
             viewLONG.Text = station.BSLongitude.ToString();
             viewLAT.Text = station.BSLatitude.ToString();
-            SLOTS.Text = station.ChargingSlots.ToString();
-            DRONES.ItemsSource = station.InCharging;
+            viewSLOTS.Text = station.ChargingSlots.ToString();
+           // DRONES.ItemsSource = station.InCharging;
             NAME.Text = station.BSName.ToString();
-
+            droneInChargingDataGrid.ItemsSource = station.InCharging;
         }
         public StationWindow(BlApi.IBL bl)//add grid
         {
@@ -235,11 +235,11 @@ namespace PL.SingleWindows
 
         }
 
-        private void openDrone_click(object sender, RoutedEventArgs e)
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            int id;
-            Int32.TryParse(DRONES.Text, out id);//!!!!!!!!!!!!!1
-            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(id))).ShowDialog();
+            DataGridCell cell = sender as DataGridCell;
+            PO.DroneInCharging d = cell.DataContext as PO.DroneInCharging;
+            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DCId))).ShowDialog();
         }
     }
 }
