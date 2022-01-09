@@ -161,6 +161,9 @@ namespace DALXML
             List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
             if (ListDrones.FirstOrDefault(s => s.Id == id).Equals(null))
                 throw new DO.NotFoundException("drone dosen't exist");
+            ListDrones.RemoveAll(drone => drone.Id == id);
+
+            XMLTools.SaveListToXMLSerializer(ListDrones, dronesPath);
         }
         #endregion
         #endregion

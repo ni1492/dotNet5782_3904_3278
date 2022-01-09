@@ -241,6 +241,8 @@ namespace BlApi
                 }
                 DateTime temp = dl.displayDronesInCharge(drone => drone.DroneId == id).FirstOrDefault().chargeTime;
                 double battery = chargingPH * ((double)((DateTime.Now.Hour-temp.Hour)+(double)((DateTime.Now.Minute-temp.Minute)/ 60)));
+                if (temp.Date != DateTime.Today)
+                    battery = 100;
                 battery += drones.Find(drone => drone.id == id).battery;
                 if (battery > 100)
                     battery = 100;
