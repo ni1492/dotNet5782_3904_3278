@@ -144,7 +144,8 @@ namespace DALXML
             foreach (var item in battery())
             {
                 power[i++] = item;
-
+                if (i == 5)
+                    break;
             }
             return power;
         }

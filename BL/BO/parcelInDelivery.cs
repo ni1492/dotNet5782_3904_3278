@@ -35,17 +35,6 @@ namespace BO
         }
         private double calcDistance()//calculate thedistance between two locations 
         {
-            //int R = 6371 * 1000;
-            //double phi1 = pickUp.Latitude * Math.PI;
-            //double phi2 = destination.Latitude * Math.PI;
-            //double deltaPhi = (destination.Latitude - pickUp.Latitude) * Math.PI / 180;
-            //double deltaLambda = (destination.Longitude - pickUp.Longitude) * Math.PI / 180;
-
-            //double a = Math.Sin(deltaPhi / 2) * Math.Sin(deltaPhi / 2) +
-            //    Math.Cos(phi1) * Math.Cos(phi2) *
-            //    Math.Sin(deltaLambda / 2) * Math.Sin(deltaLambda / 2);
-            //double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            //return (R * c / 1000);
             double lat1 = pickUp.Latitude * (Math.PI / 180.0);
             double long1 = pickUp.Longitude * (Math.PI / 180.0);
             double lat2 = destination.Latitude * (Math.PI / 180.0);

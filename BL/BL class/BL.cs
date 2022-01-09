@@ -11,7 +11,7 @@ namespace BlApi
 {
     public partial class BL: IBL
     {
-        public readonly IDal dl = DalFactory.getDal(true);//initialize the DAL object
+        public readonly IDal dl= DalFactory.getDal(true);//initialize the DAL object
         public List<droneForList> drones = new List<droneForList>(); //the list of drones saved in the BL layer
         //שדות נוספים: פנוי, נושא משקל קל, בינוני וכבד+שדה של הטענה לשעה
         public double availablePK;
@@ -32,27 +32,14 @@ namespace BlApi
             instance.mediumPK = powerUse[2];
             instance.heavyPK = powerUse[3];
             instance.chargingPH = powerUse[4];
-            instance.initializeDrone(); //initializing the program}
+            instance.initializeDroneXML(); //initializing the program
+            //initializeDroneOBLECT();
         }
         BL() { }
         public static BL Instance => instance;
         #endregion
 
-        //public BL()
-        //{
-        //    dl = DalFactory.getDal("DALObject");//initialize the DAL object
-        //    drones = new List<droneForList>(); //initialize the list of drones 
-        //    //initializing the different variables 
-        //    double[] powerUse = dl.powerUse(); 
-        //    availablePK = powerUse[0];
-        //    lightPK = powerUse[1];
-        //    mediumPK = powerUse[2];
-        //    heavyPK = powerUse[3];
-        //    chargingPH = powerUse[4];
-        //    initializeDrone(); //initializing the program
-
-        //}
-        private void initializeDrone()
+        private void initializeDroneXML()
         {
             Random r = new Random(); 
             foreach (var item in dl.DisplayDrones(drone => true))//bulding list of drones - adding them from the DAL layer
@@ -152,7 +139,109 @@ namespace BlApi
                
             }
         }
+        private void initializeDroneOBLECT()
+        {
+            Random r = new Random();
+            foreach (var item in dl.DisplayDrones(drone => true))//bulding list of drones - adding them from the DAL layer
+            {
+                drones.Add(new droneForList
+                {
+                    id = item.Id,
+                    model = item.Model,
+                    weight = (WeightCategories)item.MaxWeight
 
+                });//adding drone to the list
+            }
+            foreach (var item in drones)
+            {
+                if ((isMatched(item.id)) && (!isDelivered(item.id)) && (isPickedUp(item.id))) //if matched and picked up but not delivered-on delivery
+                {
+                    item.status = DroneStatuses.delivery;
+                    item.parcelID = findParcelDelivery(item.id);
+                    item.currentLocation = senderLocation(item.parcelID);//returns the location of the sender
+
+                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                    if (minBattery <= 100)
+                        item.battery = (double)r.Next((int)minBattery, 101);
+                    else
+                    {
+                        item.battery = (double)r.Next(50, 101);
+                    }
+                }
+                else if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
+                {
+                    item.status = DroneStatuses.delivery;
+                    item.parcelID = findParcelDelivery(item.id);
+                    item.currentLocation = nearestStation(senderLocation(item.parcelID));//returns the closet station to the sender
+
+                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                    if (minBattery <= 100)
+                        item.battery = (double)r.Next((int)minBattery, 101);
+                    else
+                    {
+                        item.battery = (double)r.Next(50, 101);
+                    }
+
+                }
+                else//not matched to any parcel
+                {
+                    item.status = (DroneStatuses)r.Next(1, 3); //the status will be randomized between in available and maintenance
+                    if (item.status == DroneStatuses.available) //creating a list of all locations of customers that have had parcels delivered to them
+                    {
+                        List<location> locations = new List<location>();
+                        int count = 0;
+                        foreach (var cus in dl.DisplayCustomers(customer => true))
+                        {
+                            bool accepted = false;
+                            foreach (var parcel in dl.DisplayParcels(parcel => true))
+                            {
+                                if (parcel.TargetId == cus.Id)
+                                {
+                                    accepted = true;
+                                    break;
+                                }
+
+                            }
+                            if (accepted)
+                            {
+                                locations.Add(new location
+                                {
+                                    Latitude = cus.Lattitude,
+                                    Longitude = cus.Longitude
+                                });
+                                count++;
+                            }
+
+                        }
+                        if (count != 0)
+                            item.currentLocation = locations[r.Next(0, count)];
+                        else
+                            item.currentLocation = new location
+                            {
+                                Latitude = r.Next(-180, 180) + (double)(r.Next(1000, 10000)) / 10000,
+                                Longitude = r.Next(-90, 90) + (double)(r.Next(1000, 10000)) / 10000
+                            };
+                        //the location in random from a list of customers that have had parcels delivered to them
+                        double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                        if (minBattery <= 100)
+                            item.battery = (double)r.Next((int)minBattery, 101);
+                        else
+                        {
+                            item.battery = (double)r.Next(50, 101);//cant get to any station
+
+                        }
+                    }
+                    else if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
+                    {
+                        int stationId = r.Next(1, dl.DisplayStations(station => true).Count());
+                        item.currentLocation = stationLocation(stationId);
+                        //the drone location will be the location of the station chosen
+                        item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
+                        dl.AddCharging(item.id, stationId);
+                    }
+                }
+            }
+        }
         private int inCharge(droneForList drone)
         {
             return dl.displayDronesInCharge(charge => charge.DroneId == drone.id).FirstOrDefault().StationId;
@@ -245,7 +334,7 @@ namespace BlApi
             }
             return location;
         }
-        private location nearestCharging(location loc)//return the closest statuon to the location given by the user
+        private location nearestCharging(location loc)//return the closest station to the location given by the user
         {
 
             List<baseStation> locations = new List<baseStation>();

@@ -16,7 +16,7 @@ namespace BlApi
             {
                 DateTime? x = new DateTime
                     (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                dl.AddParcel(new Parcel { Id = 0, SenderId= dl.DisplayCustomers(c=>c.Name== parcel.sender).FirstOrDefault().Id,TargetId= dl.DisplayCustomers(c => c.Name == parcel.receiver).FirstOrDefault().Id, Weight= (DO.WeightCategories)(parcel.weight-1),Priority= (DO.Priorities)(parcel.priority-1),DroneId= 0,Requested=x,Scheduled=null,PickedUp=null,Delivered=null }) ;
+                dl.AddParcel(new Parcel { Id = 0, SenderId= dl.DisplayCustomers(c=>c.Name== parcel.sender).FirstOrDefault().Id,TargetId= dl.DisplayCustomers(c => c.Name == parcel.receiver).FirstOrDefault().Id, Weight= (DO.WeightCategories)(parcel.weight-1),Priority= (DO.Priorities)(parcel.priority-1),DroneId= 0,Requested=x,Scheduled=null,PickedUp=null,Delivered=null }) ;           
             }
             catch (Exception ex) //catches if the ID already exists
             {

@@ -28,9 +28,10 @@ namespace PL
         public static ObservableCollection<PO.Parcel> parcels;
         public static ObservableCollection<PO.Customer> customers;
         public static ObservableCollection<PO.BaseStation> stations;
-
+        IBL bl;
         public MainWindow()
         {
+            bl = App.bl;
             InitializeComponent();
         }
 
@@ -53,22 +54,22 @@ namespace PL
         }
         private void showDronesButton_click(object sender, RoutedEventArgs e)
         {
-            new droneList(App.bl).Show();
+            new droneList(bl).Show();
         }
 
         private void showParcelsButton_click(object sender, RoutedEventArgs e)
         {
-            new ParcelList(App.bl).Show();
+            new ParcelList(bl).Show();
         }
 
         private void showCustomersButton_click(object sender, RoutedEventArgs e)
         {
-            new CustomerList(App.bl).Show();
+            new CustomerList(bl).Show();
         }
 
         private void showStationButton_click(object sender, RoutedEventArgs e)
         {
-            new BaseStationList(App.bl).Show();
+            new BaseStationList(bl).Show();
         }
 
         private void signIn_Click(object sender, RoutedEventArgs e)
@@ -79,7 +80,7 @@ namespace PL
         }
         private bool checkPassword(string text)
         {
-            if (App.bl.userCorrect("manager", text, true))
+            if (bl.userCorrect("manager", text, true))
                 return true;
             return false;
         }

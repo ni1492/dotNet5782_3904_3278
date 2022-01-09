@@ -131,7 +131,7 @@ namespace PL.SingleWindows
                     return false;
                 if (!int.TryParse(text, out int num))
                     return false;
-                if ((num >= 100000000)&&(num<10000000000))
+                if (num >= 100000000)
                     return true;
 
                 return false;
@@ -165,7 +165,7 @@ namespace PL.SingleWindows
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayCustomer(id) != null)
+                if (bl.displayCustomer(id).id!=0)
                     return false;
                 return true;
             }

@@ -240,7 +240,8 @@ namespace BlApi
                     throw new BO.exceptions.TimeException("drone not in charging");
                 }
                 DateTime temp = dl.displayDronesInCharge(drone => drone.DroneId == id).FirstOrDefault().chargeTime;
-                double battery = drones.Find(drone => drone.id == id).battery + chargingPH * ((double)((DateTime.Now.Hour-temp.Hour)+(double)((DateTime.Now.Minute-temp.Minute)/ 60)));
+                double battery = chargingPH * ((double)((DateTime.Now.Hour-temp.Hour)+(double)((DateTime.Now.Minute-temp.Minute)/ 60)));
+                battery += drones.Find(drone => drone.id == id).battery;
                 if (battery > 100)
                     battery = 100;
                 drones.Find(drone => drone.id == id).status = DroneStatuses.available;
@@ -331,6 +332,7 @@ namespace BlApi
             droneForList d = new();
             List<parcelInDelivery> parcels = new List<parcelInDelivery>();
             List<parcelInDelivery> list = new List<parcelInDelivery>();
+            double[] PK = { lightPK, mediumPK, heavyPK };
             foreach (var drone in drones)//find the drone to match
             {
                 if (droneId == drone.id)
@@ -348,8 +350,7 @@ namespace BlApi
             }
             foreach (var parcel in displayParcelListWithoutDrone())//select the parcels not matched yet that the drone can deliver
             {
-                double[] PK = { lightPK, mediumPK, heavyPK };
-                double minbattery = calcDistance(senderLocation(parcel.id), targetLocation(parcel.id)) * PK[(int)parcel.weight-1] + 
+                double minbattery = calcDistance(senderLocation(parcel.id), targetLocation(parcel.id)) * PK[(int)parcel.weight] + 
                     calcDistance(d.currentLocation, senderLocation(parcel.id)) * availablePK;
                 if (minbattery <=battery)//check if the drone can deliver 
                 {
@@ -360,8 +361,10 @@ namespace BlApi
                         priority = parcel.priority,
                         pickUp = senderLocation(parcel.id),
                         destination = targetLocation(parcel.id),
-                      //  distance = calcDistance(senderLocation(parcel.id), targetLocation(parcel.id)),
-                        status = false
+                        //distance = calcDistance(senderLocation(parcel.id), targetLocation(parcel.id)),
+                        status = false,
+                        sender = null,
+                        receiver = null
                     });
                 } 
             }
@@ -372,8 +375,9 @@ namespace BlApi
             {
                 foreach (var item in dl.DisplayParcels(parcel=>parcel.Priority==(DO.Priorities)p))
                 {
-                    if (list.Find(parcel => parcel.id == item.Id) != null)
-                        parcels.Add(list.Find(parcel => parcel.id == item.Id));
+                    parcelInDelivery temp = list.FindAll(parcel => parcel.id == item.Id).FirstOrDefault();
+                    if (temp!=null)
+                        parcels.Add(temp);
                 }
                 p--;
             } while (parcels.Count() == 0);

@@ -1,2 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<CustomerXML.xml />
+<CustomerXML.xml>
+  <Customer>
+    <Id>123456789</Id>
+    <Name>asd</Name>
+    <Phone>0323232344</Phone>
+    <Longitude>30</Longitude>
+    <Lattitude>29</Lattitude>
+  </Customer>
+  <Customer>
+    <Id>432345666</Id>
+    <Name>dsa</Name>
+    <Phone>0434556666</Phone>
+    <Longitude>26</Longitude>
+    <Lattitude>31</Lattitude>
+  </Customer>
+</CustomerXML.xml>
