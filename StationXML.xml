@@ -5,7 +5,7 @@
     <Name>station1</Name>
     <Longitude>32</Longitude>
     <Lattitude>29</Lattitude>
-    <ChargeSlots>41</ChargeSlots>
+    <ChargeSlots>40</ChargeSlots>
   </Station>
   <Station>
     <Id>2</Id>
@@ -13,5 +13,12 @@
     <Longitude>35</Longitude>
     <Lattitude>42</Lattitude>
     <ChargeSlots>76</ChargeSlots>
+  </Station>
+  <Station>
+    <Id>3</Id>
+    <Name>station3</Name>
+    <Longitude>32</Longitude>
+    <Lattitude>28</Lattitude>
+    <ChargeSlots>37</ChargeSlots>
   </Station>
 </StationXML.xml>

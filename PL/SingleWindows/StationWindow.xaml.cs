@@ -213,15 +213,16 @@ namespace PL.SingleWindows
         }
         private bool checkId(string text)
         {
+            int id;
             try
             {
                 if (text == null)
                     return false;
-                if (!int.TryParse(text, out int id))
+                if (!int.TryParse(text, out id))
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayStation(id) != null)
+                if (bl.displayStation(id).id != 0)
                     return false;
                 return true;
             }

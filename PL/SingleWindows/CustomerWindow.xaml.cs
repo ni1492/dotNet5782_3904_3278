@@ -157,15 +157,16 @@ namespace PL.SingleWindows
         }
         private bool checkId(string text)
         {
+            int id;
             try
             {
                 if (text == null)
                     return false;
-                if (!int.TryParse(text, out int id))
+                if (!int.TryParse(text, out id))
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayCustomer(id) != null)
+                if (bl.displayCustomer(id).id != 0)
                     return false;
                 return true;
             }
