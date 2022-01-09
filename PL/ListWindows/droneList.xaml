@@ -17,12 +17,7 @@
         </Grid.Background>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto" Visibility="Visible">
-            <!--<Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#7FFFD100" Offset="0"/>
-                    <GradientStop Color="#7FFF0000" Offset="1"/>
-                </LinearGradientBrush>
-            </Grid.Background>-->
+           
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200*"/>
                 <ColumnDefinition Width="200*"/>
@@ -116,19 +111,105 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible">
 
 
             </DataGrid.Columns>
+
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" Text="{Binding }" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+        </DataGrid>
+        
+        <DataGrid x:Name="groupingDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="10,19,239,89" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick_1"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Status , Mode=OneWay}"/>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn x:Name="dIdColumn" Header="DId" Width="60">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DId}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="modelColumn" Header="Model" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Model}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="batteryColumn" Header="Battery" Width="SizeToHeader">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Battery}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="weightColumn" Header="Weight" Width="80">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Weight}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="statusColumn" Header="Status" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Status}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="latitudeColumn" Header="Latitude" Width="170" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DLatitude}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="longitudeColumn" Header="Longitude" Width="170">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding DLongitude}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn x:Name="parcelColumn" Header="Parcel" Width="70">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Parcel}" FontSize="10" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
 
-        <!--<ListView Grid.Row="1" x:Name="DroneListView" MouseDoubleClick="openDrone_DoubleClick">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>-->
+       
         <Grid Name="bottomGrid" Grid.Row="2">
             <Button Content="Add drone" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" Style="{StaticResource ButtonStyle}"/>
             <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="close_Click" 
             Style="{StaticResource ButtonStyle}" />
+            <Button Content="Group" HorizontalAlignment="Left"  Margin="171,3,0,0" VerticalAlignment="Top" Height="22" Width="74"  Style="{StaticResource ButtonStyle}" Click="group_Click"/>
+            <Button Content="Ungroup" HorizontalAlignment="Left" Height="22" Width="74" Margin="40,0,0,0" VerticalAlignment="Center"  Style="{StaticResource ButtonStyle}" Click="ungroup_Click"/>
 
         </Grid>
     </Grid>

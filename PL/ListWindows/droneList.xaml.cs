@@ -24,6 +24,7 @@ namespace PL
     public partial class droneList : Window
     {
          IBL bl;
+        public List<IGrouping<DroneStatuses, Drone>> GroupingData;
         public droneList( IBL bl)
         {
             this.bl = bl;
@@ -108,6 +109,16 @@ namespace PL
             weightSelection(weightSelector, null);
            
         }
+        private void DataGridCell_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Drone d = cell.DataContext as PO.Drone;
+            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
+
+        }
+        
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).ShowDialog();
@@ -147,6 +158,21 @@ namespace PL
             weightSelection(weightSelector, null);
             weightSelector.Text = "";
 
+        }
+
+        private void group_Click(object sender, RoutedEventArgs e)
+        {
+            List<Drone> drones = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
+            GroupingData = drones.GroupBy(x => x.Status).ToList();
+            groupingDataGrid.DataContext = GroupingData;
+            droneDataGrid.Visibility = Visibility.Hidden;
+            groupingDataGrid.Visibility = Visibility.Visible;
+        }
+
+        private void ungroup_Click(object sender, RoutedEventArgs e)
+        {
+            groupingDataGrid.Visibility = Visibility.Hidden;
+            droneDataGrid.Visibility = Visibility.Visible;
         }
     }
     
