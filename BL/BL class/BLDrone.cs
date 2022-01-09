@@ -345,7 +345,7 @@ namespace BlApi
                         status = drone.status,
                         currentLocation = drone.currentLocation
                     });
-
+                    break;
                 }
             }
             foreach (var parcel in displayParcelListWithoutDrone())//select the parcels not matched yet that the drone can deliver
@@ -363,9 +363,9 @@ namespace BlApi
                         destination = targetLocation(parcel.id),
                         //distance = calcDistance(senderLocation(parcel.id), targetLocation(parcel.id)),
                         status = false,
-                        sender = null,
-                        receiver = null
-                    });
+                        sender = new customerForParcel() { id = 0, name = parcel.sender },
+                            receiver = new customerForParcel() { id = 0, name = parcel.receiver }
+                    }) ;
                 } 
             }
             if (list.Count == 0)//if the drone cant deliver any parcel

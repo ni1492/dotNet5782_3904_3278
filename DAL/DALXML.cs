@@ -264,6 +264,9 @@ namespace DALXML
             if (p.Id == 0)
             {
                 p.Id = count++;
+                counterRootElem.RemoveAll();
+                XElement counter =new XElement("ParcelID", count.ToString());
+                XMLTools.SaveListToXMLElement(counterRootElem, counterPath);
             }
             Parcel parcel = new Parcel
             {

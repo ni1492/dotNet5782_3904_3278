@@ -85,10 +85,10 @@ VerticalAlignment="Stretch" Width="auto" Visibility="Visible" Style="{StaticReso
         </DataGrid>
 
 
-        <DataGrid x:Name="baseStationGroupingDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" Height="267" Width="316" Opacity="0.9">
+        <DataGrid x:Name="baseStationGroupingDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" Height="267" Width="316" Opacity="0.9" MouseDoubleClick="GrupingCell_MouseDoubleClick">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
-                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick_1"/>
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>

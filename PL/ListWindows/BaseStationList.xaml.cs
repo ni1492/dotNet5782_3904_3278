@@ -39,14 +39,6 @@ namespace PL
             ungroup.Visibility = Visibility.Hidden;
         }
 
-        //private void openStation_DoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    int id = ((BO.baseStationForList)(sender as ListView).SelectedItem).id;
-
-        //    baseStationDataGrid.ItemsSource = bl.displayStationList();
-
-
-        //}
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
@@ -62,15 +54,8 @@ namespace PL
         private void addStation_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow(bl).ShowDialog();
-          //  baseStationDataGrid.ItemsSource = bl.displayStationList();
-           DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
-        }
-
-             private void DataGridCell_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.BaseStation s = cell.DataContext as PO.BaseStation;
-            new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
+            //  baseStationDataGrid.ItemsSource = bl.displayStationList();
+            DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
         }
 
         private void group_Click(object sender, RoutedEventArgs e)
@@ -90,6 +75,13 @@ namespace PL
             baseStationDataGrid.Visibility = Visibility.Visible;
             group.Visibility = Visibility.Visible;
             ungroup.Visibility = Visibility.Hidden;
+        }
+
+        private void GrupingCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.BaseStation s = cell.DataContext as PO.BaseStation;
+            new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
         }
     }
 }
