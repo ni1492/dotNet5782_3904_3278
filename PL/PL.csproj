@@ -24,10 +24,13 @@
     <None Remove="logo.png" />
     <None Remove="pngwing.com.png" />
     <None Remove="preview.png" />
+    <None Remove="show.png" />
     <None Remove="SingleWindows\CustomerView.png" />
     <None Remove="SingleWindows\DroneView.png" />
+    <None Remove="SingleWindows\logo.png" />
     <None Remove="SingleWindows\ParclView.png" />
     <None Remove="SingleWindows\StationView.png" />
+    <None Remove="SingleWindows\UserBack.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,10 +55,13 @@
     <Resource Include="ListWindows\backStationList.jpg" />
     <Resource Include="logo.png" />
     <Resource Include="pngwing.com.png" />
+    <Resource Include="show.png" />
     <Resource Include="SingleWindows\CustomerView.png" />
     <Resource Include="SingleWindows\DroneView.png" />
+    <Resource Include="SingleWindows\logo.png" />
     <Resource Include="SingleWindows\ParclView.png" />
     <Resource Include="SingleWindows\StationView.png" />
+    <Resource Include="SingleWindows\UserBack.png" />
   </ItemGroup>
 
 </Project>

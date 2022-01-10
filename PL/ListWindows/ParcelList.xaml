@@ -182,18 +182,5 @@
     </Grid>
 
 
-    <!--<ListView Grid.Row="1" x:Name="DroneListView" MouseDoubleClick="openDrone_DoubleClick">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>-->
-    <!--<Grid Name="bottomGrid" Grid.Row="2">
-            <Button Content="Add drone" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addDrone_Click" BorderBrush="Red" />
-            <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="Button_Click" BorderBrush="Red" />
-
-        </Grid>-->
-    <!--</Grid>-->
 
 </Window>
