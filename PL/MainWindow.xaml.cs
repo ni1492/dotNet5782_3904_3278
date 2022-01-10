@@ -31,6 +31,9 @@ namespace PL
         public static ObservableCollection<PO.Customer> customers;
         public static ObservableCollection<PO.BaseStation> stations;
         IBL bl;
+
+        public object Properties { get; private set; }
+
         public MainWindow()
         {
             
@@ -44,7 +47,14 @@ namespace PL
             showPassUser.Visibility = Visibility.Hidden;
         }
 
+        private void HandleCheck(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void HandleUnchecked(object sender, RoutedEventArgs e)
+        {
+        }
         private void showDronesButton_click(object sender, RoutedEventArgs e)
         {
             new droneList(bl).Show();
@@ -353,6 +363,7 @@ namespace PL
             tryAgain.Visibility = Visibility.Hidden;
             UserPasswordBorder.Visibility = Visibility.Visible;
             USERNAME.Content = "";
+            new RateUs();
         }
         private void DataGridCellToCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

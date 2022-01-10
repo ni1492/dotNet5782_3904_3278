@@ -26,9 +26,9 @@ namespace PL
         public static IBL bl = BlFactory.GetBl();
         public App()
         {
-            SoundPlayer player = new SoundPlayer();
-            player.SoundLocation = "music.wav";
-            player.Play();
+            //SoundPlayer player = new SoundPlayer();
+            //player.SoundLocation = "music.wav";
+            //player.Play();
             //player.PlaySync();
             //CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             //ci.DateTimeFormat.ShortDatePattern = "DD/MM/YYYY HH:MM:SS";
