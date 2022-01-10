@@ -34,6 +34,7 @@ namespace BlApi
         public void pickupParcel(int id); //parcel is picked up by drone
         public void deliverParcel(int id); //parcel is delivered by drone
         public parcel displayParcel(int id); //display requested parcel
+        public IEnumerable<parcelForList> displayParcels(Predicate<parcelForList> match); //display all parcels that match the predicate
         public IEnumerable<parcelForList> displayParcelList(); //display all parcels
         public IEnumerable<parcelForList> displayParcelListWithoutDrone(); //display all parcels that arent matched
         public ParcelStatus getStatus(int id);

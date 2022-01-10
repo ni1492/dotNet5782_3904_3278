@@ -28,6 +28,21 @@
         <Grid.Background>
             <ImageBrush ImageSource="/ListWindows/backParcelList.jpg" Stretch="Fill"/>
         </Grid.Background>
+
+        <Grid x:Name="UpGrid" Grid.ColumnSpan="4" Margin="0,-14,0,14">
+            <ComboBox x:Name="statusSelector" HorizontalAlignment="Left" VerticalAlignment="Top" Width="95" SelectionChanged="statusSelection" Height="28" Margin="625,16,0,0"/>
+            <Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}"  HorizontalAlignment="Left" Click="ClearStatusFilledComboBox_Click" Margin="716,8,0,8" FontWeight="Medium" />
+            <ComboBox x:Name="weightSelector" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" SelectionChanged="weightSelection" Height="28" Margin="94,16,0,0"/>
+
+            <Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}"  HorizontalAlignment="Left" Click="ClearWeightFilledComboBox_Click" Margin="186,8,0,12" />
+            <Label Content="Status:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Height="38" FontSize="16" FontFamily="Berlin Sans FB" Margin="560,20,0,0"/>
+            <Label Content="Weight:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="71" Height="38" FontSize="16" FontFamily="Berlin Sans FB" Margin="18,20,0,0"/>
+            <Label Content="Priority:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="168" Height="38" FontSize="16" FontFamily="Berlin Sans FB" Margin="278,20,0,0"/>
+            <Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}"  HorizontalAlignment="Left" Click="ClearPriorityFilledComboBox_Click" Margin="446,8,0,8" />
+            <ComboBox x:Name="prioritySelector" HorizontalAlignment="Center" VerticalAlignment="Top" Width="96" SelectionChanged="weightSelection"  Height="28" Margin="0,18,0,0" />
+
+        </Grid>
+
         <DataGrid x:Name="parcelDataGrid" Grid.RowSpan="4" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Height="338" Width="528" Opacity="0.8">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
@@ -89,7 +104,12 @@
             </DataGrid.GroupStyle>
         </DataGrid>
 
-        <DataGrid x:Name="parcelGroupingDataGrid" Grid.RowSpan="4" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Height="338" Width="528" Opacity="0.8">
+
+       
+
+
+
+        <DataGrid x:Name="parcelGroupingDataGrid" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" RowDetailsVisibilityMode="VisibleWhenSelected" Height="352" Width="528" Opacity="0.8" Margin="136,48,0,0" Grid.RowSpan="2">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
@@ -104,47 +124,47 @@
                         <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn x:Name="pIDColumn" Header="ID" Width="70">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding PID}" FontSize="10"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="sIDColumn1" Header="Sender" Width="90">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding SenderName}" FontSize="10"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="tIDColumn" Header="Target" Width="90">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding TargetName}" FontSize="10"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="priorityColumn" Header="Priority" Width="90">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Priority}" FontSize="10"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="pWeightColumn" Header="Weight" Width="90">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding PWeight}" FontSize="10"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn x:Name="PStatusColumn" Header="Status" Width="90">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding  PStatus}" FontSize="10"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding PID}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="sIDColumn1" Header="Sender" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding SenderName}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="tIDColumn" Header="Target" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TargetName}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="priorityColumn" Header="Priority" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Priority}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="pWeightColumn" Header="Weight" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding PWeight}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn x:Name="PStatusColumn" Header="Status" Width="90">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding  PStatus}" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
