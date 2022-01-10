@@ -22,6 +22,7 @@
     <None Remove="ListWindows\building.jpg" />
     <None Remove="logo.jpg" />
     <None Remove="logo.png" />
+    <None Remove="playIcon.png" />
     <None Remove="pngwing.com.png" />
     <None Remove="preview.png" />
     <None Remove="show.png" />
@@ -31,6 +32,7 @@
     <None Remove="SingleWindows\ParclView.png" />
     <None Remove="SingleWindows\StationView.png" />
     <None Remove="SingleWindows\UserBack.png" />
+    <None Remove="stopIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +56,7 @@
     <Resource Include="ListWindows\backParcelList.jpg" />
     <Resource Include="ListWindows\backStationList.jpg" />
     <Resource Include="logo.png" />
+    <Resource Include="playIcon.png" />
     <Resource Include="pngwing.com.png" />
     <Resource Include="show.png" />
     <Resource Include="SingleWindows\CustomerView.png" />
@@ -62,6 +65,7 @@
     <Resource Include="SingleWindows\ParclView.png" />
     <Resource Include="SingleWindows\StationView.png" />
     <Resource Include="SingleWindows\UserBack.png" />
+    <Resource Include="stopIcon.png" />
   </ItemGroup>
 
 </Project>

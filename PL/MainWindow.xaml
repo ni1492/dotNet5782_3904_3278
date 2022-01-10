@@ -5,8 +5,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
-        xmlns:Asio="clr-namespace:NAudio.Wave.Asio;assembly=NAudio.Asio"
+xmlns:local="clr-namespace:PL"
         x:Class="PL.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Icon="/logo.png">
@@ -18,7 +17,6 @@
             <RowDefinition Height="101*"/>
             <RowDefinition Height="333*"/>
         </Grid.RowDefinitions>
-
         <TabControl x:Name="TabControl_Login" Grid.RowSpan="2">
             <!--SelectionChanged="TabControl_SelectionChanged">-->
             <TabControl.Background>
@@ -29,10 +27,7 @@
             </TabControl.Background>
             <TabItem Header="main window" Width="180" Height="30" FontSize="16">
                 <Grid>
-                    <StackPanel>
-                        <ToggleButton x:Name = "tb"  Checked = "HandleCheck" Unchecked = "HandleUnchecked" Width = "108" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ToggleButtonStyle1}"/>
 
-                    </StackPanel>
                     <Image x:Name="fire" Source="/pngwing.com.png" Margin="0,20,50,0" FlowDirection="RightToLeft" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                     <TextBlock HorizontalAlignment="Center" Margin="60,50,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Center" Height="236" Width="742" FontSize="130" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic" Foreground="Black"/>
                     <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Center" Height="93" Margin="534,0,0,230" VerticalAlignment="Center" Width="94"/>
@@ -40,7 +35,17 @@
         <Button Content="admin" HorizontalAlignment="Center" Margin="150,0,0,0" VerticalAlignment="Center" Height="50" Width="86" Click="AdminSignIn" />
         <Button Content="sign up" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="99" Click="SignUp"/>-->
                     <Grid x:Name="main"   Margin="-70,0,-85,-2"/>
-                    
+                    <Button x:Name="Stop" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="stop_Click" BorderBrush="#009E9E9E">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/stopIcon.png" Opacity="1" TileMode="None" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="Play" HorizontalAlignment="Left" Visibility="Hidden" Margin="10,10,0,0" VerticalAlignment="Top" Click="play_ClicK" BorderBrush="#009E9E9E">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/playIcon.png" Opacity="1" TileMode="None" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+
                 </Grid>
             </TabItem>
 
@@ -112,7 +117,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="/BACK.jpg"/>
                     </Grid.Background>
-                    <Grid x:Name="window_User" Visibility="Visible">
+                    <Grid x:Name="window_User" Visibility="Hidden">
                         <Button x:Name="USERNAME"  Content="USER" HorizontalAlignment="Right" Margin="0,20,20,0"  VerticalAlignment="Top" Width="100" Background="#00FF0000" BorderBrush="#009E9E9E" Foreground="#DDFF0000" Click="OpenDetails_Click" Height="30" FontSize="16" FontWeight="Normal" />
                         <Button x:Name="logOutUser" Content="sign out" Height="30" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" ToolTipService.ShowDuration="8000" Style="{StaticResource ButtonStyle}"  Click="Button_Click_LogOutUser">
 
@@ -249,28 +254,57 @@
                         <Button Content="send new parcel!" HorizontalAlignment="Left" Margin="20,0,0,10" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyle}" Height="35" Width="135" Click="newParcel_Click"/>
 
                     </Grid>
-                    <Border x:Name="UserPasswordBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Visible" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
-                        <StackPanel Width="300" Margin="0,-5,0,-21">
-                            <TextBlock Text="enter username:" Height="28" Width="232" Margin="0,15,0,0"/>
-                            <TextBox x:Name="TextBox_TraineeID" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />
-                            <!--KeyDown="TextBox_TraineeID_KeyDown" GotFocus="TextBox_ExistingTraineeID_GotFocus" TextChanged="TextBox_TraineeID_TextChanged"/>-->
-                            <TextBlock Text="enter password:" Height="28" Width="232" Margin="0,15,0,0"/>
-                            <PasswordBox x:Name="PassBox_user" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0"  Width="240" />
-                            <!--KeyDown="PassBox_user_KeyDown"/>-->
-                            <TextBlock x:Name="showPassUser" Height="30" Text="" Visibility="Visible" HorizontalAlignment="Right" Padding="2" Margin="0,-30,30,0" Width="240"/>
-                            <Button Content="show" Width="28" Margin="220,-30,0,0"  Click="showUser" Height="21" BorderBrush="#009E9E9E">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="/show.png" Opacity="1" TileMode="None" Stretch="UniformToFill"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Content="sign in" Width="125" Margin="0,40,0,0" Style="{StaticResource ButtonStyle}" Click="signInUser_Click" />
-                            <!--Click="Button_Click_EnterAsExistingTrainee"/>-->
-                            <TextBlock x:Name="tryAgainUser" Text="password or userName not correct- please try again" Visibility="Hidden" Margin="20,-100,0,0" Height="28" Width="301" HorizontalAlignment="Left" FontSize="12" Foreground="Red"/>
-                            <CheckBox x:Name="rememberUser" Content="remmember me?" Foreground="#FF9F9F9F" />
+                    <Grid x:Name="enter">
+                        <Border x:Name="UserPasswordBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
+                            <StackPanel Width="300" Margin="0,-5,0,-21">
+                                <TextBlock Text="enter username:" Height="28" Width="232" Margin="0,15,0,0"/>
+                                <TextBox x:Name="TextBox_TraineeID" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />
+                                <!--KeyDown="TextBox_TraineeID_KeyDown" GotFocus="TextBox_ExistingTraineeID_GotFocus" TextChanged="TextBox_TraineeID_TextChanged"/>-->
+                                <TextBlock Text="enter password:" Height="28" Width="232" Margin="0,15,0,0"/>
+                                <PasswordBox x:Name="PassBox_user" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0"  Width="240" />
+                                <!--KeyDown="PassBox_user_KeyDown"/>-->
+                                <TextBlock x:Name="showPassUser" Height="30" Text="" Visibility="Visible" HorizontalAlignment="Right" Padding="2" Margin="0,-30,30,0" Width="240"/>
+                                <Button Content="show" Width="28" Margin="220,-30,0,0"  Click="showUser" Height="21" BorderBrush="#009E9E9E">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="/show.png" Opacity="1" TileMode="None" Stretch="UniformToFill"/>
+                                    </Button.Background>
+                                </Button>
+                                <Button Content="sign in" Width="125" Margin="0,40,0,0" Style="{StaticResource ButtonStyle}" Click="signInUser_Click" />
+                                <!--Click="Button_Click_EnterAsExistingTrainee"/>-->
+                                <TextBlock x:Name="tryAgainUser" Text="password or userName not correct- please try again" Visibility="Hidden" Margin="20,-100,0,0" Height="28" Width="301" HorizontalAlignment="Left" FontSize="12" Foreground="Red"/>
+                                <CheckBox x:Name="rememberUser" Content="remmember me?" Foreground="#FF9F9F9F" />
+                                <Button Content="Forgot Password?" Width="145" Margin="150,0,0,0"  Click="forgotPass_Click" Height="28" Background="#009E9E9E" BorderBrush="#009E9E9E" />
 
 
-                        </StackPanel>
-                    </Border>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="forgotPassBorder1" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
+                            <StackPanel Width="300" Margin="0,-5,0,-21">
+                                <TextBlock Text="enter username:" Height="28" Width="232" Margin="0,15,0,0"/>
+                                <TextBox x:Name="userName" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />
+                                <TextBlock Text="enter email:" Height="28" Width="232" Margin="0,15,0,0"/>
+                                <TextBox x:Name="userEmail" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />
+                                <Button Content="send email" Width="125" Margin="0,40,0,0" Style="{StaticResource ButtonStyle}" Click="sendEmail_Click" />
+
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="forgotPassBorder2" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
+                            <StackPanel Width="300" Margin="0,-5,0,-21">
+                                <TextBlock Text="enter code:" Height="28" Width="232" Margin="0,65,0,0"/>
+                                <TextBox x:Name="codeBox" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0"  Width="240" />
+                                <Button Content="reset password" Width="125" Margin="0,40,0,0" Style="{StaticResource ButtonStyle}" Click="resetPass_Click" />
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="resetPassBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Visible" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
+                            <StackPanel Width="300" Margin="0,-5,0,-21">
+                                <TextBlock Text="enter new password:" Height="28" Width="232" Margin="0,65,0,0"/>
+                                <TextBox x:Name="newPass" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0"  Width="240" />
+                                <Button Content="reset password" Width="125" Margin="0,40,0,0" Style="{StaticResource ButtonStyle}" Click="newPass_Click" />
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+                    
                     <Grid Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>

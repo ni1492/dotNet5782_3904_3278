@@ -43,6 +43,7 @@ namespace BlApi
         public UserForDisplay displayUser(string userN);
         public IEnumerable<UserForDisplay> displayUsersList();
         public bool userCorrect(string userN, string password, bool isManager);
-        
+        public void changePass(string userN, string password);
+
 }
 }

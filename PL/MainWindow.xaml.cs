@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using PL.PO;
 using PL.SingleWindows;
 using System.Media;
+using System.Net.Mail;
 
 namespace PL
 {
@@ -31,12 +32,11 @@ namespace PL
         public static ObservableCollection<PO.Customer> customers;
         public static ObservableCollection<PO.BaseStation> stations;
         IBL bl;
-
+        string codeForResetPass="";
         public object Properties { get; private set; }
 
         public MainWindow()
         {
-            
             bl = App.bl;
             InitializeComponent();
             UserPasswordBorder.Visibility = Visibility.Visible;
@@ -45,6 +45,10 @@ namespace PL
             window_Admin.Visibility = Visibility.Hidden;
             showPassAdmin.Visibility = Visibility.Hidden;
             showPassUser.Visibility = Visibility.Hidden;
+            forgotPassBorder1.Visibility = Visibility.Hidden;
+            forgotPassBorder2.Visibility = Visibility.Hidden;
+            resetPassBorder.Visibility = Visibility.Hidden;
+            App.music.PlayLooping();
         }
 
         private void HandleCheck(object sender, RoutedEventArgs e)
@@ -154,6 +158,22 @@ namespace PL
                 if (text == null)
                     return false;
                 if (App.bl.displayUser(text) != null)
+                    return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
+        }
+        private bool checkName2(string text)
+        {
+            try
+            {
+                if (text == null)
+                    return false;
+                if (App.bl.displayUser(text) == null)
                     return false;
                 return true;
             }
@@ -363,7 +383,7 @@ namespace PL
             tryAgain.Visibility = Visibility.Hidden;
             UserPasswordBorder.Visibility = Visibility.Visible;
             USERNAME.Content = "";
-            new RateUs();
+            new RateUs().ShowDialog();
         }
         private void DataGridCellToCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -439,6 +459,109 @@ namespace PL
                 PassBox_user.Visibility = Visibility.Visible;
             }
            
+        }
+
+        private void stop_Click(object sender, RoutedEventArgs e)
+        {
+            Stop.Visibility = Visibility.Hidden;
+            Play.Visibility = Visibility.Visible;
+            App.music.Stop();
+        }
+
+        private void play_ClicK(object sender, RoutedEventArgs e)
+        {
+            Stop.Visibility = Visibility.Visible;
+            Play.Visibility = Visibility.Hidden;
+            App.music.PlayLooping();
+
+        }
+        private bool checkCode(string pass)
+        {
+            return pass.Equals(codeForResetPass);
+        }
+        private void forgotPass_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+            
+                UserPasswordBorder.Visibility = Visibility.Hidden;
+                forgotPassBorder1.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+          //  "userName""codeBox"
+
+        }
+
+        private void resetPass_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkCode(codeBox.Text))
+            {
+                forgotPassBorder1.Visibility = Visibility.Hidden;
+                forgotPassBorder2.Visibility = Visibility.Hidden;
+                resetPassBorder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tryAgainUser.Visibility = Visibility.Visible;
+            }
+        }
+        private void newPass_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkPass(newPass.Text))
+            {
+                forgotPassBorder1.Visibility = Visibility.Hidden;
+                forgotPassBorder2.Visibility = Visibility.Hidden;
+                resetPassBorder.Visibility = Visibility.Hidden;
+
+                bl.changePass(userName.Text, newPass.Text);
+                UserPasswordBorder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tryAgainUser.Visibility = Visibility.Visible;
+            }
+        }
+        private void sendEmail_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+              if(checkName2(userName.Text)&&checkEmail(userEmail.Text))
+                {
+                    Random x = new Random();
+                    string code = "";
+                    code += (char)x.Next(65, 91);
+                    code += (char)x.Next(65, 91);
+                    code += (char)x.Next(65, 91);
+                    code += (char)x.Next(65, 91);
+                    codeForResetPass = code;
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(userEmail.Text);
+                    mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
+                    mail.Subject = "new password";
+                    mail.Body = @"<p>Forgot your password?!<br />No problem!<br />Just use the following code to reset your password:</p>
+<p><strong>"+code+@"</strong></p>
+<p>In the app you'll be able to enter and confirm your new password.</p>";
+                    mail.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                    forgotPassBorder1.Visibility = Visibility.Hidden;
+                    forgotPassBorder2.Visibility = Visibility.Visible;
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
         }
     }
 }

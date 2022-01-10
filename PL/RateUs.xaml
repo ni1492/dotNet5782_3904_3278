@@ -12,6 +12,8 @@
         </Grid.Background>
         <TextBlock x:Name="rateUs" FontSize="20" FontStyle="Oblique" VerticalAlignment="Top" Text="Rate Us!" Margin="105,37,100,0" Height="38"/>
         <materialDesign:RatingBar x:Name="BasicRatingBar"  Value="3"  Margin="84,70,77,39" />
-        <Button x:Name="notNow" Content="Not Now" FontSize="10" FontStyle="Italic" VerticalAlignment="Top" Margin="116,98,114,0" Height="25" Background="#009E9E9E" BorderBrush="#009E9E9E" Click="NotNow_Click"/>
+        <Button x:Name="notNow" Content="Not Now" FontSize="10" FontStyle="Italic" VerticalAlignment="Top" Margin="84,98,100,0" Height="25" Background="#009E9E9E" BorderBrush="#009E9E9E" Click="NotNow_Click"/>
+        <Button x:Name="submit" Content="submit" FontSize="10" FontStyle="Italic" VerticalAlignment="Top" Margin="84,114,100,0" Height="25" Background="#009E9E9E" BorderBrush="#009E9E9E" Click="Rate_Click"/>
+
     </Grid>
 </Window>

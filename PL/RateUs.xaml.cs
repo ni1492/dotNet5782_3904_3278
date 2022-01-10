@@ -22,9 +22,11 @@ namespace PL
         public RateUs()
         {
             InitializeComponent();
+            rate.Visibility = Visibility.Visible;
         }
-        public void BasicRatingBar_ValueChanged(RoutedPropertyChangedEventHandler<int> e)
+        public void Rate_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("thank you");
             this.Close();
         }
 

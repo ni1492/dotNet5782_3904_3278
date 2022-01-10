@@ -71,5 +71,20 @@ namespace BlApi
                 throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         }
+        public void changePass(string userN, string password)
+        {
+            try
+            {
+                DO.User tempDL = dl.displayUsers(user => user.UserName == userN).FirstOrDefault();
+
+                dl.deleteUser(tempDL.Id);
+                dl.AddUser(tempDL.Id, tempDL.UserName, tempDL.Email, password, tempDL.IsManager);
+            }
+            catch (Exception ex) //throw - if the customer doesnt exist
+            {
+
+                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+            }
+        }
     }
 }

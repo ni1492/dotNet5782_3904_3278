@@ -23,6 +23,8 @@ namespace PL
     /// </summary>
     public partial class App : Application
     {
+        public static SoundPlayer music = new SoundPlayer(@"music.wav");
+
         public static IBL bl = BlFactory.GetBl();
         public App()
         {
