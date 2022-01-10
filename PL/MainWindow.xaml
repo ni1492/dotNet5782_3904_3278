@@ -7,6 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         xmlns:Asio="clr-namespace:NAudio.Wave.Asio;assembly=NAudio.Asio"
+    
         x:Class="PL.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Icon="/logo.png">
