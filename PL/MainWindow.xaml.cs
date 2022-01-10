@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using PL.PO;
 using PL.SingleWindows;
+using System.Media;
 
 namespace PL
 {
@@ -32,6 +33,7 @@ namespace PL
         IBL bl;
         public MainWindow()
         {
+            
             bl = App.bl;
             InitializeComponent();
             UserPasswordBorder.Visibility = Visibility.Visible;

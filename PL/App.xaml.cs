@@ -8,7 +8,14 @@ using System.Windows;
 using BlApi;
 using System.Globalization;
 using System.Threading;
+using System.Media;
 
+//using (var waveOut = new WaveOutEvent())
+//using (var wavReader = new WaveFileReader(@"c:\mywavfile.wav"))
+//{
+//    waveOut.Init(wavReader);
+//    waveOut.Play();
+//}
 namespace PL
 {
     /// <summary>
@@ -19,6 +26,10 @@ namespace PL
         public static IBL bl = BlFactory.GetBl();
         public App()
         {
+            SoundPlayer player = new SoundPlayer();
+            player.SoundLocation = "music.wav";
+            player.Play();
+            //player.PlaySync();
             //CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             //ci.DateTimeFormat.ShortDatePattern = "DD/MM/YYYY HH:MM:SS";
             //Thread.CurrentThread.CurrentCulture = ci;
