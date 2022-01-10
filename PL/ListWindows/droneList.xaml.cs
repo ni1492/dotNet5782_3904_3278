@@ -43,20 +43,12 @@ namespace PL
 
         private void statusSelection(object sender, SelectionChangedEventArgs e)
         {
-            //if ((sender as ComboBox).SelectedIndex == 0)
-            //    return;
-            //else if(weightSelector==null || weightSelector.SelectedIndex==0)
-            //       droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.status == (BO.DroneStatuses)statusSelector.SelectedItem)
-            //                                                                        select Converter.DronePO(bl)));
-            //else
-            //    droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
-            //                                                                       select Converter.DronePO(bl)));
             if (statusSelector.SelectedItem == null)
                 statusSelector.SelectedItem=DroneStatuses.all;
             if (weightSelector.SelectedItem == null)
                 weightSelector.SelectedItem = WeightCategories.all;
 
-            else if (((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
+            else if (((WeightCategories)weightSelector.SelectedItem == WeightCategories.all) && ((DroneStatuses)statusSelector.SelectedItem == DroneStatuses.all))
                 droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDroneList()
                                                                                 select Converter.DronePO(bl)));
 
@@ -64,24 +56,15 @@ namespace PL
                 droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.weight == (BO.WeightCategories)weightSelector.SelectedItem)
                                                                                 select Converter.DronePO(bl)));
 
-            else if ((DroneStatuses)weightSelector.SelectedItem == DroneStatuses.all)
+            else if ((WeightCategories)weightSelector.SelectedItem == WeightCategories.all)
                 droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.status == (BO.DroneStatuses)statusSelector.SelectedItem)
                                                                                 select Converter.DronePO(bl)));
             else
                 droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
                                                                                 select Converter.DronePO(bl)));
-
         }
         private void weightSelection(object sender, SelectionChangedEventArgs e)
         {
-            //if ((sender as ComboBox).SelectedIndex == 0)
-            //    return;
-            //else if (statusSelector == null || statusSelector.SelectedIndex == 0)
-            //    droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => drone.weight == (BO.WeightCategories)weightSelector.SelectedItem)
-            //                                                                   select Converter.DronePO(bl)));
-            //else
-            //    droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
-            //                                                                    select Converter.DronePO(bl)));
             if (statusSelector.SelectedItem == null)
                 statusSelector.SelectedItem = DroneStatuses.all;
             if (weightSelector.SelectedItem == null)
@@ -144,8 +127,6 @@ namespace PL
             statusSelector.SelectedItem = null;
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
-            statusSelector.SelectedIndex=0;
-
         }
 
         private void ClearWeightFilledComboBox_Click(object sender, RoutedEventArgs e)
@@ -153,8 +134,6 @@ namespace PL
             weightSelector.SelectedItem = null;
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
-            weightSelector.Text = "";
-
         }
 
         private void group_Click(object sender, RoutedEventArgs e)

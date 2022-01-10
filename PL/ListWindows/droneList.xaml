@@ -15,6 +15,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="/ListWindows/backDroneList.png" Stretch="Fill"/>
         </Grid.Background>
+        
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto" Visibility="Visible">
            

@@ -141,5 +141,14 @@ namespace BlApi
             else
                 throw new BO.exceptions.DeleteException("cannot delete parcel");
         }
+
+        public IEnumerable<parcelForList> displayParcels(Predicate<parcelForList> match) //display all parcels that match the predicate
+        {
+            foreach (var parcel in displayParcelList())
+            {
+                if (match(parcel))
+                    yield return parcel;
+            }
+        }
     }
 }
