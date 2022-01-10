@@ -38,25 +38,11 @@ namespace PL
             window_User.Visibility = Visibility.Hidden;
             AdminPasswordBorder.Visibility = Visibility.Visible;
             window_Admin.Visibility = Visibility.Hidden;
+            showPassAdmin.Visibility = Visibility.Hidden;
+            showPassUser.Visibility = Visibility.Hidden;
         }
 
 
-
-
-        private void AdminSignIn(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void UserSignIn(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SignUp(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void showDronesButton_click(object sender, RoutedEventArgs e)
         {
             new droneList(bl).Show();
@@ -86,6 +72,7 @@ namespace PL
                 tryAgain.Visibility = Visibility.Hidden;
                 if (!(rememberAdmin.IsChecked.Value))
                 {
+                    showPassAdmin.Text = "";
                     PassBox_passAdmin.Clear();
                 }
             }
@@ -333,13 +320,14 @@ namespace PL
                 UserPasswordBorder.Visibility = Visibility.Hidden;
                 window_User.Visibility = Visibility.Visible;
                 tryAgainUser.Visibility = Visibility.Hidden;
-                USERNAME.Text = TextBox_TraineeID.Text;
-                List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+                USERNAME.Content = TextBox_TraineeID.Text;
+                List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
                 parcelToCusDataGrid.DataContext = parcels;
-                parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+                parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
                 parcelFromCusDataGrid.DataContext = parcels;
                 if (!(rememberUser.IsChecked.Value))
                 {
+                    showPassUser.Text = "";
                     TextBox_TraineeID.Clear();
                     PassBox_user.Clear();
                 }
@@ -362,16 +350,16 @@ namespace PL
             window_User.Visibility = Visibility.Hidden;
             tryAgain.Visibility = Visibility.Hidden;
             UserPasswordBorder.Visibility = Visibility.Visible;
-            USERNAME.Text = "";
+            USERNAME.Content = "";
         }
         private void DataGridCellToCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Parcel p = cell.DataContext as PO.Parcel;
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelFromCusDataGrid.DataContext = parcels;
         }
         private void DataGridCellFromCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -379,27 +367,65 @@ namespace PL
             DataGridCell cell = sender as DataGridCell;
             PO.Parcel p = cell.DataContext as PO.Parcel;
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelFromCusDataGrid.DataContext = parcels;
         }
 
         private void newParcel_Click(object sender, RoutedEventArgs e)
         {
 
-            new ParcelWindow(bl, USERNAME.Text).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            new ParcelWindow(bl, USERNAME.Content.ToString()).ShowDialog();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelFromCusDataGrid.DataContext = parcels;
         }
         private void refreshUSER_Click(object sender, RoutedEventArgs e)
         {
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelFromCusDataGrid.DataContext = parcels;
+        }
+
+        private void OpenDetails_Click(object sender, RoutedEventArgs e)
+        {
+            bl.displayUser(USERNAME.Content.ToString());
+            new UserInfoWindow(bl,Converter.UserPO(bl.displayUser(USERNAME.Content.ToString()))).Show();
+
+        }
+
+        private void showAdmin(object sender, RoutedEventArgs e)
+        {
+            if(showPassAdmin.Visibility==Visibility.Hidden)
+            {
+                showPassAdmin.Text = PassBox_passAdmin.Password;
+                showPassAdmin.Visibility = Visibility.Visible;
+                PassBox_passAdmin.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                showPassAdmin.Visibility = Visibility.Hidden;
+                PassBox_passAdmin.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void showUser(object sender, RoutedEventArgs e)
+        {
+            if (showPassUser.Visibility == Visibility.Hidden)
+            {
+                showPassUser.Text = PassBox_user.Password;
+                showPassUser.Visibility = Visibility.Visible;
+                PassBox_user.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                showPassUser.Visibility = Visibility.Hidden;
+                PassBox_user.Visibility = Visibility.Visible;
+            }
+           
         }
     }
 }
