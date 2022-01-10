@@ -6,9 +6,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:Asio="clr-namespace:NAudio.Wave.Asio;assembly=NAudio.Asio"
         x:Class="PL.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Icon="/logo.png">
+
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -26,13 +29,18 @@
             </TabControl.Background>
             <TabItem Header="main window" Width="180" Height="30" FontSize="16">
                 <Grid>
+                    <StackPanel>
+                        <ToggleButton x:Name = "tb"  Checked = "HandleCheck" Unchecked = "HandleUnchecked" Width = "108" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ToggleButtonStyle1}"/>
+
+                    </StackPanel>
                     <Image x:Name="fire" Source="/pngwing.com.png" Margin="0,20,50,0" FlowDirection="RightToLeft" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                     <TextBlock HorizontalAlignment="Center" Margin="60,50,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Center" Height="236" Width="742" FontSize="130" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic" Foreground="Black"/>
                     <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Center" Height="93" Margin="534,0,0,230" VerticalAlignment="Center" Width="94"/>
                     <!--<Button Content="user" HorizontalAlignment="Center" Margin="-150,0,0,0" VerticalAlignment="Center" Height="50" Width="86" Click="UserSignIn"/>
         <Button Content="admin" HorizontalAlignment="Center" Margin="150,0,0,0" VerticalAlignment="Center" Height="50" Width="86" Click="AdminSignIn" />
         <Button Content="sign up" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Center" Width="99" Click="SignUp"/>-->
-                    <Grid Margin="-70,0,-85,-2"/>
+                    <Grid x:Name="main"   Margin="-70,0,-85,-2"/>
+                    
                 </Grid>
             </TabItem>
 
@@ -121,7 +129,7 @@
                         <DataGrid x:Name="parcelFromCusDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Right" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Height="150" Width="530" Opacity="0.8" Margin="0,200,50,0">
                             <DataGrid.Resources>
                                 <Style TargetType="{x:Type DataGridCell}">
-                                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCellFromCus_MouseDoubleClick"/>
+                                    <EventSetter Event="Control.MouseDoubleClick" Handler="DataGridCellFromCus_MouseDoubleClick"/>
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
@@ -163,7 +171,7 @@
                                 <DataGridTemplateColumn x:Name="PStatusColumnF" Header="Status" Width="90">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding  PStatus}" FontSize="10"/>
+                                            <TextBlock Text="{Binding PStatus}" FontSize="10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -172,7 +180,7 @@
                                 <GroupStyle>
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate>
-                                            <TextBlock FontWeight="Bold" Text="{Binding }" />
+                                            <TextBlock FontWeight="Bold" Text="{Binding ''}" />
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>
@@ -181,7 +189,7 @@
                         <DataGrid x:Name="parcelToCusDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Right" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Height="150" Width="530" Opacity="0.8" RenderTransformOrigin="0.5,0.5" Margin="0,0,50,140">
                             <DataGrid.Resources>
                                 <Style TargetType="{x:Type DataGridCell}">
-                                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCellToCus_MouseDoubleClick"/>
+                                    <EventSetter Event="Control.MouseDoubleClick" Handler="DataGridCellToCus_MouseDoubleClick"/>
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
@@ -223,7 +231,7 @@
                                 <DataGridTemplateColumn x:Name="PStatusColumnT" Header="Status" Width="90">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding  PStatus}" FontSize="10"/>
+                                            <TextBlock Text="{Binding PStatus}" FontSize="10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -232,7 +240,7 @@
                                 <GroupStyle>
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate>
-                                            <TextBlock FontWeight="Bold" Text="{Binding }" />
+                                            <TextBlock FontWeight="Bold" Text="{Binding ''}" />
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>
@@ -263,8 +271,7 @@
 
                         </StackPanel>
                     </Border>
-                    <Grid Grid.RowSpan="2">
-                    </Grid>
+                    <Grid Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>
             <!-- sign up Window -->
