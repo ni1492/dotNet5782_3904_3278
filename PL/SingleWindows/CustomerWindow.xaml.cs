@@ -247,7 +247,8 @@ namespace PL.SingleWindows
             DataGridCell cell = sender as DataGridCell;
             PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
-
+            ToCustomerDataGrid.ItemsSource = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
+            FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
         }
     }
    

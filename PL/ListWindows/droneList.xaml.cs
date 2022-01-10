@@ -133,15 +133,6 @@ namespace PL
             weightSelection(weightSelector, null);
         }
 
-        //private void openDrone_DoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    int id = (( BO.droneForList)(sender as ListView).SelectedItem).id;
-        //    new Drone(bl, bl.displayDrone(id)).ShowDialog();
-        //    droneDataGrid.ItemsSource = bl.displayDroneList();
-        //    statusSelection(statusSelector, null);
-        //    weightSelection(weightSelector, null);
-
-        //}
 
         private void close_Click(object sender, RoutedEventArgs e)
         {
@@ -185,6 +176,11 @@ namespace PL
             UpGrid.Visibility = Visibility.Visible;
             group.Visibility = Visibility.Visible;
             ungroup.Visibility = Visibility.Hidden;
+        }
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
         }
     }
     

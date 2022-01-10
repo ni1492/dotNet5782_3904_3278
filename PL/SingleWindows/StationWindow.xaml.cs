@@ -240,6 +240,8 @@ namespace PL.SingleWindows
             DataGridCell cell = sender as DataGridCell;
             PO.DroneInCharging d = cell.DataContext as PO.DroneInCharging;
             new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DCId))).ShowDialog();
+            droneInChargingDataGrid.ItemsSource = bl.displayStation(Int32.Parse(viewID.Text)).dronesInCharging;
+
         }
     }
 }

@@ -437,7 +437,7 @@ namespace BlApi
         {
             foreach (var item in dl.DisplayParcels(parcel => true))//goes over the list of parcels to find the parcel 
             {
-                if (item.DroneId == droneId)//find the parcel that in delivery
+                if (item.DroneId == droneId && item.Delivered==null)//find the parcel that in delivery
                 {
                     return item.Id;
                 }

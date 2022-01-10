@@ -388,7 +388,14 @@ namespace PL
         private void newParcel_Click(object sender, RoutedEventArgs e)
         {
 
-            new ParcelWindow(bl).ShowDialog();
+            new ParcelWindow(bl, USERNAME.Text).ShowDialog();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            parcelToCusDataGrid.DataContext = parcels;
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
+            parcelFromCusDataGrid.DataContext = parcels;
+        }
+        private void refreshUSER_Click(object sender, RoutedEventArgs e)
+        {
             List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();
             parcelToCusDataGrid.DataContext = parcels;
             parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Text) select Converter.ParcelPO(parcel)).ToList();

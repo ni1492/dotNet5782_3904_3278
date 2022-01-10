@@ -67,7 +67,7 @@
 
         </Grid>
 
-        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Hidden"   >
+        <Grid x:Name="Add" Grid.RowSpan="12" Grid.ColumnSpan="2" Visibility="Visible"   >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
@@ -138,7 +138,7 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Visible">
+        <Grid x:Name="Actions"  Grid.RowSpan="12" Grid.ColumnSpan="3" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>

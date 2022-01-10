@@ -29,7 +29,6 @@ namespace PL.SingleWindows
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
-
             viewID.Text = parcel.PSID.ToString();
             viewSENDER.Text = parcel.PSSender.CPName;
             viewTARGET.Text = parcel.PSTarget.CPName;
@@ -128,10 +127,24 @@ namespace PL.SingleWindows
             InitializeComponent();
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
+            sender.Visibility = Visibility.Visible;
+            entersender.Visibility = Visibility.Visible;
             WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
         }
-     
+        public ParcelWindow(BlApi.IBL bl, string name)//add grid for user
+        {
+            this.bl = bl;
+            InitializeComponent();
+            Actions.Visibility = Visibility.Hidden;
+            Add.Visibility = Visibility.Visible;
+            sender.Visibility = Visibility.Hidden;
+            entersender.Visibility = Visibility.Hidden;
+            SENDER.Text = name;
+            WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+            PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
+        }
+
         private void SENDERTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(SENDER.Text))

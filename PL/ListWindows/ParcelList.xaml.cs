@@ -75,5 +75,9 @@ namespace PL
             group.Visibility = Visibility.Visible;
             ungroup.Visibility = Visibility.Hidden;
         }
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
+        }
     }
 }

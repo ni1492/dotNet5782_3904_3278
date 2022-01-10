@@ -42,6 +42,8 @@ namespace PL
             DataGridCell cell = sender as DataGridCell;
             PO.Customer c = cell.DataContext as PO.Customer;
             new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.CID))).ShowDialog();
+            DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+
         }
 
         private void addCustomer_Click(object sender, RoutedEventArgs e)
@@ -54,6 +56,10 @@ namespace PL
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
         }
     }
 }
