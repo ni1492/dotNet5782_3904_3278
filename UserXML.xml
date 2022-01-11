@@ -19,9 +19,9 @@
   <User>
     <Id>212121212</Id>
     <UserName>we</UserName>
-    <Email>fencemegirl@gmail</Email>
+    <Email>fencemegirl@gmail.com</Email>
     <IsManager>False</IsManager>
-    <Salt>206543125</Salt>
-    <HashedPassword>Zd3I2rhEOhjM/3np9zDdzlsiqbeKLda3VKV0N/4G+w35WhGoBwju3tp/bVJckrQ0/yefHCQ+DxgEID2Jopxgvg==</HashedPassword>
+    <Salt>989145505</Salt>
+    <HashedPassword>1AM5qoyn0Wc0wn1PYeaohdBd5D4Eg6ww81EUW17dZwDoNcngJ2WwvHHg+Nlh/wOkzkHyHBdkJv/GOLEub30hXA==</HashedPassword>
   </User>
 </UserXML.xml>

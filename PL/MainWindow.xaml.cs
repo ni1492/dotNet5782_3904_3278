@@ -503,10 +503,12 @@ namespace PL
                 forgotPassBorder1.Visibility = Visibility.Hidden;
                 forgotPassBorder2.Visibility = Visibility.Hidden;
                 resetPassBorder.Visibility = Visibility.Visible;
+                passWarning.Visibility = Visibility.Hidden;
+
             }
             else
             {
-                tryAgainUser.Visibility = Visibility.Visible;
+                passWarning.Visibility = Visibility.Visible;
             }
         }
         private void newPass_Click(object sender, RoutedEventArgs e)
@@ -516,20 +518,21 @@ namespace PL
                 forgotPassBorder1.Visibility = Visibility.Hidden;
                 forgotPassBorder2.Visibility = Visibility.Hidden;
                 resetPassBorder.Visibility = Visibility.Hidden;
+                passWarning.Visibility = Visibility.Hidden;
 
                 bl.changePass(userName.Text, newPass.Text);
                 UserPasswordBorder.Visibility = Visibility.Visible;
             }
             else
             {
-                tryAgainUser.Visibility = Visibility.Visible;
+                passWarning.Visibility = Visibility.Visible;
             }
         }
         private void sendEmail_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-              if(checkName2(userName.Text)&&checkEmail(userEmail.Text))
+              if(checkName2(userName.Text)&& userEmail.Text.Equals(bl.displayUser(userName.Text).Email))
                 {
                     Random x = new Random();
                     string code = "";
@@ -554,7 +557,12 @@ namespace PL
                     forgotPassBorder1.Visibility = Visibility.Hidden;
                     forgotPassBorder2.Visibility = Visibility.Visible;
                 }
-                
+                else
+                {
+                    MessageBox.Show("user name or email are not correct");
+
+                }
+
 
             }
             catch (Exception ex)

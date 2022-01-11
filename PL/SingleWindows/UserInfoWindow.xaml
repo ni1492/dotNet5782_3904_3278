@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -22,25 +22,55 @@
         <Grid.Background>
             <ImageBrush ImageSource="/SingleWindows/UserBack.png" Stretch="Fill" Opacity="0.7"/>
         </Grid.Background>
+        <Button Content="CLOSE" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Click="close_click" Style="{StaticResource ButtonStyle}" Grid.Column="0" Margin="0,0,0,0" Grid.Row="5"/>
+        <Grid x:Name="info"  Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Id:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center"  Grid.Row="1"/>
+            <TextBlock x:Name="ID" HorizontalAlignment="Center" Grid.Column="1" Text="Id" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="1"/>
+            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Name:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="2"/>
+            <TextBlock x:Name="NAME" HorizontalAlignment="Center" Grid.Column="1" Text="Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="2"/>
+            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Email:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center"  Grid.Row="3"/>
+            <TextBlock x:Name="EMALE" HorizontalAlignment="Center" Grid.Column="1" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="3"/>
+            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Phone:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="4"/>
+            <TextBlock x:Name="PHONE" HorizontalAlignment="Center" Grid.Column="1" Text="Phone" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="4"/>
+            <Button Content="CHANGE PASSWORD" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Click="ChangePass_Click" Style="{StaticResource ButtonStyle}" Grid.Column="1" Margin="0,0,0,0" Grid.Row="5"/>
 
-        <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Id:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center"  Grid.Row="1"/>
-        <TextBlock x:Name="ID" HorizontalAlignment="Center" Grid.Column="1" Text="Id" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="1"/>
-        <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Name:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="2"/>
-        <TextBlock x:Name="NAME" HorizontalAlignment="Center" Grid.Column="1" Text="Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="2"/>
-        <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Email:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center"  Grid.Row="3"/>
-        <TextBlock x:Name="EMALE" HorizontalAlignment="Center" Grid.Column="1" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="3"/>
-        <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Phone:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="4"/>
-        <TextBlock x:Name="PHONE" HorizontalAlignment="Center" Grid.Column="1" Text="Phone" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="4"/>
+        </Grid>
+
 
 
         <Grid x:Name="Actions"  Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Visible">
-
-
-            <Grid Name="viewId" Grid.Column="1" Grid.Row="0" Margin="0,2,0,8" Grid.RowSpan="3"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="enter new password:" Height="28" Grid.Row="3"  Grid.ColumnSpan="2" Margin="8,2,10,3"/>
+            <TextBox x:Name="newPass" Padding="2" VerticalContentAlignment="Center" Grid.Row="4"  Grid.ColumnSpan="2" Margin="10,2,10,9" />
+            <TextBlock x:Name="passWarning" Text="password must be longer than 8 letters" Height="28" Grid.Row="4"  Grid.ColumnSpan="2" Margin="6,30,12,7" Foreground="Red" FontSize="10" Grid.RowSpan="2"/>
+            <Button Content="RESET PASSWORD" Width="110" Height="20"  Style="{StaticResource ButtonStyle}" Grid.Row="6" Grid.Column="1" Click="newPass_Click"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
-        <Button Content="CLOSE" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Click="close_click" Style="{StaticResource ButtonStyle}" Grid.Column="0" Margin="10,0,0,10" Grid.Row="5">
-          
-        </Button>
+
+
 
 
     </Grid>
