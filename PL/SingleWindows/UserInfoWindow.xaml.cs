@@ -71,9 +71,9 @@ namespace PL.SingleWindows
                     mail.To.Add(EMALE.Text);
                     mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
                     mail.Subject = "password changed";
-                    mail.Body = @"<p> your password has been changed<br />if it wasnt you, please change it<br /> your new password:</p>
+                    mail.Body = @"<p>Your password has been changed.<br />Your new password is:</p>
 <p><strong>" + newPass.Text + @"</strong></p>
-<p>In the app you'll be able to use your new password.</p>";
+<p>If this wasn't you, we advise you to go and reset your password!</p>";
                     mail.IsBodyHtml = true;
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = "smtp.gmail.com";
