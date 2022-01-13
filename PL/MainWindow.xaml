@@ -117,7 +117,7 @@ xmlns:local="clr-namespace:PL"
                     <Grid.Background>
                         <ImageBrush ImageSource="/BACK.jpg"/>
                     </Grid.Background>
-                    <Grid x:Name="window_User" Visibility="Visible">
+                    <Grid x:Name="window_User" Visibility="Hidden">
                         <Button x:Name="USERNAME"  Content="USER" HorizontalAlignment="Right" Margin="0,0,0,0"  VerticalAlignment="Top" Width="100" Background="#00FF0000" BorderBrush="#009E9E9E" Foreground="#DDFF0000" Click="OpenDetails_Click" Height="30" FontSize="16" FontWeight="UltraBold" FontStyle="Normal" FontStretch="Normal" />
                         <Button x:Name="logOutUser" Content="sign out" Height="30" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" ToolTipService.ShowDuration="8000" Style="{StaticResource ButtonStyle}"  Click="Button_Click_LogOutUser">
 
@@ -255,7 +255,8 @@ xmlns:local="clr-namespace:PL"
 
                     </Grid>
                     <Grid x:Name="enter">
-                        <Border x:Name="UserPasswordBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
+                        <Button x:Name="cancel" Content="CANCEL" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="63" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>
+                        <Border x:Name="UserPasswordBorder" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Visible" Height="264" Margin="0,68,0,0" Grid.RowSpan="2" Background="#7FFFFFFF">
                             <StackPanel Width="300" Margin="0,-5,0,-21">
                                 <TextBlock Text="enter username:" Height="28" Width="232" Margin="0,15,0,0"/>
                                 <TextBox x:Name="TextBox_TraineeID" Height="30" Padding="2" VerticalContentAlignment="Center" Margin="0,10,0,0" Width="240" />

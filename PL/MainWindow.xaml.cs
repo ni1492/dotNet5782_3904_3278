@@ -40,6 +40,7 @@ namespace PL
             bl = App.bl;
             InitializeComponent();
             UserPasswordBorder.Visibility = Visibility.Visible;
+            cancel.Visibility = Visibility.Hidden;
             window_User.Visibility = Visibility.Hidden;
             AdminPasswordBorder.Visibility = Visibility.Visible;
             window_Admin.Visibility = Visibility.Hidden;
@@ -108,10 +109,28 @@ namespace PL
             {
                 if (checkId(ID.Text) && checkName(USER.Text)&& checkPass(PASS.Text))
                 {
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(EMAIL.Text);
+                    mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
+                    mail.Subject = "wlecome to the D.D.D family";
+                    mail.Body = @"<p>Dear" + USER.Text + @",</p>
+<p>We are very happy to welcome you to our delivery services!</p>
+<p>Your account is now set and activated. With your username and password you can easily log in and start sending and receiving parcels.</p>
+<p>Have a wonderful day:)</p>
+<p>D.D.D DragoDroneDelivery.</p>
+<p>&nbsp;</p>";
+                    mail.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
                     App.bl.AddUser(Int32.Parse(ID.Text), USER.Text, EMAIL.Text, PASS.Text, MANAGER.IsChecked.Value);
                     BO.location l = new BO.location() { Latitude = double.Parse(LATITUDE.Text), Longitude = double.Parse(LONGITUDE.Text) };
                     App.bl.addCustomer(new BO.customer() { id = Int32.Parse(ID.Text), name = USER.Text, phone = PHONE.Text, location = l });
                     MessageBox.Show("signed up");
+
+       
                     ID.Clear();
                     USER.Clear();
                     EMAIL.Clear();
@@ -126,7 +145,14 @@ namespace PL
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                if (ex.Message == "The specified string is not in the form required for an e-mail address.")
+                {
+
+                    EMAIL.BorderBrush = Brushes.DarkRed;
+                    EMAIL.Background = Brushes.Red;
+                }
+                else
+                    MessageBox.Show(ex.Message);
                 return;
             }
         }
@@ -350,6 +376,7 @@ namespace PL
             if (checkPassword(PassBox_user.Password, TextBox_TraineeID.Text,false))
             {
                 UserPasswordBorder.Visibility = Visibility.Hidden;
+                cancel.Visibility = Visibility.Hidden;
                 window_User.Visibility = Visibility.Visible;
                 tryAgainUser.Visibility = Visibility.Hidden;
                 USERNAME.Content = TextBox_TraineeID.Text;
@@ -382,6 +409,7 @@ namespace PL
             window_User.Visibility = Visibility.Hidden;
             tryAgain.Visibility = Visibility.Hidden;
             UserPasswordBorder.Visibility = Visibility.Visible;
+            cancel.Visibility = Visibility.Hidden;
             USERNAME.Content = "";
             new RateUs().ShowDialog();
         }
@@ -485,6 +513,7 @@ namespace PL
             {
             
                 UserPasswordBorder.Visibility = Visibility.Hidden;
+                cancel.Visibility = Visibility.Visible;
                 forgotPassBorder1.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
@@ -522,6 +551,7 @@ namespace PL
 
                 bl.changePass(userName.Text, newPass.Text);
                 UserPasswordBorder.Visibility = Visibility.Visible;
+                cancel.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -570,6 +600,16 @@ namespace PL
                 MessageBox.Show(ex.Message);
 
             }
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+
+            forgotPassBorder1.Visibility = Visibility.Hidden;
+            forgotPassBorder2.Visibility = Visibility.Hidden;
+            resetPassBorder.Visibility = Visibility.Hidden;
+            UserPasswordBorder.Visibility = Visibility.Visible;
+            cancel.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -21,4 +21,11 @@
     <Lattitude>28</Lattitude>
     <ChargeSlots>37</ChargeSlots>
   </Station>
+  <Station>
+    <Id>5</Id>
+    <Name>station5</Name>
+    <Longitude>30</Longitude>
+    <Lattitude>-30</Lattitude>
+    <ChargeSlots>4</ChargeSlots>
+  </Station>
 </StationXML.xml>

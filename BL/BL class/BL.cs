@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using DAL.DalApi;
 using BO;
 using DalApi;
+using System.Runtime.CompilerServices;
 namespace BlApi
 {
-    public partial class BL: IBL
+    public partial class BL : IBL
     {
-        public readonly IDal dl= DalFactory.getDal(true);//initialize the DAL object
+        public readonly IDal dl = DalFactory.getDal(true);//initialize the DAL object
         public List<droneForList> drones = new List<droneForList>(); //the list of drones saved in the BL layer
         //שדות נוספים: פנוי, נושא משקל קל, בינוני וכבד+שדה של הטענה לשעה
         public double availablePK;
@@ -41,153 +42,60 @@ namespace BlApi
 
         private void initializeDroneXML()
         {
-            Random r = new Random(); 
-            foreach (var item in dl.DisplayDrones(drone => true))//bulding list of drones - adding them from the DAL layer
+            lock (dl)
             {
-                drones.Add(new droneForList
+                Random r = new Random();
+                foreach (var item in dl.DisplayDrones(drone => true))//bulding list of drones - adding them from the DAL layer
                 {
-                    id = item.Id,
-                    model = item.Model,
-                    weight = (WeightCategories)item.MaxWeight
-
-                });//adding drone to the list
-            }
-            foreach (var item in drones)
-            {
-                if ((isMatched(item.id)) && (!isDelivered(item.id)) && (isPickedUp(item.id))) //if matched and picked up but not delivered-on delivery
-                {
-                    item.status = DroneStatuses.delivery;
-                    item.parcelID = findParcelDelivery(item.id);
-                    item.currentLocation = senderLocation(item.parcelID);//returns the location of the sender
-
-                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                    if (minBattery <= 100)
-                        item.battery = (double)r.Next((int)minBattery, 101);
-                    else
+                    drones.Add(new droneForList
                     {
-                        item.battery = (double)r.Next(50, 101);
-                    }
-                }
-                else if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
-                {
-                    item.status = DroneStatuses.delivery;
-                    item.parcelID = findParcelDelivery(item.id);
-                    item.currentLocation = nearestStation(senderLocation(item.parcelID));//returns the closet station to the sender
+                        id = item.Id,
+                        model = item.Model,
+                        weight = (WeightCategories)item.MaxWeight
 
-                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                    if (minBattery <= 100)
-                        item.battery = (double)r.Next((int)minBattery, 101);
-                    else
+                    });//adding drone to the list
+                }
+                foreach (var item in drones)
+                {
+                    if ((isMatched(item.id)) && (!isDelivered(item.id)) && (isPickedUp(item.id))) //if matched and picked up but not delivered-on delivery
                     {
-                        item.battery = (double)r.Next(50, 101);
-                    }
+                        item.status = DroneStatuses.delivery;
+                        item.parcelID = findParcelDelivery(item.id);
+                        item.currentLocation = senderLocation(item.parcelID);//returns the location of the sender
 
-                }
-                else if(inCharge(item)!=0)//if drone is in chargeing
-                {
-                    item.status = DroneStatuses.maintenance;
-                    item.currentLocation = stationLocation(inCharge(item));
-                    //the drone location will be the location of the station chosen
-                    item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
-                }
-                else//not matched to any parcel or charge->available
-                {
-                    item.status = DroneStatuses.available;
-                        List<location> locations = new List<location>();
-                        int count = 0;
-                        foreach (var cus in dl.DisplayCustomers(customer=>true))
-                        {
-                            bool accepted = false;
-                            foreach (var parcel in dl.DisplayParcels(parcel => true))
-                            {
-                                if(parcel.TargetId==cus.Id)
-                                {
-                                    accepted = true;
-                                    break;
-                                }
-
-                            }
-                            if(accepted)
-                            {
-                                locations.Add(new location
-                                {
-                                    Latitude = cus.Lattitude,
-                                    Longitude=cus.Longitude
-                                });
-                                count++;
-                            }
-
-                        }
-                        if (count != 0)
-                            item.currentLocation = locations[r.Next(0, count)];
-                        else
-                            item.currentLocation = new location
-                            {
-                                Latitude = r.Next(-180, 180) + (double)(r.Next(1000, 10000)) / 10000,
-                                Longitude = r.Next(-90, 90) + (double)(r.Next(1000, 10000)) / 10000
-                            };
-                        //the location in random from a list of customers that have had parcels delivered to them
                         double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                        if(minBattery<=100)
-                             item.battery = (double)r.Next((int)minBattery, 101);
+                        if (minBattery <= 100)
+                            item.battery = (double)r.Next((int)minBattery, 101);
                         else
                         {
-                            item.battery = (double)r.Next(50, 101);//cant get to any station
-
+                            item.battery = (double)r.Next(50, 101);
                         }
                     }
-               
-            }
-        }
-        private void initializeDroneOBLECT()
-        {
-            Random r = new Random();
-            foreach (var item in dl.DisplayDrones(drone => true))//bulding list of drones - adding them from the DAL layer
-            {
-                drones.Add(new droneForList
-                {
-                    id = item.Id,
-                    model = item.Model,
-                    weight = (WeightCategories)item.MaxWeight
-
-                });//adding drone to the list
-            }
-            foreach (var item in drones)
-            {
-                if ((isMatched(item.id)) && (!isDelivered(item.id)) && (isPickedUp(item.id))) //if matched and picked up but not delivered-on delivery
-                {
-                    item.status = DroneStatuses.delivery;
-                    item.parcelID = findParcelDelivery(item.id);
-                    item.currentLocation = senderLocation(item.parcelID);//returns the location of the sender
-
-                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                    if (minBattery <= 100)
-                        item.battery = (double)r.Next((int)minBattery, 101);
-                    else
+                    else if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
                     {
-                        item.battery = (double)r.Next(50, 101);
+                        item.status = DroneStatuses.delivery;
+                        item.parcelID = findParcelDelivery(item.id);
+                        item.currentLocation = nearestStation(senderLocation(item.parcelID));//returns the closet station to the sender
+
+                        double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                        if (minBattery <= 100)
+                            item.battery = (double)r.Next((int)minBattery, 101);
+                        else
+                        {
+                            item.battery = (double)r.Next(50, 101);
+                        }
+
                     }
-                }
-                else if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
-                {
-                    item.status = DroneStatuses.delivery;
-                    item.parcelID = findParcelDelivery(item.id);
-                    item.currentLocation = nearestStation(senderLocation(item.parcelID));//returns the closet station to the sender
-
-                    double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
-                    if (minBattery <= 100)
-                        item.battery = (double)r.Next((int)minBattery, 101);
-                    else
+                    else if (inCharge(item) != 0)//if drone is in chargeing
                     {
-                        item.battery = (double)r.Next(50, 101);
+                        item.status = DroneStatuses.maintenance;
+                        item.currentLocation = stationLocation(inCharge(item));
+                        //the drone location will be the location of the station chosen
+                        item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
                     }
-
-                }
-                else//not matched to any parcel
-                {
-                    item.status = (DroneStatuses)r.Next(1, 3); //the status will be randomized between in available and maintenance
-                    if (item.status == DroneStatuses.available) //creating a list of all locations of customers that have had parcels delivered to them
+                    else//not matched to any parcel or charge->available
                     {
+                        item.status = DroneStatuses.available;
                         List<location> locations = new List<location>();
                         int count = 0;
                         foreach (var cus in dl.DisplayCustomers(customer => true))
@@ -231,117 +139,208 @@ namespace BlApi
 
                         }
                     }
-                    else if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
+                }
+            }
+        }
+        private void initializeDroneOBLECT()
+        {
+            lock (dl)
+            {
+                Random r = new Random();
+                foreach (var item in dl.DisplayDrones(drone => true))//bulding list of drones - adding them from the DAL layer
+                {
+                    drones.Add(new droneForList
                     {
-                        int stationId = r.Next(1, dl.DisplayStations(station => true).Count());
-                        item.currentLocation = stationLocation(stationId);
-                        //the drone location will be the location of the station chosen
-                        item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
-                        dl.AddCharging(item.id, stationId);
+                        id = item.Id,
+                        model = item.Model,
+                        weight = (WeightCategories)item.MaxWeight
+
+                    });//adding drone to the list
+                }
+                foreach (var item in drones)
+                {
+                    if ((isMatched(item.id)) && (!isDelivered(item.id)) && (isPickedUp(item.id))) //if matched and picked up but not delivered-on delivery
+                    {
+                        item.status = DroneStatuses.delivery;
+                        item.parcelID = findParcelDelivery(item.id);
+                        item.currentLocation = senderLocation(item.parcelID);//returns the location of the sender
+
+                        double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                        if (minBattery <= 100)
+                            item.battery = (double)r.Next((int)minBattery, 101);
+                        else
+                        {
+                            item.battery = (double)r.Next(50, 101);
+                        }
+                    }
+                    else if ((isMatched(item.id)) && !(isPickedUp(item.id))) //is matched and not yet picked up
+                    {
+                        item.status = DroneStatuses.delivery;
+                        item.parcelID = findParcelDelivery(item.id);
+                        item.currentLocation = nearestStation(senderLocation(item.parcelID));//returns the closet station to the sender
+
+                        double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                        if (minBattery <= 100)
+                            item.battery = (double)r.Next((int)minBattery, 101);
+                        else
+                        {
+                            item.battery = (double)r.Next(50, 101);
+                        }
+
+                    }
+                    else//not matched to any parcel
+                    {
+                        item.status = (DroneStatuses)r.Next(1, 3); //the status will be randomized between in available and maintenance
+                        if (item.status == DroneStatuses.available) //creating a list of all locations of customers that have had parcels delivered to them
+                        {
+                            List<location> locations = new List<location>();
+                            int count = 0;
+                            foreach (var cus in dl.DisplayCustomers(customer => true))
+                            {
+                                bool accepted = false;
+                                foreach (var parcel in dl.DisplayParcels(parcel => true))
+                                {
+                                    if (parcel.TargetId == cus.Id)
+                                    {
+                                        accepted = true;
+                                        break;
+                                    }
+
+                                }
+                                if (accepted)
+                                {
+                                    locations.Add(new location
+                                    {
+                                        Latitude = cus.Lattitude,
+                                        Longitude = cus.Longitude
+                                    });
+                                    count++;
+                                }
+
+                            }
+                            if (count != 0)
+                                item.currentLocation = locations[r.Next(0, count)];
+                            else
+                                item.currentLocation = new location
+                                {
+                                    Latitude = r.Next(-180, 180) + (double)(r.Next(1000, 10000)) / 10000,
+                                    Longitude = r.Next(-90, 90) + (double)(r.Next(1000, 10000)) / 10000
+                                };
+                            //the location in random from a list of customers that have had parcels delivered to them
+                            double minBattery = calcMinBattery(item); //returns the minimum battery needed to allow the drone to make the delivery
+                            if (minBattery <= 100)
+                                item.battery = (double)r.Next((int)minBattery, 101);
+                            else
+                            {
+                                item.battery = (double)r.Next(50, 101);//cant get to any station
+
+                            }
+                        }
+                        else if (item.status == DroneStatuses.maintenance) //its location will be randomized between the different existing stations
+                        {
+                            int stationId = r.Next(1, dl.DisplayStations(station => true).Count());
+                            item.currentLocation = stationLocation(stationId);
+                            //the drone location will be the location of the station chosen
+                            item.battery = (double)r.Next(0, 20); // the battery will be randomized between 0-20 percent 
+                            dl.AddCharging(item.id, stationId);
+                        }
                     }
                 }
             }
         }
         private int inCharge(droneForList drone)
         {
-            return dl.displayDronesInCharge(charge => charge.DroneId == drone.id).FirstOrDefault().StationId;
+            lock (dl)
+            {
+                return dl.displayDronesInCharge(charge => charge.DroneId == drone.id).FirstOrDefault().StationId;
+            }
         }
 
         private double calcDistance(location from, location to)//calculate thedistance between two locations 
+        {
+            lock (dl)
             {
-            return dl.CalculateDistance(from.Longitude, from.Latitude, to.Longitude, to.Latitude);
+                return dl.CalculateDistance(from.Longitude, from.Latitude, to.Longitude, to.Latitude);
             }
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool isDelivered(int droneId)//check if the drone is deliverd
         {
-            bool delivered = true;
-            foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
+            lock (dl)
             {
-                if ((item.DroneId == droneId) && (item.Delivered ==null))//chack if the drone is deliverd
+                bool delivered = true;
+                foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
                 {
-                    delivered=false;
+                    if ((item.DroneId == droneId) && (item.Delivered == null))//chack if the drone is deliverd
+                    {
+                        delivered = false;
+                    }
                 }
+                return delivered;
             }
-            return delivered;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool isPickedUp(int droneId)//chack if the parcel is picked up
         {
-            foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
+            lock (dl)
             {
-                if ((item.DroneId == droneId) && (item.PickedUp != null)&&item.Delivered==null)//chack if the parcel is picked up
+                foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
                 {
-                    return true;
+                    if ((item.DroneId == droneId) && (item.PickedUp != null) && item.Delivered == null)//chack if the parcel is picked up
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool isMatched(int droneId)//chack if the drone is match to parcel
         {
-            foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
+            lock (dl)
             {
-                if (item.DroneId == droneId &&item.Delivered==null)//chack if the drone is match to parcel
+                foreach (var item in dl.DisplayParcels(parcel => true))//goes over all the parcel in the DAL layer
                 {
-                    return true;
+                    if (item.DroneId == droneId && item.Delivered == null)//chack if the drone is match to parcel
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
         }
         private location senderLocation(int parcelId)//return tne sender location by the parcel id
         {
-            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).FirstOrDefault();
-            var c = dl.DisplayCustomers(customer => customer.Id == p.SenderId).FirstOrDefault();
-            return (new location
+            lock (dl)
             {
-                Latitude = c.Lattitude,
-                Longitude = c.Longitude
-            });
-
+                var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).FirstOrDefault();
+                var c = dl.DisplayCustomers(customer => customer.Id == p.SenderId).FirstOrDefault();
+                return (new location
+                {
+                    Latitude = c.Lattitude,
+                    Longitude = c.Longitude
+                });
+            }
         }
         private location targetLocation(int parcelId)//return tne target location by the parcel id
         {
-            var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).FirstOrDefault();
-            var c = dl.DisplayCustomers(customer => customer.Id == p.TargetId).FirstOrDefault();
-            return (new location
+            lock (dl)
             {
-                Latitude = c.Lattitude,
-                Longitude = c.Longitude
-            });
-
+                var p = dl.DisplayParcels(parcel => parcel.Id == parcelId).FirstOrDefault();
+                var c = dl.DisplayCustomers(customer => customer.Id == p.TargetId).FirstOrDefault();
+                return (new location
+                {
+                    Latitude = c.Lattitude,
+                    Longitude = c.Longitude
+                });
+            }
         }
         private location nearestStation(location loc)//return the closest statuon to the location given by the user
-        { 
-            List<baseStation> locations = new List<baseStation>();
-            foreach (var baseStation in dl.DisplayStations(station=>true))//buliding a list of all the station with the locations
-            {
-                locations.Add(new baseStation
-                {
-                    location = new location
-                    {
-                        Latitude = baseStation.Lattitude,
-                        Longitude = baseStation.Longitude
-                    }
-                });//add location
-            }
-            location location = locations[0].location;
-            double smallest = calcDistance(loc, locations[0].location);
-            double temp;
-            for (int i = 0; i < locations.Count(); i++)//compering the distance to find the closest location
-            {
-                temp = calcDistance(loc, locations[i].location);
-                if (temp < smallest)
-                {
-                    smallest = temp;
-                    location = locations[i].location;
-                }
-            }
-            return location;
-        }
-        private location nearestCharging(location loc)//return the closest station to the location given by the user
         {
-
-            List<baseStation> locations = new List<baseStation>();
-            foreach (var baseStation in dl.DisplayStations(station=>true))//buliding a list of all the station with the locations
+            lock (dl)
             {
-                if(baseStation.ChargeSlots>0)
+                List<baseStation> locations = new List<baseStation>();
+                foreach (var baseStation in dl.DisplayStations(station => true))//buliding a list of all the station with the locations
                 {
                     locations.Add(new baseStation
                     {
@@ -352,97 +351,140 @@ namespace BlApi
                         }
                     });//add location
                 }
-            }
-            location location = locations[0].location;
-            double smallest = calcDistance(loc, locations[0].location);
-            double temp;
-            for (int i = 0; i < locations.Count(); i++)//compering the distance to find the closest location
-            {
-                temp = calcDistance(loc, locations[i].location);
-                if (temp < smallest)
+                location location = locations[0].location;
+                double smallest = calcDistance(loc, locations[0].location);
+                double temp;
+                for (int i = 0; i < locations.Count(); i++)//compering the distance to find the closest location
                 {
-                    smallest = temp;
-                    location = locations[i].location;
+                    temp = calcDistance(loc, locations[i].location);
+                    if (temp < smallest)
+                    {
+                        smallest = temp;
+                        location = locations[i].location;
+                    }
                 }
+                return location;
             }
-            return location;
+        }
+        private location nearestCharging(location loc)//return the closest station to the location given by the user
+        {
+            lock (dl)
+            {
+                List<baseStation> locations = new List<baseStation>();
+                foreach (var baseStation in dl.DisplayStations(station => true))//buliding a list of all the station with the locations
+                {
+                    if (baseStation.ChargeSlots > 0)
+                    {
+                        locations.Add(new baseStation
+                        {
+                            location = new location
+                            {
+                                Latitude = baseStation.Lattitude,
+                                Longitude = baseStation.Longitude
+                            }
+                        });//add location
+                    }
+                }
+                location location = locations[0].location;
+                double smallest = calcDistance(loc, locations[0].location);
+                double temp;
+                for (int i = 0; i < locations.Count(); i++)//compering the distance to find the closest location
+                {
+                    temp = calcDistance(loc, locations[i].location);
+                    if (temp < smallest)
+                    {
+                        smallest = temp;
+                        location = locations[i].location;
+                    }
+                }
+                return location;
+            }
         }
         private location stationLocation(int stationId)//return thr location of the station, by the id
         {
-            foreach (var item in dl.DisplayStations(station => true))//gos over the list of station in the DAL layer
+            lock (dl)
             {
-                if (item.Id == stationId)//fide the station by the id
-                    return (new location
-                    {
-                        Latitude = item.Lattitude,
-                        Longitude = item.Longitude
-                    });//return the location
+                foreach (var item in dl.DisplayStations(station => true))//gos over the list of station in the DAL layer
+                {
+                    if (item.Id == stationId)//fide the station by the id
+                        return (new location
+                        {
+                            Latitude = item.Lattitude,
+                            Longitude = item.Longitude
+                        });//return the location
+                }
+                return new location();
             }
-            return new location();
         }
         private double calcMinBattery(droneForList d)//calculate the battery needed to complish the delivery
         {
-            if (d.status == DroneStatuses.available)//if the drone is avilable-need to calc the batery to get to a station with a free slot
+            lock (dl)
             {
-                location location = nearestCharging(d.currentLocation);
-                return calcDistance(d.currentLocation, location) * availablePK;
-            }
-            if (d.status == DroneStatuses.delivery)//if the drone is avilable-need to calc the batery to get to the dastination and to a station with a free slot
-            {
-                WeightCategories weight;
-                foreach (var item in dl.DisplayParcels(parcel => true))
+                if (d.status == DroneStatuses.available)//if the drone is avilable-need to calc the batery to get to a station with a free slot
                 {
-                    if (item.Id == d.parcelID && isPickedUp(d.id))
-                    {
-                        weight = (WeightCategories)item.Weight;
-                       double distance1= calcDistance(d.currentLocation, targetLocation(item.Id));//the distance between the drone and the destination
-                        double distance2 = calcDistance(targetLocation(item.Id), nearestCharging(targetLocation(item.Id)));//the distance between the destination and the nearest station
-
-                        switch (weight)//calculate the battery
-                        {
-                            case WeightCategories.light:
-                                return ((distance1 * lightPK) + (distance2 * availablePK));
-                            case WeightCategories.medium:
-                                return ((distance1 * mediumPK) + (distance2 * availablePK));
-                            case WeightCategories.heavy:
-                                return ((distance1 * heavyPK) + (distance2 * availablePK));
-                            default:
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        weight = (WeightCategories)item.Weight;
-                        double distance1 = calcDistance(d.currentLocation, targetLocation(item.Id));//the distance between the drone and the destination
-                        double distance2 = calcDistance(targetLocation(item.Id), nearestCharging(targetLocation(item.Id)));//the distance between the destination and the nearest station
-                        double distance3 = calcDistance(d.currentLocation, senderLocation(item.Id));//the distance between the drone and the parcel to collect
-                        switch (weight)//calculate the battery
-                        {
-                            case WeightCategories.light:
-                                return ((distance1 * lightPK) + ((distance2+distance3)* availablePK));
-                            case WeightCategories.medium:
-                                return ((distance1 * mediumPK) + ((distance2 + distance3) * availablePK));
-                            case WeightCategories.heavy:
-                                return ((distance1 * heavyPK) + ((distance2 + distance3) * availablePK));
-                            default:
-                                break;
-                        }
-                    }
+                    location location = nearestCharging(d.currentLocation);
+                    return calcDistance(d.currentLocation, location) * availablePK;
                 }
+                if (d.status == DroneStatuses.delivery)//if the drone is avilable-need to calc the batery to get to the dastination and to a station with a free slot
+                {
+                    WeightCategories weight;
+                    foreach (var item in dl.DisplayParcels(parcel => true))
+                    {
+                        if (item.Id == d.parcelID && isPickedUp(d.id))
+                        {
+                            weight = (WeightCategories)item.Weight;
+                            double distance1 = calcDistance(d.currentLocation, targetLocation(item.Id));//the distance between the drone and the destination
+                            double distance2 = calcDistance(targetLocation(item.Id), nearestCharging(targetLocation(item.Id)));//the distance between the destination and the nearest station
 
+                            switch (weight)//calculate the battery
+                            {
+                                case WeightCategories.light:
+                                    return ((distance1 * lightPK) + (distance2 * availablePK));
+                                case WeightCategories.medium:
+                                    return ((distance1 * mediumPK) + (distance2 * availablePK));
+                                case WeightCategories.heavy:
+                                    return ((distance1 * heavyPK) + (distance2 * availablePK));
+                                default:
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            weight = (WeightCategories)item.Weight;
+                            double distance1 = calcDistance(d.currentLocation, targetLocation(item.Id));//the distance between the drone and the destination
+                            double distance2 = calcDistance(targetLocation(item.Id), nearestCharging(targetLocation(item.Id)));//the distance between the destination and the nearest station
+                            double distance3 = calcDistance(d.currentLocation, senderLocation(item.Id));//the distance between the drone and the parcel to collect
+                            switch (weight)//calculate the battery
+                            {
+                                case WeightCategories.light:
+                                    return ((distance1 * lightPK) + ((distance2 + distance3) * availablePK));
+                                case WeightCategories.medium:
+                                    return ((distance1 * mediumPK) + ((distance2 + distance3) * availablePK));
+                                case WeightCategories.heavy:
+                                    return ((distance1 * heavyPK) + ((distance2 + distance3) * availablePK));
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+
+                }
+                return 0;
             }
-            return 0;
         }
         private int findParcelDelivery(int droneId)//find the parcel that in delivery
         {
-            foreach (var item in dl.DisplayParcels(parcel => true))//goes over the list of parcels to find the parcel 
+            lock (dl)
             {
-                if (item.DroneId == droneId && item.Delivered==null)//find the parcel that in delivery
+                foreach (var item in dl.DisplayParcels(parcel => true))//goes over the list of parcels to find the parcel 
                 {
-                    return item.Id;
+                    if (item.DroneId == droneId && item.Delivered == null)//find the parcel that in delivery
+                    {
+                        return item.Id;
+                    }
                 }
+                return 0;
             }
-            return 0;
         }
     }
 

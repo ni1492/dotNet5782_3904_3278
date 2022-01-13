@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using DAL.DalApi;
-
+using System.Runtime.CompilerServices;
 
 namespace DALObject
 {
@@ -18,14 +18,11 @@ namespace DALObject
             DataSource.Initialize();
         }
         DALObject() { }
-       public static DALObject Instance => instance;
+        public static DALObject Instance => instance;
         #endregion
-        //public DALObject()
-        //{
-        //    DataSource.Initialize();
-        //}
 
         #region station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
             //initialize new station object:
@@ -45,6 +42,7 @@ namespace DALObject
             //adds to base station list:
             DataSource.baseStations.Add(station);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> DisplayStations(Predicate<Station> match)
         {
             foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
@@ -53,33 +51,7 @@ namespace DALObject
                     yield return station;
             }
         }
-        //public Station PrintStation(int id)//display station by station ID
-        //{
-        //    foreach (Station station in DataSource.baseStations)//goes over the list of stations to find the station with that ID
-        //    {
-        //        if (station.Id == id)//when found- displays the station 
-        //        {
-        //            return station;
-        //        }
-        //    }
-        //    throw new NotFoundException("station doesn't exist");
-
-        //}
-        //public IEnumerable<Station> PrintAllStation()//display all stations
-        //{
-        //    foreach (Station station in DataSource.baseStations)//goes over all the stations and prints all of them
-        //    {
-        //        yield return station;
-        //    }
-        //}
-        //public IEnumerable<Station> PrintStationWithChargeSlots()//display all stations with available charging slots 
-        //{
-        //    foreach (Station station in DataSource.baseStations)//goes over all the stations and if the station has any available charging slots - it displays it
-        //    {
-        //        if (station.ChargeSlots > 0)//station with available charging slots= at least one charging slot
-        //            yield return station;
-        //    }
-        //}
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station ConvertStation(int id)//returns the station of the ID that was given
         {
             int index = 0;
@@ -94,6 +66,7 @@ namespace DALObject
             Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteStation(int id)
         {
             bool b = false;
@@ -111,6 +84,7 @@ namespace DALObject
         #endregion
 
         #region drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
         {
             //initialize new drone object:
@@ -130,7 +104,7 @@ namespace DALObject
             //adds to drones list:
             DataSource.drones.Add(drone);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> DisplayDrones(Predicate<Drone> match)
         {
             foreach (Drone drone in DataSource.drones)//goes over all the stations and prints all of them
@@ -139,24 +113,7 @@ namespace DALObject
                     yield return drone;
             }
         }
-        //public Drone PrintDrone(int id)//display drone by drone ID
-        //{
-        //    foreach (Drone drone in DataSource.drones)//goes over the list of drones to find the drone with that ID
-        //    {
-        //        if (drone.Id == id)
-        //        {
-        //            return drone;
-        //        }
-        //    }
-        //    throw new NotFoundException("drone doesn't exist");
-        //}
-        //public IEnumerable<Drone> PrintAllDrone()//display all drones
-        //{
-        //    foreach (Drone drone in DataSource.drones)//goes over all the drones and prints all of them
-        //    {
-        //        yield return drone;
-        //    }
-        //}
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone ConvertDrone(int id)//returns the drone of the ID that was given
         {
             int index = 0;
@@ -171,6 +128,7 @@ namespace DALObject
             Drone d = new Drone();//if the parcel does not exist - returns an empty drone
             return d;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteDrone(int id)
         {
             bool b = false;
@@ -189,6 +147,7 @@ namespace DALObject
         #endregion
 
         #region customer
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
         {
             //initialize new customer object:
@@ -208,7 +167,7 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> DisplayCustomers(Predicate<Customer> match)
         {
             foreach (Customer customer in DataSource.customers)//goes over all the stations and prints all of them
@@ -217,25 +176,7 @@ namespace DALObject
                     yield return customer;
             }
         }
-        //public Customer PrintCustomer(int id)//display customer by customer ID
-        //{
-        //    foreach (Customer customer in DataSource.customers)//goes over the list of customers to find the customer with that ID
-        //    {
-        //        if (customer.Id == id)//when found- displays the customer 
-        //        {
-        //            return customer;
-        //        }
-        //    }
-        //    throw new NotFoundException("customer doesn't exist");
-
-        //}
-        //public IEnumerable<Customer> PrintAllCustomer()//display all customers
-        //{
-        //    foreach (Customer customer in DataSource.customers)//goes over all the customers and prints all of them
-        //    {
-        //        yield return customer;
-        //    }
-        //}
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteCustomer(int id)
         {
             bool b = false;
@@ -253,6 +194,7 @@ namespace DALObject
         #endregion
 
         #region parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel p)//add new parcel
         {
             try
@@ -290,6 +232,7 @@ namespace DALObject
             //add to parcels list
             DataSource.parcels.Add(parcel);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Match(int pId, int dId) //matches a drone to a parcel
         {
             bool b = false;
@@ -325,6 +268,7 @@ namespace DALObject
                 }
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
             bool b = false;
@@ -356,6 +300,7 @@ namespace DALObject
                 }
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
             bool b = false;
@@ -390,7 +335,7 @@ namespace DALObject
                 //}
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> DisplayParcels(Predicate<Parcel> match)
         {
             foreach (Parcel parcel in DataSource.parcels)//goes over all the stations and prints all of them
@@ -400,34 +345,7 @@ namespace DALObject
             }
         }
 
-        //public Parcel PrintParcel(int id)//display parcel by parcel ID
-        //{
-        //    foreach (Parcel parcel in DataSource.parcels)//goes over the list of parcels to find the parcel with that ID
-        //    {
-        //        if (parcel.Id == id)//when found- displays the parcel
-        //        {
-        //            return parcel;
-        //        }
-        //    }
-        //    throw new NotFoundException("parcel doesn't exist");
-
-        //}
-        //public IEnumerable<Parcel> PrintAllParcel()//display all parcels
-        //{
-        //    foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and prints all of them
-        //    {
-        //        yield return parcel;
-        //    }
-        //}
-        //public IEnumerable<Parcel> PrintParcelsWithNoDrone()//display all parcels that are not assigned to any drone
-        //{
-        //    foreach (Parcel parcel in DataSource.parcels)//goes over all the parcels and if they are not assigned to any drone - print the,
-        //    {
-        //        if (parcel.DroneId == 0)//not assigned to drone= drone ID is 0
-        //            yield return parcel;
-        //    }
-        //}
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
             int index = 0;
@@ -442,6 +360,7 @@ namespace DALObject
             Parcel p = new Parcel();//if the parcel does not exist - returns an empty parcel
             return p;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteParcel(int id)
         {
             bool b = false;
@@ -459,6 +378,7 @@ namespace DALObject
         #endregion
 
         #region charging
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCharging(int dId, int sId)//adds a drone to charging
         {
             bool b = false;
@@ -493,6 +413,7 @@ namespace DALObject
             //adds to charging list:
             DataSource.inCharging.Add(charging);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ChargingDrone(int dId, int sId)//send drone to charge
         {
             for (int i = 0; i < DataSource.baseStations.Count; i++)//find the station to update
@@ -507,6 +428,7 @@ namespace DALObject
             }
             AddCharging(dId, sId);//adds a new charging object to the list
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseChargingDrone(int id)//release drone from charging
         {
             bool b = false;
@@ -546,7 +468,7 @@ namespace DALObject
                 }
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
             double lat1 = latitude1 * (Math.PI / 180.0);
@@ -556,6 +478,7 @@ namespace DALObject
             double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
             return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance))) / 1000;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] powerUse()
         {
             double[] power = new double[5];
@@ -566,6 +489,7 @@ namespace DALObject
             power[4] = DataSource.Config.chargingPH;
             return power;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> displayChargings(int id)
         {
             bool b = false;
@@ -584,6 +508,7 @@ namespace DALObject
                     yield return item;
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> displayDronesInCharge(Predicate<DroneCharge> match)
         {
             foreach (var item in DataSource.inCharging)
@@ -596,6 +521,7 @@ namespace DALObject
         #endregion
 
         #region user
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(int id, string userN, string email, string password, bool isManager)
         {
             foreach (User u in DataSource.users) //if a user with the same name or id already exists
@@ -618,6 +544,7 @@ namespace DALObject
             DataSource.users.Add(temp);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteUser(int id)
         {
             bool b = false;
@@ -633,20 +560,7 @@ namespace DALObject
             DataSource.users.RemoveAll(u => u.Id == id);
         }
 
-        //public User displayUser(string userN)
-        //{
-        //    bool b = false;
-        //    foreach (User u in DataSource.users)
-        //    {
-        //        if (u.UserName == userN)
-        //        {
-        //            b = true;
-        //        }
-        //    }
-        //    if (!b)
-        //        throw new NotFoundException("user doesn't exist");
-        //    return DataSource.users.Find(u => u.UserName==userN);
-        //}
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> displayUsers(Predicate<User> match)
         {
             foreach (User u in DataSource.users)
@@ -658,6 +572,7 @@ namespace DALObject
             }
             
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool userCorrect(string userN, string password, bool isManager)
         {
             return DataSource.users.Exists(u => u.UserName == userN && u.IsManager == isManager && PasswordHandler.checkPassword(password, u.HashedPassword, u.Salt));

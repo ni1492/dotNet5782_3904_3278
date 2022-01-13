@@ -8,6 +8,7 @@ using DAL.DalApi;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using DAL;
+using System.Runtime.CompilerServices;
 
 namespace DALXML
 {
@@ -41,6 +42,7 @@ namespace DALXML
 
         #region DRONE
         #region add drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
         {
             List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -58,6 +60,7 @@ namespace DALXML
 
         #endregion
         #region match
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Match(int pId, int dId) //matches a drone to a parcel
         {
             List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -81,6 +84,7 @@ namespace DALXML
 
         #endregion
         #region PickUp update
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
             List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -98,6 +102,7 @@ namespace DALXML
 
         #endregion
         #region Delivery update
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
             List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -116,6 +121,7 @@ namespace DALXML
 
         #endregion
         #region display drones
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> DisplayDrones(Predicate<Drone> match)
         {
             List<Drone> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -126,6 +132,7 @@ namespace DALXML
 
         #endregion
         #region convert drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone ConvertDrone(int id)//returns the drone of the ID that was given
         {
             List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -135,6 +142,7 @@ namespace DALXML
 
         #endregion
         #region power
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] powerUse()
         {
             XElement configRootElem = XMLTools.LoadListFromXMLElement(configPath);
@@ -156,6 +164,7 @@ namespace DALXML
         }
         #endregion
         #region delete drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteDrone(int id)
         {
             List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -169,6 +178,7 @@ namespace DALXML
         #endregion
         #region STATION
         #region add station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
@@ -192,6 +202,7 @@ namespace DALXML
         }
         #endregion
         #region display stations
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> DisplayStations(Predicate<Station> match)
         {
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
@@ -211,6 +222,7 @@ namespace DALXML
 
         #endregion
         #region convert station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station ConvertStation(int id)//returns the station of the ID that was given
         {
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
@@ -230,6 +242,7 @@ namespace DALXML
 
         #endregion
         #region display charging
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> displayChargings(int id)
         {
             List<DroneCharge> charges = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesInChargingPath);
@@ -240,6 +253,7 @@ namespace DALXML
         }
         #endregion
         #region delete station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteStation(int id)
         {
             XElement stationRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
@@ -257,6 +271,7 @@ namespace DALXML
         #endregion
         #region PARCEL
         #region add parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel p)//add new parcel
         {
             List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -292,6 +307,7 @@ namespace DALXML
 
         #endregion
         #region display parcels
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> DisplayParcels(Predicate<Parcel> match)
         {
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -302,6 +318,7 @@ namespace DALXML
 
         #endregion
         #region convert parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
             List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -310,6 +327,7 @@ namespace DALXML
 
         #endregion
         #region delete parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteParcel(int id)
         {
             List<Parcel> ListParcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -326,6 +344,7 @@ namespace DALXML
         #endregion
         #region CUSTOMER
         #region add customer
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
         {
             XElement customerRootElem = XMLTools.LoadListFromXMLElement(customersPath);
@@ -350,6 +369,7 @@ namespace DALXML
 
         #endregion
         #region display customers
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> DisplayCustomers(Predicate<Customer> match)
         {
             XElement customerRootElem = XMLTools.LoadListFromXMLElement(customersPath);
@@ -369,6 +389,7 @@ namespace DALXML
 
         #endregion
         #region delete customer
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteCustomer(int id)
         {
             XElement customerRootElem = XMLTools.LoadListFromXMLElement(customersPath);
@@ -385,6 +406,7 @@ namespace DALXML
         #endregion
         #region CHARGING
         #region add charging
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCharging(int dId, int sId)//adds a drone to charging
         {
             List<DroneCharge> ListDrones = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesInChargingPath);
@@ -402,6 +424,7 @@ namespace DALXML
 
         #endregion
         #region charging drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ChargingDrone(int dId, int sId)//send drone to charge
         {
             List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -432,6 +455,7 @@ namespace DALXML
 
         #endregion
         #region release drone frome charging 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseChargingDrone(int id)//release drone from charging
         {
             List<Drone> ListDrones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -459,6 +483,7 @@ namespace DALXML
 
         #endregion
         #region CalculateDistance
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
             double lat1 = latitude1 * (Math.PI / 180.0);
@@ -471,6 +496,7 @@ namespace DALXML
 
         #endregion
         #region display charges
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> displayDronesInCharge(Predicate<DroneCharge> match)
         {
             List<DroneCharge> charges = XMLTools.LoadListFromXMLSerializer<DroneCharge>(dronesInChargingPath);
@@ -483,6 +509,7 @@ namespace DALXML
         #endregion
         #region USER
         #region add user
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(int id, string userN, string email, string password, bool isManager)
         {
             XElement userRootElem = XMLTools.LoadListFromXMLElement(usersPath);
@@ -508,6 +535,7 @@ namespace DALXML
         }
         #endregion
         #region delete user
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteUser(int id)
         {
             XElement userRootElem = XMLTools.LoadListFromXMLElement(usersPath);
@@ -524,27 +552,7 @@ namespace DALXML
 
         #endregion
         #region display users
-        //public User displayUser(string userN)
-        //{
-        //    XElement userRootElem = XMLTools.LoadListFromXMLElement(usersPath);
-        //    XElement user = (from b in userRootElem.Elements()
-        //                        where b.Element("UserName").Value == userN.ToString()
-        //                        select b).FirstOrDefault();
-        //    if(user==null)
-        //        throw new DO.NotFoundException("station doesn't exist");
-
-        //    return new User()
-        //    {
-        //        Id = Int32.Parse(user.Element("Id").Value),
-        //        UserName = user.Element("UserName").Value,
-        //        Email = user.Element("Email").Value,
-        //        IsManager = bool.Parse(user.Element("IsManager").Value),
-        //        Salt = Int32.Parse(user.Element("Salt").Value),
-        //        HashedPassword = user.Element("HashedPassword").Value
-        //    };
-
-          
-        //}
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> displayUsers(Predicate<User> match)
         {
             XElement userRootElem = XMLTools.LoadListFromXMLElement(usersPath);

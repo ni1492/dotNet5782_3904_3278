@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.SingleWindows"
         mc:Ignorable="d"
-        Title="UserInfoWindow" Height="200" Width="200">
+        Title="UserInfoWindow" Height="200" Width="250">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -23,7 +23,7 @@
             <ImageBrush ImageSource="/SingleWindows/UserBack.png" Stretch="Fill" Opacity="0.7"/>
         </Grid.Background>
         <Button Content="CLOSE" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Click="close_click" Style="{StaticResource ButtonStyle}" Grid.Column="0" Margin="0,0,0,0" Grid.Row="5"/>
-        <Grid x:Name="info"  Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Grid x:Name="info"  Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="4*"/>
@@ -41,7 +41,7 @@
             <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Name:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="2"/>
             <TextBlock x:Name="NAME" HorizontalAlignment="Center" Grid.Column="1" Text="Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="2"/>
             <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Email:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center"  Grid.Row="3"/>
-            <TextBlock x:Name="EMALE" HorizontalAlignment="Center" Grid.Column="1" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="3"/>
+            <TextBlock x:Name="EMAIL" HorizontalAlignment="Center" Grid.Column="1" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" TextAlignment="Center" Grid.Row="3"/>
             <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Phone:" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="4"/>
             <TextBlock x:Name="PHONE" HorizontalAlignment="Center" Grid.Column="1" Text="Phone" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center" Grid.Row="4"/>
             <Button Content="CHANGE PASSWORD" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Click="ChangePass_Click" Style="{StaticResource ButtonStyle}" Grid.Column="1" Margin="0,0,0,0" Grid.Row="5"/>

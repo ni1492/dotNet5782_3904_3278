@@ -31,7 +31,7 @@ namespace PL.SingleWindows
             passWarning.Visibility = Visibility.Hidden;
             ID.Text = user.UId.ToString();
             NAME.Text = user.UName.ToString();
-            EMALE.Text = user.Email.ToString();
+            EMAIL.Text = user.Email.ToString();
             PHONE.Text = bl.displayCustomer(Int32.Parse(user.UId.ToString())).phone;
         }
 
@@ -68,7 +68,7 @@ namespace PL.SingleWindows
                 try
                 {
                     MailMessage mail = new MailMessage();
-                    mail.To.Add(EMALE.Text);
+                    mail.To.Add(EMAIL.Text);
                     mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
                     mail.Subject = "password changed";
                     mail.Body = @"<p>Your password has been changed.<br />Your new password is:</p>

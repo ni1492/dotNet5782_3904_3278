@@ -5,85 +5,105 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using DO;
+using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
     public partial class BL : IBL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(int id, string userN, string email, string password, bool isManager)
         {
-            try
+            lock (dl)
             {
-                dl.AddUser(id, userN, email, password, isManager);
-            }
-            catch (Exception ex) //catches if the ID already exists
-            {
-                throw new BO.exceptions.ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                try
+                {
+                    dl.AddUser(id, userN, email, password, isManager);
+                }
+                catch (Exception ex) //catches if the ID already exists
+                {
+                    throw new BO.exceptions.ExistException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                }
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public UserForDisplay displayUser(string userN)
         {
-            try
+            lock (dl)
             {
-                User user = dl.displayUsers(user => user.UserName == userN).FirstOrDefault();
-                if (user == null)
-                    return null;
-                return new UserForDisplay()
+                try
                 {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    IsManager = user.IsManager,
-                    Salt = user.Salt,
-                    HashedPassword = user.HashedPassword
-                };
-            }
-            catch (Exception ex) //throw - if the customer doesnt exist
-            {
+                    User user = dl.displayUsers(user => user.UserName == userN).FirstOrDefault();
+                    if (user == null)
+                        return null;
+                    return new UserForDisplay()
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        IsManager = user.IsManager,
+                        Salt = user.Salt,
+                        HashedPassword = user.HashedPassword
+                    };
+                }
+                catch (Exception ex) //throw - if the customer doesnt exist
+                {
 
-                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                    throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                }
             }
-
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<UserForDisplay> displayUsersList()
         {
-            foreach (User user in dl.displayUsers(user=>true))
+            lock (dl)
             {
-                yield return new UserForDisplay()
+                foreach (User user in dl.displayUsers(user => true))
                 {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    IsManager = user.IsManager,
-                    Salt = user.Salt,
-                    HashedPassword = user.HashedPassword
-                };
+                    yield return new UserForDisplay()
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        IsManager = user.IsManager,
+                        Salt = user.Salt,
+                        HashedPassword = user.HashedPassword
+                    };
+                }
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool userCorrect(string userN, string password, bool isManager)
         {
-            try
+            lock (dl)
             {
-                return dl.userCorrect(userN, password, isManager);
-            }
-            catch (Exception ex) //throw - if the customer doesnt exist
-            {
-                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                try
+                {
+                    return dl.userCorrect(userN, password, isManager);
+                }
+                catch (Exception ex) //throw - if the customer doesnt exist
+                {
+                    throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                }
             }
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void changePass(string userN, string password)
         {
-            try
+            lock (dl)
             {
-                DO.User tempDL = dl.displayUsers(user => user.UserName == userN).FirstOrDefault();
+                try
+                {
+                    DO.User tempDL = dl.displayUsers(user => user.UserName == userN).FirstOrDefault();
 
-                dl.deleteUser(tempDL.Id);
-                dl.AddUser(tempDL.Id, tempDL.UserName, tempDL.Email, password, tempDL.IsManager);
-            }
-            catch (Exception ex) //throw - if the customer doesnt exist
-            {
+                    dl.deleteUser(tempDL.Id);
+                    dl.AddUser(tempDL.Id, tempDL.UserName, tempDL.Email, password, tempDL.IsManager);
+                }
+                catch (Exception ex) //throw - if the customer doesnt exist
+                {
 
-                throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                    throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
+                }
             }
         }
     }
