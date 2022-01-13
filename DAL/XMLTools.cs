@@ -11,12 +11,11 @@ using DO;
 namespace DAL
 {
     /// <summary>
-    /// מחלקה עזר לעבודה עם קבצי XML
+    /// class to help working with XML
     /// </summary>
     public class XMLTools
     {
         static string dir = @"";
-        //..\dotNet5782_3904_3278\data\
         static XMLTools()
         {
             if (dir!="" && !Directory.Exists(dir))
@@ -24,10 +23,8 @@ namespace DAL
         }
         #region SaveLoadWithXElement
         /// <summary>
-        /// שמירה לקובץ XML על ידי שימוש במחלקה XElement
+        /// save element to file
         /// </summary>
-        /// <param name="rootElem">שורש הקובץ</param>
-        /// <param name="filePath">מיקום הקובץ</param>
         public static void SaveListToXMLElement(XElement rootElem, string filePath)
         {
             try
@@ -41,10 +38,8 @@ namespace DAL
         }
 
         /// <summary>
-        /// העלאה מקובץ XML ע"י שימוש במחלקה XElement
+        /// get element from file
         /// </summary>
-        /// <param name="filePath">מיקום קובץ</param>
-        /// <returns>רשימת האלמנטים בקובץ</returns>
         public static XElement LoadListFromXMLElement(string filePath)
         {
             try
@@ -69,11 +64,8 @@ namespace DAL
 
         #region SaveLoadWithXMLSerializer
         /// <summary>
-        /// שמירה לקובץ XML ע"י שימוש בXMLSerializer
+        /// save serializer to file
         /// </summary>
-        /// <typeparam name="T">טיפוס האלמנטים בקובץ</typeparam>
-        /// <param name="list">רשימת אלמנטים מטיפוס גנרי לשמירה בקובץ</param>
-        /// <param name="filePath">מיקום הקובץ</param>
         public static void SaveListToXMLSerializer<T>(List<T> list, string filePath)
         {
             try
@@ -89,11 +81,8 @@ namespace DAL
             }
         }
         /// <summary>
-        /// העלאה מקובץ XML ע"י שימוש בXMLSerializer
+        /// get serializer from file
         /// </summary>
-        /// <typeparam name="T">טיפוס האלמנטים בקובץ</typeparam>
-        /// <param name="filePath">מיקום הקובץ</param>
-        /// <returns>רשימת האלמנטים בקובץ מטיפוס גנרי</returns>
         public static List<T> LoadListFromXMLSerializer<T>(string filePath)
         {
             try
