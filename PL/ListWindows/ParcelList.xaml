@@ -109,10 +109,9 @@
 
 
 
-        <DataGrid x:Name="parcelGroupingDataGrid" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" RowDetailsVisibilityMode="VisibleWhenSelected" Height="352" Width="528" Opacity="0.8" Margin="136,48,0,0" Grid.RowSpan="2">
+        <DataGrid x:Name="parcelGroupingDataGrid" IsReadOnly="True" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" RowDetailsVisibilityMode="VisibleWhenSelected" Height="352" Width="528" Opacity="0.8" Margin="136,48,0,0" Grid.RowSpan="2">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
-                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
@@ -123,42 +122,42 @@
                     <StackPanel>
                         <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn x:Name="pIDColumn" Header="ID" Width="70">
+                                <DataGridTemplateColumn x:Name="pIDColumn" Header="ID" Width="70" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding PID}" FontSize="10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn x:Name="sIDColumn1" Header="Sender" Width="90">
+                                <DataGridTemplateColumn x:Name="sIDColumn1" Header="Sender" Width="90" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding SenderName}" FontSize="10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn x:Name="tIDColumn" Header="Target" Width="90">
+                                <DataGridTemplateColumn x:Name="tIDColumn" Header="Target" Width="90" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding TargetName}" FontSize="10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn x:Name="priorityColumn" Header="Priority" Width="90">
+                                <DataGridTemplateColumn x:Name="priorityColumn" Header="Priority" Width="90" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Priority}" FontSize="10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn x:Name="pWeightColumn" Header="Weight" Width="90">
+                                <DataGridTemplateColumn x:Name="pWeightColumn" Header="Weight" Width="90" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding PWeight}" FontSize="10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn x:Name="PStatusColumn" Header="Status" Width="90">
+                                <DataGridTemplateColumn x:Name="PStatusColumn" Header="Status" Width="90" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding  PStatus}" FontSize="10"/>
