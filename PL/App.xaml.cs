@@ -7,15 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using BlApi;
 using System.Globalization;
-using System.Threading;
+//using System.Threading;
 using System.Media;
 
-//using (var waveOut = new WaveOutEvent())
-//using (var wavReader = new WaveFileReader(@"c:\mywavfile.wav"))
-//{
-//    waveOut.Init(wavReader);
-//    waveOut.Play();
-//}
 namespace PL
 {
     /// <summary>

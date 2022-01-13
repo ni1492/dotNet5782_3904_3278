@@ -39,50 +39,75 @@ namespace PL
         {
             bl = App.bl;
             InitializeComponent();
-            UserPasswordBorder.Visibility = Visibility.Visible;
-            cancel.Visibility = Visibility.Hidden;
-            window_User.Visibility = Visibility.Hidden;
-            AdminPasswordBorder.Visibility = Visibility.Visible;
-            window_Admin.Visibility = Visibility.Hidden;
-            showPassAdmin.Visibility = Visibility.Hidden;
-            showPassUser.Visibility = Visibility.Hidden;
-            forgotPassBorder1.Visibility = Visibility.Hidden;
-            forgotPassBorder2.Visibility = Visibility.Hidden;
-            resetPassBorder.Visibility = Visibility.Hidden;
-            App.music.PlayLooping();
+            UserPasswordBorder.Visibility = Visibility.Visible;//sign in window- user- to sign in
+            window_User.Visibility = Visibility.Hidden;//user window-need to sign in before
+            AdminPasswordBorder.Visibility = Visibility.Visible;//sign in window- admin- to sign in
+            window_Admin.Visibility = Visibility.Hidden;//admin window-need to sign in before
+            showPassAdmin.Visibility = Visibility.Hidden;//show the dots and not the password- admin
+            showPassUser.Visibility = Visibility.Hidden;//show the dots and not the password- user
+            forgotPassBorder1.Visibility = Visibility.Hidden;//forgot window 1-ask for username and email and send a code
+            forgotPassBorder2.Visibility = Visibility.Hidden;//forfot window 2- ask for the code
+            resetPassBorder.Visibility = Visibility.Hidden;//forgot window 3- allow to reset the password
+            cancel.Visibility = Visibility.Hidden;//allow to go back to the passwordBorder any time in the forget pssword prosses
+            App.music.PlayLooping();//activate the backgound music
         }
 
-        //private void HandleCheck(object sender, RoutedEventArgs e)
-        //{
+        private void HandleCheck(object sender, RoutedEventArgs e)
+        {
 
-        //}
+        }
 
-        //private void HandleUnchecked(object sender, RoutedEventArgs e)
-        //{
-        //}
+        private void HandleUnchecked(object sender, RoutedEventArgs e)
+        {
+        }
+
+        #region manager
+        #region manager view
+        /// <summary>
+        /// log out
+        /// </summary>
+        private void Button_Click_LogOut(object sender, RoutedEventArgs e)
+        {
+            window_Admin.Visibility = Visibility.Hidden;
+            tryAgain.Visibility = Visibility.Hidden;
+            AdminPasswordBorder.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// open the drones list window
+        /// </summary>
         private void showDronesButton_click(object sender, RoutedEventArgs e)
         {
             new droneList(bl).Show();
         }
-
+        /// <summary>
+        /// open the parcels list window
+        /// </summary>
         private void showParcelsButton_click(object sender, RoutedEventArgs e)
         {
             new ParcelList(bl).Show();
         }
-
+        /// <summary>
+        /// open the customers list window
+        /// </summary>
         private void showCustomersButton_click(object sender, RoutedEventArgs e)
         {
             new CustomerList(bl).Show();
         }
-
+        /// <summary>
+        /// open the stations list window
+        /// </summary>
         private void showStationButton_click(object sender, RoutedEventArgs e)
         {
             new BaseStationList(bl).Show();
         }
-
+        #endregion
+        #region signing
+        /// <summary>
+        /// log in with the password
+        /// </summary>
         private void signInAdmin_Click(object sender, RoutedEventArgs e)
         {
-            if (checkPassword(PassBox_passAdmin.Password, "manager",true))
+            if (checkPassword(PassBox_passAdmin.Password, "manager", true))
             {
                 AdminPasswordBorder.Visibility = Visibility.Hidden;
                 window_Admin.Visibility = Visibility.Visible;
@@ -96,65 +121,32 @@ namespace PL
             else
                 tryAgain.Visibility = Visibility.Visible;
         }
-        private bool checkPassword(string pass,string user,bool isManager)
+        /// <summary>
+        ///show password(the eye) of the admin window
+        /// </summary>
+        private void showAdmin(object sender, RoutedEventArgs e)
+        {
+            if (showPassAdmin.Visibility == Visibility.Hidden)
+            {
+                showPassAdmin.Text = PassBox_passAdmin.Password;
+                showPassAdmin.Visibility = Visibility.Visible;
+                PassBox_passAdmin.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                showPassAdmin.Visibility = Visibility.Hidden;
+                PassBox_passAdmin.Visibility = Visibility.Visible;
+            }
+        }
+        #endregion
+        #endregion
+
+        #region checkes
+        private bool checkPassword(string pass, string user, bool isManager)
         {
             if (bl.userCorrect(user, pass, isManager))
                 return true;
             return false;
-        }
-
-        private void SignUp_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (checkId(ID.Text) && checkName(USER.Text)&& checkPass(PASS.Text))
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.To.Add(EMAIL.Text);
-                    mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
-                    mail.Subject = "wlecome to the D.D.D family";
-                    mail.Body = @"<p>Dear" + USER.Text + @",</p>
-<p>We are very happy to welcome you to our delivery services!</p>
-<p>Your account is now set and activated. With your username and password you can easily log in and start sending and receiving parcels.</p>
-<p>Have a wonderful day:)</p>
-<p>D.D.D DragoDroneDelivery.</p>
-<p>&nbsp;</p>";
-                    mail.IsBodyHtml = true;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                    App.bl.AddUser(Int32.Parse(ID.Text), USER.Text, EMAIL.Text, PASS.Text, MANAGER.IsChecked.Value);
-                    BO.location l = new BO.location() { Latitude = double.Parse(LATITUDE.Text), Longitude = double.Parse(LONGITUDE.Text) };
-                    App.bl.addCustomer(new BO.customer() { id = Int32.Parse(ID.Text), name = USER.Text, phone = PHONE.Text, location = l });
-                    MessageBox.Show("signed up");
-
-       
-                    ID.Clear();
-                    USER.Clear();
-                    EMAIL.Clear();
-                    PASS.Clear();
-                    PHONE.Clear();
-                    LONGITUDE.Clear();
-                    LATITUDE.Clear();
-                    MANAGER.ClearValue(IconProperty);
-                }
-                else
-                    MessageBox.Show("incorrect input - signing up failed");
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "The specified string is not in the form required for an e-mail address.")
-                {
-
-                    EMAIL.BorderBrush = Brushes.DarkRed;
-                    EMAIL.Background = Brushes.Red;
-                }
-                else
-                    MessageBox.Show(ex.Message);
-                return;
-            }
         }
         private bool checkId(string text)
         {
@@ -164,7 +156,7 @@ namespace PL
                     return false;
                 if (!int.TryParse(text, out int id))
                     return false;
-                if (id <= 0 || id < 100000000  || id > 1000000000)
+                if (id <= 0 || id < 100000000 || id > 1000000000)
                     return false;
                 if (App.bl.displayUsersList().Any(user => user.Id == id))
                     return false;
@@ -177,7 +169,7 @@ namespace PL
             }
 
         }
-        private bool checkName(string text)
+        private bool checkName(string text)//signing up check
         {
             try
             {
@@ -193,7 +185,7 @@ namespace PL
             }
 
         }
-        private bool checkName2(string text)
+        private bool checkName2(string text)//forgot pass check
         {
             try
             {
@@ -231,7 +223,7 @@ namespace PL
         {
             try
             {
-                if (text.Length==0)
+                if (text.Length == 0)
                     return false;
                 if (App.bl.displayUsersList().Any(user => user.Email.Equals(text)))
                     return false;
@@ -279,7 +271,14 @@ namespace PL
                 return true;
             }
         }
-       
+        private bool checkCode(string pass)
+        {
+            return pass.Equals(codeForResetPass);
+        }
+
+        #endregion
+
+        #region red boxes
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -371,6 +370,13 @@ namespace PL
                 LATITUDE.Background = Brushes.Red;
             }
         }
+        #endregion
+
+        #region user
+        #region signing
+        /// <summary>
+        /// log in with username and password
+        /// </summary>
         private void signInUser_Click(object sender, RoutedEventArgs e)
         {
             if (checkPassword(PassBox_user.Password, TextBox_TraineeID.Text,false))
@@ -397,82 +403,9 @@ namespace PL
             }
 
         }
-
-        private void Button_Click_LogOut(object sender, RoutedEventArgs e)
-        {
-            window_Admin.Visibility = Visibility.Hidden;
-            tryAgain.Visibility = Visibility.Hidden;
-            AdminPasswordBorder.Visibility = Visibility.Visible;
-        }
-        private void Button_Click_LogOutUser(object sender, RoutedEventArgs e)
-        {
-            window_User.Visibility = Visibility.Hidden;
-            tryAgain.Visibility = Visibility.Hidden;
-            UserPasswordBorder.Visibility = Visibility.Visible;
-            cancel.Visibility = Visibility.Hidden;
-            USERNAME.Content = "";
-            new RateUs().ShowDialog();
-        }
-        private void DataGridCellToCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.Parcel p = cell.DataContext as PO.Parcel;
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
-        }
-        private void DataGridCellFromCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.Parcel p = cell.DataContext as PO.Parcel;
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
-        }
-
-        private void newParcel_Click(object sender, RoutedEventArgs e)
-        {
-
-            new ParcelWindow(bl, USERNAME.Content.ToString()).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
-        }
-        private void refreshUSER_Click(object sender, RoutedEventArgs e)
-        {
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
-        }
-
-        private void OpenDetails_Click(object sender, RoutedEventArgs e)
-        {
-            bl.displayUser(USERNAME.Content.ToString());
-            new UserInfoWindow(bl,Converter.UserPO(bl.displayUser(USERNAME.Content.ToString()))).Show();
-
-        }
-
-        private void showAdmin(object sender, RoutedEventArgs e)
-        {
-            if(showPassAdmin.Visibility==Visibility.Hidden)
-            {
-                showPassAdmin.Text = PassBox_passAdmin.Password;
-                showPassAdmin.Visibility = Visibility.Visible;
-                PassBox_passAdmin.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                showPassAdmin.Visibility = Visibility.Hidden;
-                PassBox_passAdmin.Visibility = Visibility.Visible;
-            }
-        }
-
+        /// <summary>
+        ///show password(the eye) of the user window
+        /// </summary>
         private void showUser(object sender, RoutedEventArgs e)
         {
             if (showPassUser.Visibility == Visibility.Hidden)
@@ -486,32 +419,90 @@ namespace PL
                 showPassUser.Visibility = Visibility.Hidden;
                 PassBox_user.Visibility = Visibility.Visible;
             }
-           
-        }
-
-        private void stop_Click(object sender, RoutedEventArgs e)
-        {
-            Stop.Visibility = Visibility.Hidden;
-            Play.Visibility = Visibility.Visible;
-            App.music.Stop();
-        }
-
-        private void play_ClicK(object sender, RoutedEventArgs e)
-        {
-            Stop.Visibility = Visibility.Visible;
-            Play.Visibility = Visibility.Hidden;
-            App.music.PlayLooping();
 
         }
-        private bool checkCode(string pass)
+        #endregion
+        #region actions
+        /// <summary>
+        /// log out
+        /// </summary>
+        private void Button_Click_LogOutUser(object sender, RoutedEventArgs e)
         {
-            return pass.Equals(codeForResetPass);
+            window_User.Visibility = Visibility.Hidden;
+            tryAgain.Visibility = Visibility.Hidden;
+            UserPasswordBorder.Visibility = Visibility.Visible;
+            cancel.Visibility = Visibility.Hidden;
+            USERNAME.Content = "";
+            new RateUs().ShowDialog();
         }
-        private void forgotPass_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        ///double click for the list of parcels that send to the customer
+        /// </summary>
+        private void DataGridCellToCus_MouseDoubleClick(object sender, MouseButtonEventArgs e) 
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Parcel p = cell.DataContext as PO.Parcel;
+            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelToCusDataGrid.DataContext = parcels;
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelFromCusDataGrid.DataContext = parcels;
+        }
+        /// <summary>
+        ///double click for the list of parcels that the customer send
+        /// </summary>
+        private void DataGridCellFromCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.Parcel p = cell.DataContext as PO.Parcel;
+            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelToCusDataGrid.DataContext = parcels;
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelFromCusDataGrid.DataContext = parcels;
+        }
+        /// <summary>
+        ///send new parcel from the customer 
+        /// </summary>
+        private void newParcel_Click(object sender, RoutedEventArgs e)//send new parcel from the customer
+        {
+
+            new ParcelWindow(bl, USERNAME.Content.ToString()).ShowDialog();
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelToCusDataGrid.DataContext = parcels;
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelFromCusDataGrid.DataContext = parcels;
+        }
+        /// <summary>
+        ///refresh the page-not used yet
+        /// </summary>
+        private void refreshUSER_Click(object sender, RoutedEventArgs e)
+        {
+            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelToCusDataGrid.DataContext = parcels;
+            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+            parcelFromCusDataGrid.DataContext = parcels;
+        }
+        /// <summary>
+        ///open a window with the personal details 
+        /// </summary>
+        private void OpenDetails_Click(object sender, RoutedEventArgs e)
+        {
+            bl.displayUser(USERNAME.Content.ToString());
+            new UserInfoWindow(bl, Converter.UserPO(bl.displayUser(USERNAME.Content.ToString()))).Show();
+
+        }
+
+        #endregion
+        #region forgot password
+        /// <summary>
+        /// if the user forget the password, he need to enter his username and email to 
+        /// </summary>
+        private void forgotPass_Click(object sender, RoutedEventArgs e)//no1
         {
             try
             {
-            
+
                 UserPasswordBorder.Visibility = Visibility.Hidden;
                 cancel.Visibility = Visibility.Visible;
                 forgotPassBorder1.Visibility = Visibility.Visible;
@@ -523,45 +514,14 @@ namespace PL
             }
 
         }
-
-        private void resetPass_Click(object sender, RoutedEventArgs e)
-        {
-            if (checkCode(codeBox.Text))
-            {
-                forgotPassBorder1.Visibility = Visibility.Hidden;
-                forgotPassBorder2.Visibility = Visibility.Hidden;
-                resetPassBorder.Visibility = Visibility.Visible;
-                passWarning.Visibility = Visibility.Hidden;
-
-            }
-            else
-            {
-                passWarning.Visibility = Visibility.Visible;
-            }
-        }
-        private void newPass_Click(object sender, RoutedEventArgs e)
-        {
-            if (checkPass(newPass.Text))
-            {
-                forgotPassBorder1.Visibility = Visibility.Hidden;
-                forgotPassBorder2.Visibility = Visibility.Hidden;
-                resetPassBorder.Visibility = Visibility.Hidden;
-                passWarning.Visibility = Visibility.Hidden;
-
-                bl.changePass(userName.Text, newPass.Text);
-                UserPasswordBorder.Visibility = Visibility.Visible;
-                cancel.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                passWarning.Visibility = Visibility.Visible;
-            }
-        }
-        private void sendEmail_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        ///click to send an email to the user
+        /// </summary>
+        private void sendEmail_Click(object sender, RoutedEventArgs e)//no2
         {
             try
             {
-              if(checkName2(userName.Text)&& userEmail.Text.Equals(bl.displayUser(userName.Text).Email))
+                if (checkName2(userName.Text) && userEmail.Text.Equals(bl.displayUser(userName.Text).Email))
                 {
                     Random x = new Random();
                     string code = "";
@@ -575,7 +535,7 @@ namespace PL
                     mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
                     mail.Subject = "new password";
                     mail.Body = @"<p>Forgot your password?!<br />No problem!<br />Just use the following code to reset your password:</p>
-<p><strong>"+code+@"</strong></p>
+<p><strong>" + code + @"</strong></p>
 <p>In the app you'll be able to enter and confirm your new password.</p>";
                     mail.IsBodyHtml = true;
                     SmtpClient smtp = new SmtpClient();
@@ -600,7 +560,50 @@ namespace PL
 
             }
         }
+        /// <summary>
+        ///the user need to enter the code he got to enable the changing password
+        /// </summary>
+        private void resetPass_Click(object sender, RoutedEventArgs e)//no3
+        {
+            if (checkCode(codeBox.Text))
+            {
+                forgotPassBorder1.Visibility = Visibility.Hidden;
+                forgotPassBorder2.Visibility = Visibility.Hidden;
+                resetPassBorder.Visibility = Visibility.Visible;
+                passWarning.Visibility = Visibility.Hidden;
 
+            }
+            else
+            {
+                passWarning.Visibility = Visibility.Visible;
+            }
+        }
+        /// <summary>
+        ///open the window to change the password if the code was right
+        /// </summary>
+        private void newPass_Click(object sender, RoutedEventArgs e)//no4
+        {
+            if (checkPass(newPass.Text))
+            {
+                forgotPassBorder1.Visibility = Visibility.Hidden;
+                forgotPassBorder2.Visibility = Visibility.Hidden;
+                resetPassBorder.Visibility = Visibility.Hidden;
+                passWarning.Visibility = Visibility.Hidden;
+
+                bl.changePass(userName.Text, newPass.Text);
+                UserPasswordBorder.Visibility = Visibility.Visible;
+                cancel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                passWarning.Visibility = Visibility.Visible;
+            }
+        }
+        /// <summary>
+        /// at any time while trying to change the password, if the user want to go back without changing the password, he click on this and get back to the ender window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
 
@@ -610,5 +613,92 @@ namespace PL
             UserPasswordBorder.Visibility = Visibility.Visible;
             cancel.Visibility = Visibility.Hidden;
         }
+        #endregion
+        #endregion
+
+        #region sign up
+        /// <summary>
+        /// after puting all the data, the use click to create an account, and the system send him a welcom email
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (checkId(ID.Text) && checkName(USER.Text) && checkPass(PASS.Text))
+                {
+                    MailMessage mail = new MailMessage();
+                    mail.To.Add(EMAIL.Text);
+                    mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
+                    mail.Subject = "wlecome to the D.D.D family";
+                    mail.Body = @"<p>Dear" + USER.Text + @",</p>
+<p>We are very happy to welcome you to our delivery services!</p>
+<p>Your account is now set and activated. With your username and password you can easily log in and start sending and receiving parcels.</p>
+<p>Have a wonderful day:)</p>
+<p>D.D.D DragoDroneDelivery.</p>
+<p>&nbsp;</p>";
+                    mail.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                    App.bl.AddUser(Int32.Parse(ID.Text), USER.Text, EMAIL.Text, PASS.Text, MANAGER.IsChecked.Value);
+                    BO.location l = new BO.location() { Latitude = double.Parse(LATITUDE.Text), Longitude = double.Parse(LONGITUDE.Text) };
+                    App.bl.addCustomer(new BO.customer() { id = Int32.Parse(ID.Text), name = USER.Text, phone = PHONE.Text, location = l });
+                    MessageBox.Show("signed up");
+
+
+                    ID.Clear();
+                    USER.Clear();
+                    EMAIL.Clear();
+                    PASS.Clear();
+                    PHONE.Clear();
+                    LONGITUDE.Clear();
+                    LATITUDE.Clear();
+                    MANAGER.ClearValue(IconProperty);
+                }
+                else
+                    MessageBox.Show("incorrect input - signing up failed");
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "The specified string is not in the form required for an e-mail address.")
+                {
+
+                    EMAIL.BorderBrush = Brushes.DarkRed;
+                    EMAIL.Background = Brushes.Red;
+                }
+                else
+                    MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+        #endregion
+
+        #region music
+        /// <summary>
+        /// stop the music
+        /// </summary>
+        private void stop_Click(object sender, RoutedEventArgs e)
+        {
+            Stop.Visibility = Visibility.Hidden;
+            Play.Visibility = Visibility.Visible;
+            App.music.Stop();
+        }
+        /// <summary>
+        /// restart the music
+        /// </summary>
+        private void play_ClicK(object sender, RoutedEventArgs e)
+        {
+            Stop.Visibility = Visibility.Visible;
+            Play.Visibility = Visibility.Hidden;
+            App.music.PlayLooping();
+
+        }
+        #endregion
+
+      
     }
 }

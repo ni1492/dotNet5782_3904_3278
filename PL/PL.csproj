@@ -8,12 +8,9 @@
 
   <ItemGroup>
     <None Remove="BACK.jpg" />
-    <None Remove="back1.png" />
-    <None Remove="background1.png" />
     <None Remove="building.jpg" />
     <None Remove="drone.jpg" />
     <None Remove="drone.svg" />
-    <None Remove="drone1.jpeg" />
     <None Remove="dronefinal.jpeg" />
     <None Remove="ListWindows\backCustomerList.jpg" />
     <None Remove="ListWindows\backDroneList.png" />
@@ -46,10 +43,7 @@
 
   <ItemGroup>
     <Resource Include="BACK.jpg" />
-    <Resource Include="back1.png" />
-    <Resource Include="background1.png" />
     <Resource Include="building.jpg" />
-    <Resource Include="drone1.jpeg" />
     <Resource Include="backParcelList.jpg" />
     <Resource Include="ListWindows\backCustomerList.jpg" />
     <Resource Include="ListWindows\backDroneList.png" />
