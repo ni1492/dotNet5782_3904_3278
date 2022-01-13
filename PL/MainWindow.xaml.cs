@@ -52,14 +52,6 @@ namespace PL
             App.music.PlayLooping();//activate the backgound music
         }
 
-        private void HandleCheck(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void HandleUnchecked(object sender, RoutedEventArgs e)
-        {
-        }
 
         #region manager
         #region manager view
