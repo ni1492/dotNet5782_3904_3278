@@ -316,11 +316,7 @@ namespace DALObject
 
             for (int i = 0; i < DataSource.drones.Count; i++)//goes over the list of drones to find the drone to update
             {
-                //if (DataSource.drones[i].Id == parcel.DroneId)//when the drone is found we updat status
-                //{
-                //    Drone d = DataSource.drones[i];
-                //    //update pickup
-                //    DataSource.drones[i] = d;
+               
                 for (int j = 0; j < DataSource.parcels.Count(); j++)//change the delivery time
                 {
                     if (DataSource.parcels[j].Id == parcel.Id)
@@ -331,8 +327,6 @@ namespace DALObject
                         break;
                     }
                 }
-                //    break;
-                //}
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]

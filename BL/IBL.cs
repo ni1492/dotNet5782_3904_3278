@@ -44,6 +44,7 @@ namespace BlApi
         public IEnumerable<UserForDisplay> displayUsersList();
         public bool userCorrect(string userN, string password, bool isManager);
         public void changePass(string userN, string password);
+        public void startSimulation(int droneId, Action updateDisplay, Func<bool> stop);
 
-}
+    }
 }
