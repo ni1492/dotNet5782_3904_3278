@@ -34,7 +34,6 @@ namespace PL.SingleWindows
             viewLONG.Text = station.BSLongitude.ToString();
             viewLAT.Text = station.BSLatitude.ToString();
             viewSLOTS.Text = station.ChargingSlots.ToString();
-           // DRONES.ItemsSource = station.InCharging;
             NAME.Text = station.BSName.ToString();
             droneInChargingDataGrid.ItemsSource = station.InCharging;
         }

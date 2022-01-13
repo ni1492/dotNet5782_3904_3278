@@ -74,22 +74,6 @@ namespace PL.PO
                 NAccepted = customer.notAcceptedPar 
             };
         }
-        //public static PO.CustomerSingle CustomerSinglePO(BO.customer customer)
-        //{
-        //    return new()
-        //    {
-        //        CusID = customer.id,
-        //        CusName = customer.name,
-        //        CPhone = customer.phone,
-        //        CLongitude = customer.location.convertLo(customer.location.Longitude),
-        //        CLatitude = customer.location.convertLa(customer.location.Latitude),
-        //        FromC = (List<ParcelAtCustomer>)(from p in customer.fromCus
-        //                                         select ParcelAtCustomerPO(p)),
-        //        ToC = (List<ParcelAtCustomer>)(from p in customer.toCus
-        //                                       select ParcelAtCustomerPO(p))
-        //    };
-
-        //}
         public static PO.CustomerSingle SingleCustomerPO(BO.customer customer)
         {
             List<ParcelAtCustomer> from = new List<ParcelAtCustomer>();

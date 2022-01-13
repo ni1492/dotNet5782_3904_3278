@@ -28,8 +28,6 @@ namespace PL.SingleWindows
             InitializeComponent();
             Actions.Visibility = Visibility.Visible;
             Add.Visibility = Visibility.Hidden;
-            //FCus.ItemsSource = customer.FromC;
-            //TCus.ItemsSource = customer.ToC;
             ToCustomerDataGrid.ItemsSource = customer.ToC;
             FromCustomerDataGrid.DataContext = customer.FromC;
 
@@ -235,13 +233,6 @@ namespace PL.SingleWindows
                 LONGITUDE.Background = Brushes.Red;
             }
         }
-        //public IEnumerable<PO.ParcelAtCustomer> parcels(List<PO.ParcelAtCustomer> cusParcels)
-        //{
-        //    foreach (var item in cusParcels)
-        //    {
-        //        yield return item;
-        //    }
-        //}
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;

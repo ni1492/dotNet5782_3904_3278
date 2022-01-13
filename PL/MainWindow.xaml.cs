@@ -35,7 +35,7 @@ namespace PL
         string codeForResetPass="";
         public object Properties { get; private set; }
 
-        public MainWindow()
+        public MainWindow()//constractor
         {
             bl = App.bl;
             InitializeComponent();
@@ -52,14 +52,14 @@ namespace PL
             App.music.PlayLooping();
         }
 
-        private void HandleCheck(object sender, RoutedEventArgs e)
-        {
+        //private void HandleCheck(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void HandleUnchecked(object sender, RoutedEventArgs e)
-        {
-        }
+        //private void HandleUnchecked(object sender, RoutedEventArgs e)
+        //{
+        //}
         private void showDronesButton_click(object sender, RoutedEventArgs e)
         {
             new droneList(bl).Show();
@@ -521,7 +521,6 @@ namespace PL
                 MessageBox.Show(ex.Message);
 
             }
-          //  "userName""codeBox"
 
         }
 

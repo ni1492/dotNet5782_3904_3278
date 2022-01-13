@@ -33,9 +33,6 @@ namespace PL
             List<Customer> customers = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
             DataContext = customers;
 
-            //droneDataGrid.ItemsSource = bl.displayDroneList();
-            //statusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            //weightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -49,7 +46,6 @@ namespace PL
         private void addCustomer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(bl).ShowDialog();
-            //customerDataGrid.ItemsSource = bl.displayCustomerList();
             DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
         }
 

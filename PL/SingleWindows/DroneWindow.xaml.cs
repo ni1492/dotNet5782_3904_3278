@@ -190,7 +190,6 @@ namespace PL.SingleWindows
                 int id;
                 Int32.TryParse(viewID.Text, out id);
                 bl.releaseDroneFromCharge(id);
-                // time.Visibility = Visibility.Hidden;
 
                 MessageBox.Show("released drone");
                 this.Close();

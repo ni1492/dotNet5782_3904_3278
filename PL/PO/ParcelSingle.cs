@@ -28,7 +28,6 @@ namespace PL.PO
         public CustomerForParcel PSTarget { get => (CustomerForParcel)GetValue(TargetNProperty); set => SetValue(TargetNProperty, value); }
         public WeightCategories PSWeight { get => (WeightCategories)GetValue(ParcelWeightProperty); set => SetValue(ParcelWeightProperty, value); }
         public Priorities PSPriority { get => (Priorities)GetValue(PPriorityProperty); set => SetValue(PPriorityProperty, value); }
-        //public ParcelStatus PSStatus { get => (ParcelStatus)GetValue(ParcelStatusProperty); set => SetValue(ParcelStatusProperty, value); }
 
         public int PSDrone_ID { get => (int)GetValue(DroneIDProperty); set => SetValue(DroneIDProperty, value); } //add if that says- no drone matched - when id is 0 or -1
         public DateTime? PSCreation { get => (DateTime?)GetValue(CreationProperty); set => SetValue(CreationProperty, value); }

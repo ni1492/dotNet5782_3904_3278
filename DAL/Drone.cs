@@ -10,7 +10,6 @@
             public override string ToString()//custom print function for drone struct
             {
                 return ("Drone Id: " + Id + "\nDrone Model: " + Model + "\nMaximum Weight: " + MaxWeight + "\n");
-                //"\nDrone status: " + Status + "\nDrone battery: " + Battery + 
             }
 
         };

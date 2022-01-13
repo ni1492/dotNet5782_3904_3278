@@ -404,13 +404,10 @@ namespace DALObject
             if (!b)
                 throw new NotFoundException("drone doesn't exist");
 
-            //initialize new charging object:
             DroneCharge charging = new DroneCharge();
             charging.DroneId = dId;
             charging.StationId = sId;
-            //  charging.chargTime = DateTime.Now;
             charging.chargeTime = DateTime.Now;
-            //adds to charging list:
             DataSource.inCharging.Add(charging);
         }
         [MethodImpl(MethodImplOptions.Synchronized)]

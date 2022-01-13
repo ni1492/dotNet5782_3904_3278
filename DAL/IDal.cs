@@ -42,7 +42,6 @@ namespace DAL
 
             public void AddUser(int id, string userN, string email, string password, bool isManager);
             public void deleteUser(int id);
-          //  public User displayUser(string userN);
             public IEnumerable<User> displayUsers(Predicate<User> match);
             public bool userCorrect(string userN, string password, bool isManager);
            

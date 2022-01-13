@@ -41,15 +41,6 @@ namespace PL
 
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ////if (!((sender as DataGridCell).DataContext is BaseStation))
-            ////    return;
-            //DataGridCell cell = sender as DataGridCell;
-            //PO.BaseStation s = cell.DataContext as PO.BaseStation;
-            //new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
-            //DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
-            //GroupingData = (DataContext as List<BaseStation>).GroupBy(s => s.Available).ToList();
-            //var dataGridCellTarget = (DataGridCell)sender;
-
            DataGridCell cell = sender as DataGridCell;
             PO.BaseStation s = cell.DataContext as PO.BaseStation;
             new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
@@ -64,7 +55,6 @@ namespace PL
         private void addStation_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow(bl).ShowDialog();
-            //  baseStationDataGrid.ItemsSource = bl.displayStationList();
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
         }
 
