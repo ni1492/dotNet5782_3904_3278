@@ -7,6 +7,9 @@
         mc:Ignorable="d"
     Title="DRAGODRONE BaseStationList" Height="450" Width="800">
 
+    <!--summary-->
+    <!--the list of stations-->
+    <!--summary-->
     <Grid Name="MainGrid" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -66,7 +69,9 @@
             </DataGrid.GroupStyle>
         </DataGrid>
 
-
+        <!--summary-->
+        <!--the list of stations with grouping-->
+        <!--summary-->
         <DataGrid x:Name="baseStationGroupingDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="1" Height="267" Width="316" Opacity="0.9" >
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
@@ -117,6 +122,10 @@
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
 
+
+        <!--summary-->
+        <!--buttons-->
+        <!--summary-->
         <Grid Name="bottomGrid" Grid.Row="2" Grid.ColumnSpan="4">
             <Button Content="Add station" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addStation_Click" Style="{StaticResource ButtonStyle}"/>
             <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="close_Click"  Style="{StaticResource ButtonStyle}" />

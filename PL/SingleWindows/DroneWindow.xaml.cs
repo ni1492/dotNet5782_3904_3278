@@ -23,6 +23,7 @@ namespace PL.SingleWindows
     /// </summary>
     public partial class DroneWindow : Window
     {
+        #region initialization
         BlApi.IBL bl;
         public DroneWindow(BlApi.IBL bl, PO.DroneSingle drone)//action grid
         {
@@ -113,6 +114,9 @@ namespace PL.SingleWindows
                 
             }
         }
+        #endregion
+
+        #region clicks
         private void chargeA_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -233,6 +237,20 @@ namespace PL.SingleWindows
             }
 
         }
+        public IEnumerable<int> stationAvailable(IEnumerable<baseStationForList> displayStationListSlotsAvailable)
+        {
+            foreach (var item in displayStationListSlotsAvailable)
+            {
+                yield return item.id;
+            }
+        }
+
+        private void OpenParcel_Click(object sender, RoutedEventArgs e)
+        {
+            int id;
+            Int32.TryParse(PARCEL.Text, out id);
+            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
+        }
         private void close_click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -259,6 +277,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
+        #endregion
+
+        #region check
         private bool checkModel(string text)
         {
             if ((text != null) && (text != ""))
@@ -285,6 +306,9 @@ namespace PL.SingleWindows
             }
 
         }
+        #endregion
+
+        #region text changed
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -312,20 +336,8 @@ namespace PL.SingleWindows
             }
 
         }
-        public IEnumerable<int> stationAvailable(IEnumerable<baseStationForList> displayStationListSlotsAvailable)
-        {
-            foreach (var item in displayStationListSlotsAvailable)
-            {
-                yield return item.id;
-            }
-        }
-
-        private void OpenParcel_Click(object sender, RoutedEventArgs e)
-        {
-            int id;
-            Int32.TryParse(PARCEL.Text, out id);
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
-        }
+        #endregion
+       
 
     }
 }

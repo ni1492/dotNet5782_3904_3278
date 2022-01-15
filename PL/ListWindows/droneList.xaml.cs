@@ -23,7 +23,8 @@ namespace PL
     /// </summary>
     public partial class droneList : Window
     {
-         IBL bl;
+        #region window initialization
+        IBL bl;
         public List<IGrouping<DroneStatuses, Drone>> GroupingData;
         public droneList( IBL bl)
         {
@@ -40,7 +41,9 @@ namespace PL
             group.Visibility = Visibility.Visible;
             ungroup.Visibility = Visibility.Hidden;
         }
+        #endregion
 
+        #region selectors
         private void statusSelection(object sender, SelectionChangedEventArgs e)
         {
             if (statusSelector.SelectedItem == null)
@@ -84,7 +87,9 @@ namespace PL
                 droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
                                                                                 select Converter.DronePO(bl)));
         }
+        #endregion
 
+        #region clicks
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
@@ -115,13 +120,19 @@ namespace PL
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
         }
-
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            statusSelection(statusSelector, null);
+            weightSelection(weightSelector, null);
+        }
 
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        #endregion
 
+        #region clear selectors
         private void ClearStatusFilledComboBox_Click(object sender, RoutedEventArgs e)
         {
             statusSelector.SelectedItem = null;
@@ -135,7 +146,9 @@ namespace PL
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
         }
+        #endregion
 
+        #region grouping
         private void group_Click(object sender, RoutedEventArgs e)
         {
             List<Drone> drones = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
@@ -156,11 +169,8 @@ namespace PL
             group.Visibility = Visibility.Visible;
             ungroup.Visibility = Visibility.Hidden;
         }
-        private void refresh_Click(object sender, RoutedEventArgs e)
-        {
-            statusSelection(statusSelector, null);
-            weightSelection(weightSelector, null);
-        }
+        #endregion
+        
     }
     
 

@@ -44,6 +44,7 @@ namespace PL.SingleWindows
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
         }
+        #region text changed
         private void NAMETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(NAME.Text))
@@ -109,23 +110,17 @@ namespace PL.SingleWindows
                 LONGITUDE.Background = Brushes.Red;
             }
         }
-        private bool checkPosNum(string text)
+
+
+
+        #endregion
+        #region clicks
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                if (text == null)
-                    return false;
-                if (!int.TryParse(text, out int num))
-                    return false;
-                if (num <= 0)
-                    return false;
-               
-                return true;
-            }
-            catch (Exception)
-            {
-                return true;
-            }
+            DataGridCell cell = sender as DataGridCell;
+            PO.DroneInCharging d = cell.DataContext as PO.DroneInCharging;
+            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DCId))).ShowDialog();
+            droneInChargingDataGrid.ItemsSource = bl.displayStation(Int32.Parse(viewID.Text)).dronesInCharging;
 
         }
         private void closeA_click(object sender, RoutedEventArgs e)
@@ -156,12 +151,7 @@ namespace PL.SingleWindows
                 return;
             }
         }
-        private bool checkName(string text)
-        {
-            if ((text != null) && (text != ""))
-                return true;
-            return false;
-        }
+       
         private void addStation_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -195,6 +185,33 @@ namespace PL.SingleWindows
                 MessageBox.Show(ex.Message);
                 return;
             }
+        }
+        #endregion
+        #region check
+        private bool checkPosNum(string text)
+        {
+            try
+            {
+                if (text == null)
+                    return false;
+                if (!int.TryParse(text, out int num))
+                    return false;
+                if (num <= 0)
+                    return false;
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
+        }
+        private bool checkName(string text)
+        {
+            if ((text != null) && (text != ""))
+                return true;
+            return false;
         }
         private bool checkNUM(string text)
         {
@@ -233,14 +250,7 @@ namespace PL.SingleWindows
             }
 
         }
-
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.DroneInCharging d = cell.DataContext as PO.DroneInCharging;
-            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DCId))).ShowDialog();
-            droneInChargingDataGrid.ItemsSource = bl.displayStation(Int32.Parse(viewID.Text)).dronesInCharging;
-
-        }
+        #endregion
+      
     }
 }

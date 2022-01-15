@@ -24,6 +24,7 @@ namespace PL
             InitializeComponent();
             rate.Visibility = Visibility.Visible;
         }
+        #region clicks
         public void Rate_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("thank you");
@@ -34,5 +35,6 @@ namespace PL
         {
             this.Close();
         }
+        #endregion
     }
 }

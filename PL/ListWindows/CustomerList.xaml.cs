@@ -24,6 +24,7 @@ namespace PL
     /// </summary>
     public partial class CustomerList : Window
     {
+        #region window initialization 
         IBL bl;
 
         public CustomerList(IBL bl)
@@ -34,6 +35,9 @@ namespace PL
             DataContext = customers;
 
         }
+        #endregion
+
+        #region clicks
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
@@ -57,5 +61,6 @@ namespace PL
         {
             DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
         }
+        #endregion
     }
 }

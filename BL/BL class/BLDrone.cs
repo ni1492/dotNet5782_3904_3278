@@ -12,6 +12,8 @@ namespace BlApi
     public partial class BL : IBL
     {
         public Random r = new Random();
+
+        #region add drone
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void addDrone(droneForList drone, int stationId) //adds new drone (to the list in DAL layer and in the BL layer)
         {
@@ -49,6 +51,9 @@ namespace BlApi
                 drones.Add(drone); //if it doesnt already exist then we will add to the list of drones (BL)
             }
         }
+        #endregion
+
+        #region match drone to parcel
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void matchParcelToDrone(int id)  //match fuction - recieves a drone ID
         {
@@ -80,6 +85,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region update drone
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void updateDrone(int id, string model)  //update the drone model name
         {
@@ -282,6 +290,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region display drone
         [MethodImpl(MethodImplOptions.Synchronized)]
         public drone displayDrone(int id) //displays the requested drone 
         {
@@ -332,6 +343,16 @@ namespace BlApi
                 throw new BO.exceptions.NotFoundException(ex.Message, ex); //sending inner exception for the exception returning from the DAL
             }
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match) //display all drones
+        {
+            foreach (var drone in displayDroneList())
+            {
+                if (match(drone))
+                    yield return drone;
+            }
+        }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<droneForList> displayDroneList() //displays the list of drones
         {
@@ -340,6 +361,9 @@ namespace BlApi
                 yield return drone;
             }
         }
+        #endregion
+
+        #region assistant functions
         private IEnumerable<parcelInDelivery> parcelsByPriority(List<parcelInDelivery> list, BO.Priorities prioritiy) //returns all the parcels based on the priority requested ---should this be in BLParcel??
         {
             foreach (parcelInDelivery parcel in list)
@@ -437,15 +461,8 @@ namespace BlApi
             return parcelId;
         }
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match) //display all drones
-        {
-            foreach (var drone in displayDroneList())
-            {
-                if (match(drone))
-                    yield return drone;
-            }
-        }
+        #endregion
+        
     }
 
 }

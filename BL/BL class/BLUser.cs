@@ -11,6 +11,7 @@ namespace BlApi
 {
     public partial class BL : IBL
     {
+        #region add user
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(int id, string userN, string email, string password, bool isManager)
         {
@@ -26,6 +27,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region display user
         [MethodImpl(MethodImplOptions.Synchronized)]
         public UserForDisplay displayUser(string userN)
         {
@@ -72,6 +76,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region user info check
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool userCorrect(string userN, string password, bool isManager)
         {
@@ -87,6 +94,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region change password
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void changePass(string userN, string password)
         {
@@ -106,5 +116,6 @@ namespace BlApi
                 }
             }
         }
+        #endregion
     }
 }

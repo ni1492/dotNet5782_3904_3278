@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using IDAL.DO;
 using DAL.DalApi;
 using BO;
 using DalApi;
@@ -14,7 +13,7 @@ namespace BlApi
     {
         internal readonly IDal dl = DalFactory.getDal(true);//initialize the DAL object
         public List<droneForList> drones = new List<droneForList>(); //the list of drones saved in the BL layer
-        //שדות נוספים: פנוי, נושא משקל קל, בינוני וכבד+שדה של הטענה לשעה
+        //additional settings - percentage of charging for hour, battery usage for each weight category
         public double availablePK;
         public double lightPK;
         public double mediumPK;
@@ -40,6 +39,7 @@ namespace BlApi
         public static BL Instance => instance;
         #endregion
 
+        #region initialization
         private void initializeDroneXML()
         {
             lock (dl)
@@ -142,7 +142,7 @@ namespace BlApi
                 }
             }
         }
-        private void initializeDroneOBLECT()
+        private void initializeDroneOBJECT()
         {
             lock (dl)
             {
@@ -248,21 +248,24 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
         #region assistant funcs
-        private int inCharge(droneForList drone)
+        private int inCharge(droneForList drone) //displays the station id the drone is charging at
         {
             lock (dl)
             {
                 return dl.displayDronesInCharge(charge => charge.DroneId == drone.id).FirstOrDefault().StationId;
             }
         }
-        private double calcDistance(location from, location to)//calculate thedistance between two locations 
+        private double calcDistance(location from, location to)//calculate the distance between two locations 
         {
             lock (dl)
             {
                 return dl.CalculateDistance(from.Longitude, from.Latitude, to.Longitude, to.Latitude);
             }
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool isDelivered(int droneId)//check if the drone is deliverd
         {
@@ -279,6 +282,7 @@ namespace BlApi
                 return delivered;
             }
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool isPickedUp(int droneId)//chack if the parcel is picked up
         {
@@ -294,6 +298,7 @@ namespace BlApi
                 return false;
             }
         }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool isMatched(int droneId)//chack if the drone is match to parcel
         {
@@ -487,11 +492,13 @@ namespace BlApi
             }
         }
         #endregion
+
+        #region start simulation
         public void startSimulation(int droneId, Action updateDisplay, Func<bool> stop)
         {
             new Simulation(this, droneId, updateDisplay, stop);
         }
-
+        #endregion
     }
 
 }

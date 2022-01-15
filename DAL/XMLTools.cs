@@ -21,6 +21,7 @@ namespace DAL
             if (dir!="" && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
         }
+
         #region SaveLoadWithXElement
         /// <summary>
         /// save element to file

@@ -9,6 +9,7 @@ namespace PL.PO
 {
     public static class Converter
     {
+        #region drone
         public static PO.DroneSingle SingleDronePO(BO.drone drone)
         {
             return new()
@@ -39,6 +40,30 @@ namespace PL.PO
             };
 
         }
+
+        public static PO.DroneForParcel DroneForParcelPO(BO.droneForParcel drone)
+        {
+            return new()
+            {
+                DPId = drone.id,
+                DPBattery = drone.battery,
+                DPLongitude = drone.currentLocation.convertLo(drone.currentLocation.Longitude),
+                DPLatitude = drone.currentLocation.convertLa(drone.currentLocation.Latitude)
+            };
+
+        }
+        public static PO.DroneInCharging DroneInChargingPO(BO.droneInCharging drone)
+        {
+            return new()
+            {
+                DCId = drone.id,
+                DCBattery = drone.battery
+            };
+
+        }
+        #endregion
+
+        #region parcel
         public static PO.Parcel ParcelPO(BO.parcelForList parcel)
         {
             return new()
@@ -52,7 +77,68 @@ namespace PL.PO
                
             };
         }
-      
+
+        public static PO.ParcelSingle SingleParcelPO(BO.parcel parcel)
+        {
+            return new()
+            {
+                PSID = parcel.id.ToString(),
+                PSSender = CustomerForParcelPO(parcel.sender),
+                PSTarget = CustomerForParcelPO(parcel.receiver),
+                PSWeight = (WeightCategories)parcel.weight,
+                PSPriority = (Priorities)parcel.priority,
+                PSDrone_ID = parcel.drone.id,
+                PSCreation = parcel.creation,
+                PSMatch = parcel.match,
+                PSPickup = parcel.pickup,
+                PSDelivery = parcel.delivery
+            };
+
+        }
+
+        public static PO.ParcelAtCustomer ParcelAtCustomerPO(BO.parcelAtCustomer parcel)
+        {
+            return new()
+            {
+                PCID = parcel.id,
+                PCWeight = (WeightCategories)parcel.weight,
+                PCPriority = (Priorities)parcel.priority,
+                PCStatus = (ParcelStatus)parcel.status,
+                OtherC = CustomerForParcelPO(parcel.otherCus)
+            };
+
+        }
+        public static PO.ParcelInDelivery ParcelInDeliveryPO(BO.parcelInDelivery parcel)
+        {
+            if (parcel == null)
+                return null;
+
+            string s = "";
+
+            if (parcel.status)
+                s = "delivery";
+            else
+                s = "waiting";
+
+
+            return new()
+            {
+                PDID = parcel.id,
+                PDSender = CustomerForParcelPO(parcel.sender),
+                PDTarget = CustomerForParcelPO(parcel.receiver),
+                PDWeight = (WeightCategories)parcel.weight,
+                PDPriority = (Priorities)parcel.priority,
+                PDStatus = s,
+                PickLongitude = parcel.pickUp.convertLo(parcel.pickUp.Longitude),
+                PickLatitude = parcel.pickUp.convertLa(parcel.pickUp.Latitude),
+                DesLongitude = parcel.destination.convertLo(parcel.destination.Longitude),
+                DesLatitude = parcel.destination.convertLa(parcel.destination.Latitude)
+            };
+
+        }
+        #endregion
+
+        #region customer
         public static PO.CustomerForParcel CustomerForParcelPO(BO.customerForParcel customer)
         {
             return new()
@@ -99,7 +185,9 @@ namespace PL.PO
             };
 
         }
+        #endregion
 
+        #region station
         public static PO.BaseStation StationPO(BO.baseStationForList station)
         {
             return new()
@@ -110,23 +198,7 @@ namespace PL.PO
                 Used = station.usedSlots
             };
         }
-        public static PO.ParcelSingle SingleParcelPO(BO.parcel parcel)
-        {
-            return new()
-            {
-            PSID=parcel.id.ToString(),
-                PSSender =CustomerForParcelPO( parcel.sender),
-                PSTarget = CustomerForParcelPO(parcel.receiver),
-                PSWeight=(WeightCategories)parcel.weight,
-                PSPriority=(Priorities)parcel.priority,
-                PSDrone_ID = parcel.drone.id,
-                PSCreation = parcel.creation,
-                PSMatch = parcel.match,
-                PSPickup = parcel.pickup,
-                PSDelivery = parcel.delivery
-            };
-
-        }
+      
        
         public static PO.BaseStationSingle SingleStationPO(BO.baseStation station)
         {
@@ -146,67 +218,9 @@ namespace PL.PO
             };
 
         }
-       
-        public static PO.DroneForParcel DroneForParcelPO(BO.droneForParcel drone)
-        {
-            return new()
-            {
-                DPId=drone.id,
-            DPBattery= drone.battery,
-            DPLongitude= drone.currentLocation.convertLo(drone.currentLocation.Longitude),
-            DPLatitude= drone.currentLocation.convertLa(drone.currentLocation.Latitude)
-            };
+        #endregion
 
-        }
-        public static PO.DroneInCharging DroneInChargingPO(BO.droneInCharging drone)
-        {
-            return new()
-            {
-                DCId = drone.id,
-                DCBattery = drone.battery
-            };
-
-        }
-        public static PO.ParcelAtCustomer ParcelAtCustomerPO(BO.parcelAtCustomer parcel)
-        {
-            return new()
-            {
-                PCID = parcel.id,
-            PCWeight= (WeightCategories)parcel.weight,
-            PCPriority =(Priorities) parcel.priority,
-            PCStatus= (ParcelStatus)parcel.status,
-            OtherC= CustomerForParcelPO(parcel.otherCus)
-            };
-
-        }
-        public static PO.ParcelInDelivery ParcelInDeliveryPO(BO.parcelInDelivery parcel)
-        {
-            if (parcel == null)
-                return null;
-
-            string s ="";
-           
-                if (parcel.status)
-                    s = "delivery";
-                else
-                    s = "waiting";
-            
-
-            return new()
-            {
-                PDID = parcel.id,
-                PDSender = CustomerForParcelPO(parcel.sender),
-                PDTarget = CustomerForParcelPO(parcel.receiver),
-                PDWeight=(WeightCategories)parcel.weight,
-                PDPriority = (Priorities)parcel.priority,
-                PDStatus =s,
-                PickLongitude = parcel.pickUp.convertLo(parcel.pickUp.Longitude),
-                PickLatitude= parcel.pickUp.convertLa(parcel.pickUp.Latitude),
-                DesLongitude= parcel.destination.convertLo(parcel.destination.Longitude),
-                DesLatitude = parcel.destination.convertLa(parcel.destination.Latitude)
-            };
-
-        }
+        #region user
         public static PO.User UserPO(BO.UserForDisplay user)
         {
             return new()
@@ -219,5 +233,6 @@ namespace PL.PO
                 Email=user.Email
             };
         }
+        #endregion
     }
 }

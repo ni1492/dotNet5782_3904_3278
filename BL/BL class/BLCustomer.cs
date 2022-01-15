@@ -12,6 +12,7 @@ namespace BlApi
 {
     public partial class BL : IBL
     {
+        #region add customer
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void addCustomer(customer customer) //adding a new customer
         {
@@ -27,6 +28,8 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+        #region update customer
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void updateCustomer(int id, string name, string phone) //update a customers details
         {
@@ -52,6 +55,8 @@ namespace BlApi
 
             }
         }
+        #endregion
+        #region display customer
         [MethodImpl(MethodImplOptions.Synchronized)]
         public customer displayCustomer(int id) //displays the customer requested
         {
@@ -161,7 +166,7 @@ namespace BlApi
                 }
             }
         }
-
+        #endregion
     }
 }
 

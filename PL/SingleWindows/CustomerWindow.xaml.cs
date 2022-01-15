@@ -21,6 +21,7 @@ namespace PL.SingleWindows
     /// </summary>
     public partial class CustomerWindow : Window
     {
+        #region initialization
         BlApi.IBL bl;
         public CustomerWindow(BlApi.IBL bl, PO.CustomerSingle customer)//action grid
         {
@@ -44,6 +45,9 @@ namespace PL.SingleWindows
             Actions.Visibility = Visibility.Hidden;
             Add.Visibility = Visibility.Visible;
         }
+        #endregion
+
+        #region clicks
         private void closeA_click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -106,6 +110,18 @@ namespace PL.SingleWindows
                 return;
             }
         }
+
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
+            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
+            ToCustomerDataGrid.ItemsSource = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
+            FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
+        }
+        #endregion
+
+        #region check and text changed
         private bool checkName(string text)
         {
             if ((text != null) && (text != ""))
@@ -233,14 +249,8 @@ namespace PL.SingleWindows
                 LONGITUDE.Background = Brushes.Red;
             }
         }
-        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridCell cell = sender as DataGridCell;
-            PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
-            ToCustomerDataGrid.ItemsSource = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
-            FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
-        }
+        #endregion
+        
     }
    
 }

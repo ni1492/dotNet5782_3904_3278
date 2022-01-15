@@ -21,8 +21,8 @@ namespace PL.SingleWindows
     public partial class UserInfoWindow : Window
     {
         BlApi.IBL bl;
-        
-            public UserInfoWindow(BlApi.IBL bl, PO.User user)
+
+        public UserInfoWindow(BlApi.IBL bl, PO.User user)
         {
             this.bl = bl;
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace PL.SingleWindows
             EMAIL.Text = user.Email.ToString();
             PHONE.Text = bl.displayCustomer(Int32.Parse(user.UId.ToString())).phone;
         }
-
+        #region clicks
         private void close_click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -113,5 +113,6 @@ namespace PL.SingleWindows
 
 
         }
+        #endregion
     }
 }

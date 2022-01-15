@@ -11,6 +11,7 @@ namespace BlApi
 {
     public partial class BL : IBL
     {
+        #region add parcel
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void addParcel(parcelForList parcel)
         {
@@ -28,6 +29,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region display parcel
         [MethodImpl(MethodImplOptions.Synchronized)]
         public parcel displayParcel(int id) //display the parcel requested
         {
@@ -73,29 +77,7 @@ namespace BlApi
 
             }
         }
-        private droneForParcel newDrone(Parcel p)
-        {
-            if (p.DroneId == 0)
-                return new droneForParcel
-                {
-                    id = 0,
-                    battery = 0,
-                    currentLocation = null
-                };
-            if(p.DroneId == -1)
-                return new droneForParcel
-                {
-                    id = -1,
-                    battery =0,
-                    currentLocation = null
-                };
-            return new droneForParcel
-            {
-                id = p.DroneId,
-                battery = getBattery(p.DroneId),
-                currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
-            };
-        }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<parcelForList> displayParcelList() //displays the list of all parcels 
         {
@@ -116,22 +98,7 @@ namespace BlApi
                 }
             }
         }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
-        {
-            lock (dl)
-            {
-                DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).FirstOrDefault();
-                DateTime? x = null;
-                if (p.Delivered != x)
-                    return ParcelStatus.Delivered;
-                if (p.PickedUp != x)
-                    return ParcelStatus.PickedUp;
-                if (p.Scheduled != x)
-                    return ParcelStatus.Scheduled;
-                return ParcelStatus.Requested;
-            }
-        }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<parcelForList> displayParcelListWithoutDrone() //displays all the parcels that havent been matched with a drone
         {
@@ -154,6 +121,64 @@ namespace BlApi
                 }
             }
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<parcelForList> displayParcels(Predicate<parcelForList> match) //display all parcels that match the predicate
+        {
+            foreach (var parcel in displayParcelList())
+            {
+                if (match(parcel))
+                    yield return parcel;
+            }
+        }
+        #endregion
+
+        #region assistant functions
+        private droneForParcel newDrone(Parcel p) //returns an empty drone for list 
+        {
+            if (p.DroneId == 0)
+                return new droneForParcel
+                {
+                    id = 0,
+                    battery = 0,
+                    currentLocation = null
+                };
+            if(p.DroneId == -1)
+                return new droneForParcel
+                {
+                    id = -1,
+                    battery =0,
+                    currentLocation = null
+                };
+            return new droneForParcel
+            {
+                id = p.DroneId,
+                battery = getBattery(p.DroneId),
+                currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
+            };
+        }
+        #endregion
+
+        #region get status
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public ParcelStatus getStatus(int id) //the function returns the ParcelStatus of the parcel
+        {
+            lock (dl)
+            {
+                DO.Parcel p = dl.DisplayParcels(parcel => parcel.Id == id).FirstOrDefault();
+                DateTime? x = null;
+                if (p.Delivered != x)
+                    return ParcelStatus.Delivered;
+                if (p.PickedUp != x)
+                    return ParcelStatus.PickedUp;
+                if (p.Scheduled != x)
+                    return ParcelStatus.Scheduled;
+                return ParcelStatus.Requested;
+            }
+        }
+        #endregion
+
+        #region delete parcel
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteParcel(int id)
         {
@@ -166,15 +191,7 @@ namespace BlApi
                     throw new BO.exceptions.DeleteException("cannot delete parcel");
             }
         }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<parcelForList> displayParcels(Predicate<parcelForList> match) //display all parcels that match the predicate
-        {
-            foreach (var parcel in displayParcelList())
-            {
-                if (match(parcel))
-                    yield return parcel;
-            }
-        }
+        #endregion
+       
     }
 }

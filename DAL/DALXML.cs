@@ -200,6 +200,7 @@ namespace DALXML
         }
         #endregion
         #endregion
+
         #region STATION
         #region add station
         /// <summary>
@@ -308,6 +309,7 @@ namespace DALXML
         }
         #endregion
         #endregion
+
         #region PARCEL
         #region add parcel
         /// <summary>
@@ -391,6 +393,7 @@ namespace DALXML
         }
         #endregion
         #endregion
+
         #region CUSTOMER
         #region add customer
         /// <summary>
@@ -462,6 +465,7 @@ namespace DALXML
         }
         #endregion
         #endregion
+
         #region CHARGING
         #region add charging
         /// <summary>
@@ -581,6 +585,7 @@ namespace DALXML
         }
         #endregion
         #endregion
+
         #region USER
         #region add user
         /// <summary>

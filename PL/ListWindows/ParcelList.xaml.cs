@@ -23,6 +23,7 @@ namespace PL
     /// </summary>
     public partial class ParcelList : Window
     {
+        #region window initialization
         IBL bl;
         public List<IGrouping<string, Parcel>> GroupingData;
 
@@ -43,7 +44,9 @@ namespace PL
             weightSelection(weightSelector, null);
             prioritySelection(prioritySelector, null);
         }
+        #endregion
 
+        #region selectors
         private void statusSelection(object sender, SelectionChangedEventArgs e)
         {
             if (statusSelector.SelectedItem == null)
@@ -168,6 +171,9 @@ namespace PL
                 parcelDataGrid.ItemsSource = new ObservableCollection<PO.Parcel>(from bl in bl.displayParcels(parcel => (parcel.status == (BO.ParcelStatus)statusSelector.SelectedItem) && (parcel.weight == (BO.WeightCategories)weightSelector.SelectedItem) && (parcel.priority == (BO.Priorities)prioritySelector.SelectedItem))
                                                                                  select Converter.ParcelPO(bl));
         }
+        #endregion
+
+        #region clear selectors
         private void ClearStatusFilledComboBox_Click(object sender, RoutedEventArgs e)
         {
             statusSelector.SelectedItem = null;
@@ -193,7 +199,9 @@ namespace PL
             prioritySelection(prioritySelector, null);
 
         }
+        #endregion
 
+        #region clicks
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
@@ -219,6 +227,14 @@ namespace PL
             weightSelection(weightSelector, null);
             prioritySelection(prioritySelector, null);
         }
+
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
+        }
+        #endregion
+
+        #region grouping
         private void group_Click(object sender, RoutedEventArgs e)
         {
             List<Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
@@ -240,9 +256,7 @@ namespace PL
             UpGrid.Visibility = Visibility.Visible;
 
         }
-        private void refresh_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
-        }
+        #endregion
+       
     }
 }

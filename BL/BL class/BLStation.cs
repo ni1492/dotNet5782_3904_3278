@@ -11,6 +11,7 @@ namespace BlApi
 {
     public partial class BL : IBL
     {
+        #region add station
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void addStation(baseStation station)
         {
@@ -27,6 +28,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region update station
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void updateStation(int id, string name, int chargingSlots) //update station details
         {
@@ -54,6 +58,9 @@ namespace BlApi
                 }
             }
         }
+        #endregion
+
+        #region display station
         [MethodImpl(MethodImplOptions.Synchronized)]
         public baseStation displayStation(int id) //display the base station requested
         {
@@ -92,13 +99,7 @@ namespace BlApi
             }
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]private double getBattery(int droneId)
-        {
-            if (droneId == 0|| droneId==-1)
-                return 0;
-            return drones.Find(drone => drone.id == droneId).battery;
-        }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<baseStationForList> displayStationList()//displays the list of stations
         {
             lock (dl)
@@ -135,5 +136,17 @@ namespace BlApi
                 }
             }
         }
+
+        #endregion
+
+        #region assistant functions
+        private double getBattery(int droneId)
+        {
+            if (droneId == 0|| droneId==-1)
+                return 0;
+            return drones.Find(drone => drone.id == droneId).battery;
+        }
+        #endregion
+       
     }
 }

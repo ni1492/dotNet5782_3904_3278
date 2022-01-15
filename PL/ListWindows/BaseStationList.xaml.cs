@@ -24,6 +24,7 @@ namespace PL
     /// </summary>
     public partial class BaseStationList : Window
     {
+        #region window initialization
         IBL bl;
         public List<IGrouping<int, BaseStation>> GroupingData;
 
@@ -38,7 +39,9 @@ namespace PL
             group.Visibility = Visibility.Visible;
             ungroup.Visibility = Visibility.Hidden;
         }
+        #endregion
 
+        #region clicks
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
            DataGridCell cell = sender as DataGridCell;
@@ -57,7 +60,13 @@ namespace PL
             new StationWindow(bl).ShowDialog();
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
         }
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
+        }
+        #endregion
 
+        #region grouping
         private void group_Click(object sender, RoutedEventArgs e)
         {
             List<BaseStation> stations = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
@@ -84,9 +93,7 @@ namespace PL
             new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
         }
-        private void refresh_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
-        }
+        #endregion
+       
     }
 }

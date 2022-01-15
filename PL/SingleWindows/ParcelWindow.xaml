@@ -109,27 +109,7 @@
                 <ComboBox x:Name="PRIORITY" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>
-            <!--<Grid Name="drone" Grid.Row="6" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="37*"/>
-                    <ColumnDefinition Width="114*"/>
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="DRONEID" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
-
-            </Grid>-->
-
-            <!--<Grid Name="creation" Grid.Row="6" Grid.Column="1">
-                <TextBox x:Name="CREATION" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="CTextChanged" Style="{StaticResource IDWaterMark}" TextChanged="CREATION_TextChanged"/>
-            </Grid>
-            <Grid Name="match" Grid.Row="7" Grid.Column="1">
-                <TextBox x:Name="MATCH" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="MTextChanged" Style="{StaticResource IDWaterMark}"/>
-            </Grid>
-            <Grid Name="pickup" Grid.Row="8" Grid.Column="1">
-                <TextBox x:Name="PICKUP" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="PTextChanged" Style="{StaticResource IDWaterMark}"/>
-            </Grid>
-            <Grid Name="delivery" Grid.Row="9" Grid.Column="1">
-                <TextBox x:Name="DELIVERY" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="PTextChanged" Style="{StaticResource IDWaterMark}"/>
-            </Grid>-->
+            
             <Grid Name="add" Grid.Row="12" Grid.Column="1">
                 <Button Content="ADD PARCEL" VerticalAlignment="Top" Margin="145,-3,-89,0" Click="addParcel_Click" Style="{StaticResource ButtonStyle}" />
                 <Button Content="CANCEL" HorizontalAlignment="Left" Margin="75,-3,0,0" VerticalAlignment="Top" Width="63" Click="cancel_Click" Style="{StaticResource ButtonStyle}"/>

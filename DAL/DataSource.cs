@@ -9,6 +9,7 @@ namespace DALObject
 {
     internal class DataSource
     {
+        #region initialize lists
         internal static Random R = new Random();
         //lists of stored information: drones, stations, customers, parcels, inCharging.
         internal static List<Drone> drones = new();
@@ -17,7 +18,9 @@ namespace DALObject
         internal static List<Parcel> parcels = new();
         internal static List<DroneCharge> inCharging = new();
         internal static List<User> users = new();
+        #endregion
 
+        #region config initialization
         internal class Config//initialization of running numbers for station list, drone list, customer list, and parcel list
         {
             internal static int StationID = 1;
@@ -30,6 +33,9 @@ namespace DALObject
             internal static double heavyPK;
             internal static double chargingPH;
         }
+        #endregion
+
+        #region initialization
         public static void Initialize()//initialization of data for the program
         {
             Config.availablePK = R.NextDouble() / 10;
@@ -138,5 +144,6 @@ namespace DALObject
                 parcels.Add(parcel);
             }
             }
+        #endregion
     }
 }

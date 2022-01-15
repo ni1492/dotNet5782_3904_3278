@@ -89,9 +89,7 @@
                 <ComboBox x:Name="STATION" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>
-            <!--<Grid Name="stationId" Grid.Row="4" Grid.Column="1">
-                <TextBox x:Name="STATION" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" LostFocus="STATIONTextChanged" Style="{StaticResource StationIDWaterMark}"/>
-            </Grid>-->
+            
             <Grid Name="enterStation" Grid.Row="4" Grid.Column="0">
                 <TextBlock HorizontalAlignment="Center" Text="station id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
             </Grid>
@@ -194,19 +192,6 @@
                 </Grid.ColumnDefinitions>
 
             </Grid>
-
-            <!--<Grid x:Name="time" Grid.RowSpan="7"  Grid.ColumnSpan="2" Grid.Column="1" Margin="113,4,-13,-83" Grid.Row="3" Visibility="Hidden" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="211*"/>
-                    <RowDefinition Height="94*"/>
-                </Grid.RowDefinitions>
-                <TextBox x:Name="Hour" HorizontalAlignment="Left" Margin="70,112,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" LostFocus="HOURTextChanged"/>
-                <TextBox x:Name="Minute" HorizontalAlignment="Left" Margin="70,152,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" LostFocus="MINUTETextChanged"/>
-                <TextBlock HorizontalAlignment="Left" Margin="51,91,0,0" Text="Hour" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="51,131,0,0" Text="Minute" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Center" Margin="0,51,0,0" Text="to release drone from charging:" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="112" TextAlignment="Center"/>
-
-            </Grid>-->
         </Grid>
     </Grid>
 

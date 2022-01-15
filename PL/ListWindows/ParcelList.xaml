@@ -6,13 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ParceList" Height="450" Width="800" >
+    
     <Grid Name="MainGrid">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="370*"/>
-            <RowDefinition Height="30*"/>
-        </Grid.RowDefinitions>
-        <Grid x:Name="Data"  Height="auto" Grid.Row="1"  Width="auto">-->
+
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="370*"/>
@@ -29,6 +25,10 @@
             <ImageBrush ImageSource="/ListWindows/backParcelList.jpg" Stretch="Fill"/>
         </Grid.Background>
 
+        <!--summary-->
+        <!--top grid - the grid with multiple selectors-->
+        <!--summary-->
+
         <Grid x:Name="UpGrid" Grid.ColumnSpan="4" Margin="0,-14,0,14">
             <ComboBox x:Name="statusSelector" HorizontalAlignment="Left" VerticalAlignment="Top" Width="95" SelectionChanged="statusSelection" Height="28" Margin="625,16,0,0"/>
             <Button Content="Clear"  Style="{StaticResource MaterialDesignFlatButton}"  HorizontalAlignment="Left" Click="ClearStatusFilledComboBox_Click" Margin="716,8,0,8" FontWeight="Medium" />
@@ -43,6 +43,9 @@
 
         </Grid>
 
+        <!--summary-->
+        <!--the list of parcels-->
+        <!--summary-->
         <DataGrid x:Name="parcelDataGrid" Grid.RowSpan="4" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" RowDetailsVisibilityMode="VisibleWhenSelected" Height="338" Width="528" Opacity="0.8">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
@@ -104,11 +107,9 @@
             </DataGrid.GroupStyle>
         </DataGrid>
 
-
-       
-
-
-
+        <!--summary-->
+        <!--the list of parcels with grouping-->
+        <!--summary-->
         <DataGrid x:Name="parcelGroupingDataGrid" IsReadOnly="True" Grid.ColumnSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" RowDetailsVisibilityMode="VisibleWhenSelected" Height="352" Width="528" Opacity="0.8" Margin="136,48,0,0" Grid.RowSpan="2">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
@@ -171,6 +172,9 @@
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
 
+        <!--summary-->
+        <!--buttons-->
+        <!--summary-->
         <Grid Name="bottomGrid" Grid.Row="2" Grid.ColumnSpan="4">
             <Button Content="Add parcel" HorizontalAlignment="Left" Margin="648,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="addParcel_Click" Style="{StaticResource ButtonStyle}"/>
             <Button Content="close" HorizontalAlignment="Left" Margin="556,0,0,0" VerticalAlignment="Center" Height="22" Width="74" Click="close_Click" Style="{StaticResource ButtonStyle}" />

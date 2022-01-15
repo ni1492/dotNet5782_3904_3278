@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Grey.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepOrange.xaml" />
             </ResourceDictionary.MergedDictionaries>
-           <!--whatermarks:-->
+           <!--watermarks:-->
             <Style TargetType="{x:Type TextBlock}" x:Key="HorizontalExpanderContentTextBlock">
                 <Setter Property="Opacity" Value=".68"/>
                 <Setter Property="TextWrapping" Value="Wrap"/>
