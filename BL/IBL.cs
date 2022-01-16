@@ -89,7 +89,7 @@ namespace BlApi
         /// </summary>
         public void addParcel(parcelForList parcel);
         /// <summary>
-        ///match function 
+        ///match the drone to a suitable parcel
         /// </summary>
         public void matchParcelToDrone(int id);
         /// <summary>

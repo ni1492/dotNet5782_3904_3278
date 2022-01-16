@@ -40,6 +40,9 @@ namespace BlApi
         #endregion
 
         #region initialization
+     /// <summary>
+     /// initialize the drones list acording to the xml files
+     /// </summary>
         private void initializeDroneXML()
         {
             lock (dl)
@@ -142,6 +145,9 @@ namespace BlApi
                 }
             }
         }
+        /// <summary>
+        /// initialize the drones list acording to the data source in dalObject
+        /// </summary>
         private void initializeDroneOBJECT()
         {
             lock (dl)
@@ -258,7 +264,8 @@ namespace BlApi
                 return dl.displayDronesInCharge(charge => charge.DroneId == drone.id).FirstOrDefault().StationId;
             }
         }
-        private double calcDistance(location from, location to)//calculate the distance between two locations 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public double calcDistance(location from, location to)//calculate the distance between two locations 
         {
             lock (dl)
             {
@@ -314,7 +321,8 @@ namespace BlApi
                 return false;
             }
         }
-        private location senderLocation(int parcelId)//return tne sender location by the parcel id
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public location senderLocation(int parcelId)//return tne sender location by the parcel id
         {
             lock (dl)
             {
@@ -327,7 +335,8 @@ namespace BlApi
                 });
             }
         }
-        private location targetLocation(int parcelId)//return tne target location by the parcel id
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public location targetLocation(int parcelId)//return tne target location by the parcel id
         {
             lock (dl)
             {

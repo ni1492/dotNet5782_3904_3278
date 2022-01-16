@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using BO;
 using PL.PO;
+using System.ComponentModel;
+
 
 
 namespace PL.SingleWindows
@@ -25,6 +27,7 @@ namespace PL.SingleWindows
     {
         #region initialization
         BlApi.IBL bl;
+        BackgroundWorker worker;
         public DroneWindow(BlApi.IBL bl, PO.DroneSingle drone)//action grid
         {
             this.bl = bl;
@@ -378,7 +381,60 @@ namespace PL.SingleWindows
 
         }
         #endregion
-       
 
+        #region simulation
+        private void HandleCheck(object sender, RoutedEventArgs e)
+        {
+            worker = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            worker.DoWork += Worker_DoWork;
+            worker.ProgressChanged += Worker_ProgressChanged;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            worker.RunWorkerAsync(Int32.Parse(viewID.Text));
+            bl.startSimulation(Int32.Parse(viewID.Text), () => worker.ReportProgress(0), () => worker.CancellationPending);
+        }
+       
+        private void HandleUnchecked(object sender, RoutedEventArgs e)
+        {
+        }
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bl.startSimulation(Int32.Parse(viewID.Text), () => worker.ReportProgress(0), () => worker.CancellationPending);
+        }
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            updateDroneWindow(drone.DroneId);
+        }
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            worker = null;
+            //if the window need to be closed - boolean variable, that is true if the user want to close the window in the middle of auto mode
+        }
+        #endregion
+        private void refresh(int droneId)
+        {
+            InitializeComponent();
+            drone drone= bl.displayDrone(Int32.Parse( viewID.Text));
+
+            Actions.Visibility = Visibility.Visible;
+            Add.Visibility = Visibility.Hidden;
+            MODEL.Text = drone.model;
+            viewWEIGHT.Text = drone.weight.ToString();
+            BATTERY.Text = drone.battery.ToString();
+            STATUS.Text = drone.status.ToString();
+            LATITUDE.Text = drone.currentLocation.Latitude.ToString();
+            LONGITUDE.Text = drone.currentLocation.Longitude.ToString();
+            if (drone.parcel == null)
+            {
+                OPENPARCEL.Visibility = Visibility.Hidden;
+                PARCEL.Text = "no parcel matched";
+            }
+            else
+            {
+                PARCEL.Text = drone.parcel.PDID.ToString();
+                OPENPARCEL.Visibility = Visibility.Visible;
+
+            }
+            InitializeActionsButton(drone);
+        }
     }
 }

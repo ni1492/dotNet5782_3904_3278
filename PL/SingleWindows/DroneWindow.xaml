@@ -89,7 +89,7 @@
                 <ComboBox x:Name="STATION" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" Margin="14,0,0,0"  />
 
             </Grid>
-            
+
             <Grid Name="enterStation" Grid.Row="4" Grid.Column="0">
                 <TextBlock HorizontalAlignment="Center" Text="station id:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
             </Grid>
@@ -171,16 +171,11 @@
 
             </Grid>
             <Grid x:Name="buttons" Grid.Row="9"  Grid.ColumnSpan="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="237*"/>
-                    <ColumnDefinition Width="11*"/>
-                    <ColumnDefinition Width="121*"/>
-                    <ColumnDefinition Width="32*"/>
-                </Grid.ColumnDefinitions>
+              
                 <Button Content="CLOSE" HorizontalAlignment="Left" Margin="10,-2,0,0" VerticalAlignment="Top" Width="45" Click="close_click" Style="{StaticResource ButtonStyle}" Height="20"/>
                 <Button Content="UPDATE" HorizontalAlignment="Left" Margin="60,-2,0,0" VerticalAlignment="Top" Width="50" Click="updateA_click" Style="{StaticResource ButtonStyle}" Height="20"/>
-                <Button x:Name="action1" Content="action1" Margin="115,-2,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Left" Width="120" Height="20"/>
-                <Button x:Name="action2" Content="action2" HorizontalAlignment="Center" Margin="0,-2,0,0" VerticalAlignment="Top" Width="120" Style="{StaticResource ButtonStyle}" Grid.Column="1" Height="20" Grid.ColumnSpan="2"/>
+                <Button x:Name="action1" Content="action1" Margin="115,-2,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Left" Width="125" Height="20"/>
+                <Button x:Name="action2" Content="action2" HorizontalAlignment="Center" Margin="225,-2,0,0" VerticalAlignment="Top" Width="120" Style="{StaticResource ButtonStyle}" Grid.Column="2" Height="20"/>
 
 
 
@@ -191,6 +186,9 @@
                     <ColumnDefinition Width="129*"/>
                 </Grid.ColumnDefinitions>
 
+            </Grid>
+            <Grid x:Name="simulation" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
+                <ToggleButton x:Name = "simulationSwitch"  Checked = "HandleCheck" Unchecked = "HandleUnchecked" Width = "108" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             </Grid>
         </Grid>
     </Grid>
