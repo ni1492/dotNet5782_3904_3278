@@ -25,7 +25,6 @@ namespace DALXML
         public static DALXML Instance => instance;
         #endregion
 
-
         #region DS XML Files
 
         private readonly string dronesPath = @"DroneXML.xml"; //XMLSerializer

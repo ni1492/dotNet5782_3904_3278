@@ -10,49 +10,149 @@ namespace BlApi
     public interface IBL
     {
         #region station functions
-        public void addStation(baseStation station); //add station
-        public void updateStation(int id, string name, int chargingSlots); //update station details 
-        public baseStation displayStation(int id); //display requested station
-        public IEnumerable<baseStationForList> displayStationList(); //display all stations
-        public IEnumerable<baseStationForList> displayStationListSlotsAvailable(); //display all the stations with available charging slots
+        /// <summary>
+        ///add station
+        /// </summary>
+        public void addStation(baseStation station);
+        /// <summary>
+        ///update station details 
+        /// </summary>
+        public void updateStation(int id, string name, int chargingSlots);
+        /// <summary>
+        ///display requested station
+        /// </summary>
+        public baseStation displayStation(int id);
+        /// <summary>
+        ///display all stations
+        /// </summary>
+        public IEnumerable<baseStationForList> displayStationList();
+        /// <summary>
+        ///display all the stations with available charging slots
+        /// </summary>
+        public IEnumerable<baseStationForList> displayStationListSlotsAvailable();
         #endregion
 
         #region drone functions
-        public void addDrone(droneForList drone, int stationId); //add drone 
-        public void updateDrone(int id, string model); //update deone details
-        public void sendDroneToCharge(int id); //send drone to charge 
-        public void releaseDroneFromCharge(int id); //release drone from charging
-        public drone displayDrone(int id); //display requested drone 
-        public IEnumerable<droneForList> displayDroneList(); //display all drones
-        public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match); //display all drones
+        /// <summary>
+        ///add drone 
+        /// </summary>
+        public void addDrone(droneForList drone, int stationId);
+        /// <summary>
+        ///update deone details
+        /// </summary>
+        public void updateDrone(int id, string model);
+        /// <summary>
+        ///send drone to charge 
+        /// </summary>
+        public void sendDroneToCharge(int id);
+        /// <summary>
+        ///release drone from charging 
+        /// </summary>
+        public void releaseDroneFromCharge(int id);
+        /// <summary>
+        ///display requested drone  
+        /// </summary>
+        public drone displayDrone(int id);
+        /// <summary>
+        ///display all drones 
+        /// </summary>
+        public IEnumerable<droneForList> displayDroneList();
+        /// <summary>
+        ///display all drones 
+        /// </summary>
+        public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match);
+       
         #endregion
 
         #region customer functions
-        public void addCustomer(customer customer); //add customer
-        public void updateCustomer(int id, string name, string phone); //update customer details
-        public customer displayCustomer(int id); //display requested customer
-        public IEnumerable<customerForList> displayCustomerList(); //display all customers
+        /// <summary>
+        ///add customer 
+        /// </summary>
+        public void addCustomer(customer customer);
+        /// <summary>
+        ///update customer details 
+        /// </summary>
+        public void updateCustomer(int id, string name, string phone);
+        /// <summary>
+        ///display requested customer 
+        /// </summary>
+        public customer displayCustomer(int id);
+        /// <summary>
+        ///display all customers 
+        /// </summary>
+        public IEnumerable<customerForList> displayCustomerList();
         #endregion
 
         #region parcel functions
-        public void addParcel(parcelForList parcel); //add parcel 
-        public void matchParcelToDrone(int id); //match function
-        public void pickupParcel(int id); //parcel is picked up by drone
-        public void deliverParcel(int id); //parcel is delivered by drone
-        public parcel displayParcel(int id); //display requested parcel
-        public IEnumerable<parcelForList> displayParcels(Predicate<parcelForList> match); //display all parcels that match the predicate
-        public IEnumerable<parcelForList> displayParcelList(); //display all parcels
-        public IEnumerable<parcelForList> displayParcelListWithoutDrone(); //display all parcels that arent matched
+        /// <summary>
+        ///add parcel  
+        /// </summary>
+        public void addParcel(parcelForList parcel);
+        /// <summary>
+        ///match function 
+        /// </summary>
+        public void matchParcelToDrone(int id);
+        /// <summary>
+        ///parcel is picked up by drone 
+        /// </summary>
+        public void pickupParcel(int id);
+        /// <summary>
+        ///parcel is delivered by drone 
+        /// </summary>
+        public void deliverParcel(int id);
+        /// <summary>
+        ///display requested parcel 
+        /// </summary>
+        public parcel displayParcel(int id);
+        /// <summary>
+        ///display all parcels that match the predicate 
+        /// </summary>
+        public IEnumerable<parcelForList> displayParcels(Predicate<parcelForList> match);
+        /// <summary>
+        ///display all parcels 
+        /// </summary>
+        public IEnumerable<parcelForList> displayParcelList();
+        /// <summary>
+        ///display all parcels that arent matched 
+        /// </summary>
+        public IEnumerable<parcelForList> displayParcelListWithoutDrone(); 
+        /// <summary>
+        ///returen the status of the parcel 
+        /// </summary>
         public ParcelStatus getStatus(int id);
+        /// <summary>
+        ///delete parcel 
+        /// </summary>
         public void deleteParcel(int id);
         #endregion
 
         #region user functions
+        /// <summary>
+        ///add user  
+        /// </summary>
         public void AddUser(int id, string userN, string email, string password, bool isManager);
+        /// <summary>
+        ///display the user by the userName  
+        /// </summary>
         public UserForDisplay displayUser(string userN);
+        /// <summary>
+        ///display all users  
+        /// </summary>
         public IEnumerable<UserForDisplay> displayUsersList();
+        /// <summary>
+        ///check the password of the user  
+        /// </summary>
         public bool userCorrect(string userN, string password, bool isManager);
+        /// <summary>
+        ///changing the password for the user  
+        /// </summary>
         public void changePass(string userN, string password);
+        #endregion
+     
+        #region simulation
+        /// <summary>
+        ///starting the simukation for the drone  
+        /// </summary>
         public void startSimulation(int droneId, Action updateDisplay, Func<bool> stop);
         #endregion
     }

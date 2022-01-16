@@ -44,6 +44,9 @@ namespace PL
         #endregion
 
         #region selectors
+       /// <summary>
+       /// show only the drones that their status equal to the selection
+       /// </summary>
         private void statusSelection(object sender, SelectionChangedEventArgs e)
         {
             if (statusSelector.SelectedItem == null)
@@ -66,6 +69,9 @@ namespace PL
                 droneDataGrid.ItemsSource = new ObservableCollection<PO.Drone>((from bl in bl.displayDrones(drone => (drone.status == (BO.DroneStatuses)statusSelector.SelectedItem) && (drone.weight == (BO.WeightCategories)weightSelector.SelectedItem))
                                                                                 select Converter.DronePO(bl)));
         }
+        /// <summary>
+        /// show only the drones that their weight equal to the selection
+        /// </summary>
         private void weightSelection(object sender, SelectionChangedEventArgs e)
         {
             if (statusSelector.SelectedItem == null)
@@ -90,6 +96,9 @@ namespace PL
         #endregion
 
         #region clicks
+        /// <summary>
+        ///open single drone window 
+        /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
@@ -99,20 +108,22 @@ namespace PL
             weightSelection(weightSelector, null);
            
         }
-        private void DataGridCell_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
-        {
-            if (!((sender as DataGridCell).DataContext is Drone))
-                return;
-            DataGridCell cell = sender as DataGridCell;
-            PO.Drone d = cell.DataContext as PO.Drone;
-            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
-            DataContext = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
-            GroupingData = (DataContext as List<Drone>).GroupBy(s => s.Status).ToList();
-            statusSelection(statusSelector, null);
-            weightSelection(weightSelector, null);
+        //private void DataGridCell_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (!((sender as DataGridCell).DataContext is Drone))
+        //        return;
+        //    DataGridCell cell = sender as DataGridCell;
+        //    PO.Drone d = cell.DataContext as PO.Drone;
+        //    new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
+        //    DataContext = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
+        //    GroupingData = (DataContext as List<Drone>).GroupBy(s => s.Status).ToList();
+        //    statusSelection(statusSelector, null);
+        //    weightSelection(weightSelector, null);
 
-        }
-        
+        //}
+        /// <summary>
+        ///open adding drone window
+        /// </summary>
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl).ShowDialog();
@@ -120,12 +131,17 @@ namespace PL
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
         }
+        /// <summary>
+        ///refreshing the page
+        /// </summary>
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
         }
-
+        /// <summary>
+        ///close the window
+        /// </summary>
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -133,13 +149,18 @@ namespace PL
         #endregion
 
         #region clear selectors
+        /// <summary>
+        /// clear the status selection
+        /// </summary>
         private void ClearStatusFilledComboBox_Click(object sender, RoutedEventArgs e)
         {
             statusSelector.SelectedItem = null;
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
         }
-
+        /// <summary>
+        /// clear the weight selection
+        /// </summary>
         private void ClearWeightFilledComboBox_Click(object sender, RoutedEventArgs e)
         {
             weightSelector.SelectedItem = null;
@@ -149,6 +170,9 @@ namespace PL
         #endregion
 
         #region grouping
+        /// <summary>
+        ///groping the list of drones
+        /// </summary>
         private void group_Click(object sender, RoutedEventArgs e)
         {
             List<Drone> drones = (from drone in bl.displayDroneList() select Converter.DronePO(drone)).ToList();
@@ -160,7 +184,9 @@ namespace PL
             group.Visibility = Visibility.Hidden;
             ungroup.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        ///ungroping the list of drones
+        /// </summary>
         private void ungroup_Click(object sender, RoutedEventArgs e)
         {
             groupingDataGrid.Visibility = Visibility.Hidden;
@@ -172,7 +198,4 @@ namespace PL
         #endregion
         
     }
-    
-
-
 }

@@ -115,6 +115,9 @@ namespace PL.SingleWindows
         #endregion
 
         #region clicks
+        /// <summary>
+        ///update pick up time
+        /// </summary>
         public void isPickedup_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -130,7 +133,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
-
+        /// <summary>
+        ///update delivery time
+        /// </summary>
         public void isDelivered_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -146,7 +151,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
-
+        /// <summary>
+        ///add the parcel
+        /// </summary>
         private void addParcel_Click(object sender, RoutedEventArgs e)
         {
 
@@ -179,12 +186,16 @@ namespace PL.SingleWindows
             }
 
         }
-
+        /// <summary>
+        ///close the window without doing anything
+        /// </summary>
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        ///delete parcel
+        /// </summary>
         private void deleteA_click(object sender, RoutedEventArgs e)
         {
             try
@@ -202,7 +213,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
-
+        /// <summary>
+        ///open sender window
+        /// </summary>
         private void openSender_Click(object sender, RoutedEventArgs e)
         {
             foreach (var c in bl.displayCustomerList())
@@ -216,7 +229,9 @@ namespace PL.SingleWindows
             }
 
         }
-
+        /// <summary>
+        ///open target window
+        /// </summary>
         private void openTarget_Click(object sender, RoutedEventArgs e)
         {
             foreach (var c in bl.displayCustomerList())
@@ -229,7 +244,9 @@ namespace PL.SingleWindows
                 }
             }
         }
-
+        /// <summary>
+        ///open drone window
+        /// </summary>
         private void openDrone_Click(object sender, RoutedEventArgs e)
         {
             int id;
@@ -239,6 +256,9 @@ namespace PL.SingleWindows
         #endregion
 
         #region text changed
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void SENDERTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(SENDER.Text))
@@ -252,6 +272,9 @@ namespace PL.SingleWindows
                 SENDER.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void TARGETTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(TARGET.Text))
@@ -268,6 +291,9 @@ namespace PL.SingleWindows
         #endregion
 
         #region check
+        /// <summary>
+        ///check if the name is possible
+        /// </summary>
         private bool checkName(string text)
         {
             if ((text == null) || (text == ""))
@@ -276,6 +302,9 @@ namespace PL.SingleWindows
                 return false;
             return true;
         }
+        /// <summary>
+        ///check if the id is possible
+        /// </summary>
         private bool checkId(string text)
         {
             try

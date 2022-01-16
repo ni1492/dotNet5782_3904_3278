@@ -45,6 +45,9 @@ namespace PL.SingleWindows
             Add.Visibility = Visibility.Visible;
         }
         #region text changed
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void NAMETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(NAME.Text))
@@ -58,6 +61,9 @@ namespace PL.SingleWindows
                 NAME.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary> 
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -71,6 +77,9 @@ namespace PL.SingleWindows
                 ID.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void SLOTSNUMTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkPosNum(SLOTS.Text))
@@ -84,6 +93,9 @@ namespace PL.SingleWindows
                 SLOTS.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void LATITUDETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkNUM(LATITUDE.Text))
@@ -97,6 +109,9 @@ namespace PL.SingleWindows
                 LATITUDE.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void LONGITUDETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkNUM(LONGITUDE.Text))
@@ -115,18 +130,27 @@ namespace PL.SingleWindows
 
         #endregion
         #region clicks
+        /// <summary>
+        ///open drone window
+        /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
             PO.DroneInCharging d = cell.DataContext as PO.DroneInCharging;
             new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DCId))).ShowDialog();
-            droneInChargingDataGrid.ItemsSource = bl.displayStation(Int32.Parse(viewID.Text)).dronesInCharging;
+            droneInChargingDataGrid.DataContext = bl.displayStation(Int32.Parse(viewID.Text)).dronesInCharging;
 
         }
+        /// <summary>
+        ///close window
+        /// </summary>
         private void closeA_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        /// <summary>
+        ///update model name and slots number
+        /// </summary>
         private void updateA_click(object sender, RoutedEventArgs e)
         {
             try
@@ -151,7 +175,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
-       
+        /// <summary>
+        ///add new station
+        /// </summary>
         private void addStation_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -188,6 +214,9 @@ namespace PL.SingleWindows
         }
         #endregion
         #region check
+        /// <summary>
+        ///check if the slots number is possible
+        /// </summary>
         private bool checkPosNum(string text)
         {
             try
@@ -207,12 +236,18 @@ namespace PL.SingleWindows
             }
 
         }
+        /// <summary>
+        ///check if the name is possible
+        /// </summary>
         private bool checkName(string text)
         {
             if ((text != null) && (text != ""))
                 return true;
             return false;
         }
+        /// <summary>
+        ///check if the location is possible
+        /// </summary>
         private bool checkNUM(string text)
         {
             try
@@ -229,6 +264,9 @@ namespace PL.SingleWindows
             }
 
         }
+        /// <summary>
+        ///check if the name is possible
+        /// </summary>
         private bool checkId(string text)
         {
             int id;

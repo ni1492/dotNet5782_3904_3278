@@ -134,12 +134,18 @@ namespace PL
         #endregion
 
         #region checkes
+        /// <summary>
+        ///check if the password is the right assword
+        /// </summary>
         private bool checkPassword(string pass, string user, bool isManager)
         {
             if (bl.userCorrect(user, pass, isManager))
                 return true;
             return false;
         }
+        /// <summary>
+        ///check if the id is possible
+        /// </summary>
         private bool checkId(string text)
         {
             try
@@ -161,6 +167,9 @@ namespace PL
             }
 
         }
+        /// <summary>
+        ///check if the name is possible
+        /// </summary>
         private bool checkName(string text)//signing up check
         {
             try
@@ -177,6 +186,9 @@ namespace PL
             }
 
         }
+        /// <summary>
+        ///check if the name is exist- for the forgot password option
+        /// </summary>
         private bool checkName2(string text)//forgot pass check
         {
             try
@@ -193,6 +205,9 @@ namespace PL
             }
 
         }
+        /// <summary>
+        ///check if the password is possible
+        /// </summary>
         private bool checkPass(string text)
         {
             try
@@ -211,6 +226,9 @@ namespace PL
 
 
         }
+        /// <summary>
+        ///check if the email is possible
+        /// </summary>
         private bool checkEmail(string text)
         {
             try
@@ -229,6 +247,9 @@ namespace PL
 
 
         }
+        /// <summary>
+        ///check if the phone is possible
+        /// </summary>
         private bool checkPhone(string text)
         {
             try
@@ -248,6 +269,9 @@ namespace PL
             }
 
         }
+        /// <summary>
+        ///check if the location is possible
+        /// </summary>
         private bool checkLocation(string text)
         {
             try
@@ -263,6 +287,9 @@ namespace PL
                 return true;
             }
         }
+        /// <summary>
+        ///check if the code is the right code
+        /// </summary>
         private bool checkCode(string pass)
         {
             return pass.Equals(codeForResetPass);
@@ -271,6 +298,9 @@ namespace PL
         #endregion
 
         #region red boxes
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -284,6 +314,9 @@ namespace PL
                 ID.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void NameTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(USER.Text))
@@ -297,6 +330,9 @@ namespace PL
                 USER.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void PassTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkPass(PASS.Text))
@@ -310,6 +346,9 @@ namespace PL
                 PASS.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void EmailTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkEmail(EMAIL.Text))
@@ -323,6 +362,9 @@ namespace PL
                 EMAIL.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void PHONETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkPhone(PHONE.Text))
@@ -336,6 +378,9 @@ namespace PL
                 PHONE.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void LONGITUDEextChanged(object sender, RoutedEventArgs e)
         {
             if (checkLocation(LONGITUDE.Text))
@@ -349,6 +394,9 @@ namespace PL
                 LONGITUDE.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void LATITUDETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkLocation(LATITUDE.Text))

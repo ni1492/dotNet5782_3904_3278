@@ -117,6 +117,9 @@ namespace PL.SingleWindows
         #endregion
 
         #region clicks
+        /// <summary>
+        ///charging drone
+        /// </summary>
         private void chargeA_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -134,6 +137,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
+        /// <summary>
+        ///send drone to delivery
+        /// </summary>
         private void sendToDeliveryA_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -151,6 +157,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
+        /// <summary>
+        ///update delivery time
+        /// </summary>
         private void deliverA_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -169,6 +178,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
+        /// <summary>
+        ///update pickup time
+        /// </summary>
         private void pickupA_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -187,6 +199,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
+        /// <summary>
+        ///relese drone
+        /// </summary>
         private void releaseChargeA_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -206,6 +221,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
+        /// <summary>
+        ///add new drone
+        /// </summary>
         private void addDrone_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -237,6 +255,9 @@ namespace PL.SingleWindows
             }
 
         }
+        /// <summary>
+        ///return the id of all the available stations
+        /// </summary>
         public IEnumerable<int> stationAvailable(IEnumerable<baseStationForList> displayStationListSlotsAvailable)
         {
             foreach (var item in displayStationListSlotsAvailable)
@@ -244,17 +265,25 @@ namespace PL.SingleWindows
                 yield return item.id;
             }
         }
-
+        /// <summary>
+        ///open parcel window
+        /// </summary>
         private void OpenParcel_Click(object sender, RoutedEventArgs e)
         {
             int id;
             Int32.TryParse(PARCEL.Text, out id);
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
         }
+        /// <summary>
+        ///close window
+        /// </summary>
         private void close_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        /// <summary>
+        ///update model name
+        /// </summary>
         private void updateA_click(object sender, RoutedEventArgs e)
         {
             try
@@ -280,12 +309,18 @@ namespace PL.SingleWindows
         #endregion
 
         #region check
+        /// <summary>
+        ///check if the model is possible
+        /// </summary>
         private bool checkModel(string text)
         {
             if ((text != null) && (text != ""))
                 return true;
             return false;
         }
+        /// <summary>
+        ///check if the id is possible
+        /// </summary>
         private bool checkId(string text)
         {
             try
@@ -309,6 +344,9 @@ namespace PL.SingleWindows
         #endregion
 
         #region text changed
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -322,6 +360,9 @@ namespace PL.SingleWindows
                 ID.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void MODELTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkModel(MODEL.Text))

@@ -48,10 +48,16 @@ namespace PL.SingleWindows
         #endregion
 
         #region clicks
+        /// <summary>
+        ///close window
+        /// </summary>
         private void closeA_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        /// <summary>
+        ///update model name
+        /// </summary>
         private void updateA_click(object sender, RoutedEventArgs e)
         {
             try
@@ -74,6 +80,9 @@ namespace PL.SingleWindows
                 return;
             }
         }
+        /// <summary>
+        ///add new customer
+        /// </summary>
         private void addCustomer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -110,24 +119,32 @@ namespace PL.SingleWindows
                 return;
             }
         }
-
+        /// <summary>
+        ///open the paecel window
+        /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
             PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
-            ToCustomerDataGrid.ItemsSource = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
+            ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
             FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
         }
         #endregion
 
         #region check and text changed
+        /// <summary>
+        ///check if the name is possible
+        /// </summary>
         private bool checkName(string text)
         {
             if ((text != null) && (text != ""))
                 return true;
             return false;
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void NAMETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkName(NAME.Text))
@@ -141,6 +158,9 @@ namespace PL.SingleWindows
                 NAME.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///check if the phone is possible
+        /// </summary>
         private bool checkPhone(string text)
         {
             try
@@ -160,6 +180,9 @@ namespace PL.SingleWindows
             }
 
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void PHONETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkPhone(PHONE.Text))
@@ -173,6 +196,9 @@ namespace PL.SingleWindows
                 PHONE.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///check if the id is possible
+        /// </summary>
         private bool checkId(string text)
         {
             int id;
@@ -194,6 +220,9 @@ namespace PL.SingleWindows
             }
 
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void IDTextChanged(object sender, RoutedEventArgs e)
         {
             if (checkId(ID.Text))
@@ -207,6 +236,9 @@ namespace PL.SingleWindows
                 ID.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///check if the location is possible
+        /// </summary>
         private bool checkNUM(string text)
         {
             try
@@ -223,6 +255,9 @@ namespace PL.SingleWindows
             }
 
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void LATITUDETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkNUM(LATITUDE.Text))
@@ -236,6 +271,9 @@ namespace PL.SingleWindows
                 LATITUDE.Background = Brushes.Red;
             }
         }
+        /// <summary>
+        ///if the input isnt possible, the box become red
+        /// </summary>
         private void LONGITUDETextChanged(object sender, RoutedEventArgs e)
         {
             if (checkNUM(LONGITUDE.Text))

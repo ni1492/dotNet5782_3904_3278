@@ -21,7 +21,95 @@ namespace DALObject
         public static DALObject Instance => instance;
         #endregion
 
+        #region drone
+        #region add drone
+        /// <summary>
+        /// add a new drone
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
+        {
+            //initialize new drone object:
+            foreach (Drone d in DataSource.drones)
+            {
+                if (d.Id == Id)
+                {
+                    throw new ExistException("drone alredy exist");
+                }
+            }
+            DO.Drone drone = new DO.Drone();
+            drone.Id = Id;
+            drone.Model = model;
+            drone.MaxWeight = maxWeight;
+            //  drone.Status = status;
+            //  drone.Battery = battery;
+            //adds to drones list:
+            DataSource.drones.Add(drone);
+        }
+        #endregion
+        #region display drones
+        /// <summary>
+        /// display drones
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Drone> DisplayDrones(Predicate<Drone> match)
+        {
+            foreach (Drone drone in DataSource.drones)//goes over all the stations and prints all of them
+            {
+                if (match(drone))
+                    yield return drone;
+            }
+        }
+        #endregion
+        #region convert drone
+        /// <summary>
+        ///returns the drone of the ID that was given
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Drone ConvertDrone(int id)//returns the drone of the ID that was given
+        {
+            int index = 0;
+            foreach (Drone drone in DataSource.drones)//goes over all the drones and finds the one with the given ID and returns it
+            {
+                index++;
+                if (id == drone.Id)
+                {
+                    return drone;
+                }
+            }
+            Drone d = new Drone();//if the parcel does not exist - returns an empty drone
+            return d;
+        }
+        #endregion
+        #region delete drone
+        /// <summary>
+        ///remove drone from the file
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void deleteDrone(int id)
+        {
+            bool b = false;
+            foreach (Drone d in DataSource.drones)
+            {
+                if (d.Id == id)
+                {
+                    b = true;
+                }
+            }
+            if (!b)
+                throw new NotFoundException("drone doesn't exist");
+            DataSource.drones.RemoveAll(Drone => Drone.Id == id);
+        }
+        #endregion
+
+
+        #endregion
+
         #region station
+        #region add station
+        /// <summary>
+        /// add a new station
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(int Id, string name, double longitude, double lattitude, int chargeSlots)//add a new station
         {
@@ -51,6 +139,11 @@ namespace DALObject
                     yield return station;
             }
         }
+        #endregion
+        #region convert station
+        /// <summary>
+        ///returns the station of the ID that was given
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Station ConvertStation(int id)//returns the station of the ID that was given
         {
@@ -66,6 +159,11 @@ namespace DALObject
             Station s = new Station();//if the station does not exist - returns an empty station
             return s;
         }
+        #endregion
+        #region delete station
+        /// <summary>
+        ///delete station
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteStation(int id)
         {
@@ -83,70 +181,13 @@ namespace DALObject
         }
         #endregion
 
-        #region drone
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddDrone(int Id, string model, WeightCategories maxWeight)//add a new drone
-        {
-            //initialize new drone object:
-            foreach (Drone d in DataSource.drones)
-            {
-                if (d.Id == Id)
-                {
-                    throw new ExistException("drone alredy exist");
-                }
-            }
-            DO.Drone drone = new DO.Drone();
-            drone.Id = Id;
-            drone.Model = model;
-            drone.MaxWeight = maxWeight;
-            //  drone.Status = status;
-            //  drone.Battery = battery;
-            //adds to drones list:
-            DataSource.drones.Add(drone);
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<Drone> DisplayDrones(Predicate<Drone> match)
-        {
-            foreach (Drone drone in DataSource.drones)//goes over all the stations and prints all of them
-            {
-                if (match(drone))
-                    yield return drone;
-            }
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public Drone ConvertDrone(int id)//returns the drone of the ID that was given
-        {
-            int index = 0;
-            foreach (Drone drone in DataSource.drones)//goes over all the drones and finds the one with the given ID and returns it
-            {
-                index++;
-                if (id == drone.Id)
-                {
-                    return drone;
-                }
-            }
-            Drone d = new Drone();//if the parcel does not exist - returns an empty drone
-            return d;
-        }
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void deleteDrone(int id)
-        {
-            bool b = false;
-            foreach (Drone d in DataSource.drones)
-            {
-                if (d.Id == id)
-                {
-                    b = true;
-                }
-            }
-            if (!b)
-                throw new NotFoundException("drone doesn't exist");
-            DataSource.drones.RemoveAll(Drone => Drone.Id == id);
-        }
-
         #endregion
 
         #region customer
+        #region add customer
+        /// <summary>
+        ///add a new customer
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int Id, string name, string phone, double longitude, double lattitude)//add a new customer
         {
@@ -167,6 +208,11 @@ namespace DALObject
             //adds to customers list:
             DataSource.customers.Add(customer);
         }
+        #endregion
+        #region display customers
+        /// <summary>
+        ///display customers
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> DisplayCustomers(Predicate<Customer> match)
         {
@@ -176,6 +222,11 @@ namespace DALObject
                     yield return customer;
             }
         }
+        #endregion
+        #region delete customer
+        /// <summary>
+        ///delet customer 
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteCustomer(int id)
         {
@@ -193,7 +244,13 @@ namespace DALObject
         }
         #endregion
 
+        #endregion
+
         #region parcel
+        #region add parcel
+        /// <summary>
+        ///add new parcel
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(Parcel p)//add new parcel
         {
@@ -232,6 +289,11 @@ namespace DALObject
             //add to parcels list
             DataSource.parcels.Add(parcel);
         }
+        #endregion
+        #region match
+        /// <summary>
+        ///matches a drone to a parcel
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Match(int pId, int dId) //matches a drone to a parcel
         {
@@ -268,6 +330,11 @@ namespace DALObject
                 }
             }
         }
+        #endregion
+        #region PickUp update
+        /// <summary>
+        ///Update pickup parcel by drone
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void PickUpTime(Parcel parcel)//Update pickup parcel by drone
         {
@@ -300,6 +367,11 @@ namespace DALObject
                 }
             }
         }
+        #endregion
+        #region Delivery update
+        /// <summary>
+        ///Update delivery parcel status
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliveryTime(Parcel parcel)//Update delivery parcel status
         {
@@ -329,6 +401,11 @@ namespace DALObject
                 }
             }
         }
+        #endregion
+        #region display parcels
+        /// <summary>
+        ///display parcels
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> DisplayParcels(Predicate<Parcel> match)
         {
@@ -338,7 +415,11 @@ namespace DALObject
                     yield return parcel;
             }
         }
-
+        #endregion
+        #region convert parcel
+        /// <summary>
+        ///returns the parcel of the ID that was given
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel ConvertParcel(int id)//returns the parcel of the ID that was given
         {
@@ -354,6 +435,11 @@ namespace DALObject
             Parcel p = new Parcel();//if the parcel does not exist - returns an empty parcel
             return p;
         }
+        #endregion
+        #region delete parcel
+        /// <summary>
+        ///delete parcel
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteParcel(int id)
         {
@@ -371,7 +457,13 @@ namespace DALObject
         }
         #endregion
 
+        #endregion
+
         #region charging
+        #region add charging
+        /// <summary>
+        ///adds a drone to charging
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCharging(int dId, int sId)//adds a drone to charging
         {
@@ -404,6 +496,11 @@ namespace DALObject
             charging.chargeTime = DateTime.Now;
             DataSource.inCharging.Add(charging);
         }
+        #endregion
+        #region charging drone
+        /// <summary>
+        ///send drone to charge
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ChargingDrone(int dId, int sId)//send drone to charge
         {
@@ -419,6 +516,11 @@ namespace DALObject
             }
             AddCharging(dId, sId);//adds a new charging object to the list
         }
+        #endregion
+        #region release drone frome charging 
+        /// <summary>
+        ///release drone to charge
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseChargingDrone(int id)//release drone from charging
         {
@@ -459,6 +561,11 @@ namespace DALObject
                 }
             }
         }
+        #endregion
+        #region CalculateDistance
+        /// <summary>
+        ///calculate distance between two points
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double CalculateDistance(double longitude1, double latitude1, double longitude2, double latitude2)//calculate the distance between two coordinates
         {
@@ -469,6 +576,11 @@ namespace DALObject
             double distance = Math.Pow(Math.Sin((lat2 - lat1) / 2.0), 2.0) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(long2 / 2.0), 2.0);
             return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(distance), Math.Sqrt(1.0 - distance))) / 1000;
         }
+        #endregion
+        #region power
+        /// <summary>
+        ///array with all the data about the power the drone need in the delivery
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] powerUse()
         {
@@ -480,6 +592,12 @@ namespace DALObject
             power[4] = DataSource.Config.chargingPH;
             return power;
         }
+        #endregion
+
+        #region display charging
+        /// <summary>
+        ///display drone charging in the station
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> displayChargings(int id)
         {
@@ -499,6 +617,11 @@ namespace DALObject
                     yield return item;
             }
         }
+        #endregion
+        #region display charges
+        /// <summary>
+        ///display drone in charge
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> displayDronesInCharge(Predicate<DroneCharge> match)
         {
@@ -508,10 +631,15 @@ namespace DALObject
                     yield return item;
             }
         }
+        #endregion
 
         #endregion
 
         #region user
+        #region add user
+        /// <summary>
+        ///add user
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddUser(int id, string userN, string email, string password, bool isManager)
         {
@@ -534,7 +662,11 @@ namespace DALObject
             };
             DataSource.users.Add(temp);
         }
-
+        #endregion
+        #region delete user
+        /// <summary>
+        ///delete user
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void deleteUser(int id)
         {
@@ -550,7 +682,11 @@ namespace DALObject
                 throw new NotFoundException("user doesn't exist");
             DataSource.users.RemoveAll(u => u.Id == id);
         }
-
+        #endregion
+        #region display users
+        /// <summary>
+        ///display users
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<User> displayUsers(Predicate<User> match)
         {
@@ -563,13 +699,19 @@ namespace DALObject
             }
             
         }
+        #endregion
+        #region find user
+        /// <summary>
+        ///check if the password correct
+        ///</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool userCorrect(string userN, string password, bool isManager)
         {
             return DataSource.users.Exists(u => u.UserName == userN && u.IsManager == isManager && PasswordHandler.checkPassword(password, u.HashedPassword, u.Salt));
         }
+        #endregion
 
-        
+
         #endregion
     }
 

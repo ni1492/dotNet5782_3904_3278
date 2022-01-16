@@ -42,6 +42,9 @@ namespace PL
         #endregion
 
         #region clicks
+        /// <summary>
+        ///open single station window 
+        /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
            DataGridCell cell = sender as DataGridCell;
@@ -50,16 +53,24 @@ namespace PL
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
 
         }
+        /// <summary>
+        ///close the window
+        /// </summary>
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        ///open adding station window
+        /// </summary>
         private void addStation_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow(bl).ShowDialog();
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
         }
+        /// <summary>
+        ///refreshing the page
+        /// </summary>
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
@@ -67,6 +78,9 @@ namespace PL
         #endregion
 
         #region grouping
+        /// <summary>
+        ///groping the list of stations
+        /// </summary>
         private void group_Click(object sender, RoutedEventArgs e)
         {
             List<BaseStation> stations = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
@@ -77,7 +91,9 @@ namespace PL
             group.Visibility = Visibility.Hidden;
             ungroup.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        ///ungroping the list of stations
+        /// </summary>
         private void ungroup_Click(object sender, RoutedEventArgs e)
         {
             baseStationGroupingDataGrid.Visibility = Visibility.Hidden;
@@ -85,7 +101,9 @@ namespace PL
             group.Visibility = Visibility.Visible;
             ungroup.Visibility = Visibility.Hidden;
         }
-
+        /// <summary>
+        ///open single station window 
+        /// </summary>
         private void GrupingCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;

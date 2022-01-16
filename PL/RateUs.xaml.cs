@@ -25,12 +25,17 @@ namespace PL
             rate.Visibility = Visibility.Visible;
         }
         #region clicks
+        /// <summary>
+        ///thank theuser and close the rating window 
+        /// </summary>
         public void Rate_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("thank you");
             this.Close();
         }
-
+        /// <summary>
+        ///close the rating window 
+        /// </summary>
         private void NotNow_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

@@ -38,6 +38,9 @@ namespace PL
         #endregion
 
         #region clicks
+        /// <summary>
+        ///open single customer window 
+        /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
@@ -46,17 +49,24 @@ namespace PL
             DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
 
         }
-
+        /// <summary>
+        ///open adding customer window
+        /// </summary>
         private void addCustomer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(bl).ShowDialog();
             DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
         }
-
+        /// <summary>
+        ///close the window
+        /// </summary>
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        /// <summary>
+        ///refreshing the page
+        /// </summary>
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
             DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();

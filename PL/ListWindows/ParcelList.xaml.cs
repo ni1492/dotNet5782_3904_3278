@@ -47,6 +47,9 @@ namespace PL
         #endregion
 
         #region selectors
+        /// <summary>
+        /// show only the parcels that their status equal to the selection
+        /// </summary>
         private void statusSelection(object sender, SelectionChangedEventArgs e)
         {
             if (statusSelector.SelectedItem == null)
@@ -88,6 +91,9 @@ namespace PL
                 parcelDataGrid.ItemsSource = new ObservableCollection<PO.Parcel>(from bl in bl.displayParcels(parcel => (parcel.status == (BO.ParcelStatus)statusSelector.SelectedItem) && (parcel.weight == (BO.WeightCategories)weightSelector.SelectedItem)&&(parcel.priority==(BO.Priorities)prioritySelector.SelectedItem))
                                                                                 select Converter.ParcelPO(bl));
         }
+        /// <summary>
+        /// show only the parcels that their weight equal to the selection
+        /// </summary>
         private void weightSelection(object sender, SelectionChangedEventArgs e)
         {
             if (statusSelector.SelectedItem == null)
@@ -129,7 +135,9 @@ namespace PL
                 parcelDataGrid.ItemsSource = new ObservableCollection<PO.Parcel>(from bl in bl.displayParcels(parcel => (parcel.status == (BO.ParcelStatus)statusSelector.SelectedItem) && (parcel.weight == (BO.WeightCategories)weightSelector.SelectedItem) && (parcel.priority == (BO.Priorities)prioritySelector.SelectedItem))
                                                                                  select Converter.ParcelPO(bl));
         }
-
+        /// <summary>
+        /// show only the parcels that their priority equal to the selection
+        /// </summary>
         private void prioritySelection(object sender, SelectionChangedEventArgs e)
         {
             if (statusSelector.SelectedItem == null)
@@ -174,6 +182,9 @@ namespace PL
         #endregion
 
         #region clear selectors
+        /// <summary>
+        /// clear the status selection
+        /// </summary>
         private void ClearStatusFilledComboBox_Click(object sender, RoutedEventArgs e)
         {
             statusSelector.SelectedItem = null;
@@ -182,7 +193,9 @@ namespace PL
             prioritySelection(prioritySelector, null);
 
         }
-
+        /// <summary>
+        /// clear the weight selection
+        /// </summary>
         private void ClearWeightFilledComboBox_Click(object sender, RoutedEventArgs e)
         {
             weightSelector.SelectedItem = null;
@@ -191,6 +204,9 @@ namespace PL
             prioritySelection(prioritySelector, null);
 
         }
+        /// <summary>
+        /// clear the priority selection
+        /// </summary>
         private void ClearPriorityFilledComboBox_Click(object sender, RoutedEventArgs e)
         {
             prioritySelector.SelectedItem = null;
@@ -202,6 +218,9 @@ namespace PL
         #endregion
 
         #region clicks
+        /// <summary>
+        ///open single parcel window 
+        /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
@@ -213,12 +232,16 @@ namespace PL
             weightSelection(weightSelector, null);
             prioritySelection(prioritySelector, null);
         }
-
+        /// <summary>
+        ///close the window
+        /// </summary>
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        ///open adding parcel window
+        /// </summary>
         private void addParcel_Click(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(bl).ShowDialog();
@@ -227,7 +250,9 @@ namespace PL
             weightSelection(weightSelector, null);
             prioritySelection(prioritySelector, null);
         }
-
+        /// <summary>
+        ///refreshing the page
+        /// </summary>
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
             DataContext = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
@@ -235,6 +260,9 @@ namespace PL
         #endregion
 
         #region grouping
+        /// <summary>
+        ///groping the list of parcels
+        /// </summary>
         private void group_Click(object sender, RoutedEventArgs e)
         {
             List<Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
@@ -246,7 +274,9 @@ namespace PL
             group.Visibility = Visibility.Hidden;
             ungroup.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        ///ungroping the list of parcels
+        /// </summary>
         private void ungroup_Click(object sender, RoutedEventArgs e)
         {
             parcelGroupingDataGrid.Visibility = Visibility.Hidden;
