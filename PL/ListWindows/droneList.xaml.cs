@@ -103,6 +103,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Drone d = cell.DataContext as PO.Drone;
+           if(d!=null)
             new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).ShowDialog();
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);

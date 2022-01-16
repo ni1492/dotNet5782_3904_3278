@@ -482,7 +482,8 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Parcel p = cell.DataContext as PO.Parcel;
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
+            if (p != null)
+                new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
             List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelToCusDataGrid.DataContext = parcels;
             parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
@@ -495,6 +496,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Parcel p = cell.DataContext as PO.Parcel;
+          if(p!=null)
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
             List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
             parcelToCusDataGrid.DataContext = parcels;

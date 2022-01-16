@@ -45,7 +45,8 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Customer c = cell.DataContext as PO.Customer;
-            new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.CID))).ShowDialog();
+           if(c!=null)
+             new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.CID))).ShowDialog();
             DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
 
         }

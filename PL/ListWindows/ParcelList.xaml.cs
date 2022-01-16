@@ -225,6 +225,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.Parcel p = cell.DataContext as PO.Parcel;
+           if(p!=null)
             new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
             List<Parcel> parcels = (from parcel in bl.displayParcelList() select Converter.ParcelPO(parcel)).ToList();
             DataContext = parcels;

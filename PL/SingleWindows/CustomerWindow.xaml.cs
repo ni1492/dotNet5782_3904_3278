@@ -126,9 +126,12 @@ namespace PL.SingleWindows
         {
             DataGridCell cell = sender as DataGridCell;
             PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
-            ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
+            if(p!=null)
+            {
+                new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
+            }
             FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
+            ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
         }
         #endregion
 

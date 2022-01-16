@@ -49,7 +49,8 @@ namespace PL
         {
            DataGridCell cell = sender as DataGridCell;
             PO.BaseStation s = cell.DataContext as PO.BaseStation;
-            new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
+            if(s!=null)
+              new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
 
         }
@@ -108,6 +109,7 @@ namespace PL
         {
             DataGridCell cell = sender as DataGridCell;
             PO.BaseStation s = cell.DataContext as PO.BaseStation;
+          if(s!=null)
             new StationWindow(bl, Converter.SingleStationPO(bl.displayStation(s.BSId))).ShowDialog();
             DataContext = (from station in bl.displayStationList() select Converter.StationPO(station)).ToList();
         }
