@@ -28,4 +28,11 @@
     <Longitude>29</Longitude>
     <Lattitude>30</Lattitude>
   </Customer>
+  <Customer>
+    <Id>545444545</Id>
+    <Name>avital</Name>
+    <Phone>0586883742</Phone>
+    <Longitude>32</Longitude>
+    <Lattitude>31</Lattitude>
+  </Customer>
 </CustomerXML.xml>

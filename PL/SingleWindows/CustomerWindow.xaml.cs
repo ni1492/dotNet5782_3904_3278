@@ -54,6 +54,8 @@ namespace PL.SingleWindows
         private void closeA_click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
+            ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
         }
         /// <summary>
         ///update model name

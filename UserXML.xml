@@ -24,4 +24,12 @@
     <Salt>1981548806</Salt>
     <HashedPassword>uyqdScxcvRrLHsQEUm5pPW9WLVF+jQ1MV9Dx+44CcfyCPB71vXdb2CVlLvn5YQwI2+0aEHqcMiXkfBlj5ZILJA==</HashedPassword>
   </User>
+  <User>
+    <Id>545444545</Id>
+    <UserName>avital</UserName>
+    <Email>avital.sh.w@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>650854596</Salt>
+    <HashedPassword>cvtJO4J0vqRUZMRTTWSDh2I6iNq6f++jo6r+Sw4bGoFhEc61ZyX4Fl+ki1gjX+xkpgt6B4+xU5sEp2a4yiNQ7g==</HashedPassword>
+  </User>
 </UserXML.xml>

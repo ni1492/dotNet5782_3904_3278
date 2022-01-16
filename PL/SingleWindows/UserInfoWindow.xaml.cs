@@ -35,16 +35,24 @@ namespace PL.SingleWindows
             PHONE.Text = bl.displayCustomer(Int32.Parse(user.UId.ToString())).phone;
         }
         #region clicks
+        /// <summary>
+        /// close the window
+        /// </summary>
         private void close_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// allow to change the password
+        /// </summary>
         private void ChangePass_Click(object sender, RoutedEventArgs e)
         {
             info.Visibility = Visibility.Hidden;
             Actions.Visibility = Visibility.Visible;
         }
+        /// <summary>
+        /// changing password
+        /// </summary>
         private void newPass_Click(object sender, RoutedEventArgs e)
         {
             if (checkPass(newPass.Text))
@@ -95,6 +103,9 @@ namespace PL.SingleWindows
                 passWarning.Visibility = Visibility.Visible;
             }
         }
+        /// <summary>
+        /// check if the password is right
+        /// </summary>
         private bool checkPass(string text)
         {
             try

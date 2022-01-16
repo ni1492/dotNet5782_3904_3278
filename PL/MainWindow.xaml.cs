@@ -674,7 +674,7 @@ namespace PL
                     mail.To.Add(EMAIL.Text);
                     mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
                     mail.Subject = "wlecome to the D.D.D family";
-                    mail.Body = @"<p>Dear" + USER.Text + @",</p>
+                    mail.Body = @"<p>Dear " + USER.Text + @",</p>
 <p>We are very happy to welcome you to our delivery services!</p>
 <p>Your account is now set and activated. With your username and password you can easily log in and start sending and receiving parcels.</p>
 <p>Have a wonderful day:)</p>
