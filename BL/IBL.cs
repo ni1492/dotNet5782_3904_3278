@@ -37,11 +37,11 @@ namespace BlApi
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<baseStationForList> displayStationListSlotsAvailable();
-        [MethodImpl(MethodImplOptions.Synchronized)]
         /// <summary>
-        ///display all drones in the station 
+        ///display all drones id in the station 
         /// </summary>
-        public IEnumerable<droneInCharging> displayDronesInCharge(int id);
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<int> displayDronesInCharge(int id);
         #endregion
 
         #region drone functions

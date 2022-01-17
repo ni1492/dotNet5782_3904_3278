@@ -137,11 +137,11 @@ namespace BlApi
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<droneInCharging> displayDronesInCharge(int id)
+        public IEnumerable<int> displayDronesInCharge(int id)
         {
-            foreach (var drone in displayDronesInCharge(id))
+            foreach (var drone in dl.displayChargings(id))
             {
-                yield return drone;
+                yield return drone.DroneId;
             }
         }
         #endregion

@@ -69,11 +69,11 @@ namespace BlApi
                                 bl.sendDroneToCharge(drone.id);
                                 drone.currentLocation = currentLoc;
                                 drone.battery = currentBattery;
-                                droneStatus = status.deliver;
+                                droneStatus = status.charge;
                                 int stationId = 0;
                                 foreach (var station in bl.displayStationList())
                                 {
-                                    if (bl.displayDronesInCharge(station.id).Any(d => d.id == drone.id))
+                                    if (bl.displayDronesInCharge(station.id).Any(d => d==drone.id))
                                         stationId = station.id;
                                 }
                                 location stationLoc = bl.displayStation(stationId).location;

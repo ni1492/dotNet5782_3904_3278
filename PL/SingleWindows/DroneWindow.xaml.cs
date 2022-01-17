@@ -457,20 +457,7 @@ namespace PL.SingleWindows
         #endregion
         private void refresh()
         {
-            bool acquired = false;
-            try
-            {
-                acquired = System.Threading.Monitor.TryEnter(bl);
-            }
-            finally
-            {
-                if (acquired)
-                {
-                    Monitor.Exit(bl);
-                }
-            }
-            if (acquired == false) MessageBox.Show("The SyncRoot is not locked.");
-
+           
             lock (bl)
             {
                 drone drone;
