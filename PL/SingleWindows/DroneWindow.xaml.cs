@@ -437,10 +437,10 @@ namespace PL.SingleWindows
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.Dispatcher.Invoke(() =>
-            {
-                bl.startSimulation(Int32.Parse(viewID.Text), refresh, ()=> !simulationSwitch.IsChecked.Value);
-            });
+            //this.Dispatcher.Invoke(() =>
+            //{
+                bl.startSimulation((int)e.Argument, ()=>worker.ReportProgress(0), ()=>worker.CancellationPending);
+           // });
         }
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -454,9 +454,8 @@ namespace PL.SingleWindows
         #endregion
         private void refresh()
         {
-          //  lock(bl)
+            lock(bl)
             {
-                InitializeComponent();
                 drone drone = bl.displayDrone(Int32.Parse(viewID.Text));
                 MODEL.Text = drone.model;
                 viewWEIGHT.Text = drone.weight.ToString();

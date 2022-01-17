@@ -37,6 +37,11 @@ namespace BlApi
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<baseStationForList> displayStationListSlotsAvailable();
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// <summary>
+        ///display all drones in the station 
+        /// </summary>
+        public IEnumerable<droneInCharging> displayDronesInCharge(int id);
         #endregion
 
         #region drone functions
@@ -75,6 +80,8 @@ namespace BlApi
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match);
+ 
+     
 
         #endregion
 

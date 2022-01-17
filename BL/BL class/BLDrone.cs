@@ -298,24 +298,38 @@ namespace BlApi
         {
             try
             {
-                droneForList drone = drones.Find(drone => drone.id == id);
-                parcel temp = displayParcel(drone.parcelID);
-                if (temp != null)
+                lock (dl)
                 {
-                    parcelInDelivery p = (new parcelInDelivery
+
+                    droneForList drone = drones.Find(drone => drone.id == id);
+                    parcel temp = displayParcel(drone.parcelID);
+                    if (temp != null)
                     {
-                        id = temp.id,
-                        weight = temp.weight,
-                        priority = temp.priority,
-                        sender = temp.sender,
-                        receiver = temp.receiver,
-                        pickUp = senderLocation(temp.id),
-                        destination = targetLocation(temp.id)
-                    });
-                    if (getStatus(temp.id) == ParcelStatus.PickedUp)
-                        p.status = true;
-                    else
-                        p.status = false;
+                        parcelInDelivery p = (new parcelInDelivery
+                        {
+                            id = temp.id,
+                            weight = temp.weight,
+                            priority = temp.priority,
+                            sender = temp.sender,
+                            receiver = temp.receiver,
+                            pickUp = senderLocation(temp.id),
+                            destination = targetLocation(temp.id)
+                        });
+                        if (getStatus(temp.id) == ParcelStatus.PickedUp)
+                            p.status = true;
+                        else
+                            p.status = false;
+                        return (new drone
+                        {
+                            id = drone.id,
+                            model = drone.model,
+                            weight = drone.weight,
+                            currentLocation = drone.currentLocation,
+                            battery = drone.battery,
+                            status = drone.status,
+                            parcel = p
+                        });
+                    }
                     return (new drone
                     {
                         id = drone.id,
@@ -324,19 +338,9 @@ namespace BlApi
                         currentLocation = drone.currentLocation,
                         battery = drone.battery,
                         status = drone.status,
-                        parcel = p
+                        parcel = null
                     });
                 }
-                return (new drone
-                {
-                    id = drone.id,
-                    model = drone.model,
-                    weight = drone.weight,
-                    currentLocation = drone.currentLocation,
-                    battery = drone.battery,
-                    status = drone.status,
-                    parcel = null
-                });
             }
             catch (Exception ex) //catches if the ID not exists
             {
@@ -347,21 +351,26 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match) //display all drones
         {
-            foreach (var drone in displayDroneList())
+            lock (dl)
             {
-                if (match(drone))
-                    yield return drone;
+                foreach (var drone in displayDroneList())
+                {
+                    if (match(drone))
+                        yield return drone;
+                }
             }
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<droneForList> displayDroneList() //displays the list of drones
         {
-            foreach (var drone in drones)
-            {
-                yield return drone;
-            }
+                foreach (var drone in drones)
+                {
+                    yield return drone;
+                }
+           
         }
         #endregion
+       
 
         #region assistant functions
         private IEnumerable<parcelInDelivery> parcelsByPriority(List<parcelInDelivery> list, BO.Priorities prioritiy) //returns all the parcels based on the priority requested ---should this be in BLParcel??

@@ -9,7 +9,19 @@
     <Requested>2022-01-17T14:19:37</Requested>
     <DroneId>1001</DroneId>
     <Scheduled>2022-01-17T14:20:53.915539+02:00</Scheduled>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-17T15:54:04.689838+02:00</PickedUp>
+    <Delivered>2022-01-17T15:54:10.869426+02:00</Delivered>
+  </Parcel>
+  <Parcel>
+    <Id>1001</Id>
+    <SenderId>212121212</SenderId>
+    <TargetId>123456789</TargetId>
+    <Weight>medium</Weight>
+    <Priority>regular</Priority>
+    <Requested>2022-01-17T15:53:43</Requested>
+    <DroneId>1001</DroneId>
+    <Scheduled>2022-01-17T15:54:11.4012618+02:00</Scheduled>
+    <PickedUp>2022-01-17T15:54:17.6309482+02:00</PickedUp>
+    <Delivered>2022-01-17T15:54:18.1681791+02:00</Delivered>
   </Parcel>
 </ArrayOfParcel>

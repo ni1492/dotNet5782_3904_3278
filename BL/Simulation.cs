@@ -19,7 +19,7 @@ namespace BlApi
         private static double accuracy = 0.0001;
         private static BO.droneForList drone;
 
-        enum status { deliver, charge, wait,toCharge};
+        enum status { deliver, charge, wait, toCharge };
         private status droneStatus = status.charge;
 
         private location targetLocation;
@@ -63,21 +63,24 @@ namespace BlApi
                         {
                             lock (bl)
                             {
-                                lock (bl.dl)
+                                location currentLoc = drone.currentLocation;
+                                double currentBattery = drone.battery;
+                                drone.status = DroneStatuses.available;
+                                bl.sendDroneToCharge(drone.id);
+                                drone.currentLocation = currentLoc;
+                                drone.battery = currentBattery;
+                                droneStatus = status.deliver;
+                                int stationId = 0;
+                                foreach (var station in bl.displayStationList())
                                 {
-                                    location currentLoc = drone.currentLocation;
-                                    double currentBattery = drone.battery;
-                                    drone.status = DroneStatuses.available;
-                                    bl.sendDroneToCharge(drone.id);
-                                    drone.currentLocation = currentLoc;
-                                    drone.battery = currentBattery;
-                                    droneStatus = status.deliver;
-                                    int stationId = bl.dl.displayDronesInCharge(d => d.DroneId == drone.id).FirstOrDefault().StationId;
-                                    location stationLoc = bl.displayStation(stationId).location;
-                                    targetLocation = stationLoc;
-                                    distanceFromTarget = bl.calcDistance(drone.currentLocation, stationLoc);
-                                    batteryUsage = bl.availablePK;
+                                    if (bl.displayDronesInCharge(station.id).Any(d => d.id == drone.id))
+                                        stationId = station.id;
                                 }
+                                location stationLoc = bl.displayStation(stationId).location;
+                                targetLocation = stationLoc;
+                                distanceFromTarget = bl.calcDistance(drone.currentLocation, stationLoc);
+                                batteryUsage = bl.availablePK;
+
                             }
                         }
                         catch (Exception ex) when (ex is BO.exceptions.TimeException || ex is BO.exceptions.NotFoundException)
@@ -88,7 +91,7 @@ namespace BlApi
                         }
                         break;
                     case status.deliver:
-                        lock(bl)
+                        lock (bl)
                         {
                             calculate(bl);
                         }
@@ -104,7 +107,7 @@ namespace BlApi
                         if (drone.battery == 100)
                             lock (bl)
                             {
-                                bl.releaseDroneFromCharge(drone.id); 
+                                bl.releaseDroneFromCharge(drone.id);
                             }
                         break;
                     case status.wait: //try sending drone to charge - waiting until a station close enough has empty charge slots
@@ -164,22 +167,22 @@ namespace BlApi
             {
                 lock (bl)
                 {
-                    try 
+                    try
                     {
-                        bl.matchParcelToDrone(drone.id); 
+                        bl.matchParcelToDrone(drone.id);
                     }
                     catch (BO.exceptions.NotFoundException ex)
                     {
-                      if (drone.battery == 100) //drone cant collect any parcel at all
+                        if (drone.battery == 100) //drone cant collect any parcel at all
                             return;
-                        else if(ex.Message.Equals("no parcel can be matched to the drone"))
+                        else if (ex.Message.Equals("no parcel can be matched to the drone"))
                         {
                             drone.status = DroneStatuses.maintenance;
                             droneStatus = status.toCharge;
                         } //drone cant collect any parcel because of his battery
                         else
                         {
-                            return;   
+                            return;
                         }
                     }
                 }
@@ -187,20 +190,20 @@ namespace BlApi
         }
         private static bool delay()
         {
-            try 
-            { 
-                Thread.Sleep(delayMS); 
+            try
+            {
+                Thread.Sleep(delayMS);
             }
             catch (Exception)
-            { 
-                return false; 
+            {
+                return false;
             }
             return true;
         }
-      
+
         private void calculate(BlApi.BL bl)
         {
-            lock(bl)
+            lock (bl)
             {
                 distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation);
                 if (distanceFromTarget < accuracy)
@@ -223,7 +226,7 @@ namespace BlApi
                 drone.currentLocation = new location { Longitude = lon, Latitude = lat };
                 distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation);
             }
-          
+
         }
     }
 }

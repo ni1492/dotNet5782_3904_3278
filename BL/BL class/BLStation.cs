@@ -136,7 +136,14 @@ namespace BlApi
                 }
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<droneInCharging> displayDronesInCharge(int id)
+        {
+            foreach (var drone in displayDronesInCharge(id))
+            {
+                yield return drone;
+            }
+        }
         #endregion
 
         #region assistant functions
