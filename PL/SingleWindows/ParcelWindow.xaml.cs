@@ -26,63 +26,72 @@ namespace PL.SingleWindows
 
         public ParcelWindow(BlApi.IBL bl)//add grid
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Hidden;
-            Add.Visibility = Visibility.Visible;
-            sender.Visibility = Visibility.Visible;
-            entersender.Visibility = Visibility.Visible;
-            WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Hidden;
+                Add.Visibility = Visibility.Visible;
+                sender.Visibility = Visibility.Visible;
+                entersender.Visibility = Visibility.Visible;
+                WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+                PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
+            }
         }
         public ParcelWindow(BlApi.IBL bl, string name)//add grid for user
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Hidden;
-            Add.Visibility = Visibility.Visible;
-            sender.Visibility = Visibility.Hidden;
-            entersender.Visibility = Visibility.Hidden;
-            SENDER.Text = name;
-            WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Hidden;
+                Add.Visibility = Visibility.Visible;
+                sender.Visibility = Visibility.Hidden;
+                entersender.Visibility = Visibility.Hidden;
+                SENDER.Text = name;
+                WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+                PRIORITY.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
+            }
         }
         public ParcelWindow(BlApi.IBL bl, PO.ParcelSingle parcel)//action grid
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Visible;
-            Add.Visibility = Visibility.Hidden;
-            viewID.Text = parcel.PSID.ToString();
-            viewSENDER.Text = parcel.PSSender.CPName;
-            viewTARGET.Text = parcel.PSTarget.CPName;
-            viewWEIGHT.Text = parcel.PSWeight.ToString();
-            viewPRIOR.Text = parcel.PSPriority.ToString();
-            viewCREATE.Text = parcel.PSCreation.ToString();
-            viewMATCH.Text = parcel.PSMatch.ToString();
-            viewPICK.Text = parcel.PSPickup.ToString();
-            viewDELIV.Text = parcel.PSDelivery.ToString();
-            InitializeActionsButton(parcel);
-            if (parcel.PSDrone_ID == 0)
+            lock (bl)
             {
-                viewDRONE.Text = "no drone matched";
-                OPDrone.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                viewDRONE.Text = parcel.PSDrone_ID.ToString();
-                OPDrone.Visibility = Visibility.Visible;
-            }
-            if (viewDELIV.Text != "")
-            {
-                OPCus1.Visibility = Visibility.Hidden;
-                OPCus2.Visibility = Visibility.Hidden;
-                OPDrone.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                OPCus1.Visibility = Visibility.Visible;
-                OPCus2.Visibility = Visibility.Visible;
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Visible;
+                Add.Visibility = Visibility.Hidden;
+                viewID.Text = parcel.PSID.ToString();
+                viewSENDER.Text = parcel.PSSender.CPName;
+                viewTARGET.Text = parcel.PSTarget.CPName;
+                viewWEIGHT.Text = parcel.PSWeight.ToString();
+                viewPRIOR.Text = parcel.PSPriority.ToString();
+                viewCREATE.Text = parcel.PSCreation.ToString();
+                viewMATCH.Text = parcel.PSMatch.ToString();
+                viewPICK.Text = parcel.PSPickup.ToString();
+                viewDELIV.Text = parcel.PSDelivery.ToString();
+                InitializeActionsButton(parcel);
+                if (parcel.PSDrone_ID == 0)
+                {
+                    viewDRONE.Text = "no drone matched";
+                    OPDrone.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    viewDRONE.Text = parcel.PSDrone_ID.ToString();
+                    OPDrone.Visibility = Visibility.Visible;
+                }
+                if (viewDELIV.Text != "")
+                {
+                    OPCus1.Visibility = Visibility.Hidden;
+                    OPCus2.Visibility = Visibility.Hidden;
+                    OPDrone.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    OPCus1.Visibility = Visibility.Visible;
+                    OPCus2.Visibility = Visibility.Visible;
+                }
             }
         }
         private void InitializeActionsButton(PO.ParcelSingle parcel)
@@ -122,7 +131,10 @@ namespace PL.SingleWindows
         {
             try
             {
-                bl.pickupParcel(Int32.Parse(viewDRONE.Text));
+                lock (bl)
+                {
+                    bl.pickupParcel(Int32.Parse(viewDRONE.Text));
+                }
                 this.Close();
                 return;
 
@@ -140,7 +152,10 @@ namespace PL.SingleWindows
         {
             try
             {
-                bl.deliverParcel(Int32.Parse(viewDRONE.Text));
+                lock (bl)
+                {
+                    bl.deliverParcel(Int32.Parse(viewDRONE.Text));
+                }
                 this.Close();
                 return;
 
@@ -170,8 +185,10 @@ namespace PL.SingleWindows
                         priority = (BO.Priorities)PRIORITY.SelectedItem,
                         status = BO.ParcelStatus.Requested
                     };
-
-                    bl.addParcel(p);
+                    lock (bl)
+                    {
+                        bl.addParcel(p);
+                    }
                     MessageBox.Show("Added");
                     this.Close();
                     return;
@@ -202,7 +219,10 @@ namespace PL.SingleWindows
             {
                 int id;
                 Int32.TryParse(viewID.Text, out id);
-                bl.deleteParcel(id);
+                lock (bl)
+                {
+                    bl.deleteParcel(id);
+                }
                 MessageBox.Show("parcel deleted");
                 this.Close();
                 return;
@@ -218,13 +238,16 @@ namespace PL.SingleWindows
         /// </summary>
         private void openSender_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var c in bl.displayCustomerList())
+            lock (bl)
             {
-
-                if (c.name == viewSENDER.Text)
+                foreach (var c in bl.displayCustomerList())
                 {
-                    new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.id))).ShowDialog();
-                    break;
+
+                    if (c.name == viewSENDER.Text)
+                    {
+                        new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.id))).ShowDialog();
+                        break;
+                    }
                 }
             }
 
@@ -234,13 +257,16 @@ namespace PL.SingleWindows
         /// </summary>
         private void openTarget_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var c in bl.displayCustomerList())
+            lock (bl)
             {
-
-                if (c.name == viewTARGET.Text)
+                foreach (var c in bl.displayCustomerList())
                 {
-                    new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.id))).ShowDialog();
-                    break;
+
+                    if (c.name == viewTARGET.Text)
+                    {
+                        new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.id))).ShowDialog();
+                        break;
+                    }
                 }
             }
         }
@@ -249,9 +275,12 @@ namespace PL.SingleWindows
         /// </summary>
         private void openDrone_Click(object sender, RoutedEventArgs e)
         {
-            int id;
-            Int32.TryParse(viewDRONE.Text, out id);
-            new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(id))).ShowDialog();
+            lock (bl)
+            {
+                int id;
+                Int32.TryParse(viewDRONE.Text, out id);
+                new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(id))).ShowDialog();
+            }
         }
         #endregion
 
@@ -296,11 +325,14 @@ namespace PL.SingleWindows
         /// </summary>
         private bool checkName(string text)
         {
-            if ((text == null) || (text == ""))
-                return false;
-            if (bl.displayCustomerList().FirstOrDefault(c=>c.name==text) == null)
-                return false;
-            return true;
+            lock (bl)
+            {
+                if ((text == null) || (text == ""))
+                    return false;
+                if (bl.displayCustomerList().FirstOrDefault(c => c.name == text) == null)
+                    return false;
+                return true;
+            }
         }
         /// <summary>
         ///check if the id is possible
@@ -309,15 +341,18 @@ namespace PL.SingleWindows
         {
             try
             {
-                if (text == null)
-                    return false;
-                if (!int.TryParse(text, out int id))
-                    return false;
-                if (id <= 0)
-                    return false;
-                if (bl.displayParcelList().FirstOrDefault(p=>p.id==id) != null)
-                    return false;
-                return true;
+                lock (bl)
+                {
+                    if (text == null)
+                        return false;
+                    if (!int.TryParse(text, out int id))
+                        return false;
+                    if (id <= 0)
+                        return false;
+                    if (bl.displayParcelList().FirstOrDefault(p => p.id == id) != null)
+                        return false;
+                    return true;
+                }
             }
             catch (Exception)
             {

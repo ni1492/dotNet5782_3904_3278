@@ -25,25 +25,31 @@ namespace PL.SingleWindows
         BlApi.IBL bl;
         public CustomerWindow(BlApi.IBL bl, PO.CustomerSingle customer)//action grid
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Visible;
-            Add.Visibility = Visibility.Hidden;
-            ToCustomerDataGrid.ItemsSource = customer.ToC;
-            FromCustomerDataGrid.DataContext = customer.FromC;
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Visible;
+                Add.Visibility = Visibility.Hidden;
+                ToCustomerDataGrid.ItemsSource = customer.ToC;
+                FromCustomerDataGrid.DataContext = customer.FromC;
 
-            viewID.Text = customer.CusID.ToString();
-            ShowLat.Text = customer.CLatitude.ToString();
-            ShowLong.Text = customer.CLongitude.ToString();
-            NAME.Text = customer.CusName.ToString();
-            PHONE.Text = customer.CPhone.ToString();
+                viewID.Text = customer.CusID.ToString();
+                ShowLat.Text = customer.CLatitude.ToString();
+                ShowLong.Text = customer.CLongitude.ToString();
+                NAME.Text = customer.CusName.ToString();
+                PHONE.Text = customer.CPhone.ToString();
+            }
         }
         public CustomerWindow(BlApi.IBL bl)//add grid
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Hidden;
-            Add.Visibility = Visibility.Visible;
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Hidden;
+                Add.Visibility = Visibility.Visible;
+            }
         }
         #endregion
 
@@ -53,9 +59,12 @@ namespace PL.SingleWindows
         /// </summary>
         private void closeA_click(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
-            ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
+            lock (bl)
+            {
+                this.Close();
+                FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
+                ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
+            }
         }
         /// <summary>
         ///update model name
@@ -64,17 +73,21 @@ namespace PL.SingleWindows
         {
             try
             {
-                if (checkName(NAME.Text)&&checkPhone(PHONE.Text))
-                {
-                    int id;
-                    Int32.TryParse(viewID.Text, out id);
-                    bl.updateCustomer(id,NAME.Text,PHONE.Text);
-                    MessageBox.Show("updated");
-                    this.Close();
-                    return;
-                }
-                else
-                    MessageBox.Show("incorrect input - customer update failed");
+                    if (checkName(NAME.Text) && checkPhone(PHONE.Text))
+                    {
+                        int id;
+                        Int32.TryParse(viewID.Text, out id);
+                    lock (bl)
+                    {
+                        bl.updateCustomer(id, NAME.Text, PHONE.Text);
+                    }
+                        MessageBox.Show("updated");
+                        this.Close();
+                        return;
+                    }
+                    else
+                        MessageBox.Show("incorrect input - customer update failed");
+               
             }
             catch (Exception ex)
             {
@@ -107,7 +120,10 @@ namespace PL.SingleWindows
                         }
                         
                     };
-                    bl.addCustomer(c);
+                    lock (bl)
+                    {
+                        bl.addCustomer(c);
+                    }
                     MessageBox.Show("Added");
                     this.Close();
                     return;
@@ -126,14 +142,17 @@ namespace PL.SingleWindows
         /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataGridCell cell = sender as DataGridCell;
-            PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
-            if(p!=null)
+            lock (bl)
             {
-                new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
+                DataGridCell cell = sender as DataGridCell;
+                PO.ParcelAtCustomer p = cell.DataContext as PO.ParcelAtCustomer;
+                if (p != null)
+                {
+                    new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PCID))).ShowDialog();
+                }
+                FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
+                ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
             }
-            FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
-            ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
         }
         #endregion
 
@@ -215,8 +234,11 @@ namespace PL.SingleWindows
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayCustomer(id).id != 0)
-                    return false;
+                lock (bl)
+                {
+                    if (bl.displayCustomer(id).id != 0)
+                        return false;
+                }
                 return true;
             }
             catch (Exception)

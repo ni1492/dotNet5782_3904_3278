@@ -134,28 +134,33 @@ namespace BlApi
         #endregion
 
         #region assistant functions
+
         private droneForParcel newDrone(Parcel p) //returns an empty drone for list 
         {
-            if (p.DroneId == 0)
-                return new droneForParcel
-                {
-                    id = 0,
-                    battery = 0,
-                    currentLocation = null
-                };
-            if(p.DroneId == -1)
-                return new droneForParcel
-                {
-                    id = -1,
-                    battery =0,
-                    currentLocation = null
-                };
-            return new droneForParcel
+            lock(dl)
             {
-                id = p.DroneId,
-                battery = getBattery(p.DroneId),
-                currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
-            };
+                if (p.DroneId == 0)
+                    return new droneForParcel
+                    {
+                        id = 0,
+                        battery = 0,
+                        currentLocation = null
+                    };
+                if (p.DroneId == -1)
+                    return new droneForParcel
+                    {
+                        id = -1,
+                        battery = 0,
+                        currentLocation = null
+                    };
+                return new droneForParcel
+                {
+                    id = p.DroneId,
+                    battery = getBattery(p.DroneId),
+                    currentLocation = drones.Find(drone => drone.id == p.DroneId).currentLocation
+                };
+
+            }
         }
         #endregion
 

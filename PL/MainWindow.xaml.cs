@@ -69,28 +69,40 @@ namespace PL
         /// </summary>
         private void showDronesButton_click(object sender, RoutedEventArgs e)
         {
-            new droneList(bl).Show();
+            lock(bl)
+            {
+                new droneList(bl).Show();
+            }
         }
         /// <summary>
         /// open the parcels list window
         /// </summary>
         private void showParcelsButton_click(object sender, RoutedEventArgs e)
         {
-            new ParcelList(bl).Show();
+            lock(bl)
+            {
+                new ParcelList(bl).Show();
+            }
         }
         /// <summary>
         /// open the customers list window
         /// </summary>
         private void showCustomersButton_click(object sender, RoutedEventArgs e)
         {
-            new CustomerList(bl).Show();
+            lock(bl)
+            {
+                new CustomerList(bl).Show();
+            }
         }
         /// <summary>
         /// open the stations list window
         /// </summary>
         private void showStationButton_click(object sender, RoutedEventArgs e)
         {
-            new BaseStationList(bl).Show();
+            lock (bl)
+            {
+                new BaseStationList(bl).Show();
+            }
         }
         #endregion
         #region signing
@@ -139,9 +151,12 @@ namespace PL
         /// </summary>
         private bool checkPassword(string pass, string user, bool isManager)
         {
-            if (bl.userCorrect(user, pass, isManager))
-                return true;
-            return false;
+            lock (bl)
+            {
+                if (bl.userCorrect(user, pass, isManager))
+                    return true;
+                return false;
+            }
         }
         /// <summary>
         ///check if the id is possible
@@ -150,7 +165,9 @@ namespace PL
         {
             try
             {
-                if (text == null)
+                lock (bl)
+                {
+                    if (text == null)
                     return false;
                 if (!int.TryParse(text, out int id))
                     return false;
@@ -158,8 +175,9 @@ namespace PL
                     return false;
                 if (App.bl.displayUsersList().Any(user => user.Id == id))
                     return false;
-                else
-                    return true;
+                    else
+                        return true;
+                }
             }
             catch (Exception)
             {
@@ -174,11 +192,14 @@ namespace PL
         {
             try
             {
-                if (text == null)
-                    return false;
-                if (App.bl.displayUser(text) != null)
-                    return false;
-                return true;
+                lock (bl)
+                {
+                    if (text == null)
+                        return false;
+                    if (App.bl.displayUser(text) != null)
+                        return false;
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -193,11 +214,14 @@ namespace PL
         {
             try
             {
-                if (text == null)
-                    return false;
-                if (App.bl.displayUser(text) == null)
-                    return false;
-                return true;
+                lock (bl)
+                {
+                    if (text == null)
+                        return false;
+                    if (App.bl.displayUser(text) == null)
+                        return false;
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -233,12 +257,15 @@ namespace PL
         {
             try
             {
-                if (text.Length == 0)
-                    return false;
-                if (App.bl.displayUsersList().Any(user => user.Email.Equals(text)))
-                    return false;
-                else
-                    return true;
+                lock (bl)
+                {
+                    if (text.Length == 0)
+                        return false;
+                    if (App.bl.displayUsersList().Any(user => user.Email.Equals(text)))
+                        return false;
+                    else
+                        return true;
+                }
             }
             catch (Exception)
             {
@@ -419,22 +446,25 @@ namespace PL
         /// </summary>
         private void signInUser_Click(object sender, RoutedEventArgs e)
         {
-            if (checkPassword(PassBox_user.Password, TextBox_TraineeID.Text,false))
+            if (checkPassword(PassBox_user.Password, TextBox_TraineeID.Text, false))
             {
-                UserPasswordBorder.Visibility = Visibility.Hidden;
-                cancel.Visibility = Visibility.Hidden;
-                window_User.Visibility = Visibility.Visible;
-                tryAgainUser.Visibility = Visibility.Hidden;
-                USERNAME.Content = TextBox_TraineeID.Text;
-                List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-                parcelToCusDataGrid.DataContext = parcels;
-                parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-                parcelFromCusDataGrid.DataContext = parcels;
-                if (!(rememberUser.IsChecked.Value))
+                lock (bl)
                 {
-                    showPassUser.Text = "";
-                    TextBox_TraineeID.Clear();
-                    PassBox_user.Clear();
+                    UserPasswordBorder.Visibility = Visibility.Hidden;
+                    cancel.Visibility = Visibility.Hidden;
+                    window_User.Visibility = Visibility.Visible;
+                    tryAgainUser.Visibility = Visibility.Hidden;
+                    USERNAME.Content = TextBox_TraineeID.Text;
+                    List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                    parcelToCusDataGrid.DataContext = parcels;
+                    parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                    parcelFromCusDataGrid.DataContext = parcels;
+                    if (!(rememberUser.IsChecked.Value))
+                    {
+                        showPassUser.Text = "";
+                        TextBox_TraineeID.Clear();
+                        PassBox_user.Clear();
+                    }
                 }
             }
             else
@@ -478,61 +508,74 @@ namespace PL
         /// <summary>
         ///double click for the list of parcels that send to the customer
         /// </summary>
-        private void DataGridCellToCus_MouseDoubleClick(object sender, MouseButtonEventArgs e) 
+        private void DataGridCellToCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataGridCell cell = sender as DataGridCell;
-            PO.Parcel p = cell.DataContext as PO.Parcel;
-            if (p != null)
-                new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
+            lock (bl)
+            {
+                DataGridCell cell = sender as DataGridCell;
+                PO.Parcel p = cell.DataContext as PO.Parcel;
+                if (p != null)
+                    new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
+                List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelToCusDataGrid.DataContext = parcels;
+                parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelFromCusDataGrid.DataContext = parcels;
+            }
         }
         /// <summary>
         ///double click for the list of parcels that the customer send
         /// </summary>
         private void DataGridCellFromCus_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataGridCell cell = sender as DataGridCell;
-            PO.Parcel p = cell.DataContext as PO.Parcel;
-          if(p!=null)
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
+            lock (bl)
+            {
+                DataGridCell cell = sender as DataGridCell;
+                PO.Parcel p = cell.DataContext as PO.Parcel;
+                if (p != null)
+                    new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(p.PID))).ShowDialog();
+                List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelToCusDataGrid.DataContext = parcels;
+                parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelFromCusDataGrid.DataContext = parcels;
+            }
         }
         /// <summary>
         ///send new parcel from the customer 
         /// </summary>
         private void newParcel_Click(object sender, RoutedEventArgs e)//send new parcel from the customer
         {
-
-            new ParcelWindow(bl, USERNAME.Content.ToString()).ShowDialog();
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
+            lock (bl)
+            {
+                new ParcelWindow(bl, USERNAME.Content.ToString()).ShowDialog();
+                List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelToCusDataGrid.DataContext = parcels;
+                parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelFromCusDataGrid.DataContext = parcels;
+            }
         }
         /// <summary>
         ///refresh the page-not used yet
         /// </summary>
         private void refreshUSER_Click(object sender, RoutedEventArgs e)
         {
-            List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelToCusDataGrid.DataContext = parcels;
-            parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
-            parcelFromCusDataGrid.DataContext = parcels;
+            lock (bl)
+            {
+                List<Parcel> parcels = (from parcel in bl.displayParcelList().Where(p => p.receiver == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelToCusDataGrid.DataContext = parcels;
+                parcels = (from parcel in bl.displayParcelList().Where(p => p.sender == USERNAME.Content.ToString()) select Converter.ParcelPO(parcel)).ToList();
+                parcelFromCusDataGrid.DataContext = parcels;
+            }
         }
         /// <summary>
         ///open a window with the personal details 
         /// </summary>
         private void OpenDetails_Click(object sender, RoutedEventArgs e)
         {
-            bl.displayUser(USERNAME.Content.ToString());
-            new UserInfoWindow(bl, Converter.UserPO(bl.displayUser(USERNAME.Content.ToString()))).Show();
-
+            lock (bl)
+            {
+                bl.displayUser(USERNAME.Content.ToString());
+                new UserInfoWindow(bl, Converter.UserPO(bl.displayUser(USERNAME.Content.ToString()))).Show();
+            }
         }
 
         #endregion
@@ -563,38 +606,41 @@ namespace PL
         {
             try
             {
-                if (checkName2(userName.Text) && userEmail.Text.Equals(bl.displayUser(userName.Text).Email))
+                lock (bl)
                 {
-                    Random x = new Random();
-                    string code = "";
-                    code += (char)x.Next(65, 91);
-                    code += (char)x.Next(65, 91);
-                    code += (char)x.Next(65, 91);
-                    code += (char)x.Next(65, 91);
-                    codeForResetPass = code;
-                    MailMessage mail = new MailMessage();
-                    mail.To.Add(userEmail.Text);
-                    mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
-                    mail.Subject = "new password";
-                    mail.Body = @"<p>Forgot your password?!<br />No problem!<br />Just use the following code to reset your password:</p>
+                    if (checkName2(userName.Text) && userEmail.Text.Equals(bl.displayUser(userName.Text).Email))
+                    {
+                        Random x = new Random();
+                        string code = "";
+                        code += (char)x.Next(65, 91);
+                        code += (char)x.Next(65, 91);
+                        code += (char)x.Next(65, 91);
+                        code += (char)x.Next(65, 91);
+                        codeForResetPass = code;
+                        MailMessage mail = new MailMessage();
+                        mail.To.Add(userEmail.Text);
+                        mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
+                        mail.Subject = "new password";
+                        mail.Body = @"<p>Forgot your password?!<br />No problem!<br />Just use the following code to reset your password:</p>
 <p><strong>" + code + @"</strong></p>
 <p>In the app you'll be able to enter and confirm your new password.</p>";
-                    mail.IsBodyHtml = true;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                    forgotPassBorder1.Visibility = Visibility.Hidden;
-                    forgotPassBorder2.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    MessageBox.Show("user name or email are not correct");
+                        mail.IsBodyHtml = true;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        forgotPassBorder1.Visibility = Visibility.Hidden;
+                        forgotPassBorder2.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MessageBox.Show("user name or email are not correct");
+
+                    }
+
 
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -627,14 +673,17 @@ namespace PL
         {
             if (checkPass(newPass.Text))
             {
-                forgotPassBorder1.Visibility = Visibility.Hidden;
-                forgotPassBorder2.Visibility = Visibility.Hidden;
-                resetPassBorder.Visibility = Visibility.Hidden;
-                passWarning.Visibility = Visibility.Hidden;
+                lock (bl)
+                {
+                    forgotPassBorder1.Visibility = Visibility.Hidden;
+                    forgotPassBorder2.Visibility = Visibility.Hidden;
+                    resetPassBorder.Visibility = Visibility.Hidden;
+                    passWarning.Visibility = Visibility.Hidden;
 
-                bl.changePass(userName.Text, newPass.Text);
-                UserPasswordBorder.Visibility = Visibility.Visible;
-                cancel.Visibility = Visibility.Hidden;
+                    bl.changePass(userName.Text, newPass.Text);
+                    UserPasswordBorder.Visibility = Visibility.Visible;
+                    cancel.Visibility = Visibility.Hidden;
+                }
             }
             else
             {
@@ -668,41 +717,44 @@ namespace PL
         {
             try
             {
-                if (checkId(ID.Text) && checkName(USER.Text) && checkPass(PASS.Text))
+                lock (bl)
                 {
-                    MailMessage mail = new MailMessage();
-                    mail.To.Add(EMAIL.Text);
-                    mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
-                    mail.Subject = "wlecome to the D.D.D family";
-                    mail.Body = @"<p>Dear " + USER.Text + @",</p>
+                    if (checkId(ID.Text) && checkName(USER.Text) && checkPass(PASS.Text))
+                    {
+                        MailMessage mail = new MailMessage();
+                        mail.To.Add(EMAIL.Text);
+                        mail.From = new MailAddress("DragoDroneDelivery@gmail.com");
+                        mail.Subject = "wlecome to the D.D.D family";
+                        mail.Body = @"<p>Dear " + USER.Text + @",</p>
 <p>We are very happy to welcome you to our delivery services!</p>
 <p>Your account is now set and activated. With your username and password you can easily log in and start sending and receiving parcels.</p>
 <p>Have a wonderful day:)</p>
 <p>D.D.D DragoDroneDelivery.</p>
 <p>&nbsp;</p>";
-                    mail.IsBodyHtml = true;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                    App.bl.AddUser(Int32.Parse(ID.Text), USER.Text, EMAIL.Text, PASS.Text, MANAGER.IsChecked.Value);
-                    BO.location l = new BO.location() { Latitude = double.Parse(LATITUDE.Text), Longitude = double.Parse(LONGITUDE.Text) };
-                    App.bl.addCustomer(new BO.customer() { id = Int32.Parse(ID.Text), name = USER.Text, phone = PHONE.Text, location = l });
-                    MessageBox.Show("signed up");
+                        mail.IsBodyHtml = true;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.Credentials = new System.Net.NetworkCredential("DragoDroneDelivery@gmail.com", "DRAGODRONE");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        App.bl.AddUser(Int32.Parse(ID.Text), USER.Text, EMAIL.Text, PASS.Text, MANAGER.IsChecked.Value);
+                        BO.location l = new BO.location() { Latitude = double.Parse(LATITUDE.Text), Longitude = double.Parse(LONGITUDE.Text) };
+                        App.bl.addCustomer(new BO.customer() { id = Int32.Parse(ID.Text), name = USER.Text, phone = PHONE.Text, location = l });
+                        MessageBox.Show("signed up");
 
 
-                    ID.Clear();
-                    USER.Clear();
-                    EMAIL.Clear();
-                    PASS.Clear();
-                    PHONE.Clear();
-                    LONGITUDE.Clear();
-                    LATITUDE.Clear();
-                    MANAGER.ClearValue(IconProperty);
+                        ID.Clear();
+                        USER.Clear();
+                        EMAIL.Clear();
+                        PASS.Clear();
+                        PHONE.Clear();
+                        LONGITUDE.Clear();
+                        LATITUDE.Clear();
+                        MANAGER.ClearValue(IconProperty);
+                    }
+                    else
+                        MessageBox.Show("incorrect input - signing up failed");
                 }
-                else
-                    MessageBox.Show("incorrect input - signing up failed");
             }
             catch (Exception ex)
             {

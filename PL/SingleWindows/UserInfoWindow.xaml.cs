@@ -24,15 +24,18 @@ namespace PL.SingleWindows
 
         public UserInfoWindow(BlApi.IBL bl, PO.User user)
         {
-            this.bl = bl;
-            InitializeComponent();
-            info.Visibility = Visibility.Visible;
-            Actions.Visibility = Visibility.Hidden;
-            passWarning.Visibility = Visibility.Hidden;
-            ID.Text = user.UId.ToString();
-            NAME.Text = user.UName.ToString();
-            EMAIL.Text = user.Email.ToString();
-            PHONE.Text = bl.displayCustomer(Int32.Parse(user.UId.ToString())).phone;
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                info.Visibility = Visibility.Visible;
+                Actions.Visibility = Visibility.Hidden;
+                passWarning.Visibility = Visibility.Hidden;
+                ID.Text = user.UId.ToString();
+                NAME.Text = user.UName.ToString();
+                EMAIL.Text = user.Email.ToString();
+                PHONE.Text = bl.displayCustomer(Int32.Parse(user.UId.ToString())).phone;
+            }
         }
         #region clicks
         /// <summary>
@@ -61,7 +64,10 @@ namespace PL.SingleWindows
 
                 try
                 {
-                    bl.changePass(NAME.Text, newPass.Text);
+                    lock (bl)
+                    {
+                        bl.changePass(NAME.Text, newPass.Text);
+                    }
                     MessageBox.Show("password changed- you'll receive an email about the change");
                    
                 }

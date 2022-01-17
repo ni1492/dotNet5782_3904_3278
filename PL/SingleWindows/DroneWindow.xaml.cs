@@ -15,8 +15,7 @@ using System.Collections.ObjectModel;
 using BO;
 using PL.PO;
 using System.ComponentModel;
-
-
+using System.Windows.Threading;
 
 namespace PL.SingleWindows
 {
@@ -28,93 +27,100 @@ namespace PL.SingleWindows
         #region initialization
         BlApi.IBL bl;
         BackgroundWorker worker;
+        private bool stop() => worker.CancellationPending;
         public DroneWindow(BlApi.IBL bl, PO.DroneSingle drone)//action grid
-        {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Visible;
-            Add.Visibility = Visibility.Hidden;
-            viewID.Text = drone.DId.ToString();
-            MODEL.Text = drone.Model;
-            viewWEIGHT.Text = drone.Weight.ToString();
-            BATTERY.Text = drone.Battery.ToString();
-            STATUS.Text = drone.Status.ToString();
-            LATITUDE.Text = drone.DLatitude.ToString();
-            LONGITUDE.Text = drone.DLongitude.ToString();
-            if (drone.Parcel == null)
+        {  lock (bl)
             {
-                OPENPARCEL.Visibility = Visibility.Hidden;
-                PARCEL.Text = "no parcel matched";
-            }
-            else
-            {
-                PARCEL.Text = drone.Parcel.PDID.ToString();
-                OPENPARCEL.Visibility = Visibility.Visible;
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Visible;
+                Add.Visibility = Visibility.Hidden;
+                viewID.Text = drone.DId.ToString();
+                MODEL.Text = drone.Model;
+                viewWEIGHT.Text = drone.Weight.ToString();
+                BATTERY.Text = drone.Battery.ToString();
+                STATUS.Text = drone.Status.ToString();
+                LATITUDE.Text = drone.DLatitude.ToString();
+                LONGITUDE.Text = drone.DLongitude.ToString();
+                if (drone.Parcel == null)
+                {
+                    OPENPARCEL.Visibility = Visibility.Hidden;
+                    PARCEL.Text = "no parcel matched";
+                }
+                else
+                {
+                    PARCEL.Text = drone.Parcel.PDID.ToString();
+                    OPENPARCEL.Visibility = Visibility.Visible;
 
+                }
+                InitializeActionsButton(drone);
             }
-            InitializeActionsButton(drone);
-
         }
         public DroneWindow(BlApi.IBL bl)//add grid
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Hidden;
-            Add.Visibility = Visibility.Visible;
-            OpenParcel.Visibility = Visibility.Hidden;
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Hidden;
+                Add.Visibility = Visibility.Visible;
+                OpenParcel.Visibility = Visibility.Hidden;
 
-            WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            STATION.ItemsSource = stationAvailable(bl.displayStationListSlotsAvailable());
+                WEIGHT.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+                STATION.ItemsSource = stationAvailable(bl.displayStationListSlotsAvailable());
 
-            //"enter: id, model, max weight, station id";
+                //"enter: id, model, max weight, station id";
+            }
         }
 
         private void InitializeActionsButton(DroneSingle drone)
         {
-
-            if (drone == null)
-                throw new ArgumentNullException("No drone");
-
-            if ((DroneStatuses)drone.Status == DroneStatuses.available)
+            lock (bl)
             {
-                action1.Visibility = Visibility.Visible;
-                action1.Content = "Charge";
-                action1.Click += chargeA_Click;
+                if (drone == null)
+                    throw new ArgumentNullException("No drone");
 
-                action2.Visibility = Visibility.Visible;
-                action2.Content = "Send to delivery";
-                action2.Click += sendToDeliveryA_Click;
-                OpenParcel.Visibility = Visibility.Hidden;
+                if ((DroneStatuses)drone.Status == DroneStatuses.available)
+                {
+                    action1.Visibility = Visibility.Visible;
+                    action1.Content = "Charge";
+                    action1.Click += chargeA_Click;
 
-            }
-            else if ((DroneStatuses)drone.Status == DroneStatuses.maintenance)
-            {
-                action1.Visibility = Visibility.Visible;
-                action1.Content = "Release charge";
-                action1.Click += releaseChargeA_Click;
-                action2.Visibility = Visibility.Hidden;
-                OpenParcel.Visibility = Visibility.Hidden;
+                    action2.Visibility = Visibility.Visible;
+                    action2.Content = "Send to delivery";
+                    action2.Click += sendToDeliveryA_Click;
+                    OpenParcel.Visibility = Visibility.Hidden;
 
-            }
-            else if (bl.getStatus(drone.Parcel.PDID) == (BO.ParcelStatus)ParcelStatus.PickedUp)
-            {
-                action1.Visibility = Visibility.Visible;
-                action2.Visibility = Visibility.Hidden;
-                action1.Content = "Deliver parcel";
-                action1.Click += deliverA_Click;
-                OpenParcel.Visibility = Visibility.Visible;
-                
+                }
+                else if ((DroneStatuses)drone.Status == DroneStatuses.maintenance)
+                {
+                    action1.Visibility = Visibility.Visible;
+                    action1.Content = "Release charge";
+                    action1.Click += releaseChargeA_Click;
+                    action2.Visibility = Visibility.Hidden;
+                    OpenParcel.Visibility = Visibility.Hidden;
+
+                }
+                else if (bl.getStatus(drone.Parcel.PDID) == (BO.ParcelStatus)ParcelStatus.PickedUp)
+                {
+                    action1.Visibility = Visibility.Visible;
+                    action2.Visibility = Visibility.Hidden;
+                    action1.Content = "Deliver parcel";
+                    action1.Click += deliverA_Click;
+                    OpenParcel.Visibility = Visibility.Visible;
 
 
-            }
-            else
-            {
-                action1.Visibility = Visibility.Visible;
-                action2.Visibility = Visibility.Hidden;
-                action1.Content = "Pick up parcel";
-                action1.Click += pickupA_Click;
-                OpenParcel.Visibility = Visibility.Visible;
-                
+
+                }
+                else
+                {
+                    action1.Visibility = Visibility.Visible;
+                    action2.Visibility = Visibility.Hidden;
+                    action1.Content = "Pick up parcel";
+                    action1.Click += pickupA_Click;
+                    OpenParcel.Visibility = Visibility.Visible;
+
+                }
             }
         }
         #endregion
@@ -127,12 +133,16 @@ namespace PL.SingleWindows
         {
             try
             {
-                int id;
-                Int32.TryParse(viewID.Text, out id);
-                bl.sendDroneToCharge(id);
-                MessageBox.Show("sent to charge");
-                this.Close();
-                return;
+                lock(bl)
+                {
+                    int id;
+                    Int32.TryParse(viewID.Text, out id);
+                    bl.sendDroneToCharge(id);
+                    MessageBox.Show("sent to charge");
+                    this.Close();
+                    return;
+                }
+               
             }
             catch (Exception ex)
             {
@@ -147,12 +157,16 @@ namespace PL.SingleWindows
         {
             try
             {
-                int id;
-                Int32.TryParse(viewID.Text, out id);
-                bl.matchParcelToDrone(id);
-                MessageBox.Show("drone matched");
-                this.Close();
-                return;
+                lock(bl)
+                {
+                    int id;
+                    Int32.TryParse(viewID.Text, out id);
+                    bl.matchParcelToDrone(id);
+                    MessageBox.Show("drone matched");
+                    this.Close();
+                    return;
+                }
+              
             }
             catch (Exception ex)
             {
@@ -167,13 +181,15 @@ namespace PL.SingleWindows
         {
             try
             {
-                int id;
-                Int32.TryParse(viewID.Text, out id);
-                bl.deliverParcel(id);
-                MessageBox.Show("delivered");
-                this.Close();
-                return;
-
+                lock(bl)
+                {
+                    int id;
+                    Int32.TryParse(viewID.Text, out id);
+                    bl.deliverParcel(id);
+                    MessageBox.Show("delivered");
+                    this.Close();
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -188,12 +204,16 @@ namespace PL.SingleWindows
         {
             try
             {
-                int id;
-                Int32.TryParse(viewID.Text, out id);
-                bl.pickupParcel(id);
-                MessageBox.Show("picked up");
-                this.Close();
-                return;
+                lock(bl)
+                {
+                    int id;
+                    Int32.TryParse(viewID.Text, out id);
+                    bl.pickupParcel(id);
+                    MessageBox.Show("picked up");
+                    this.Close();
+                    return;
+                }
+              
 
             }
             catch (Exception ex)
@@ -208,6 +228,8 @@ namespace PL.SingleWindows
         private void releaseChargeA_Click(object sender, RoutedEventArgs e)
         {
             try
+            { 
+                lock(bl)
             {
                 int id;
                 Int32.TryParse(viewID.Text, out id);
@@ -216,6 +238,8 @@ namespace PL.SingleWindows
                 MessageBox.Show("released drone");
                 this.Close();
                 return;
+            }
+               
 
             }
             catch (Exception ex)
@@ -231,26 +255,30 @@ namespace PL.SingleWindows
         {
             try
             {
-                if (checkId(ID.Text) && checkModel(MODEL.Text) && STATION.SelectedItem != null && WEIGHT.SelectedItem != null)
+                lock(bl)
                 {
-                    int x;
-                    Int32.TryParse(ID.Text, out x);
-                    BO.droneForList d = new BO.droneForList
+                    if (checkId(ID.Text) && checkModel(MODEL.Text) && STATION.SelectedItem != null && WEIGHT.SelectedItem != null)
                     {
-                        id = x,
-                        model = MODEL.Text,
-                        weight = (BO.WeightCategories)WEIGHT.SelectedItem
+                        int x;
+                        Int32.TryParse(ID.Text, out x);
+                        BO.droneForList d = new BO.droneForList
+                        {
+                            id = x,
+                            model = MODEL.Text,
+                            weight = (BO.WeightCategories)WEIGHT.SelectedItem
 
-                    };
-                    Int32.TryParse(STATION.Text.ToString(), out x);
-                    bl.addDrone(d, x);
-                    MessageBox.Show("Added");
-                    this.Close();
-                    return;
+                        };
+                        Int32.TryParse(STATION.Text.ToString(), out x);
+                        bl.addDrone(d, x);
+                        MessageBox.Show("Added");
+                        this.Close();
+                        return;
+                    }
+                    else
+                        MessageBox.Show("incorrect input - add drone failed");
                 }
-                else
-                    MessageBox.Show("incorrect input - add drone failed");
             }
+               
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -273,9 +301,12 @@ namespace PL.SingleWindows
         /// </summary>
         private void OpenParcel_Click(object sender, RoutedEventArgs e)
         {
-            int id;
-            Int32.TryParse(PARCEL.Text, out id);
-            new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
+            lock (bl)
+            {
+                int id;
+                Int32.TryParse(PARCEL.Text, out id);
+                new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
+            }
         }
         /// <summary>
         ///close window
@@ -291,17 +322,21 @@ namespace PL.SingleWindows
         {
             try
             {
-                if (checkModel(MODEL.Text))
+                lock(bl)
                 {
-                    int id;
-                    Int32.TryParse(viewID.Text, out id);
-                    bl.updateDrone(id, MODEL.Text);
-                    MessageBox.Show("updated");
-                    this.Close();
-                    return;
+                    if (checkModel(MODEL.Text))
+                    {
+                        int id;
+                        Int32.TryParse(viewID.Text, out id);
+                        bl.updateDrone(id, MODEL.Text);
+                        MessageBox.Show("updated");
+                        this.Close();
+                        return;
+                    }
+                    else
+                        MessageBox.Show("incorrect input - update drone failed");
                 }
-                else
-                    MessageBox.Show("incorrect input - update drone failed");
+               
             }
             catch (Exception ex)
             {
@@ -334,8 +369,12 @@ namespace PL.SingleWindows
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayDrones(drone => drone.id == id).FirstOrDefault() != null)
-                    return false;
+                lock(bl)
+                {
+                    if (bl.displayDrones(drone => drone.id == id).FirstOrDefault() != null)
+                        return false;
+                }
+              
                 return true;
             }
             catch (Exception)
@@ -390,19 +429,22 @@ namespace PL.SingleWindows
             worker.ProgressChanged += Worker_ProgressChanged;
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             worker.RunWorkerAsync(Int32.Parse(viewID.Text));
-            bl.startSimulation(Int32.Parse(viewID.Text), () => worker.ReportProgress(0), () => worker.CancellationPending);
         }
        
         private void HandleUnchecked(object sender, RoutedEventArgs e)
         {
+            worker.CancelAsync();
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            bl.startSimulation(Int32.Parse(viewID.Text), () => worker.ReportProgress(0), () => worker.CancellationPending);
+            this.Dispatcher.Invoke(() =>
+            {
+                bl.startSimulation(Int32.Parse(viewID.Text), refresh, ()=> !simulationSwitch.IsChecked.Value);
+            });
         }
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            updateDroneWindow(drone.DroneId);
+            refresh();
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -410,31 +452,32 @@ namespace PL.SingleWindows
             //if the window need to be closed - boolean variable, that is true if the user want to close the window in the middle of auto mode
         }
         #endregion
-        private void refresh(int droneId)
+        private void refresh()
         {
-            InitializeComponent();
-            drone drone= bl.displayDrone(Int32.Parse( viewID.Text));
-
-            Actions.Visibility = Visibility.Visible;
-            Add.Visibility = Visibility.Hidden;
-            MODEL.Text = drone.model;
-            viewWEIGHT.Text = drone.weight.ToString();
-            BATTERY.Text = drone.battery.ToString();
-            STATUS.Text = drone.status.ToString();
-            LATITUDE.Text = drone.currentLocation.Latitude.ToString();
-            LONGITUDE.Text = drone.currentLocation.Longitude.ToString();
-            if (drone.parcel == null)
+          //  lock(bl)
             {
-                OPENPARCEL.Visibility = Visibility.Hidden;
-                PARCEL.Text = "no parcel matched";
-            }
-            else
-            {
-                PARCEL.Text = drone.parcel.PDID.ToString();
-                OPENPARCEL.Visibility = Visibility.Visible;
+                InitializeComponent();
+                drone drone = bl.displayDrone(Int32.Parse(viewID.Text));
+                MODEL.Text = drone.model;
+                viewWEIGHT.Text = drone.weight.ToString();
+                BATTERY.Text = drone.battery.ToString();
+                STATUS.Text = drone.status.ToString();
+                LATITUDE.Text = drone.currentLocation.Latitude.ToString();
+                LONGITUDE.Text = drone.currentLocation.Longitude.ToString();
+                if (drone.parcel == null)
+                {
+                    OPENPARCEL.Visibility = Visibility.Hidden;
+                    PARCEL.Text = "no parcel matched";
+                }
+                else
+                {
+                    PARCEL.Text = drone.parcel.id.ToString();
+                    OPENPARCEL.Visibility = Visibility.Visible;
 
+                }
+                InitializeActionsButton(Converter.SingleDronePO(drone));
             }
-            InitializeActionsButton(drone);
+           
         }
     }
 }

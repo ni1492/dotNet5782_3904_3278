@@ -29,11 +29,13 @@ namespace PL
 
         public CustomerList(IBL bl)
         {
-            this.bl = bl;
-            InitializeComponent();
-            List<Customer> customers = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
-            DataContext = customers;
-
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                List<Customer> customers = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+                DataContext = customers;
+            }
         }
         #endregion
 
@@ -43,11 +45,15 @@ namespace PL
         /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataGridCell cell = sender as DataGridCell;
-            PO.Customer c = cell.DataContext as PO.Customer;
-           if(c!=null)
-             new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.CID))).ShowDialog();
-            DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+            lock(bl)
+            {
+                DataGridCell cell = sender as DataGridCell;
+                PO.Customer c = cell.DataContext as PO.Customer;
+                if (c != null)
+                    new CustomerWindow(bl, Converter.SingleCustomerPO(bl.displayCustomer(c.CID))).ShowDialog();
+                DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+            }
+            
 
         }
         /// <summary>
@@ -55,8 +61,12 @@ namespace PL
         /// </summary>
         private void addCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(bl).ShowDialog();
-            DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+            lock(bl)
+            {
+                new CustomerWindow(bl).ShowDialog();
+                DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+            }
+            
         }
         /// <summary>
         ///close the window
@@ -70,7 +80,11 @@ namespace PL
         /// </summary>
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+            lock(bl)
+            {
+                DataContext = (from customer in bl.displayCustomerList() select Converter.CustomerPO(customer)).ToList();
+
+            }
         }
         #endregion
     }

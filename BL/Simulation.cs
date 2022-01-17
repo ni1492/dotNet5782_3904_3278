@@ -88,7 +88,10 @@ namespace BlApi
                         }
                         break;
                     case status.deliver:
-                        calculate(bl);
+                        lock(bl)
+                        {
+                            calculate(bl);
+                        }
                         if (distanceFromTarget == 0)
                         {
                             droneStatus = status.charge;
@@ -100,7 +103,9 @@ namespace BlApi
                         drone.battery = Min(drone.battery, 100);
                         if (drone.battery == 100)
                             lock (bl)
-                            { bl.releaseDroneFromCharge(drone.id); }
+                            {
+                                bl.releaseDroneFromCharge(drone.id); 
+                            }
                         break;
                     case status.wait: //try sending drone to charge - waiting until a station close enough has empty charge slots
                         droneStatus = status.toCharge;
@@ -114,39 +119,40 @@ namespace BlApi
 
         private void deliveryDrone(BlApi.BL bl)
         {
-            if (!delay())
-                return;
-            lock (bl)
+            if (delay())
             {
-                parcel parcel = bl.displayParcel(drone.parcelID);
-                bool pickedUp = parcel.pickup is not null;
-                targetLocation = pickedUp ? bl.targetLocation(parcel.id) : bl.senderLocation(parcel.id);
-                if (pickedUp)
+                lock (bl)
                 {
-                    switch(parcel.weight)
+                    parcel parcel = bl.displayParcel(drone.parcelID);
+                    bool pickedUp = parcel.pickup is not null;
+                    targetLocation = pickedUp ? bl.targetLocation(parcel.id) : bl.senderLocation(parcel.id);
+                    if (pickedUp)
                     {
-                        case WeightCategories.light:
-                            batteryUsage = bl.lightPK;
-                            break;
-                        case WeightCategories.medium:
-                            batteryUsage = bl.mediumPK;
-                            break;
-                        case WeightCategories.heavy:
-                            batteryUsage = bl.heavyPK;
-                            break;
-                    }    
-                }
-                else
-                    batteryUsage = bl.availablePK;
-                calculate(bl);
-                if (distanceFromTarget == 0)
-                {
-                    if (!pickedUp)
-                        bl.pickupParcel(drone.id);
+                        switch (parcel.weight)
+                        {
+                            case WeightCategories.light:
+                                batteryUsage = bl.lightPK;
+                                break;
+                            case WeightCategories.medium:
+                                batteryUsage = bl.mediumPK;
+                                break;
+                            case WeightCategories.heavy:
+                                batteryUsage = bl.heavyPK;
+                                break;
+                        }
+                    }
                     else
-                    {
-                        bl.deliverParcel(drone.id);
                         batteryUsage = bl.availablePK;
+                    calculate(bl);
+                    if (distanceFromTarget == 0)
+                    {
+                        if (!pickedUp)
+                            bl.pickupParcel(drone.id);
+                        else
+                        {
+                            bl.deliverParcel(drone.id);
+                            batteryUsage = bl.availablePK;
+                        }
                     }
                 }
             }
@@ -164,17 +170,16 @@ namespace BlApi
                     }
                     catch (BO.exceptions.NotFoundException ex)
                     {
-                        if (ex.Message.Equals("no parcel can be matched to the drone"))
-                            return;
-
-                        else
                       if (drone.battery == 100) //drone cant collect any parcel at all
                             return;
-                        else //drone cant collect any parcel because of his battery
+                        else if(ex.Message.Equals("no parcel can be matched to the drone"))
                         {
-
                             drone.status = DroneStatuses.maintenance;
                             droneStatus = status.toCharge;
+                        } //drone cant collect any parcel because of his battery
+                        else
+                        {
+                            return;   
                         }
                     }
                 }
@@ -195,26 +200,30 @@ namespace BlApi
       
         private void calculate(BlApi.BL bl)
         {
-            distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation);
-            if (distanceFromTarget < accuracy)
+            lock(bl)
             {
-                distanceFromTarget = 0;
-                drone.currentLocation = targetLocation;
-                return;
+                distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation);
+                if (distanceFromTarget < accuracy)
+                {
+                    distanceFromTarget = 0;
+                    drone.currentLocation = targetLocation;
+                    return;
+                }
+                double timePassed = (double)delayMS / 1000;
+                double distanceChange = V * timePassed;
+                double change = Min(distanceChange, distanceFromTarget); //in case the drone has theoretically passed the target
+                double proportionalChange = change / distanceFromTarget;
+                drone.battery = Max(0.0, drone.battery - change * batteryUsage);
+                double droneLat = drone.currentLocation.Latitude;
+                double droneLong = drone.currentLocation.Longitude;
+                double targetLat = targetLocation.Latitude;
+                double targetLong = targetLocation.Longitude;
+                double lat = droneLat + (targetLat - droneLat) * proportionalChange; //we ignore the shipua of earth
+                double lon = droneLong + (targetLong - droneLong) * proportionalChange;
+                drone.currentLocation = new location { Longitude = lon, Latitude = lat };
+                distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation);
             }
-            double timePassed = (double)delayMS / 1000;
-            double distanceChange = V * timePassed;
-            double change = Min(distanceChange, distanceFromTarget); //in case the drone has theoretically passed the target
-            double proportionalChange = change / distanceFromTarget;
-            drone.battery = Max(0.0, drone.battery - change * batteryUsage);
-            double droneLat = drone.currentLocation.Latitude;
-            double droneLong = drone.currentLocation.Longitude;
-            double targetLat = targetLocation.Latitude;
-            double targetLong = targetLocation.Longitude;
-            double lat = droneLat + (targetLat - droneLat) * proportionalChange; //we ignore the shipua of earth
-            double lon = droneLong + (targetLong - droneLong) * proportionalChange;
-            drone.currentLocation = new location { Longitude = lon, Latitude = lat };
-            distanceFromTarget =bl.calcDistance(drone.currentLocation, targetLocation);
+          
         }
     }
 }

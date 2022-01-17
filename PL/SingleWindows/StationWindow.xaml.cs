@@ -26,23 +26,29 @@ namespace PL.SingleWindows
 
         public StationWindow(BlApi.IBL bl, PO.BaseStationSingle station)//action grid
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Visible;
-            Add.Visibility = Visibility.Hidden;
-            viewID.Text = station.BaseSId.ToString();
-            viewLONG.Text = station.BSLongitude.ToString();
-            viewLAT.Text = station.BSLatitude.ToString();
-            viewSLOTS.Text = station.ChargingSlots.ToString();
-            NAME.Text = station.BSName.ToString();
-            droneInChargingDataGrid.ItemsSource = station.InCharging;
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Visible;
+                Add.Visibility = Visibility.Hidden;
+                viewID.Text = station.BaseSId.ToString();
+                viewLONG.Text = station.BSLongitude.ToString();
+                viewLAT.Text = station.BSLatitude.ToString();
+                viewSLOTS.Text = station.ChargingSlots.ToString();
+                NAME.Text = station.BSName.ToString();
+                droneInChargingDataGrid.ItemsSource = station.InCharging;
+            }
         }
         public StationWindow(BlApi.IBL bl)//add grid
         {
-            this.bl = bl;
-            InitializeComponent();
-            Actions.Visibility = Visibility.Hidden;
-            Add.Visibility = Visibility.Visible;
+            lock (bl)
+            {
+                this.bl = bl;
+                InitializeComponent();
+                Actions.Visibility = Visibility.Hidden;
+                Add.Visibility = Visibility.Visible;
+            }
         }
         #region text changed
         /// <summary>
@@ -135,12 +141,14 @@ namespace PL.SingleWindows
         /// </summary>
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataGridCell cell = sender as DataGridCell;
-            PO.DroneInCharging d = cell.DataContext as PO.DroneInCharging;
-            if (d != null)
-                new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DCId))).ShowDialog();
-            droneInChargingDataGrid.DataContext = bl.displayStation(Int32.Parse(viewID.Text)).dronesInCharging;
-
+            lock (bl)
+            {
+                DataGridCell cell = sender as DataGridCell;
+                PO.DroneInCharging d = cell.DataContext as PO.DroneInCharging;
+                if (d != null)
+                    new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DCId))).ShowDialog();
+                droneInChargingDataGrid.DataContext = bl.displayStation(Int32.Parse(viewID.Text)).dronesInCharging;
+            }
         }
         /// <summary>
         ///close window
@@ -162,7 +170,10 @@ namespace PL.SingleWindows
                     Int32.TryParse(viewID.Text, out id);
                     int slots;
                     Int32.TryParse(SLOTS.Text, out slots);
-                    bl.updateStation(id, NAME.Text, slots);
+                    lock (bl)
+                    {
+                        bl.updateStation(id, NAME.Text, slots);
+                    }
                     MessageBox.Show("updated");
                     this.Close();
                     return;
@@ -199,7 +210,10 @@ namespace PL.SingleWindows
                             Latitude=Double.Parse(LATITUDE.Text)
                         }
                     };
-                    bl.addStation(bs);
+                    lock (bl)
+                    {
+                        bl.addStation(bs);
+                    }
                     MessageBox.Show("Added");
                     this.Close();
                     return;
@@ -279,8 +293,11 @@ namespace PL.SingleWindows
                     return false;
                 if (id <= 0)
                     return false;
-                if (bl.displayStation(id).id != 0)
-                    return false;
+                lock (bl)
+                {
+                    if (bl.displayStation(id).id != 0)
+                        return false;
+                }
                 return true;
             }
             catch (Exception)
