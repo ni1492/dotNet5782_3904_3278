@@ -102,7 +102,7 @@ xmlns:local="clr-namespace:PL"
                             </Button>
                             <Button Content="sign in" Width="91" Margin="0,40,0,0" Style="{StaticResource ButtonStyle}" Click="signInAdmin_Click"/>
                             <TextBlock x:Name="tryAgain" Text="password not correct- please try again" Visibility="Hidden" Margin="30,-100,0,0" Height="28" Width="232" HorizontalAlignment="Left" FontSize="12" Foreground="Red"/>
-                            <CheckBox x:Name="rememberAdmin" Content="remmember me?" Foreground="#FF9F9F9F" />
+                            <CheckBox x:Name="rememberAdmin" Content="remember me?" Foreground="#FF9F9F9F" />
                         </StackPanel>
                     </Border>
 

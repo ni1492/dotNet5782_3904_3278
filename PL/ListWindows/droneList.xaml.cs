@@ -117,9 +117,14 @@ namespace PL
                 DataGridCell cell = sender as DataGridCell;
                 PO.Drone d = cell.DataContext as PO.Drone;
                 if (d != null)
+                {
                     new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).Show();
+                    DataContext = bl.displayDroneList();
+                }
+                   
                 statusSelection(statusSelector, null);
                 weightSelection(weightSelector, null);
+
             }
         }
         
@@ -141,6 +146,7 @@ namespace PL
         /// </summary>
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
+            droneDataGrid.ItemsSource = bl.displayDroneList();
             statusSelection(statusSelector, null);
             weightSelection(weightSelector, null);
         }
