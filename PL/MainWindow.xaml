@@ -11,7 +11,7 @@ xmlns:local="clr-namespace:PL"
         Title="MainWindow" Height="450" Width="800" Icon="/logo.png">
 
 
-<!--mainwindow-->
+    <!--mainwindow-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="101*"/>
@@ -30,7 +30,7 @@ xmlns:local="clr-namespace:PL"
                     <Image x:Name="fire" Source="/pngwing.com.png" Margin="0,20,50,0" FlowDirection="RightToLeft" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                     <TextBlock HorizontalAlignment="Center" Margin="60,50,0,0" Text="DRAGODRONE" TextWrapping="Wrap" VerticalAlignment="Center" Height="236" Width="742" FontSize="130" TextAlignment="Center" FontWeight="Bold" FontFamily="MS Gothic" Foreground="Black"/>
                     <Image x:Name="drone" Source="/logo.png" HorizontalAlignment="Center" Height="93" Margin="534,0,0,230" VerticalAlignment="Center" Width="94"/>
-                    
+
                     <Grid x:Name="main"   Margin="-70,0,-85,-2"/>
                     <Button x:Name="Stop" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="stop_Click" BorderBrush="#009E9E9E">
                         <Button.Background>
@@ -45,7 +45,7 @@ xmlns:local="clr-namespace:PL"
 
                 </Grid>
             </TabItem>
-            
+
             <!--admin tab-->
 
             <TabItem Header="admin" Width="180" Height="30" FontSize="16" >
@@ -256,7 +256,7 @@ xmlns:local="clr-namespace:PL"
                             </DataGrid.GroupStyle>
                         </DataGrid>
                         <Button Content="send new parcel!" HorizontalAlignment="Left" Margin="20,0,0,10" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyle}" Height="35" Width="135" Click="newParcel_Click"/>
-                        
+
 
                     </Grid>
                     <Grid x:Name="enter">
@@ -308,7 +308,7 @@ xmlns:local="clr-namespace:PL"
                         </Border>
 
                     </Grid>
-                    
+
                     <Grid Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>
@@ -318,17 +318,19 @@ xmlns:local="clr-namespace:PL"
                     <Grid.Background>
                         <ImageBrush ImageSource="/BACK.jpg"/>
                     </Grid.Background>
-                    <CheckBox x:Name="MANAGER" Content="is manager" HorizontalAlignment="Left" Margin="100,280,0,0" VerticalAlignment="Top" Height="23" Width="150"/>
+                    <!--<CheckBox x:Name="MANAGER" Content="is manager" HorizontalAlignment="Left" Margin="100,280,0,0" VerticalAlignment="Top" Height="23" Width="150"/>-->
                     <TextBox x:Name="ID" HorizontalAlignment="Left" Margin="100,40,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource IDWaterMark}" LostFocus="IDTextChanged"/>
                     <TextBox  x:Name="USER" HorizontalAlignment="Left" Margin="100,90,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource UserWaterMark}" LostFocus="NameTextChanged"/>
                     <TextBox  x:Name="EMAIL" HorizontalAlignment="Left" Margin="100,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource EmailWaterMark}" LostFocus="EmailTextChanged"/>
                     <TextBox  x:Name="PASS" HorizontalAlignment="Left" Margin="100,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  Height="30" Style="{StaticResource PasswordWaterMark}" LostFocus="PassTextChanged"/>
                     <Button  Content="sign up" HorizontalAlignment="Left" Width="100" Margin="613,320,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" FontSize="16" Click="SignUp_Click"/>
+                    <Button  Content="By registering you agree to the: Terms and Privacy" HorizontalAlignment="Left" Width="363" Margin="350,350,0,0" VerticalAlignment="Top" Background="#00FF0000" BorderBrush="#009E9E9E"  Click="Button_Click"/>
                     <TextBox x:Name="PHONE" HorizontalAlignment="Left" Margin="350,90,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource PhoneNumWaterMark}" LostFocus="PHONETextChanged"/>
                     <TextBox x:Name="LONGITUDE" HorizontalAlignment="Left" Margin="350,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource LongitudeWaterMark}" LostFocus="LONGITUDEextChanged"/>
                     <TextBox x:Name="LATITUDE" HorizontalAlignment="Left" Margin="350,190,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="30" Style="{StaticResource LatitudeWaterMark}" LostFocus="LATITUDETextChanged" />
                     <Image x:Name="pic" Source="/logo.png" HorizontalAlignment="Center" Height="93" Margin="534,0,0,230" VerticalAlignment="Center" Width="94"/>
                     <TextBlock HorizontalAlignment="Left" Margin="100,220,0,0" Text="at least 8 characters" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="11" Opacity="0.6"/>
+
                 </Grid>
             </TabItem>
 

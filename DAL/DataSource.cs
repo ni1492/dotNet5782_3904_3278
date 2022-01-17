@@ -43,6 +43,7 @@ namespace DALObject
             Config.mediumPK = Config.lightPK + R.NextDouble();
             Config.heavyPK = Config.mediumPK + R.NextDouble();
             Config.chargingPH = R.Next(1000, 2000) + R.NextDouble();
+            int salt;
             int num = R.Next(2, 5);
             for (int i = 0; i < num; i++)//initialization of 2-4 stations
             {
@@ -66,6 +67,8 @@ namespace DALObject
             num = R.Next(10, 15);
             string[] names = { "hanna", "lenny", "ginny", "minnie", "bob", "benny", "yakob", "shuva", "etya", "hamutal",
                "liorah", "nelly", "hellen", "braidy", "daisy", "anastasia", "kevin" };//potential names for initialization of customers
+            string[] mails = { "moriapines12@gmail.com", "ayeletsohn@gmail.com", "shuva.danziger@gmail.com", "moria.kapl@gmail.com", "nsf.talya@gmail.com", "avital.sh.w@gmail.com", "noga.eden.ilan@gmail.com", "fencemegirl@gmail.com",
+                "pipolpipol@gmail.com","amongeus.gg@gmail.com", "thalianolan15@gmail.com", "nofriedm@g.jct.ac.il", "nilan@g.jct.ac.il", "moriaosh@g.jct.ac.il", "candidi.online@gmail.com", "moriapines@gmail.com","dididididumdum@gmail.com" };//potential names for initialization of customers
             for (int i = 0; i < num; i++)//initialization of 10-14 customers
             {
                 Customer customer = new Customer();
@@ -75,6 +78,17 @@ namespace DALObject
                 customer.Longitude = R.Next(30, 33) + (double)(R.Next(1000, 10000)) / 10000;
                 customer.Lattitude = R.Next(-30, -27) + (double)(R.Next(1000, 10000)) / 10000;
                 customers.Add(customer);
+                salt = PasswordHandler.generateSalt();
+                users.Add(new User
+                {
+                    Id = customer.Id,
+                    UserName = customer.Name,
+                    Email = mails[i],
+                    Salt = salt,
+                    HashedPassword = PasswordHandler.generateNewPassword("11111111", salt),
+                    IsManager = false
+                });
+
             }
             num = R.Next(12, 15);
             for (int i = 0; i < num-5; i++)//initialization of 10-14 parcels
@@ -143,7 +157,17 @@ namespace DALObject
 
                 parcels.Add(parcel);
             }
-            }
+             salt = PasswordHandler.generateSalt();
+            users.Add(new User
+            {
+                Id = 0,
+                UserName = "manager",
+                Email = "DragoDroneDelivery@gmail.com",
+                Salt = salt,
+                HashedPassword = PasswordHandler.generateNewPassword("1111", salt),
+                IsManager =true
+            });
+        }
         #endregion
     }
 }

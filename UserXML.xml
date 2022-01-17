@@ -10,7 +10,7 @@
   </User>
   <User>
     <Id>212121212</Id>
-    <UserName>we</UserName>
+    <UserName>noah</UserName>
     <Email>fencemegirl@gmail.com</Email>
     <IsManager>False</IsManager>
     <Salt>2135267228</Salt>
@@ -18,18 +18,130 @@
   </User>
   <User>
     <Id>121212121</Id>
-    <UserName>ew</UserName>
+    <UserName>noga</UserName>
     <Email>noga.eden.ilan@gmail.com</Email>
     <IsManager>False</IsManager>
     <Salt>1981548806</Salt>
     <HashedPassword>uyqdScxcvRrLHsQEUm5pPW9WLVF+jQ1MV9Dx+44CcfyCPB71vXdb2CVlLvn5YQwI2+0aEHqcMiXkfBlj5ZILJA==</HashedPassword>
   </User>
   <User>
+    <Id>326664589</Id>
+    <UserName>shuva</UserName>
+    <Email>shuva.danziger@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>166957073</Salt>
+    <HashedPassword>4+iPZHYVccQjg9gaxR62aNqnE3TCESrwmVbeB4sOaeRQD1dbdmnQGtY30uzRtxq/rz5ICEzbAM/XCXKJcvJqtQ==</HashedPassword>
+  </User>
+  <User>
+    <Id>234543445</Id>
+    <UserName>moria</UserName>
+    <Email>moria.kapl@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>849299826</Salt>
+    <HashedPassword>bSfnRZTwipw9tiMG2nN/QGytNzpDNl/oK2oOnz14N1EmMF/RGjISoqQeL3SjCgS5q+w/B08ITiOakAMdWY4dcA==</HashedPassword>
+  </User>
+  <User>
+    <Id>234444356</Id>
+    <UserName>noa</UserName>
+    <Email>nsf.talya@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>470916299</Salt>
+    <HashedPassword>25uVkeL6e34x8JUB9WJHrGiDpbqKiSq2VdfDDL07r6mYkzmYpPbmdeuG0WBCHW5WOwsxTaTDeYKWGvyQOCKSCw==</HashedPassword>
+  </User>
+  <User>
     <Id>545444545</Id>
     <UserName>avital</UserName>
     <Email>avital.sh.w@gmail.com</Email>
     <IsManager>False</IsManager>
-    <Salt>650854596</Salt>
-    <HashedPassword>cvtJO4J0vqRUZMRTTWSDh2I6iNq6f++jo6r+Sw4bGoFhEc61ZyX4Fl+ki1gjX+xkpgt6B4+xU5sEp2a4yiNQ7g==</HashedPassword>
+    <Salt>1548625339</Salt>
+    <HashedPassword>p6RpQ5tmVNXzLwrQ6oz/LFjCO7fz9eQ9GMPAYAFjAr7tY1Nb7UrIwfFGvi/b/ZLmERksblOFGPF5mFn6ehRtNQ==</HashedPassword>
+  </User>
+  <User>
+    <Id>213456765</Id>
+    <UserName>moriaa</UserName>
+    <Email>moriapines12@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>430563899</Salt>
+    <HashedPassword>bbgbbK2X8nug2fDb2X6cf5iBzTR54E2QpOphZi+yUs4rY8qmSRd6cBwZw6k55byTuA1FrWqahOI9pG9CluSjbg==</HashedPassword>
+  </User>
+  <User>
+    <Id>344543455</Id>
+    <UserName>ayelet</UserName>
+    <Email>ayeletsohn@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>394525260</Salt>
+    <HashedPassword>ELKO2HCr/BfVTJWM1RO1ZZ21fmPUHP43V1RjQxEHGsxTnlrMy8be59190R6X+5AabKM8HIotKdFE6p6KtHLzMA==</HashedPassword>
+  </User>
+  <User>
+    <Id>333333333</Id>
+    <UserName>hamutal</UserName>
+    <Email>pipolpipol@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>1336070449</Salt>
+    <HashedPassword>DY0ziJOL/qz7Rd2TQFpiq0XZ1MVsFSNoOcnneFSDOy8+Ty5JFU1exMKfTldKYGQMpJnBeWLFgjUN5sELRxEfvw==</HashedPassword>
+  </User>
+  <User>
+    <Id>343333434</Id>
+    <UserName>ami</UserName>
+    <Email>amongeus.gg@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>833047378</Salt>
+    <HashedPassword>UVtR3SFDeEVLEFnQ1WNLi3tlJVuorfMyV3RexTdSHNRlqB705qkRlDaLY7m/fYgvcJxJxybEovEzGJ+YP1dJ9A==</HashedPassword>
+  </User>
+  <User>
+    <Id>444534444</Id>
+    <UserName>thalia</UserName>
+    <Email>thalianolan15@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>1240821471</Salt>
+    <HashedPassword>QuLvi4kwSucw8wr6OQnuksD0Rlqhop2exyep5i54ifbqcZ0KMgIe5xE+VP8+UAqF5c5QwsYm0g84G5VoatSvqw==</HashedPassword>
+  </User>
+  <User>
+    <Id>333222323</Id>
+    <UserName>nofried</UserName>
+    <Email>nofriedm@g.jct.ac.il</Email>
+    <IsManager>False</IsManager>
+    <Salt>373751104</Salt>
+    <HashedPassword>iAoCbPoEP2BptsyBCX3QpahC0HLdgZiWugztvSkK3tUoBZkSAw3K3NYEKVJwZirTLCSTaq6EtJO2GkJzNQrQvA==</HashedPassword>
+  </User>
+  <User>
+    <Id>933344544</Id>
+    <UserName>nilan</UserName>
+    <Email>nilan@g.jct.ac.il</Email>
+    <IsManager>False</IsManager>
+    <Salt>1289078155</Salt>
+    <HashedPassword>zHkHapTwGzHuqbILvuNYcKZVcZE2IUT4QRbirs/UE/U9OUgmRz5fUlf+EVjb1QV+ht/OPkRN+pCXhocijlCY1Q==</HashedPassword>
+  </User>
+  <User>
+    <Id>323333233</Id>
+    <UserName>mori</UserName>
+    <Email>moriaosh@g.jct.ac.il</Email>
+    <IsManager>False</IsManager>
+    <Salt>1496930775</Salt>
+    <HashedPassword>5TETi0FYtu9KEt7HM/ebCv3cq1AKSuDu3nztdVO0WpvzYPPk2ZAEQUZeYNYVc9lcUNpVtPn12/rh2nEhnouQJQ==</HashedPassword>
+  </User>
+  <User>
+    <Id>222333444</Id>
+    <UserName>candidi</UserName>
+    <Email>candidi.online@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>1719039843</Salt>
+    <HashedPassword>cOG0XNT420k4kOOWX/EECOSK5iOA088eLprgv6nH88xM2CAEPzP+TTPk/4Py8o1dXSrXD1bK7dj7vUHIrtE6HQ==</HashedPassword>
+  </User>
+  <User>
+    <Id>222444555</Id>
+    <UserName>mor</UserName>
+    <Email>moriapines@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>2102838049</Salt>
+    <HashedPassword>pgKOfkC2QWtEaRS3ZoBID7bVk7RUylYBEqeyiNWpyZkXvbLFn1pI8nfiGYs8pAmj3AVQmYC4XoXbere7xcbeOQ==</HashedPassword>
+  </User>
+  <User>
+    <Id>288475633</Id>
+    <UserName>didi</UserName>
+    <Email>dididididumdum@gmail.com</Email>
+    <IsManager>False</IsManager>
+    <Salt>984795843</Salt>
+    <HashedPassword>85qF2ONMgxZzZgJkpY9qCedhWdILg6hvP48qGWKJbssTeQeFwnmJUKymx8sdGIHKD6SwTT27B3S4PO9sMB7n3Q==</HashedPassword>
   </User>
 </UserXML.xml>

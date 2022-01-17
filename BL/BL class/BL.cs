@@ -25,6 +25,7 @@ namespace BlApi
         static BL()
         {
             instance.drones = new List<droneForList>(); //initialize the list of drones 
+            instance.drones.OrderByDescending(d => d.id);
             //initializing the different variables 
             double[] powerUse = instance.dl.powerUse();
             instance.availablePK = powerUse[0];
