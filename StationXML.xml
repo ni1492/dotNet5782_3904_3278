@@ -5,27 +5,27 @@
     <Name>station1</Name>
     <Longitude>32</Longitude>
     <Lattitude>29</Lattitude>
-    <ChargeSlots>39</ChargeSlots>
+    <ChargeSlots>20</ChargeSlots>
   </Station>
   <Station>
     <Id>2</Id>
     <Name>station2</Name>
     <Longitude>35</Longitude>
     <Lattitude>42</Lattitude>
-    <ChargeSlots>76</ChargeSlots>
+    <ChargeSlots>10</ChargeSlots>
   </Station>
   <Station>
     <Id>3</Id>
     <Name>station3</Name>
     <Longitude>32</Longitude>
     <Lattitude>28</Lattitude>
-    <ChargeSlots>37</ChargeSlots>
+    <ChargeSlots>4</ChargeSlots>
   </Station>
   <Station>
     <Id>5</Id>
     <Name>station5</Name>
     <Longitude>30</Longitude>
     <Lattitude>-30</Lattitude>
-    <ChargeSlots>4</ChargeSlots>
+    <ChargeSlots>3</ChargeSlots>
   </Station>
 </StationXML.xml>

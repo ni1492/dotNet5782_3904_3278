@@ -10,7 +10,7 @@ namespace BO
     {
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-        public string convertLa(double lattitude)
+         public string convertLa(double lattitude)
         {
             string La;
             int angle;

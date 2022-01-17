@@ -195,5 +195,15 @@ namespace BlApi
         /// </summary>
         public void startSimulation(int droneId, Action updateDisplay, Func<bool> stop);
         #endregion
+
+        /// <summary>
+        ///return the longitude in the sexagesimal format  
+        /// </summary>
+        public string LongitudeToString(double l);
+        /// <summary>
+        ///return the latitude in the sexagesimal format  
+        /// </summary>
+        public string LatitudeToString(double l);
+
     }
 }

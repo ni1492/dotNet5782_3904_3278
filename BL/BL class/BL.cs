@@ -500,6 +500,15 @@ namespace BlApi
                 return 0;
             }
         }
+        public string LongitudeToString(double l)
+        {
+            return (new location { }).convertLo(l);
+        }
+   
+        public string LatitudeToString(double l)
+        {
+            return (new location { }).convertLa(l);
+        }
         #endregion
 
         #region start simulation

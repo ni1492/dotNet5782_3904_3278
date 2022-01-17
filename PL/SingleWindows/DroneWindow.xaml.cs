@@ -306,7 +306,7 @@ namespace PL.SingleWindows
             {
                 int id;
                 Int32.TryParse(PARCEL.Text, out id);
-                new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).ShowDialog();
+                new ParcelWindow(bl, Converter.SingleParcelPO(bl.displayParcel(id))).Show();
             }
         }
         /// <summary>
@@ -473,8 +473,8 @@ namespace PL.SingleWindows
                 viewWEIGHT.Text = drone.weight.ToString();
                 BATTERY.Text = drone.battery.ToString();
                 STATUS.Text = drone.status.ToString();
-                LATITUDE.Text = drone.currentLocation.Latitude.ToString();
-                LONGITUDE.Text = drone.currentLocation.Longitude.ToString();
+                LATITUDE.Text = bl.LatitudeToString(drone.currentLocation.Latitude);
+                LONGITUDE.Text = bl.LongitudeToString(drone.currentLocation.Longitude);
                 if (drone.parcel == null)
                 {
                     OPENPARCEL.Visibility = Visibility.Hidden;
