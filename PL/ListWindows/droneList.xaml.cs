@@ -52,6 +52,7 @@ namespace PL
        /// </summary>
         private void statusSelection(object sender, SelectionChangedEventArgs e)
         {
+
             lock(bl)
             {
                 if (statusSelector.SelectedItem == null)
@@ -114,16 +115,17 @@ namespace PL
         {
             lock (bl)
             {
+                droneDataGrid.DataContext = bl.displayDroneList();
+
                 DataGridCell cell = sender as DataGridCell;
                 PO.Drone d = cell.DataContext as PO.Drone;
                 if (d != null)
                 {
                     new DroneWindow(bl, Converter.SingleDronePO(bl.displayDrone(d.DId))).Show();
-                    DataContext = bl.displayDroneList();
                 }
-                   
                 statusSelection(statusSelector, null);
                 weightSelection(weightSelector, null);
+                droneDataGrid.DataContext = bl.displayDroneList();
 
             }
         }

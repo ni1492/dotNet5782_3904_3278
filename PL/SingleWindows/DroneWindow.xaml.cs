@@ -467,8 +467,8 @@ namespace PL.SingleWindows
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("refresh");
-                    return;                }
+                    return;               
+                }
                 MODEL.Text = drone.model;
                 viewWEIGHT.Text = drone.weight.ToString();
                 BATTERY.Text = drone.battery.ToString();
