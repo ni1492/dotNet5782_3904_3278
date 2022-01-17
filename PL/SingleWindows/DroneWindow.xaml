@@ -188,7 +188,7 @@
 
             </Grid>
             <Grid x:Name="simulation" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
-                <ToggleButton x:Name = "simulationSwitch"  Checked = "HandleCheck" Unchecked = "HandleUnchecked" Width = "108" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                <ToggleButton x:Name = "simulationSwitch"  Checked = "HandleCheck" Unchecked = "HandleUnchecked" Width = "108" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonStyle1}"/>
             </Grid>
         </Grid>
     </Grid>
