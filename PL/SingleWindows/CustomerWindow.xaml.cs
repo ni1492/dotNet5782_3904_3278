@@ -32,7 +32,7 @@ namespace PL.SingleWindows
                 Actions.Visibility = Visibility.Visible;
                 Add.Visibility = Visibility.Hidden;
                 ToCustomerDataGrid.ItemsSource = customer.ToC;
-                FromCustomerDataGrid.DataContext = customer.FromC;
+                FromCustomerDataGrid.ItemsSource = customer.FromC;
 
                 viewID.Text = customer.CusID.ToString();
                 ShowLat.Text = customer.CLatitude.ToString();
@@ -49,6 +49,7 @@ namespace PL.SingleWindows
                 InitializeComponent();
                 Actions.Visibility = Visibility.Hidden;
                 Add.Visibility = Visibility.Visible;
+               
             }
         }
         #endregion
@@ -60,10 +61,9 @@ namespace PL.SingleWindows
         private void closeA_click(object sender, RoutedEventArgs e)
         {
             lock (bl)
-            {
+            { 
                 this.Close();
-                FromCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).fromCus;
-                ToCustomerDataGrid.DataContext = bl.displayCustomer(Int32.Parse(viewID.Text)).toCus;
+
             }
         }
         /// <summary>
