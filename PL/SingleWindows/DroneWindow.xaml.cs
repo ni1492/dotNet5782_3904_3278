@@ -437,10 +437,13 @@ namespace PL.SingleWindows
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //this.Dispatcher.Invoke(() =>
-            //{
-                bl.startSimulation((int)e.Argument, ()=>worker.ReportProgress(0), ()=>worker.CancellationPending);
-           // });
+            lock (bl)
+            {
+                //this.Dispatcher.Invoke(() =>
+                //{
+                bl.startSimulation((int)e.Argument, () => worker.ReportProgress(0), () => worker.CancellationPending);
+                // });
+            }
         }
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
