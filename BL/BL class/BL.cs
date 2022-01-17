@@ -505,11 +505,10 @@ namespace BlApi
         #region start simulation
         public void startSimulation(int droneId, Action updateDisplay, Func<bool> stop)
         {
-            lock(dl)
-            {
+            
                 new Simulation(this, droneId, updateDisplay, stop);
 
-            }
+          
         }
         #endregion
     }

@@ -351,18 +351,18 @@ namespace BlApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<droneForList> displayDrones(Predicate<droneForList> match) //display all drones
         {
-            lock (dl)
-            {
+           
                 foreach (var drone in displayDroneList())
                 {
                     if (match(drone))
                         yield return drone;
                 }
-            }
+            
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<droneForList> displayDroneList() //displays the list of drones
         {
+            
                 foreach (var drone in drones)
                 {
                     yield return drone;

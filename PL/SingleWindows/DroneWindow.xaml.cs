@@ -16,6 +16,7 @@ using BO;
 using PL.PO;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace PL.SingleWindows
 {
@@ -27,10 +28,12 @@ namespace PL.SingleWindows
         #region initialization
         BlApi.IBL bl;
         BackgroundWorker worker;
+        PO.DroneSingle DRONE;
         private bool stop() => worker.CancellationPending;
         public DroneWindow(BlApi.IBL bl, PO.DroneSingle drone)//action grid
         {  lock (bl)
             {
+                DRONE = drone;
                 this.bl = bl;
                 InitializeComponent();
                 Actions.Visibility = Visibility.Visible;
@@ -58,8 +61,7 @@ namespace PL.SingleWindows
         }
         public DroneWindow(BlApi.IBL bl)//add grid
         {
-            lock (bl)
-            {
+        
                 this.bl = bl;
                 InitializeComponent();
                 Actions.Visibility = Visibility.Hidden;
@@ -70,13 +72,12 @@ namespace PL.SingleWindows
                 STATION.ItemsSource = stationAvailable(bl.displayStationListSlotsAvailable());
 
                 //"enter: id, model, max weight, station id";
-            }
+            
         }
 
         private void InitializeActionsButton(DroneSingle drone)
         {
-            lock (bl)
-            {
+           
                 if (drone == null)
                     throw new ArgumentNullException("No drone");
 
@@ -121,7 +122,7 @@ namespace PL.SingleWindows
                     OpenParcel.Visibility = Visibility.Visible;
 
                 }
-            }
+            
         }
         #endregion
 
@@ -437,13 +438,12 @@ namespace PL.SingleWindows
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            lock (bl)
-            {
+           
                 //this.Dispatcher.Invoke(() =>
                 //{
                 bl.startSimulation((int)e.Argument, () => worker.ReportProgress(0), () => worker.CancellationPending);
                 // });
-            }
+            
         }
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -457,9 +457,31 @@ namespace PL.SingleWindows
         #endregion
         private void refresh()
         {
-            lock(bl)
+            bool acquired = false;
+            try
             {
-                drone drone = bl.displayDrone(Int32.Parse(viewID.Text));
+                acquired = System.Threading.Monitor.TryEnter(bl);
+            }
+            finally
+            {
+                if (acquired)
+                {
+                    Monitor.Exit(bl);
+                }
+            }
+            if (acquired == false) MessageBox.Show("The SyncRoot is not locked.");
+
+            lock (bl)
+            {
+                drone drone;
+                try
+                {
+                    drone = bl.displayDrone(DRONE.DId);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("refresh");
+                    return;                }
                 MODEL.Text = drone.model;
                 viewWEIGHT.Text = drone.weight.ToString();
                 BATTERY.Text = drone.battery.ToString();
