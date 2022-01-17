@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
 using static System.Math;
-//using System.Diagnostics;
 using BO;
 
 
@@ -14,20 +13,22 @@ namespace BlApi
 {
     class Simulation
     {
-        private static double V = 50;
-        private static int delayMS = 500;
-        private static double accuracy = 0.0001;
-        private static BO.droneForList drone;
+        #region initialize
+        private static double V = 50; //velocitiy
+        private static int delayMS = 500; //delay in milliseconds
+        private static double accuracy = 0.0001; //accuracy
+        private static BO.droneForList drone; 
 
-        enum status { deliver, charge, wait, toCharge };
+        enum status { deliver, charge, wait, toCharge }; //status of drone - traveling, charging, waiting to charge, or initial charge
         private status droneStatus = status.charge;
 
-        private location targetLocation;
-        private double distanceFromTarget = 0;
-        private double batteryUsage;
+        private location targetLocation; //target location - can either be sender or receiver 
+        private double distanceFromTarget = 0; //distance from target - for calculations later on
+        private double batteryUsage; //battery usage
 
-
-
+        /// <summary>
+        /// simulator constructor - sends to functions according to the status of the drone
+        /// </summary>
         public Simulation(BlApi.BL bl, int dId, Action updateDisplay, Func<bool> stop)
         {
             lock (bl)
@@ -51,14 +52,18 @@ namespace BlApi
                 updateDisplay();
             }
         }
-
+        #endregion
+        #region charged
+        /// <summary>
+        /// deals with drone in charging - depending on the status - updates location and battery
+        /// </summary>
         private void chargedDrone(BlApi.BL bl)
         {
             if (delay())
             {
                 switch (droneStatus)
                 {
-                    case status.toCharge:
+                    case status.toCharge: //sends the drone to charge at charging station - updates the battery and location accordingly
                         try
                         {
                             lock (bl)
@@ -90,7 +95,7 @@ namespace BlApi
                             droneStatus = status.wait;
                         }
                         break;
-                    case status.deliver:
+                    case status.deliver: //if the drone is already on the way to the charging station 
                         lock (bl)
                         {
                             calculate(bl);
@@ -100,7 +105,7 @@ namespace BlApi
                             droneStatus = status.charge;
                         }
                         break;
-                    case status.charge:
+                    case status.charge: // if the drone is already charging at the charging station
                         double timePassed = (double)delayMS / 1000;
                         drone.battery += bl.chargingPH * timePassed;
                         drone.battery = Min(drone.battery, 100);
@@ -119,19 +124,23 @@ namespace BlApi
 
             }
         }
-
+        #endregion
+        #region delivery
+        /// <summary>
+        /// deals with drone in delivery - depending on the status - updates location and battery
+        /// </summary>
         private void deliveryDrone(BlApi.BL bl)
         {
             if (delay())
             {
                 lock (bl)
                 {
-                    parcel parcel = bl.displayParcel(drone.parcelID);
+                    parcel parcel = bl.displayParcel(drone.parcelID); 
                     bool pickedUp = parcel.pickup is not null;
-                    targetLocation = pickedUp ? bl.targetLocation(parcel.id) : bl.senderLocation(parcel.id);
+                    targetLocation = pickedUp ? bl.targetLocation(parcel.id) : bl.senderLocation(parcel.id); //if the parcel is not picked up - the target location is the sender, if it is its the receiver
                     if (pickedUp)
                     {
-                        switch (parcel.weight)
+                        switch (parcel.weight) //update battery according to the weight
                         {
                             case WeightCategories.light:
                                 batteryUsage = bl.lightPK;
@@ -144,10 +153,10 @@ namespace BlApi
                                 break;
                         }
                     }
-                    else
-                        batteryUsage = bl.availablePK;
-                    calculate(bl);
-                    if (distanceFromTarget == 0)
+                    else //if the parcel isnt picked up - flys to the sender
+                        batteryUsage = bl.availablePK; 
+                    calculate(bl);  //calculates the distance to the destination
+                    if (distanceFromTarget == 0) //picks up drone
                     {
                         if (!pickedUp)
                             bl.pickupParcel(drone.id);
@@ -160,7 +169,11 @@ namespace BlApi
                 }
             }
         }
-
+        #endregion
+        #region available
+        /// <summary>
+        /// deals with available drone- matches to a parcel if possible
+        /// </summary>
         private void availableDrone(BlApi.BL bl)
         {
             if (delay())
@@ -169,7 +182,7 @@ namespace BlApi
                 {
                     try
                     {
-                        bl.matchParcelToDrone(drone.id);
+                        bl.matchParcelToDrone(drone.id); //matches
                     }
                     catch (BO.exceptions.NotFoundException ex)
                     {
@@ -188,7 +201,12 @@ namespace BlApi
                 }
             }
         }
-        private static bool delay()
+        #endregion
+        #region assistant functions
+        /// <summary>
+        /// checks delay
+        /// </summary>
+        private static bool delay() 
         {
             try
             {
@@ -200,22 +218,24 @@ namespace BlApi
             }
             return true;
         }
-
+        /// <summary>
+        /// calculates the distance to the destination
+        /// </summary>
         private void calculate(BlApi.BL bl)
         {
             lock (bl)
             {
-                distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation);
+                distanceFromTarget = bl.calcDistance(drone.currentLocation, targetLocation); 
                 if (distanceFromTarget < accuracy)
                 {
                     distanceFromTarget = 0;
                     drone.currentLocation = targetLocation;
                     return;
                 }
-                double timePassed = (double)delayMS / 1000;
-                double distanceChange = V * timePassed;
+                double timePassed = (double)delayMS / 1000; //time passed
+                double distanceChange = V * timePassed; //velocity times the time passed
                 double change = Min(distanceChange, distanceFromTarget); //in case the drone has theoretically passed the target
-                double proportionalChange = change / distanceFromTarget;
+                double proportionalChange = change / distanceFromTarget; 
                 drone.battery = Max(0.0, drone.battery - change * batteryUsage);
                 double droneLat = drone.currentLocation.Latitude;
                 double droneLong = drone.currentLocation.Longitude;
@@ -228,5 +248,6 @@ namespace BlApi
             }
 
         }
+        #endregion
     }
 }
