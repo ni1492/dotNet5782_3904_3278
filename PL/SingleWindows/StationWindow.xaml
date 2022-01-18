@@ -54,10 +54,7 @@
             <TextBlock HorizontalAlignment="Center" Text="charging slots:" TextWrapping="Wrap" VerticalAlignment="Center" Width="140" TextAlignment="Center"/>
 
         </Grid>
-        <Grid Name="viewSlots" Grid.Row="3" Grid.Column="1" Margin="0,0,0,65" Grid.RowSpan="3">
-            <TextBlock x:Name="viewSLOTS" HorizontalAlignment="Center" Text="Slots" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-
-        </Grid>
+  
 
         <Grid x:Name="Add" Grid.RowSpan="11" Grid.ColumnSpan="2" Visibility="Hidden"   >
             <Grid.ColumnDefinitions>
@@ -120,6 +117,10 @@
             </Grid.RowDefinitions>
             <Grid Name="viewId" Grid.Column="1" Margin="0,8,0,0" Grid.RowSpan="2">
                 <TextBlock x:Name="viewID" HorizontalAlignment="Center" Text="id" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+            </Grid>
+            <Grid Name="viewSlots" Grid.Row="3" Grid.Column="1" Margin="0,0,0,65" Grid.RowSpan="3">
+                <TextBlock x:Name="viewSLOTS" HorizontalAlignment="Center" Text="Slots" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
 
             </Grid>
             <Grid Name="viewLongitude" Grid.Row="3" Grid.Column="1" Margin="0,27,0,25" Grid.RowSpan="3">

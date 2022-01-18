@@ -74,7 +74,7 @@ namespace BlApi
                                 bl.sendDroneToCharge(drone.id);
                                 drone.currentLocation = currentLoc;
                                 drone.battery = currentBattery;
-                                droneStatus = status.charge;
+                                droneStatus = status.deliver;
                                 int stationId = 0;
                                 foreach (var station in bl.displayStationList())
                                 {
