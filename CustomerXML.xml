@@ -105,4 +105,11 @@
     <Longitude>25</Longitude>
     <Lattitude>32</Lattitude>
   </Customer>
+  <Customer>
+    <Id>234344343</Id>
+    <Name>nurit</Name>
+    <Phone>0545464322</Phone>
+    <Longitude>31</Longitude>
+    <Lattitude>32</Lattitude>
+  </Customer>
 </CustomerXML.xml>

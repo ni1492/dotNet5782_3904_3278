@@ -144,4 +144,12 @@
     <Salt>984795843</Salt>
     <HashedPassword>85qF2ONMgxZzZgJkpY9qCedhWdILg6hvP48qGWKJbssTeQeFwnmJUKymx8sdGIHKD6SwTT27B3S4PO9sMB7n3Q==</HashedPassword>
   </User>
+  <User>
+    <Id>234344343</Id>
+    <UserName>nurit</UserName>
+    <Email>nurit@g.jct.ac.il</Email>
+    <IsManager>False</IsManager>
+    <Salt>1494618854</Salt>
+    <HashedPassword>6KGGriEGCiIlDdpQA5/zJIx/hOk7QV3Ee27LNmpQZIWrhg4w1Dfe+Bn+qfAJf/2TIpaE1wcvuin8LZSl62MYPA==</HashedPassword>
+  </User>
 </UserXML.xml>
